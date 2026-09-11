@@ -155,7 +155,7 @@ await page.goto(ORIGIN + '/finds', { waitUntil: 'domcontentloaded' });
 await page.waitForFunction(() => typeof window.openFinds === 'function');
 await page.waitForTimeout(500);
 const look = await page.evaluate(() => {
-  const g = e => e ? getComputedStyle(e) : null;
+  const g = (e, p) => e ? getComputedStyle(e, p) : null;
   const hdr = document.querySelector('.hdr');
   const card = document.querySelector('.ss');
   const left = document.querySelector('#s-finds .dc-tagline .pinkheart');
@@ -168,6 +168,11 @@ const look = await page.evaluate(() => {
     leftHeart: left ? left.classList.contains('hl') : false,
     leftTilt: left ? g(left).transform : '',
     subtitleFont: g(document.querySelector('#s-finds .dc-subtitle')).fontFamily,
+    tagline: g(document.querySelector('#s-finds .dc-tagline')).color,
+    editTagline: g(document.querySelector('#s-dream .dc-tagline')).color,
+    rule: g(document.querySelector('#s-finds .dc-logo'), '::after').backgroundColor,
+    xlink: g(document.querySelector('#s-finds .dc-xlink span')).color,
+    editXlink: g(document.querySelector('#s-dream .dc-xlink span')).color,
   };
 });
 ok('the shared Style Star logo is hidden, same as the Edit', look.headerHidden);
@@ -176,8 +181,52 @@ ok('the background bleeds her tan, not the Edit\'s teal', look.velvet && !look.t
 ok('the bleed is a warm tan', /^rgb\(2\d\d, 1\d\d, \d+\)$/.test(look.bleed), look.bleed);
 ok('the LEFT heart mirrors the right one — her catch', look.leftHeart, look.leftTilt);
 ok('the subtitle is the Edit\'s serif, not the default sans', /Lora/i.test(look.subtitleFont), look.subtitleFont);
+/* 🚨 HER RULING 2026-09-11: "I think I want HAND SELECTED BY CATHERINE to be in
+   the same teal color as it is written on the edit page." A tan accent set was
+   built here first and she turned it down, so ONLY THE BLEED DIFFERS now.
+   ▶ These compare the two SCREENS against each other rather than against a
+   hex, so the day she changes the Edit's teal, the Finds page follows and this
+   still passes -- which is the whole point of "the same colour as the Edit". */
+ok('HAND SELECTED BY CATHERINE is the Edit\'s exact teal — her ruling',
+   !!look.tagline && look.tagline === look.editTagline, look.tagline + '  vs  ' + look.editTagline);
+ok('the invitation at the foot is the Edit\'s teal too',
+   !!look.xlink && look.xlink === look.editXlink, look.xlink + '  vs  ' + look.editXlink);
+ok('and no tan accent survived inside the frame',
+   !/rgb\(140, 90, 30\)|rgb\(201, 139, 60\)/.test([look.tagline, look.rule, look.xlink].join(' ')),
+   [look.tagline, look.rule, look.xlink].join(' '));
 
-console.log('\n7. NOTHING THREW');
+console.log('\n8. HER FIRST PIECES ARE ON IT — moved off the Edit at her ask, 2026-09-11');
+const pieces = await page.evaluate(() => {
+  const rows = [...document.querySelectorAll('#s-finds .dc-item')];
+  return {
+    n: rows.length,
+    hrefs: rows.map(r => (r.querySelector('.dc-item-btn') || {}).href || ''),
+    rels: rows.map(r => (r.querySelector('.dc-item-btn') || {}).rel || ''),
+    names: rows.map(r => (r.querySelector('.dc-item-name') || {}).textContent || ''),
+    saves: rows.filter(r => r.querySelector('.wl-save')).length,
+    empty: document.querySelectorAll('#s-finds .dc-empty-note').length,
+  };
+});
+ok('her pieces are on the page', pieces.n >= 2, String(pieces.n));
+ok('the waiting placeholder is gone now that they have landed', pieces.empty === 0);
+ok('every piece is an Amazon link', pieces.hrefs.every(h => /(^|\.)amazon\.com\//.test(h)), pieces.hrefs.join(' | '));
+ok('every outbound link is rel="sponsored noopener" — affq\'s rule',
+   pieces.rels.every(r => /sponsored/.test(r) && /noopener/.test(r)), pieces.rels.join(' | '));
+ok('every piece carries the save heart, added at runtime', pieces.saves === pieces.n, String(pieces.saves));
+/* ⚠️ THE OTHER HALF OF A MOVE: it is only a move if it LEFT. A copy would look
+   identical on this page and quietly double her Amazon pieces across the app. */
+await page.goto(ORIGIN + '/edit', { waitUntil: 'domcontentloaded' });
+await page.waitForFunction(() => typeof window.showDream === 'function');
+await page.waitForTimeout(400);
+const leftBehind = await page.evaluate(() => ({
+  n: document.querySelectorAll('#s-dream .dc-item').length,
+  amazon: [...document.querySelectorAll('#s-dream .dc-item-btn')]
+            .filter(a => /(^|\.)amazon\.com\//.test(a.href)).length,
+}));
+ok('they really LEFT the Edit — it holds no Amazon piece', leftBehind.amazon === 0, String(leftBehind.amazon));
+ok('and the Edit is otherwise intact', leftBehind.n === 33, String(leftBehind.n));
+
+console.log('\n9. NOTHING THREW');
 ok('no page errors', errors.length === 0, errors[0]);
 
 console.log('\n' + (fail ? '✗ ' : '✓ ') + pass + ' passed, ' + fail + ' failed\n');

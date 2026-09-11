@@ -29,7 +29,7 @@ it several times that day as if it were her next step, and it was not: **she had
 | 3 | ~~Shop your Style — wire the finder into it~~ ✅ **BUILT 2026-09-09, BOTH FORKS ANSWERED BY HER FIRST.** Real products lead, her six stay below; the default view searches too. `ssfind` **52** checks. | — | ✅ done |
 | 4 | ~~A save heart on `_findCard`~~ ✅ **BUILT 2026-09-09 — every card the finder shows now carries the EXISTING `_wlSaveBtn`, and a saved piece keeps its photograph.** | — | ✅ done |
 | 5 | ~~Homework 7 — first testers~~ ✅ **CLOSED 2026-09-09 BY HER: *"I have already asked many friends and put it out on Instagram."*** | — | ✅ done |
-| 6 | ~~Three Edit pieces + the Edit's order~~ ✅ **BUILT AND LIVE 2026-09-10 — her Simkhai tote, Simkhai sandal and Zoe Lev necklace, all Olivela and all EARNING; the Edit is 35 items and the shops that pay her now LEAD.** | — | ✅ done |
+| 6 | ~~Three Edit pieces + the Edit's order~~ ✅ **BUILT AND LIVE 2026-09-10 — her Simkhai tote, Simkhai sandal and Zoe Lev necklace, all Olivela and all EARNING; the shops that pay her now LEAD. ⚠️ **The Edit was 35 that day and is 33 from 2026-09-11** — her two Amazon pieces moved to `/finds` at her ask.** | — | ✅ done |
 | 7 | ~~The Edit strip could not see one of her photos~~ ✅ **HER CATCH, FIXED 2026-09-10 — and it turned up a latent bug that would have shipped a broken card when the Star rotation moved on.** | — | ✅ done |
 | 8 | ~~The strip cropped her photos and showed the Star twice~~ ✅ **HER THREE CATCHES OFF ONE SCREENSHOT, ALL FIXED AND LIVE 2026-09-10. The strip now CROPS NOTHING, renders a `px2` stack as a stack, and can no longer duplicate the Star.** | — | ✅ done |
 | 9 | ~~The whisper promised "the same pieces waiting" and a resume searched again~~ ✅ **HER CATCH, FIXED AND LIVE 2026-09-10 — and the check that was supposed to guard it had been a FALSE GREEN for a day.** | — | ✅ done |
@@ -46,7 +46,7 @@ it several times that day as if it were her next step, and it was not: **she had
 | 24 | 🔗 **THE EDIT AS A SHAREABLE LINK — HER ASK, 2026-09-10: *"I want the Edit to be a shareable link."*** ▶▶ **YES IT NEEDS ITS OWN URL, AND THE MACHINERY IS ALREADY BUILT AND PROVEN EIGHT TIMES.** `_ROUTES` today: `/privacy` `/terms` `/story` `/faq` `/contact` `/trending` `/wardrobe` `/results`, plus `/journal/<slug>` and the token-carrying shared wishlist. **The Edit (`s-dream`) is simply not in it.** ▶ **THE BUILD IS THE DOCUMENTED THREE EDITS:** one `_ROUTES` line · one `[[redirects]]` block in `netlify.toml` (status **200**, a rewrite not a 301) · one line in `_openRoute()`. 🚨🚨 **AND THE TRAP, FOUND BY READING THE CODE BEFORE BUILDING: `_openRoute` MUST CALL `showDream()`, NEVER A BARE `show('s-dream')`.** **`showDream()` is what calls `_wlDecorateEdit()`, and `_wlDecorateEdit()` IS WHAT AFFILIATE-WRAPS EVERY EDIT LINK AT RUNTIME** (`index.html:9963`). ▶ **A direct landing that skipped it would render her whole Edit with RAW product links that earn NOTHING — the exact "one route of four forgot" shape as the `<<FIND>>` marker leak.** ⚠️ **Assert it in a test: land on the path cold and check an `.dc-item-btn` href contains `click.linksynergy.com`.** | Claude | ⏳ **OPEN — she asked for it** |
 | 25 | 🛒 **AN AMAZON FINDS PAGE — HER ASK, 2026-09-10, AND STRATEGICALLY IT IS THE BEST IDEA ON THIS BOARD.** ***"I want to make an Amazon finds page. Another Sharable page dedicated to Amazon finds. I want to also feature some of them on Star of the week and our normal edit."*** ▶▶ **WHY IT MATTERS MORE THAN IT LOOKS: THIS FILE HAS SAID FOR WEEKS THAT WHAT THE APP LACKS IS A MID-MARKET GENERALIST** (every fed store is `$$$`/`$$$$`, dress median $398, 0 of 200 dresses under $100). **Amazon IS that, and it is the one such programme she can join without being declined for traffic.** ⚠️ **SO HER INSTINCT ANSWERS THE AFFORDABILITY PROBLEM THIS FILE KEPT CALLING UNSOLVABLE-WITHOUT-USERS.** 🚨🚨 **BUT THE ORDER SHE PROPOSED IS BACKWARDS AND IT IS WORTH REAL MONEY TO GET RIGHT — SEE THE AMAZON BLOCK IN THE MONEY PATH.** ▶ **THE PAGE ITSELF NEEDS NO CATALOGUE AND NO API: hand-picked links, exactly like the Edit, which is also the only version that honours her own disclosure that every piece is personally selected by the founder.** | Claude to build, HERS to pick the pieces | ⏳ **OPEN — she asked for it** |
 | 24b | ✅✅ **THE EDIT IS A SHAREABLE LINK — BUILT AND LIVE 2026-09-10: `stylestar.app/edit`.** ▶ **SIX edits, not the three the routing note promised**, because sharing needs more than a route: the `netlify.toml` rewrite (200) · an `[[edge_functions]]` registration · `PAGES['/edit']` in `page-titles.js` · `_ROUTES` · `_PAGE_META` · an `_openRoute` branch · **and the sitemap entry (priority 0.9)**. 🚨🚨 **THE TRAP IT NEARLY SHIPPED WITH, AND IT WAS MEASURED: `_openRoute` MUST CALL `showDream()`.** Planting a bare `show('s-dream')` rendered **17 links on merchants she IS approved for completely UNWRAPPED** — earning nothing, on the one page she actually sends to people, **with every card looking perfectly normal.** ▶ **`scratchpad/editshare.js`, 26 checks, built around that money check and PROVEN TO BITE.** ⚠️ **The title and description live in TWO files that cannot import from each other; §4 of the suite asserts they match word for word.** ✅ **Verified on the SERVED file, not the deploy badge.** | — | ✅ done |
-| 25b | ✅✅ **AMAZON FINDS IS BUILT AND LIVE — `stylestar.app/finds`, 2026-09-10. ⚠️ NOT YET LINKED FROM THE APP AND NOT IN THE SITEMAP, ON PURPOSE: IT HAS NO PIECES IN IT YET.** ▶ **Reachable by URL so she can look at it; it gets its nav entry and its sitemap row the day her first pieces land.** 🚨 **THE NAMING DECISION, AND IT IS THE PART THAT MATTERS: THE HEADING SAYS *AMAZON FINDS* AND THE PATH SAYS `/finds`, DELIBERATELY DIFFERENT.** Her words: *"I want it to be Amazon Finds or something with Amazon in it FOR NOW. If later we get Target or kohls approved maybe could change."* ▶▶ **A HEADING IS FREE TO CHANGE; A PATH CAN NEVER MOVE ONCE SHARED (her own standing rule). Separating them is what makes her "maybe change later" actually possible.** ⚠️ **RENAME THE HEADING FREELY. NEVER RENAME THE PATH.** | — | ✅ built, waiting on her pieces |
+| 25b | ✅✅ **AMAZON FINDS IS BUILT AND LIVE — `stylestar.app/finds`, 2026-09-10. ⭐⭐ HER FIRST PIECES LANDED 2026-09-11 AND IT IS IN THE SITEMAP NOW (priority 0.9).** Her ask: *"let's go ahead and move the Amazon pieces that are currently on the Edit over the Finds page now"* — **the Badu stacking bangles $16.99 and the PRETTYGARDEN maxi $46.99, MOVED not copied, so the Edit went 35 → 33 and holds no Amazon piece at all.** ⚠️ **THE BANGLES STAY IN `WEEK_STARS` ON PURPOSE — her own *"I want to also feature some of them on Star of the week"*. That table was NOT touched.** ▶ **STILL NOT IN THE APP'S NAV, and that is the one thing left on it: today the only way in is the Edit's own cross-link and the URL. HERS to say when it gets a nav entry, because where a woman meets it is a product decision.** ▶ **It was kept out of the sitemap while it was empty — a crawler that meets an empty page first tends to keep believing it is empty.** 🚨 **THE NAMING DECISION, AND IT IS THE PART THAT MATTERS: THE HEADING SAYS *AMAZON FINDS* AND THE PATH SAYS `/finds`, DELIBERATELY DIFFERENT.** Her words: *"I want it to be Amazon Finds or something with Amazon in it FOR NOW. If later we get Target or kohls approved maybe could change."* ▶▶ **A HEADING IS FREE TO CHANGE; A PATH CAN NEVER MOVE ONCE SHARED (her own standing rule). Separating them is what makes her "maybe change later" actually possible.** ⚠️ **RENAME THE HEADING FREELY. NEVER RENAME THE PATH.** | — | ✅ live with her first two pieces |
 | 12 | ~~The wall arrives in Google's order, not hers~~ ✅ **HER DECISION, BUILT AND LIVE 2026-09-10 — her ten dimensions order the browse row. Measured: Google sent `Old Navy > Nordstrom > Kohl's > Talbots`, she sees `Nordstrom > Talbots > Old Navy > Kohl's`.** | — | ✅ done |
 | 13 | ~~The app promises before it knows it can deliver~~ ✅ **HER DECISION, BUILT AND LIVE 2026-09-10 — the stylist's sentence is HELD until there are cards to keep it with. Retires a FAMILY of faults, not one.** | — | ✅ done |
 | 14 | ~~Affiliate shops should appear "somewhere in there"~~ ✅ **POSITION was already built (`_findSpread`, 2026-09-09). ⚠️ Her ruling was in NEITHER file; it is in the ledger now.** | — | ✅ done |
@@ -137,7 +137,17 @@ that makes any future number mean something.**
   moment it was offered: *"yes let's do the watchdog next. great idea, thank you for suggesting it."*
   ▶ **`scripts/check-product-urls.js` now reads all THREE surfaces**, via `scripts/lib/curation-links.js`
   (parsers kept separate so they can be tested with no network): the **Star of the Week queue**, the
-  **Style Star Edit**, and the frozen catalog. **`scratchpad/linkwatch.js`, 24 checks.**
+  **Style Star Edit**, and the frozen catalog. **`scratchpad/linkwatch.js`, 27 checks.**
+  🚨🚨 **FOUR SURFACES FROM 2026-09-11 — AMAZON FINDS JOINED, AND THE WAY IT JOINED IS THE LESSON.**
+  `collectEdit` split the WHOLE source on `<div class="dc-item">`, which was correct while one screen
+  used that markup. **The Finds page uses the same blocks, so the moment her first two pieces landed,
+  her Finds pieces were filed under *"THE STYLE STAR EDIT"* — in a report whose only job is telling her
+  which page to go and fix.** ▶ **Both parsers are SCOPED BY SCREEN now (`s-dream` / `s-finds`),
+  `SURFACE` has a `finds` row, and the report loop and `--only` know it.** ⚠️ **A THIRD CURATED SCREEN
+  WILL DO THIS AGAIN: with no slice and no `SURFACE` row, its pieces vanish from the report with NO
+  error.** ✅ **So `linkwatch` now asserts the two screens' counts ADD UP to every `.dc-item` in the
+  file — an unwatched screen fails the suite instead of going quiet.** ⭐ **The failure that started it
+  was the good kind: `collected 33 of 35`.**
   ⏰ **IT RUNS ITSELF — `.github/workflows/curation-links.yml`, SATURDAYS 14:00 UTC.** ⭐ **Saturday is
   measured, not picked: the Star rotates on a SUNDAY boundary, so a dead piece is caught while it is
   still NEXT week's Star** — she gets a day to swap it, instead of finding out after a woman has seen it.
@@ -267,7 +277,7 @@ that makes any future number mean something.**
   the trend authority. Re-sort seasonally; every addition relights the New pill automatically.
 - ✅✅ **MORE STYLE STAR EDIT ITEMS — SHE ADDED THREE ON 2026-09-10 AND THEY ARE LIVE.** Simkhai Devon
   Suede Tote $695 · Simkhai Stella Suede Block Heel Sandal $445 · Zoe Lev Diamond & 14k Gold Bezel
-  Pendant Necklace $825, **all from Olivela, so all three EARN.** ▶ **The Edit is 35 items**, ordered
+  Pendant Necklace $825, **all from Olivela, so all three EARN.** ▶ **The Edit is 33 items** (35 until 2026-09-11, when her two Amazon pieces moved to `/finds` at her ask), ordered
   her way since the same day: **the shops that pay her lead, the text cards follow.** ⚠️ **CLAUDE MUST
   NEVER PICK THE PRODUCTS** — the disclosure says every piece is personally selected by the founder.
   **Protect that.** ⭐ **The working pattern that produced three in one sitting: she sends a link, a
@@ -521,7 +531,19 @@ needs changing: it already fails fast and tells her the truth.**
 (`_saveShopFind`, `_ssFindPaint`, `_ssFindData`, then `THESE FIELDS ARE THE SEARCH`), never by the
 deploy badge.** Standing rule; it held twice.
 
-### ▶ TEST STATE — MEASURED TODAY (2026-09-10, later)
+### ▶ TEST STATE — MEASURED 2026-09-11
+✅ **`findspage` 47 (was 37) · `editshare` 26 · `affq` 42 (was 40) · `linkwatch` 27 (was 24). Zero
+failures.** ⭐ **AND THE FOUR NEW GUARDS WERE PROVEN TO BITE, not merely written:** putting the tan
+tagline back and COPYING an Amazon piece instead of moving it turned `findspage` red on exactly the
+four checks meant to catch each — *"rgb(140, 90, 30) vs rgb(15, 166, 182)"* and *"the Edit is
+otherwise intact → 34"*.
+⚠️ **TWO SUITES WENT RED ON THE MOVE AND BOTH WERE THE GOOD KIND** — the app did not get worse, her
+pieces moved: `linkwatch` *"collected 33 of 35"* (its parser had started filing Finds pieces under the
+Edit) and `affq` *"2 canonical Amazon"* on a screen that now has none. ▶ **Both assertions were
+REWRITTEN TO NAME THE RULE — every curated screen's pieces are watched; every Amazon link anywhere is
+canonical — never to bump a number.** **This file's own standing lesson, applied.**
+
+### ▶ TEST STATE — MEASURED 2026-09-10, later
 ✅ **`ssfind` 60 (was 52) · `chatfallback` 105 · `chatfind` 63 · `findprod` 63 · `copy` 49 · `affq` 40.
 Zero failures.** ⭐ **`chatfind` 63/0 is the one that matters most for the belted change: it proves the
 CHAT's her-words guard did not move.**
@@ -530,7 +552,7 @@ Both inline script blocks parse, div balance is byte-identical to the `HEAD` bas
 NOTHING and reads exactly like a suite that never ran. **It was re-run alone to be sure.** ▶ **Do not
 read an empty line in a batch as a pass.**
 ⚠️ **The suites NOT re-run are unchanged from earlier today and no claim is made about them:**
-wbedittasr 42 · starpx 28 · linkwatch 24 · findprod 63 · storepool 49 · untagged 21 · searchtune 80/1
+wbedittasr 42 · starpx 28 · linkwatch 27 · findprod 63 · storepool 49 · untagged 21 · searchtune 80/1
 (the known pre-existing `styles.css` failure) · curated 63/2 (both pre-existing).
 
 ### ▶▶ WHAT IS WAITING ON HER
@@ -855,8 +877,19 @@ placement we have the teal color on edit... I prefer the lightest shade of tan."
 from the card's BLACK 8px frame and its silver inset, never from the bleed.** That is why the Edit's
 dark teal and this pale tan both read correctly. **Do not "fix" it by making it deeper.**
 ⚠️ **THE TAN IS A BACKGROUND AND MAY NEVER BE TEXT — MEASURED: 1.73:1 on white**, against the 4.5:1 an
-18-to-80 audience needs, and against this file's own contrast rule. ▶ **The accent that replaces the
-Edit's turquoise on this page is `#8C5A1E`, 5.84:1.**
+18-to-80 audience needs, and against this file's own contrast rule.
+🚨🚨 **AND THE ACCENT QUESTION IS CLOSED BY HER, 2026-09-11: THERE IS NO TAN ACCENT. ONLY THE BLEED
+DIFFERS.** A tan accent set was built here first — a `#8C5A1E` tagline (5.84:1), a `#C98B3C` rule under
+the heading, a tan shopping bag, a tan invitation at the foot — and **she looked at it and ruled it
+off: *"I think I want HAND SELECTED BY CATHERINE to be in the same teal color as it is written on the
+edit page."*** ▶▶ **SO EVERYTHING INSIDE THE FRAME IS THE EDIT'S, BYTE FOR BYTE**: the teal tagline,
+the gold rule, the teal bag, the teal invitation. **The four `#s-finds` overrides were DELETED, not
+recoloured, so the day she changes the Edit's teal this page follows on its own.** ⚠️ **DO NOT re-add
+a per-page accent "to tie it to the tan" — that is the version she saw and turned down.**
+⭐ **AND HER REASON IS THE SAME ONE THAT RETIRED THE THIRD PAGE: two pages that look like one
+stylist's idea, not a luxury page and a cheap page.** Her own line does the job; a second palette
+would have undone it. ▶ **The test compares the two SCREENS against each other rather than against a
+hex** (`findspage` §6), because *"the same colour as the Edit"* is the rule, not `#0FA6B6`.
 ▶ **HER CLOSING LINE UNDERLINES ONLY THE INVITATION:** the sentence reads plainly and *"Click here to
 explore more →"* carries the underline. **Underlining the whole thing turns a stylist's sentence into
 a banner.** ⚠️ **The whole block stays the tap target — her audience runs to 80.**
@@ -880,7 +913,11 @@ of place but as a stylist I do recommend mixing high and low items."* ▶ **She 
 page — hand-picked luxury splurges — to offset Amazon, and doubted it herself: *"That would end up
 being 3 'Edit' pages though so not sure I want to do that."***
 ✅✅ **SHE WAS RIGHT TO DOUBT IT, AND THE MEASUREMENT SETTLED IT: HER EDIT IS ALREADY A HIGH/LOW MIX.**
-Across all 35 pieces: **$12 to $1,100, median $248 — 11 under $100, 10 at $100-299, 14 at $300+.**
+Measured at 35 pieces: **$12 to $1,100, median $248 — 11 under $100, 10 at $100-299, 14 at $300+.**
+▶ **RE-MEASURED 2026-09-11 AT 33, after her two Amazon pieces moved to `/finds`: $12.99 to $1,100,
+median $278 — 9 under $100, 10 at $100-299, 14 at $300+.** ⚠️ **The argument is UNCHANGED and the
+figures moved as little as that** — the Edit is still a high/low mix on its own, which is why the
+third page stayed unbuilt.
 ▶▶ **SO THE SPLURGE PAGE SHE WAS IMAGINING ALREADY EXISTS. IT IS THE EDIT.** Building a second one
 would have split her best page in half and given her a third thing to maintain.
 ⭐⭐ **AND THE FEAR WAS POINTED AT THE WRONG RISK, WHICH IS WORTH SAYING PLAINLY WHENEVER IT RETURNS:
@@ -921,6 +958,11 @@ one. **The catalogued six become seven; that is correct, not drift.**
 ### 💰 WHICH EDIT PIECES ACTUALLY EARN — MEASURED 2026-09-10, AND THE FIRST FIGURE GIVEN TO HER WAS WRONG
 🚨 **HER QUESTION, AND IT DESERVES A NUMBER RATHER THAN A YES: *"I can share it and when anyone opens it
 and clicks on a link and purchases - we make money from that affilate link purchase?"***
+🚨 **THE COUNTS BELOW WERE MEASURED AT 35 PIECES. THE EDIT IS 33 FROM 2026-09-11** — her two Amazon
+pieces moved to `/finds`, so the honest figures today are **17 EARN, 16 DO NOT, and Amazon is no longer
+in the Edit's unearning list at all.** ▶ **The `_AMZ_TAG` argument in (b) is UNTOUCHED by the move: the
+same two pieces still light up on approval, on the Finds page instead of the Edit.** *The 2026-09-10
+measurement, kept because its method and its lesson are the point:*
 ▶▶ **MEASURED ACROSS ALL 35 EDIT PIECES: 17 EARN, 18 DO NOT.**
 · **EARNING (17):** Olivela 4 · Mytheresa 3 · DVF 2 · Marissa Collections 2 · **Etsy 2** · FARM Rio 1 ·
 Vilebrequin 1 · Fleur du Mal 1 · COUTR 1.

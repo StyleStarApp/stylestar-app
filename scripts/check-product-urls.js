@@ -33,15 +33,16 @@ import { fileURLToPath } from 'url';
 //   ONES THAT DO. It now reads all three, and reports the Star first.
 // Run:  node scripts/check-product-urls.js            (everything)
 //       node scripts/check-product-urls.js --only star (just this week's piece)
-import {collectAll, collectStars, collectEdit, collectCatalog, stockVerdict, SURFACE}
+import {collectAll, collectStars, collectEdit, collectFinds, collectCatalog, stockVerdict, SURFACE}
   from './lib/curation-links.js';
 
 const ROOT = path.join(path.dirname(fileURLToPath(import.meta.url)), '..');
 const onlyArg = (process.argv.find(a => a.startsWith('--only')) || '').split(/[= ]/)[1]
              || (process.argv[process.argv.indexOf('--only') + 1] || '');
-const only = ['star', 'edit', 'catalog'].includes(onlyArg) ? onlyArg : null;
+const only = ['star', 'edit', 'finds', 'catalog'].includes(onlyArg) ? onlyArg : null;
 const items = only === 'star' ? collectStars()
             : only === 'edit' ? collectEdit()
+            : only === 'finds' ? collectFinds()
             : only === 'catalog' ? collectCatalog(ROOT)
             : collectAll(ROOT);
 
@@ -113,7 +114,7 @@ async function check(p) {
 }
 
 console.log(`Checking ${items.length} live links`
-  + (only ? ` on the ${SURFACE[only].label}` : ' across the Star of the Week, the Edit and the frozen catalog')
+  + (only ? ` on the ${SURFACE[only].label}` : ' across the Star of the Week, the Edit, Amazon Finds and the frozen catalog')
   + `...\n`);
 
 const results = [];
@@ -128,7 +129,7 @@ const line = r => `  ${(r.p.id || '').padEnd(9)} ${r.p.name}${r.p.retailer ? '  
 //   catalog rows, which is precisely how a dead Star would have been lost in it
 //   even once it was being checked. Where a thing appears decides how loud it is.
 let exitBad = 0;
-for (const key of ['star', 'edit', 'catalog']) {
+for (const key of ['star', 'edit', 'finds', 'catalog']) {
   const mine = results.filter(r => r.p.source === key);
   if (!mine.length) continue;
   const S = SURFACE[key];

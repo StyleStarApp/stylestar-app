@@ -25,7 +25,8 @@ const html = () => fs.readFileSync(path.join(ROOT, 'index.html'), 'utf8');
 
 const unent = s => String(s || '')
   .replace(/&mdash;/g, '—').replace(/&amp;/g, '&')
-  .replace(/&quot;/g, '"').replace(/&#39;/g, "'").replace(/&nbsp;/g, ' ').trim();
+  .replace(/&quot;/g, '"').replace(/&#39;/g, "'").replace(/&nbsp;/g, ' ')
+  .replace(/&middot;/g, '\u00b7').replace(/&rsquo;/g, '\u2019').trim();
 
 /* THE FROZEN CATALOG. Still checked, but it is the LOWEST priority surface now:
    she adds no rows and checks no links, and a death here is accepted. */
@@ -42,9 +43,27 @@ export function collectCatalog(root = ROOT) {
 /* THE STYLE STAR EDIT — hand-written .dc-item blocks in index.html. Every one is
    a piece she personally chose, and the disclosure says so out loud, which is
    exactly why a dead one matters more than a catalog row. */
-export function collectEdit(src = html()) {
+/* 🚨 SCOPED BY SCREEN SINCE 2026-09-11, AND THE REASON IS THE USEFUL PART. This
+   used to split the WHOLE source file, which was correct while `.dc-item` lived
+   on exactly one screen. Amazon Finds now uses the same markup, so an unscoped
+   split silently filed her Finds pieces under "THE STYLE STAR EDIT" — a report
+   that sends her to the wrong page to fix a dead link is worse than no report.
+   ⚠️ A THIRD CURATED SCREEN WILL DO THIS AGAIN: give it a slice here and a
+   SURFACE entry below, or its pieces vanish from the report with no error. */
+function screenSlice(src, id, nextId) {
+  const i = src.indexOf(`id="${id}"`);
+  if (i < 0) return '';
+  const j = src.indexOf(`id="${nextId}"`, i);
+  return src.slice(i, j < 0 ? src.length : j);
+}
+
+export function collectEdit(src = html(), opts = {}) {
+  const source = opts.source || 'edit';
+  const scope = opts.scope === undefined
+    ? screenSlice(src, 's-dream', 's-finds')
+    : opts.scope;
   const out = [];
-  const blocks = src.split('<div class="dc-item">').slice(1);
+  const blocks = String(scope).split('<div class="dc-item">').slice(1);
   for (const b of blocks) {
     const block = b.slice(0, b.indexOf('</div>\n    </div>') + 1 || 4000);
     const name = /<div class="dc-item-name">([\s\S]*?)<\/div>/.exec(block);
@@ -53,12 +72,21 @@ export function collectEdit(src = html()) {
     const href = /<a class="dc-item-btn"[^>]*href="([^"]+)"/.exec(block);
     if (!name || !href) continue;
     out.push({
-      source: 'edit', id: 'edit', name: unent(name[1]), brand: '',
+      source, id: source, name: unent(name[1]), brand: '',
       retailer: unent(store && store[1]), price: unent(price && price[1]),
       url: unent(href[1])
     });
   }
   return out;
+}
+
+/* AMAZON FINDS — the same hand-written markup on her second curated screen.
+   Same rule, same loudness: she vouched for these out loud too. */
+export function collectFinds(src = html()) {
+  return collectEdit(src, {
+    source: 'finds',
+    scope: screenSlice(src, 's-finds', 's-shop')
+  });
 }
 
 /* THE STAR OF THE WEEK QUEUE. Only names in WEEK_STAR_PHOTO_ORDER rotate — that
@@ -100,7 +128,7 @@ export function collectStars(src = html()) {
 }
 
 export function collectAll(root = ROOT) {
-  return [...collectStars(), ...collectEdit(), ...collectCatalog(root)];
+  return [...collectStars(), ...collectEdit(), ...collectFinds(), ...collectCatalog(root)];
 }
 
 /* ── IS IT ACTUALLY IN STOCK? ────────────────────────────────────────────────
@@ -137,5 +165,6 @@ export function stockVerdict(body) {
 export const SURFACE = {
   star:    {rank: 0, label: 'STAR OF THE WEEK', note: 'the piece every woman sees this week'},
   edit:    {rank: 1, label: 'THE STYLE STAR EDIT', note: 'pieces she personally vouched for'},
-  catalog: {rank: 2, label: 'the frozen catalog', note: 'no longer maintained — a death here is accepted'}
+  finds:   {rank: 2, label: 'AMAZON FINDS', note: 'pieces she personally vouched for'},
+  catalog: {rank: 3, label: 'the frozen catalog', note: 'no longer maintained — a death here is accepted'}
 };

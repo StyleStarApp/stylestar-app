@@ -13,7 +13,7 @@
 // Run: node scratchpad/linkwatch.js
 import fs from 'fs';
 import path from 'path';
-import {collectStars, collectEdit, collectCatalog, collectAll, stockVerdict, SURFACE, ROOT}
+import {collectStars, collectEdit, collectFinds, collectCatalog, collectAll, stockVerdict, SURFACE, ROOT}
   from '../scripts/lib/curation-links.js';
 
 let pass = 0; const fails = [];
@@ -23,16 +23,35 @@ const ok = (l, c, d) => { if (c) { pass++; console.log('  ✓ ' + l); }
 const src = fs.readFileSync(path.join(ROOT, 'index.html'), 'utf8');
 
 console.log('\nPART 1 — it reads the surfaces she actually maintains');
-const stars = collectStars(), edit = collectEdit(), cat = collectCatalog(ROOT);
+const stars = collectStars(), edit = collectEdit(), finds = collectFinds(), cat = collectCatalog(ROOT);
 ok('the Star queue is read', stars.length > 0, String(stars.length));
 ok('the Edit is read', edit.length > 0, String(edit.length));
+ok('Amazon Finds is read', finds.length > 0, String(finds.length));
 ok('the frozen catalog is still read', cat.length > 0, String(cat.length));
 // ⚠️ DERIVED, never a frozen number — the 2026-09-08 lesson. Her Edit grows when
 // she adds a piece, and a test that fails on that teaches the next session to
 // bump a number without reading it.
-const domCount = (src.match(/<div class="dc-item">/g) || []).length;
+// 🚨 SCOPED BY SCREEN SINCE 2026-09-11. This used to count `.dc-item` across the
+// WHOLE file, which was right while one screen used that markup. Amazon Finds
+// now uses the same blocks, so an unscoped count quietly compared the Edit's 33
+// against the file's 35 — and the failure it produced is the GOOD kind: the
+// parser really had started filing her Finds pieces under the Edit.
+const slice = (id, next) => {
+  const i = src.indexOf(`id="${id}"`), j = src.indexOf(`id="${next}"`, i);
+  return i < 0 ? '' : src.slice(i, j < 0 ? src.length : j);
+};
+const count = t => (t.match(/<div class="dc-item">/g) || []).length;
+const domCount = count(slice('s-dream', 's-finds'));
+const findsCount = count(slice('s-finds', 's-shop'));
 ok('every Edit item in the markup is collected, none dropped',
    edit.length === domCount, `collected ${edit.length} of ${domCount}`);
+ok('every Amazon Finds item in the markup is collected, none dropped',
+   finds.length === findsCount, `collected ${finds.length} of ${findsCount}`);
+// ⚠️ AND THE WHOLE-FILE TOTAL STILL HAS TO ADD UP, or a THIRD curated screen
+// could appear one day and go entirely unwatched with every check above green.
+ok('no .dc-item anywhere in the file is unwatched',
+   domCount + findsCount === count(src),
+   `${domCount} + ${findsCount} of ${count(src)}`);
 ok('every collected link is https', collectAll(ROOT).every(i => /^https:\/\//.test(i.url)),
    collectAll(ROOT).filter(i => !/^https:\/\//.test(i.url)).map(i => i.name).join(', '));
 ok('every item carries a name and a surface',

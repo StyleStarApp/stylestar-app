@@ -72,7 +72,19 @@
        NO DOUBLE HYPHEN ANYWHERE INSIDE AN XML COMMENT. -->
   <url>
     <loc>https://stylestar.app/edit</loc>
-    <lastmod>2026-09-10</lastmod>
+    <lastmod>2026-09-11</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <!-- AMAZON FINDS, listed from 2026-09-11 and NOT before. It was built on
+       2026-09-10 and deliberately kept out of this file while it had no pieces
+       in it; a crawler that meets an empty page first tends to keep believing
+       it is empty. Her first two pieces landed today, so it earns its row.
+       The heading says "Amazon Finds" and the path says /finds on purpose, and
+       the path may NEVER move once shared. See CLAUDE.md. -->
+  <url>
+    <loc>https://stylestar.app/finds</loc>
+    <lastmod>2026-09-11</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>

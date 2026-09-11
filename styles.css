@@ -246,11 +246,16 @@ html.edit-velvet,html.edit-velvet body{background:#0E7F8C}
    inset, never from the bleed, which is why the Edit's dark teal and this pale
    tan both read correctly. Do not "fix" this by darkening it. */
 html.finds-velvet,html.finds-velvet body{background:#ECBD83}
-/* The accent that replaces #0FA6B6 on this page only. Measured 5.84:1 on the
-   card's own warm paper -- readable, and unmistakably the Amazon family. */
-#s-finds .dc-tagline{color:#8C5A1E}
-#s-finds .dc-logo::after{background:#C98B3C}
-#s-finds .dc-item-btn svg{stroke:#8C5A1E}
+/* 🚨 NO ACCENT OVERRIDES ON THIS PAGE, AND THAT IS HER DECISION (2026-09-11),
+   NOT AN OVERSIGHT. A tan accent set (#8C5A1E tagline, #C98B3C rule, tan bag
+   icon) was built here first and she ruled it off: "I think I want HAND
+   SELECTED BY CATHERINE to be in the same teal color as it is written on the
+   edit page." ▶ SO ONLY THE BLEED DIFFERS. Everything inside the frame -- the
+   teal tagline, the gold rule under the heading, the teal shopping bag, the
+   teal invitation at the foot -- is the Edit's, byte for byte, because the two
+   pages are ONE STYLIST'S IDEA and her own line says so. ⚠️ DO NOT re-add a
+   per-page accent to "tie it to the tan"; that is the version she saw and
+   turned down. */
 /* Her bottom line, 2026-09-11: the SENTENCE reads plainly and only the INVITATION
    is underlined. Underlining the whole thing turns a stylist's sentence into a
    banner; this keeps her words as words and still shows clearly where to tap.
@@ -258,7 +263,6 @@ html.finds-velvet,html.finds-velvet body{background:#ECBD83}
    link is not a target. */
 .dc-xlink{text-align:center;font-family:'Lora',Georgia,serif;font-size:14px;line-height:1.6;color:#4a463e;cursor:pointer;margin-top:14px;padding:4px 2px}
 .dc-xlink span{font-weight:600;color:#0FA6B6;text-decoration:underline;text-underline-offset:3px}
-#s-finds .dc-xlink span{color:#8C5A1E}
 /* ▶ HER RETHINK (2026-08-10), and the reasoning is the keeper. The Wardrobe List
    used to flip its whole colour scheme with the tab (gold bleed + black frame,
    then black bleed + gold frame). She called it "too much muchness" and asked to
@@ -3944,15 +3948,3 @@ body.ss-play .hm-entrance{animation:ssOverlayOut .55s ease 1.6s forwards}
   .chat-typing-star,.find-load-star{animation:none;opacity:.75}
 }
 
-/* The Finds page's placeholder, shown only until Catherine's first pieces land
-   (2026-09-10). Deliberately quiet and deliberately NOT an apology: her rule is
-   state the truth and stop. It is removed the moment a .dc-item is added. */
-.dc-empty-note{
-  text-align:center;
-  color:#6e6e6e;
-  font-size:14px;
-  line-height:1.6;
-  padding:2.2rem 1rem;
-  max-width:30ch;
-  margin:0 auto;
-}

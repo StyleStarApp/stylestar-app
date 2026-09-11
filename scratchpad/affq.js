@@ -182,17 +182,42 @@ const disc = await page.evaluate(() => {
 });
 ok('Edit: exactly one disclosure, visible, above the first item', disc.edit.count === 1 && disc.edit.visible && disc.edit.above, JSON.stringify(disc.edit));
 ok('Mall: exactly one disclosure, visible, above the first store card', disc.mall.count === 1 && disc.mall.visible && disc.mall.above, JSON.stringify(disc.mall));
+// 🚨 BOTH CURATED SCREENS SINCE 2026-09-11, AND THE FAILURE THAT FORCED IT IS
+//   THE GOOD KIND. This used to query `#s-dream` alone and compare it against a
+//   whole-file anchor count. Her two Amazon pieces moved to Amazon Finds at her
+//   ask, so the Edit went 35 → 33 and its Amazon count went 2 → 0, and the
+//   assertion went red on a move that broke nothing.
+//   ▶ REWRITTEN TO NAME THE RULE, NEVER TO BUMP THE NUMBER (this file's own
+//   standing lesson): every hand-written product anchor ANYWHERE in the app
+//   carries the rel, and every Amazon link is the canonical /dp/ form — no
+//   matter which curated screen she keeps it on. A third screen inherits it.
 const editDom = await page.evaluate(() => {
-  const links = [...document.querySelectorAll('#s-dream .dc-item-btn')];
-  return { n: links.length, rel: links.every(a => a.rel === 'sponsored noopener'), amazon: links.filter(a => a.href.includes('amazon.com/dp/')).length };
+  const links = [...document.querySelectorAll('#s-dream .dc-item-btn, #s-finds .dc-item-btn')];
+  return {
+    n: links.length,
+    dream: document.querySelectorAll('#s-dream .dc-item-btn').length,
+    finds: document.querySelectorAll('#s-finds .dc-item-btn').length,
+    rel: links.every(a => a.rel === 'sponsored noopener'),
+    amazon: links.filter(a => /amazon\.com\//.test(a.href)).length,
+    amazonCanonical: links.filter(a => /amazon\.com\//.test(a.href))
+                          .every(a => a.href.includes('amazon.com/dp/')),
+  };
 });
 // ⚠️ 2026-08-21: an Edit href may now be AFFILIATE-WRAPPED in the live DOM
 // (click.linksynergy.com) even though the markup holds the bare product URL,
 // because _wlDecorateEdit rewrites it on render. The rel and the Amazon
 // canonicalisation are what this assertion is really about, so it counts
 // against the derived total rather than a frozen number.
-ok('every Edit link carries the rel in the live DOM, 2 canonical Amazon',
-   editDom.n === EDIT_N && editDom.rel && editDom.amazon === 2, JSON.stringify(editDom));
+ok('every curated product link carries the rel in the live DOM',
+   editDom.n === EDIT_N && editDom.rel, JSON.stringify(editDom));
+// ⚠️ NOT "2 on the Edit" any more — WHERE she keeps an Amazon piece is hers to
+// change, and a test that pins it to a screen just makes her moves look broken.
+ok('every Amazon link anywhere is the canonical /dp/ form',
+   editDom.amazon >= 2 && editDom.amazonCanonical, JSON.stringify(editDom));
+// ⚠️ AND HER SECOND CURATED SCREEN IS REALLY BEING LOOKED AT, so the check above
+//   cannot quietly pass by finding nothing there.
+ok('Amazon Finds is rendering her pieces, not an empty page',
+   editDom.finds >= 2, JSON.stringify(editDom));
 await page.close();
 
 console.log('\nB2. Quiz autosave: exit and return keeps her place');
