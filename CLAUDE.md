@@ -936,6 +936,36 @@ the unstamped file before `--write` was run.**
 through the egress proxy), so the live page cannot be rendered and looked at from a session. **`curl` on
 the served file is the instrument** — it is what settled this.
 
+### 🔎 DO WE RESUBMIT TO GOOGLE AND BING EVERY TIME? — HER QUESTION 2026-09-11, ANSWERED FOR GOOD
+▶ **HER WORDS: *"as we add more items to Edit and Finds and update and change the pages so we need to
+resubmit to Google and bing for indexing? Or is that a one time thing?"***
+✅ **THE ANSWER, IN TWO HALVES, AND ONLY ONE OF THEM IS EVER HERS:**
+**(a) REQUESTING INDEXING IS ONE-TIME, PER PAGE.** It means *"you don't know this page exists, come
+look."* Once a page is indexed, both engines re-crawl it on their own. **She never resubmits because she
+changed content, and she should not be asked to.** ⚠️ **The one exception worth offering: a change she
+wants picked up in days rather than weeks — she can nudge it, it costs a minute, it is never required.**
+**(b) `<lastmod>` IS THE FOREVER HALF, AND IT IS CLAUDE'S JOB.** It is **the one sitemap field crawlers
+actually use** — Google ignores `changefreq` and `priority` outright. **A stale `lastmod` is the whole
+difference between her new pieces being fetched next week and being found whenever Google wanders back.**
+🚨 **AND IT HAS GONE STALE BEFORE — found 2026-08-31, the home page and `/faq` still claiming 2026-08-24
+after a week of real edits.** ▶▶ **A DATE SOMEONE MUST REMEMBER TO BUMP IS A DATE THAT GOES STALE**, the
+same failure this repo had just fixed for the stylesheet.
+✅ **BUILT 2026-09-11: `scripts/sitemap-lastmod.js`, `--check` / `--write`.** It hashes the CONTENT of her
+three curation surfaces — `/edit`, `/finds`, `/trending` — and fails when one moved and its date did not.
+**`editshare` runs it.** ⭐ **PROVEN TO BITE: planting one new `.dc-item` failed with `/edit`, and
+`--write` then stamped `/edit` ALONE and left `/trending` on 2026-09-03.**
+⚠️ **THE TRIGGER IS A CONTENT HASH, NEVER A JUDGEMENT** — only text and links count, so restyling a page
+is not a reason to tell a crawler it changed.
+⚠️⚠️ **AND THE FIRST-RUN DECISION, WHICH MUST NOT BE "SIMPLIFIED": WITH NO BASELINE, `--write` SEEDS AND
+DOES NOT STAMP.** Everything reads as changed on a first run, so a stamping first run would have written
+today onto `/trending`, untouched since 2026-09-03. ▶ **That is a lie to a crawler, and `lastmod`'s whole
+value is that it is honest — a sitemap that cries "new!" on an unchanged page is one Google learns to
+discount.** **"No baseline" is not the same fact as "the page changed."**
+▶ **AFTER ADDING ONE OF HER PIECES: `node scripts/sitemap-lastmod.js --write`.**
+▶ **STILL OPEN AND GENUINELY HERS: `/finds` has never been submitted to either engine.** It is in the
+sitemap so both will find it eventually; **the one-time request is the four-step walkthrough she liked
+for `/edit`** — Google Search Console and Bing Webmaster Tools, **one step per message.**
+
 ### 🎨 HER FIVE DESIGN NOTES ON THE FINDS PAGE — ALL BUILT AND LIVE 2026-09-11
 ▶ **She tested the live page after the stylesheet fix landed and sent five things. All are built.**
 **(1) *"let's fix how do 💕 is all by itself"*** — the heart was orphaning onto its own line.

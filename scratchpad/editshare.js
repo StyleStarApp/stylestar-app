@@ -132,7 +132,27 @@ ok('the Edit still carries exactly one disclosure',
 ok('every outbound Edit link is rel="sponsored"',
    (await page.evaluate(() => [...document.querySelectorAll('#s-dream .dc-item-btn')].every(a => (a.getAttribute('rel') || '').includes('sponsored')))));
 
-console.log('\n6. NOTHING THREW');
+console.log('\n6. THE SEARCH ENGINES ARE TOLD WHEN HER PAGES CHANGE');
+/* 🚨 HER QUESTION, 2026-09-11: "as we add more items to Edit and Finds... do we
+   need to resubmit to Google and bing for indexing? Or is that a one time
+   thing?" ▶ Requesting indexing IS one-time; keeping <lastmod> honest is the
+   forever half, and it is CLAUDE'S half, not hers.
+   ⚠️ It has gone stale before (2026-08-31: the home page and /faq still claimed
+   2026-08-24 after a week of edits). A date someone must remember to bump is a
+   date that goes stale — so it is derived from a content hash and checked here.
+   ▶ Proven to bite: planting one new .dc-item failed this with "/edit". */
+const lm = (await import('child_process'))
+  .spawnSync(process.execPath, [path.join(ROOT, 'scripts/sitemap-lastmod.js'), '--check'],
+             { encoding: 'utf8' });
+ok('every curated page\'s sitemap date matches what is actually on it',
+   lm.status === 0, (lm.stderr || lm.stdout || '').trim().split('\n')[0]);
+/* ⚠️ AND THE PAGES MUST BE IN THE SITEMAP AT ALL to have a date to keep honest. */
+const sm = fs.readFileSync(path.join(ROOT, 'sitemap.xml'), 'utf8');
+for (const p of ['/edit', '/finds', '/trending'])
+  ok(`${p} is listed in the sitemap, so crawlers find it unprompted`,
+     sm.includes(`<loc>https://stylestar.app${p}</loc>`));
+
+console.log('\n7. NOTHING THREW');
 ok('no page errors', errors.length === 0, errors[0]);
 
 console.log('\n' + (fail ? '✗ ' : '✓ ') + pass + ' passed, ' + fail + ' failed\n');
