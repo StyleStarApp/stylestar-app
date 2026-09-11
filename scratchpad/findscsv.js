@@ -179,7 +179,15 @@ for (const [nm, asin] of [['Stretchy Stacking Bangles', 'B0CWD1RYK3'], ['Ponytai
   ok(`${nm} carries no colour in its name`, byAsin.get(asin) === nm, byAsin.get(asin));
   const row = load(path.join(path.dirname(new URL(import.meta.url).pathname), '..', 'data/amazon-finds.csv'))
     .find(r => r.url.includes(asin));
-  ok(`...and its note names the range instead`, /gold or silver/i.test(row.note), row.note);
+  /* 🚨 THIS PINNED THE LITERAL "gold or silver" AND WENT RED WITHIN THE HOUR, when she
+     changed the bangles to "both gold and silver" — a BETTER sentence, failing a check
+     written for the sentence it replaced. The rule is that the note names BOTH metals,
+     never which joiner sits between them; the joiner is her voice and it is hers to
+     change. ▶ Same lesson as the em-dash check two commits ago: pin the RULE, not the
+     wording. It keeps happening because pinning the string is always the easier line
+     to write. */
+  ok(`...and its note names both metals instead`,
+     /gold/i.test(row.note) && /silver/i.test(row.note), row.note);
 }
 
 console.log('\n8. HER LIVE PAGE AND HER SPREADSHEET AGREE');
