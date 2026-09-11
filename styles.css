@@ -286,7 +286,22 @@ html.finds-velvet .ss.dream-mirror{background:linear-gradient(#fff,#fff) padding
    control, never the padding inside it" — applied forwards for once: the
    padding IS the tap target, and her audience runs to 80. */
 .dc-xlink{text-align:center;font-family:'Lora',Georgia,serif;font-size:14px;line-height:1.6;color:#4a463e;cursor:pointer;margin:16px auto 0;padding:13px 2px;text-wrap:balance}
-.dc-xlink span{font-weight:600;color:#0FA6B6;text-decoration:underline;text-underline-offset:3px}
+/* 🚨 PINK, HER RULING 2026-09-11 — and it is the ONE link on these pages that
+   changes colour. The trending line beside it STAYS teal (`.dc-trend-link`),
+   deliberately: "let's make that pink instead of turquoise. Keep the Curious
+   what's trending line turquoise."
+   ▶ #EC4899 is the app's OWN stylist-mark pink, already used 10 times — not a
+   new colour invented for this. Her 2026-08-09 mark system: gold is the app's
+   voice, PINK IS CATHERINE'S, and this link is the one that leads to her other
+   curated page, so the pink is saying something true.
+   ⚠️ MEASURED, and the honest number: #EC4899 is 3.53:1 on the card's white,
+   under the 4.5:1 this file demands of body text. THE TEAL IT REPLACES IS
+   WORSE — 2.94:1 — so this is an improvement, not a regression, and both are
+   BOLD and UNDERLINED, which is the affordance a plain paragraph lacks.
+   ▶ If maximum readability is ever wanted here, #D6337F measures 4.53:1 and is
+   the same hue family. Do not swap it in without asking her — she chose the
+   colour by name. */
+.dc-xlink span{font-weight:600;color:#EC4899;text-decoration:underline;text-underline-offset:3px}
 /* ▶ HER RETHINK (2026-08-10), and the reasoning is the keeper. The Wardrobe List
    used to flip its whole colour scheme with the tab (gold bleed + black frame,
    then black bleed + gold frame). She called it "too much muchness" and asked to

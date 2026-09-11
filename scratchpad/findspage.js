@@ -126,14 +126,22 @@ ok('description matches word for word in both files', !!eD && eD === iD);
 console.log('\n5. THE TWO PAGES POINT AT EACH OTHER — HER OWN LINE');
 ok('the Finds page carries her sentence', /mixing high and low is how i dress my clients/i.test(txt));
 ok('and it links to the Edit', (await page.evaluate(() => !!document.querySelector('#s-finds .dc-xlink[onclick*="showDream"]'))));
+/* ⚠️ REWRITTEN 2026-09-11 TO NAME THE RULE RATHER THAN THE WORDS. This used to
+   assert the literal string "click here to explore more", and it went red when
+   she renamed the link to say WHERE it goes — the app changed, it did not break.
+   ▶ The rule she actually gave is about EMPHASIS: her sentence reads plainly and
+   only the invitation carries the underline, because underlining the whole thing
+   turns a stylist's sentence into a banner. That survives any rewording.
+   ▶ The WORDS are asserted in §9, against the page each link must name. */
 ok('the sentence reads plainly and only the INVITATION is underlined — her ask',
    (await page.evaluate(() => {
      const el = document.querySelector('#s-finds .dc-xlink');
      if (!el) return false;
      const sp = el.querySelector('span');
+     const plain = el.childNodes[0];
      return getComputedStyle(el).textDecorationLine === 'none'
          && !!sp && getComputedStyle(sp).textDecorationLine.includes('underline')
-         && /click here to explore more/i.test(sp.innerText);
+         && !!plain && plain.nodeType === 3 && plain.textContent.trim().length > 20;
    })));
 await page.evaluate(() => window.showDream());
 await page.waitForTimeout(350);
@@ -249,6 +257,10 @@ const foot = async (route, screen) => {
          welds are font- and width-independent, which a hand-typed &nbsp; tuned
          to one screen would not be. */
       welds: document.querySelectorAll('#' + s + ' .dc-xlink .nb, #' + s + ' .dc-trend-link .nb').length,
+      xlText: (xl || {}).textContent || '',
+      xlGo: (xl && xl.getAttribute('onclick')) || '',
+      xlColour: xl ? g(xl.querySelector('span')).color : '',
+      tlColour: tl ? g(tl).color : '',
       subtitleWeld: !!q('.dc-subtitle .nb'),
     subtitleTail: (q('.dc-subtitle .nb') || {}).textContent || '',
       balanced: g(q('.dc-subtitle')).textWrap || g(q('.dc-subtitle')).textWrapStyle,
@@ -278,6 +290,29 @@ for (const [route, screen, label] of [['/finds', 's-finds', 'Amazon Finds'], ['/
   ok(label + ': her subtitle ends with a period before the heart — her ruling',
      /\.\s*$/.test(f.subtitleTail), JSON.stringify(f.subtitleTail));
   ok(label + ': the subtitle balances its lines at any width', /balance/.test(f.balanced || ''), f.balanced);
+  /* 🚨 HER RULING 2026-09-11: each page NAMES where its link goes, instead of
+     the old "explore more" which said nothing. "Click here to explore Amazon
+     Finds" / "Click here to explore The Edit".
+     ▶ The pair is asserted CROSSWISE on purpose — the commonest way to break
+     this is to copy one page's markup onto the other, which would leave a page
+     inviting a woman to explore the page she is already standing on. */
+  const goesTo = label === 'Amazon Finds'
+    ? { names: /explore\s+The Edit/i, calls: /showDream/, notItself: /Amazon Finds/i }
+    : { names: /explore\s+Amazon Finds/i, calls: /openFinds/, notItself: /The Edit/i };
+  ok(label + ': its closing link NAMES the other page', goesTo.names.test(f.xlText), f.xlText.trim());
+  ok(label + ': ...and actually goes there', goesTo.calls.test(f.xlGo), f.xlGo);
+  ok(label + ': ...and never invites her to the page she is already on',
+     !goesTo.notItself.test(f.xlText.replace(/^[^]*?explore/i, '')), f.xlText.trim());
+  /* 🚨 HER RULING, AND THE TWO HALVES ARE EQUALLY HER WORDS: "let's make that
+     pink instead of turquoise. Keep the Curious what's trending line turquoise."
+     ▶ So the test asserts they DIFFER, not just that one is pink — the failure
+     she would actually mind is a sweep that recolours both. */
+  ok(label + ': the link to her other page is PINK — her ruling',
+     f.xlColour === 'rgb(236, 72, 153)', f.xlColour);
+  ok(label + ': and the trending line beside it STAYS turquoise — also her ruling',
+     f.tlColour === 'rgb(15, 166, 182)', f.tlColour);
+  ok(label + ': the two are not the same colour', f.xlColour !== f.tlColour,
+     f.xlColour + ' vs ' + f.tlColour);
 }
 /* ⚠️ HER ASK WAS SCOPED TO ONE PAGE — "take out the background linen on THIS
    page". The Edit keeps its linen deliberately; asserting BOTH halves is what

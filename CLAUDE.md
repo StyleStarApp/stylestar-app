@@ -1083,6 +1083,33 @@ it does the whole job her third page was meant to do — for free, with nothing 
 ⚠️ **AND IT AVOIDS PAIR-CURATION:** a page of splurge/save COUPLES would look beautiful and would force
 her to curate in twos, against her actual working pattern of one piece at a time.
 
+### 🩷 EACH CURATED PAGE NAMES WHERE ITS LINK GOES, AND THAT LINK IS PINK — HER RULING 2026-09-11
+▶ **HER WORDS: *"On the edit page I want it to say something like 'Click here to explore Amazon Finds'…
+and let's make that pink instead of turquoise. Keep the Curious what's trending line turquoise."*** Same
+on Finds, pointing at The Edit.
+✅ **BUILT, AND THE NAMING IS THE REAL IMPROVEMENT: *"Click here to explore more →"* said NOTHING about
+where it went.** Now the Edit says **Amazon Finds** and Finds says **The Edit**. ⚠️ **Her sentence
+*"Mixing high and low is how I dress my clients."* is UNTOUCHED — only the invitation half changed.**
+🚨 **THE COMMONEST WAY TO BREAK THIS IS A COPY-PASTE BETWEEN THE TWO PAGES**, which would leave a page
+inviting a woman to explore the page she is already standing on. ✅ **`findspage` asserts it CROSSWISE:
+each page names the OTHER, calls the other's opener, and never names itself.**
+🩷 **THE PINK IS `#EC4899` — THE APP'S OWN STYLIST-MARK PINK, ALREADY USED 10 TIMES, not a new colour
+invented for this.** ⭐ **And it says something true: her 2026-08-09 mark system is GOLD = the app's
+voice, PINK = Catherine's, and this is the link between her two personally curated pages.**
+⚠️⚠️ **THE CONTRAST NUMBER, MEASURED AND TOLD TO HER PLAINLY RATHER THAN QUIETLY FIXED: `#EC4899` is
+**3.53:1** on the card's white, under the 4.5:1 this file demands of body text. ▶▶ **BUT THE TEAL IT
+REPLACED IS WORSE — 2.94:1 — so this is an IMPROVEMENT, not a regression**, and both are BOLD and
+UNDERLINED, an affordance a plain paragraph lacks. ▶ **If maximum readability is ever wanted, `#D6337F`
+measures 4.53:1 in the same hue family** — ⚠️ **do not swap it in without asking her; she chose the
+colour by name.**
+🚨 **THE TRENDING LINE STAYS TEAL, AND BOTH HALVES ARE EQUALLY HER WORDS.** ✅ **The test asserts the two
+DIFFER, not merely that one is pink — the failure she would actually mind is a sweep that recolours
+both.**
+⭐ **AND ONE OLD CHECK WENT RED ON THIS, THE GOOD KIND:** it pinned the literal string *"click here to
+explore more"*. **The app changed, it did not break.** ▶ **Rewritten to name the RULE — her sentence
+reads plainly, only the invitation is underlined — which survives any rewording; the WORDS are asserted
+separately against the page each link must name.** **This file's own standing lesson, applied again.**
+
 ### ✍️ THE TWO CURATED SUBTITLES END WITH A PERIOD — HER RULING 2026-09-11, AND IT BREAKS THE HOUSE PATTERN ON PURPOSE
 ▶ **HER QUESTION: *"at the top line of Edit it ends with I hope you'll love them too and the top line of
 Finds it says I hope you love these great finds as much as I do. Do we need a period at the end of those
