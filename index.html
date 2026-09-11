@@ -13577,7 +13577,44 @@ var WEEK_STARS=[  {n:'Tommy Hilfiger Claihre Kitten Heel Slide Sandal',store:'No
    //   both orders at the true card size and looked at before choosing.
    px:'https://cdn.shopify.com/s/files/1/0710/8113/2228/files/1229377.jpg?width=800',
    px2:'https://cdn.shopify.com/s/files/1/0710/8113/2228/files/1229376.jpg?width=800',
-   px2Alt:'Side view showing the gold YSL monogram on the arm'}
+   px2Alt:'Side view showing the gold YSL monogram on the arm'},
+  /* ⭐ SEVEN ADDED 2026-09-11, HER ASK, AND EVERY ONE WAS ALREADY IN THE EDIT
+     WITH A LICENSED PHOTO — they simply never got a Star entry. Found by
+     comparing the two lists rather than from memory: 8 Edit pieces had no queue
+     entry, and 7 are from shops she is APPROVED for (Mytheresa, Etsy, Marissa
+     Collections, Olivela), so _affMid opens the photo gate for every one.
+     ▶ THE EIGHTH IS THE SEAFOLLY BIKINI TOP, OUT ON TWO COUNTS: Everything But
+     Water is not an approved advertiser, and her own content rule keeps a
+     bikini off the opening card regardless. Not an oversight.
+     ⚠️ EVERY px BELOW IS THE URL THE EDIT ALREADY RENDERS for that piece —
+     copied, never re-sourced, so the two screens cannot end up showing
+     different photographs of one item. The Edit cards were PARSED to get them:
+     a substring search matched three NEIGHBOURING blocks and would have
+     shipped the wrong photo on three of the seven.
+     ▶ Notes are condensed from her own Edit copy to the one-liner budget, HER
+     WORDS ONLY, nothing invented — a Claude draft like every other Star note,
+     and she may reword any of them. */
+  {n:'Simkhai Devon Suede Tote',store:'Olivela',url:'https://www.olivela.com/products/simkhai-devon-suede-tote-black',price:'$695',
+   note:'I love how this tote is wearing gold jewelry. Also noted are the magnetic closure and metal feet.',
+   px:'https://www.olivela.com/cdn/shop/files/side_1_10_01282acf-1122-41cf-8dc4-4ece9da4b900.jpg?v=1783374402&width=800'},
+  {n:'Simkhai Stella Suede Block Heel Sandal',store:'Olivela',url:'https://www.olivela.com/products/simkhai-stella-suede-block-heel-sandal-brown',price:'$445',
+   note:'The most versatile color and style. Dress it up or down and check out the matching bags too.',
+   px:'https://www.olivela.com/cdn/shop/files/Side2.jpg?v=1783374902&width=800'},
+  {n:'Zoe Lev Diamond & 14k Gold Bezel Pendant Necklace',store:'Olivela',url:'https://www.olivela.com/products/diamond-14k-gold-large-bezel-pendant-necklace-gold',price:'$825',
+   note:'The most classic everyday necklace. Adjustable 16-18 inches, beautiful diamond bezel. Perfect for layering.',
+   px:'https://www.olivela.com/cdn/shop/files/16_f7606d03-7693-4a38-a71d-32de72c59037.jpg?v=1748534084&width=800'},
+  {n:'Valentino Garavani VLOGO Signature Reversible Leather Belt',store:'Mytheresa',url:'https://www.mytheresa.com/us/en/women/valentino-garavani-vlogo-signature-reversible-leather-belt-black-p01182366',price:'$570',
+   note:'Belts are in more than ever this season. This one is reversible, and reversible means half off (girl math!).',
+   px:'https://www.mytheresa.com/image/1094/1238/100/33/P01182366.jpg'},
+  {n:'Valentino Garavani Rockstud Medium Suede Pouch',store:'Mytheresa',url:'https://www.mytheresa.com/us/en/women/valentino-garavani-rockstud-medium-suede-pouch-beige-p01180729',price:'$790',
+   note:'Nobody does studs better than Valentino. I appreciate the detachable wrist strap and luxurious suede.',
+   px:'https://www.mytheresa.com/image/1094/1238/100/9f/P01180729_b1.jpg'},
+  {n:'Valentino Square Oversized Sunglasses',store:'Marissa Collections',url:'https://marissacollections.com/products/valentino-accessories-square-oversized-sunglasses',price:'$465',
+   note:'Bold statement gold paired with an oversized silhouette, two of fall\'s biggest trends in one pair.',
+   px:'https://marissacollections.com/cdn/shop/files/valentino-accessories-accessoriesunglasses-gold-square-oversized-sunglasses.jpg?v=1781596529'},
+  {n:'Open Heart Necklace',store:'Etsy',url:'https://www.etsy.com/listing/849636969/open-heart-necklace-14k-gold-fill',price:'~$45',
+   note:'Lovely conversation piece. Comes in sterling silver or gold fill. Open your heart!',
+   px:'https://i.etsystatic.com/7720739/r/il/8b7e04/3606550162/il_794xN.3606550162_ca87.jpg'}
 ];
 /* PHOTOS-ONLY ROTATION, her call 2026-08-26: seeing the Athleta linen pant
    (no photo) live, she said "I want the star of this week to still be the
@@ -13624,27 +13661,38 @@ var WEEK_STARS=[  {n:'Tommy Hilfiger Claihre Kitten Heel Slide Sandal',store:'No
 // cutoff. If anything else gets inserted before it in the future, re-verify
 // this the same way -- the margin is real but no longer generous.
 var WEEK_STAR_PHOTO_ORDER=[
-  'Love Hearts Find Me Pendant Necklace',                         // Oct 11, pushed back a week
-  'Diane von Furstenberg Jeanne Silk Jersey Wrap Dress',          // Oct 18, pushed back a week
-  'FARM Rio Pink Garden Terrace 3D One-Shoulder Maxi Dress',      // Aug 26 (this week), unchanged
-  'Gucci GG Canvas Mini Shoulder Bag',                     // Aug 30 (next week) -- her jump-the-line pick
-  // ⚠️⚠️ THE SERPUI ABIGAIL HANDBAG WAS HERE AND IS SOLD OUT — her catch,
-  //   2026-09-08, while it was the LIVE Star of the Week. Verified before acting
-  //   rather than taken on trust: marissacollections.com returns
-  //   schema.org/OutOfStock, "available":false and "Sold out" on the page.
-  //   Her instruction: "delete it and add this in its place now. All others stay
-  //   same order." ▶ SWAPPED IN PLACE, so the pool stays 9 and EVERY other
-  //   piece keeps the exact week it already had.
-  // ▶ The WEEK_STARS entry itself is deliberately LEFT IN PLACE below. It is
-  //   inert once its name is gone from here (this list is the whitelist, not a
-  //   sort hint), it carries the pxPos crop note her bag fix produced, and
-  //   starpx pins that crop as a worked example. Deleting the entry would throw
-  //   away the lesson to remove something already invisible.
-  'Saint Laurent SL M136 Sunglasses',                             // Sep 6 — LIVE NOW, replacing the sold-out bag
-  'Vilebrequin Long Mesh Cover-Up Dress — Off White',              // Sep 13, was Sep 6 -- still a week ahead of her Sep 20 cutoff
-  'Veronica Beard Crosbie Jean',                                   // Sep 20, was Sep 13
-  'Fleur du Mal Sculpt Molded Sports Bra',                         // Sep 27, was Sep 20
-  'Isabella Celini Stackable Love Bracelet'                        // Oct 4, unchanged
+  /* 🚨🚨 THIS LIST IS NOT IN PLAY ORDER AND NEVER HAS BEEN — READ BEFORE EDITING.
+     The star is pool[floor(days-since-anchor / 7) mod pool.length], so the array is
+     ROTATED relative to what a woman actually sees: today sits at index 4, and
+     indices 0-3 are the pieces reached by WRAPPING at the end of the cycle.
+     ▶ THE DATE ON EACH LINE IS THE TRUTH. Keep them updated; the position is not
+     readable on its own.
+     ⚠️⚠️ SO "APPEND AT THE END" IS NOT THE SAFE MOVE IT LOOKS LIKE. Adding her seven
+     at indices 9-15 put them BEFORE the wrap, which shoved the four pieces at 0-3
+     back by seven weeks — her FARM Rio summer maxi would have landed 13 December.
+     ▶ Measured and caught before shipping, which is the only reason this list is
+     laid out the way it is: the seven are SPLIT, three at the tail (13-15) and four
+     at the head (0-3), so every date that already existed is exactly where it was.
+     ✅ VERIFIED WEEK BY WEEK against the previous schedule, not assumed. */
+  // ── indices 0-3: reached LAST, after the wrap ──────────────────────────────
+  'Valentino Garavani VLOGO Signature Reversible Leather Belt',   // Nov 29
+  'Valentino Garavani Rockstud Medium Suede Pouch',               // Dec 6
+  'Valentino Square Oversized Sunglasses',                        // Dec 13
+  'Open Heart Necklace',                                          // Dec 20
+  // ── index 4 is TODAY ───────────────────────────────────────────────────────
+  'Saint Laurent SL M136 Sunglasses',                             // Sep 6 — LIVE NOW
+  'Vilebrequin Long Mesh Cover-Up Dress — Off White',             // Sep 13 — her Sep 20 cutoff still clears
+  'Veronica Beard Crosbie Jean',                                  // Sep 20
+  'Fleur du Mal Sculpt Molded Sports Bra',                        // Sep 27
+  'Isabella Celini Stackable Love Bracelet',                      // Oct 4
+  'Love Hearts Find Me Pendant Necklace',                         // Oct 11 — unchanged by the seven
+  'Diane von Furstenberg Jeanne Silk Jersey Wrap Dress',          // Oct 18 — unchanged
+  'FARM Rio Pink Garden Terrace 3D One-Shoulder Maxi Dress',      // Oct 25 — unchanged
+  'Gucci GG Canvas Mini Shoulder Bag',                            // Nov 1  — unchanged
+  // ── indices 13-15: the first three of her seven ────────────────────────────
+  'Simkhai Devon Suede Tote',                                     // Nov 8
+  'Simkhai Stella Suede Block Heel Sandal',                       // Nov 15
+  'Zoe Lev Diamond & 14k Gold Bezel Pendant Necklace'             // Nov 22
 ];
 function _weekStarPhotoPool(){
   // WHITELIST, not a sort hint: only a name she has actually put here can
