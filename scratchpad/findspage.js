@@ -234,6 +234,53 @@ const leftBehind = await page.evaluate(() => ({
 ok('they really LEFT the Edit — it holds no Amazon piece', leftBehind.amazon === 0, String(leftBehind.amazon));
 ok('and the Edit is otherwise intact', leftBehind.n === 33, String(leftBehind.n));
 
+console.log('\n8b. THE PRICES ARE ROUNDED UP WITH A TILDE — her ask, 2026-09-11');
+/* 🚨 WHY THIS PAGE AND NOT THE EDIT, AND IT IS A TRUTH DIFFERENCE RATHER THAN A
+   STYLE ONE: Amazon product pages are BOT-WALLED (measured 2026-09-11 — one
+   serves an automated-access wall, the other 166KB with no price in it), so an
+   Amazon price can never be verified from here and moves daily. A tilde is
+   honest about a number nobody can check. The Edit's shops CAN be read, so the
+   Edit keeps exact prices. ⚠️ A future tidy-up will want to unify the two. It
+   must not — these pages differ here because the FACTS differ. */
+const editPrices = await page.evaluate(() =>
+  [...document.querySelectorAll('#s-dream .dc-price')].map(e => e.textContent.trim()));
+/* ⚠️ MEASURED RATHER THAN ASSUMED, AND IT CORRECTED THIS CHECK AS FIRST WRITTEN:
+   the Edit ALREADY carries a tilde on 6 of its 33 prices (~$50, ~$295, ...), so
+   "the Edit shows exact prices" was simply false. The tilde is not a new
+   convention on /finds — it is one she already uses where a figure is
+   approximate. ▶ What is worth guarding is that the Edit was not SWEPT into the
+   Finds rule: its readable shops still print what they really charge. */
+ok('the Edit is not swept into the Finds rule — most of it still prints exact prices',
+   editPrices.filter(p => p[0] !== '~').length > editPrices.length / 2,
+   editPrices.filter(p => p[0] === '~').length + ' of ' + editPrices.length + ' tilded');
+await page.goto(ORIGIN + '/finds', { waitUntil: 'domcontentloaded' });
+await page.waitForFunction(() => typeof window.openFinds === 'function');
+await page.waitForTimeout(300);
+const money = await page.evaluate(() =>
+  [...document.querySelectorAll('#s-finds .dc-price')]
+    .map(e => ({ shown: e.textContent.trim(), exact: e.getAttribute('data-price') })));
+ok('every Finds price carries a tilde', money.length > 0 && money.every(m => /^~/.test(m.shown)), JSON.stringify(money));
+ok('and not one of them shows cents', money.every(m => !/\.\d/.test(m.shown)), money.map(m => m.shown).join(' | '));
+/* ⚠️ CEILING, NEVER NEAREST. Nearest prints ~$16 for a $16.25 piece and she
+   arrives to find it DEARER than the page said — her own sale-price rule broken
+   by a rounding mode. This asserts the RULE, not the four numbers on it today. */
+ok('each shown price is her real figure rounded UP, never down', money.every(m => {
+  /* ⚠️ TAKE THE LEADING NUMBER ONLY. "~$10 for 4" has a 4 in its qualifier, and
+     stripping every non-digit turned it into 104 — a check that failed on a card
+     that was perfectly correct. */
+  const num = t => parseFloat((/([0-9]+(?:\.[0-9]+)?)/.exec(String(t || '')) || [])[1]);
+  const n = num(m.exact), s = num(m.shown);
+  return !isFinite(n) || s === Math.ceil(n);
+}), JSON.stringify(money));
+ok('the exact figure she typed is still stored on every card',
+   money.every(m => m.exact && m.exact.length > 0), JSON.stringify(money));
+/* ▶ A TRAILING QUALIFIER IS NOT DECORATION: four cuffs for ~$10 is a different
+   offer from one, so the rounder may never throw those words away. */
+ok('a price qualifier survives the rounding',
+   money.filter(m => / for \d/.test(String(m.exact))).every(m => / for \d/.test(m.shown)),
+   money.map(m => m.shown).join(' | '));
+
+
 console.log('\n9. HER FIVE DESIGN NOTES, 2026-09-11');
 /* 🚨 THE TAP TARGETS ARE A SAFETY ASK, NOT A TASTE ONE: "those buttons need to
    be spaced out a bit more so finger doesn't bump the wrong one." Her audience

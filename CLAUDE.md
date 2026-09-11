@@ -344,6 +344,13 @@ line further down contradicts this one, THIS ONE WINS.**
    **This is the fix for a whole class of "it looks like the deploy failed" faults.**
 4. **THE SITEMAP'S `<lastmod>` KEEPS ITSELF HONEST** on her three curation surfaces, so her new pieces
    get crawled rather than waiting for Google to wander back.
+5. 🛒🛒 **AMAZON FINDS CAN BE ADDED IN BATCHES FROM A SPREADSHEET — HER ASK, AND SHE CHOSE THE BIG
+   VERSION: *"i want to do a larger batch."*** ▶ **`data/amazon-finds.csv` is the source of truth;
+   `node scripts/finds-from-csv.js data/amazon-finds.csv --write` renders it.** Columns are
+   **`name,store,price,note,url,category`** and her four live pieces are already in it, so the file
+   IS the template — she adds rows. **`scratchpad/findscsv.js`, 41 checks, no network.**
+6. 💲 **THE FINDS PRICES ARE ROUNDED UP WITH A TILDE — `~$17`, `~$10 for 4`.** Her real figure with
+   cents stays on the card in `data-price`; the cents are never shown.
 ⚠️ **READ POINT 1 TOGETHER WITH THE SERPAPI SECTION BELOW, or this reads as "shopping works" and it
 does not.** ▶ **Google's half of the product search is still intermittent — 1 search in 6 — and her
 own affiliate feed is carrying the product experience on its own.**
@@ -472,8 +479,8 @@ is in `CLAUDE-archive.md`.*
 deploy badge.** Standing rule; it held twice.
 
 ### ▶ TEST STATE — MEASURED 2026-09-11
-✅ **`findspage` 47 (was 37) · `editshare` 26 · `affq` 42 (was 40) · `linkwatch` 27 (was 24). Zero
-failures.** ⭐ **AND THE FOUR NEW GUARDS WERE PROVEN TO BITE, not merely written:** putting the tan
+✅ **RE-MEASURED AFTER THE BATCH WORK: `findspage` **92** (was 86) · `findscsv` **41** (new) · `editshare` **30** · `affq` **42** · `linkwatch` **27** · `copy` **50**. Zero failures.**
+⚠️ **THE OLD FIGURE HERE SAID `findspage` 47 AND IT WAS STALE** — the suite was already at 86 before a line was added today. ▶ **Re-measure before writing a count down; a number nobody re-runs is the same kind of stale note this file keeps getting caught by.** ⭐ **AND THE FOUR NEW GUARDS WERE PROVEN TO BITE, not merely written:** putting the tan
 tagline back and COPYING an Amazon piece instead of moving it turned `findspage` red on exactly the
 four checks meant to catch each — *"rgb(140, 90, 30) vs rgb(15, 166, 182)"* and *"the Edit is
 otherwise intact → 34"*.
@@ -1067,6 +1074,68 @@ order-history crumbs. **Strip to the bare `https://www.amazon.com/dp/<ASIN>`.**
 dropping them lands on the base product, which is right unless she pinned a colourway on purpose;
 `ref=ppx_yo2ov_…` **COMES OFF HER OWN ORDERS PAGE**, so it is pure tracking.
 
+### 💲💲 THE FINDS PRICES ROUND **UP**, NEVER TO THE NEAREST — AND THE ROUNDING MODE IS THE WHOLE POINT
+▶ **HER ASK, RELAYED THROUGH COWORK 2026-09-11:** stop showing exact prices on `/finds`; show the real
+figure rounded, with a tilde — `16.99 → ~$17`. **Cents are never shown, the price field is optional, and
+an empty one shows NO price at all (no placeholder, no "price varies").**
+🚨🚨 **THE SPEC SAID *"rounded to the nearest whole dollar"* AND THAT ONE WORD BREAKS HER OWN RULE.**
+Nearest prints **~$16 for a $16.25 piece**, and she arrives to find it **DEARER than the page said** —
+which is exactly the feeling her 2026-07-31 sale-price rule exists to prevent (*arriving to find it
+cheaper feels lucky; arriving to find it dearer feels misled, and only one is recoverable*).
+▶▶ **SO IT IS `Math.ceil`, NEVER `Math.round`.** Ceiling can only ever surprise her the good way. **All
+three examples in the spec happened to round up anyway, so "nearest" was a slip, not a decision.**
+✅ **PROVEN TO BITE: putting `Math.round` back turns `findscsv` red on exactly the two checks that
+exist for it** — *"$16.25 shows ~$17"* and *"$16.01 → ~$17"*. **A rounding mode is invisible in a diff
+and invisible on the page; it is only ever visible in a test.**
+▶ **WHY THIS PAGE AND NOT THE EDIT, AND IT IS A TRUTH DIFFERENCE RATHER THAN A STYLE ONE:** Amazon
+product pages are **bot-walled**, so an Amazon price can never be verified from here and moves daily.
+A tilde is honest about a number nobody can check. **The Edit's shops CAN be read, so the Edit keeps its
+exact prices.** ⚠️ **A future tidy-up will want to unify the two pages. IT MUST NOT — they differ here
+because the FACTS differ.**
+⭐ **AND A MEASUREMENT CORRECTED THE CHECK AS FIRST WRITTEN, WHICH IS WORTH KEEPING: THE EDIT ALREADY
+CARRIES A TILDE ON 6 OF ITS 33 PRICES** (`~$50` `~$45` `~$295` `~$90` `~$100` `~$350`). **So the tilde
+is not a new convention invented for Finds — it is one she already uses where a figure is approximate.**
+▶ The assertion was rewritten from the false *"the Edit shows exact prices"* to the true rule: **the
+Edit was not SWEPT into the Finds rule.**
+⚠️ **A TRAILING QUALIFIER IS NOT DECORATION AND MUST SURVIVE THE ROUNDING.** Her Gold Ponytail Cuff
+reads **`$9.99 for 4`** → **`~$10 for 4`**. **Four cuffs for ~$10 is a different offer from one**, so a
+rounder that assumed a bare number would quietly change what the card claims.
+▶ **THE EXACT FIGURE IS STILL STORED** on every card as `data-price`, so nothing is lost and the
+rounding stays checkable.
+
+### 📦 ADDING FINDS PIECES IN BATCHES — `data/amazon-finds.csv` IS THE SOURCE OF TRUTH
+▶ **HER DECISION 2026-09-11: *"i want to do a larger batch."*** Hand-editing markup is fine for three
+pieces and is still how the Edit works; it stops being fine at twenty.
+```
+node scripts/finds-from-csv.js data/amazon-finds.csv          # dry run, shows what would change
+node scripts/finds-from-csv.js data/amazon-finds.csv --write  # applies it
+node scripts/finds-from-csv.js --check                        # does the page still match the CSV?
+```
+▶ **COLUMNS, EXACTLY: `name,store,price,note,url,category`.** Her four live pieces are already in the
+file, **so the CSV IS the template — she adds rows, she never starts one.**
+- **`url`** takes a full Amazon link **or a bare 10-character ASIN** (she asked for both). It is
+  canonicalised to `https://www.amazon.com/dp/<ASIN>` — **`ref=ppx_yo2ov_…`, `th=1`, `psc=1` all come
+  off.** A non-Amazon link is **refused**, never rendered.
+- **`price`** is her REAL figure with cents. Optional. May carry a qualifier (`9.99 for 4`).
+- **`category`** is optional. ⚠️ **EMPTY EVERYWHERE = THE FLAT PAGE SHE HAS TODAY, no headings at all.**
+  **Her row order IS the page order, and the order a category first APPEARS is where it lands** — so she
+  rearranges the page by rearranging her spreadsheet, with nothing to configure and nobody to ask.
+- ⚠️ **HER FOUR PIECES ARE DELIBERATELY UNCATEGORISED.** Claude may not invent her taxonomy — the same
+  rule that says Claude never picks the products. **The column waits for her.**
+🚨 **THE GENERATED REGION IS MARKED (`<!-- FINDS:ITEMS:START/END -->`) AND THE SCRIPT SLICES `s-finds`
+BEFORE LOOKING FOR IT** — because every `.dc-*` anchor is ambiguous now and **the first occurrence in
+the file is always the EDIT'S**, which is how two Amazon pieces once landed on the wrong page.
+⚠️ **A HAND EDIT BETWEEN THE MARKERS IS OVERWRITTEN BY THE NEXT RUN.** The CSV is the truth.
+✅ **REMOVALS ARE BLOCKED BY DEFAULT** — a spreadsheet sent with rows missing would otherwise silently
+delete her page. It refuses and names the pieces; `--allow-removals` is the deliberate override.
+✅ **IT PRINTS BOTH SCREEN COUNTS AFTER EVERY WRITE** — the cheap habit that catches the wrong-screen bug.
+▶ **AFTER A BATCH: `node scripts/sitemap-lastmod.js --write`.** (The suite catches a stale date anyway —
+it did on this very change.)
+⚠️ **PHOTOS ARE DELIBERATELY NOT IN THE CSV.** The Edit's photos are hotlinked from merchants she is
+approved for and gated by `_affMid`; **Amazon is not in `_AFF_MID` and she is not an Associate yet**, so
+hotlinking Amazon product images is an unanswered licensing question, not a missing feature. **Ask her
+before building it; do not add a column on a guess.**
+
 ### 🚨 `.dc-sign` NOW EXISTS ON TWO PAGES, AND THE FIRST ONE IN THE FILE IS THE EDIT'S
 ⚠️ **PAID FOR 2026-09-11: two of her Amazon pieces were inserted above `<div class="dc-sign">With love,
 Catherine` and landed on the EDIT**, because that anchor's first occurrence is `s-dream`. **The Edit
@@ -1373,6 +1442,7 @@ that is the whole lesson of 2026-09-06 and it repeated twice more on 2026-09-07.
 | **HER OWN STORE SCORES ORDER THE BROWSE ROW** | **`_findByHerShops` sorts by `_storeFit` before `_findSpread` seats her affiliates through it; an UNSCORED shop sorts LAST and is never given an invented score** | n/a | **ssfind 68, and the check asserts the row really MOVED, not merely that it is in some order** | ✅ **HER DECISION 2026-09-10: *"I would like to see the nicer shops first."* ⚠️ SHE WAS ASKED WHICH OF TWO BUILDS SHE MEANT, because this and her 2026-09-09 *"one row starting with the ones that match her search terms the best"* point different ways. SHE CHOSE NICER SHOPS GENUINELY FIRST, and her September order survives as the TIE-BREAK (the sort is stable, so within one shop the best match still leads). ▶ DO NOT SILENTLY RESTORE THE OLD ORDER. ⚠️ ONE BUILDER, so it lands on the CHAT's row too, deliberately and with her told: "nicer shops first" is her taste, not a screen setting.** |
 | **AN EDIT NAME CARRIES NO COLOURWAY, AND MAY DISAGREE WITH THE SHOP'S OWN TITLE** | n/a — the stylist names no products at all | **the Edit's hand-written `.dc-item` names, and the rule is written into the markup beside them** | **▶ none; it is a judgement, and the markup carries the warning** | ✅ **HER TWO RULINGS, 2026-09-10, LIFTED INTO THE LEDGER WHEN THEIR SESSION BLOCK WAS ARCHIVED — a rule she gave never archives. (a) *"Let's take the dash and the word Beige off of this Edit item"*, then unprompted on the sandal *"don't call it brown, just leave the color out."* (b) Olivela's own title says *"Diamond & 14k Gold **LARGE** Bezel Pendant Necklace"* and her ruling is *"leave out the word large. They call it large, but it is not really large."* 🚨 THAT IS HER SALE-PRICE RULE ONE STEP OUT: a woman who arrives to find a piece DAINTIER than billed feels misled; one who finds it as delicate as described does not. ⚠️ A FUTURE SESSION WILL SEE THE MISMATCH WITH THE SHOP'S TITLE AND WANT TO "FIX" IT. It must not. ⚠️ The urls still say `beige`/`brown`/`large` — the shops' own product handles, never shown to a woman and not ours to change.** |
 | **A RESUME SHOWS HER THE PIECES SHE LEFT, NOT A FRESH SEARCH** | **Shop your Style: `_saveShopFind` stores the found row beside the six picks, and `_ssFindPaint` paints it before the waiting star is ever set going** | n/a — the shelves rebuild from the feed, and promise nothing about sameness | **ssfind 54, and the check answers the resume with DIFFERENT products so it can tell memory from a re-ask** | ✅ **HER CATCH, 2026-09-10: *"the whisper said... the same pieces waiting. So I clicked on it and this was not true."* 🚨 THE WHISPER IS A PROMISE, AND HALF THE SHELF WAS KEPT: the six text cards are advice, the PHOTOGRAPHS are what she came back for. ⚠️ `t` is never re-stamped by a late row, or a slow search would quietly extend the six-hour promise. 🚨🚨 AND THE CHECK GUARDING THIS PASSED ON THE BROKEN CODE FOR A WHOLE DAY, because the harness answered every search identically: A STUB THAT ALWAYS ANSWERS THE SAME THING CANNOT TELL "it remembered" FROM "it asked again".** |
+| **A PRICE SHE CANNOT CHECK IS ROUNDED UP, NEVER TO THE NEAREST** | n/a — the stylist names no prices at all, by construction | **`/finds`: `renderPrice()` in `scripts/finds-from-csv.js` ceilings her real figure and prints `~$17`; the exact cents stay on the card in `data-price`. The Edit keeps EXACT prices, because its shops can be read** | **findscsv 41 · findspage 92** | ✅ **HER ASK 2026-09-11, and the ROUNDING MODE was corrected before it shipped. The spec said "nearest", which prints ~$16 for a $16.25 piece — she arrives to find it DEARER than the page said, which is her own 2026-07-31 sale-price rule broken by a word. 🚨 CEILING ONLY: the cheaper surprise is the only recoverable one. ▶ WHY FINDS AND NOT THE EDIT IS A TRUTH DIFFERENCE, NOT A STYLE ONE — Amazon pages are bot-walled, so the price can never be verified from here and moves daily; the Edit's shops can be read. ⚠️ DO NOT UNIFY THE TWO PAGES. ⭐ AND THE EDIT ALREADY TILDES 6 OF ITS 33 PRICES, measured — the convention is hers already, not a new invention. ⚠️ A QUALIFIER SURVIVES THE ROUNDING: "$9.99 for 4" → "~$10 for 4", because four cuffs for ~$10 is a different offer from one.** |
 🚨🚨 **THE "A PRODUCT PHOTO IS NEVER CROPPED" ROW IS SEPARATE FROM THE `px2` PHOTO ROW ON PURPOSE, AND
 THE DIFFERENCE IS THE USEFUL PART.** `pxPos`, `pxFit` and `px2` are **per-item overrides she or Claude
 choose by LOOKING at one known photograph** — the Star of the Week, an Edit pick. They work because
