@@ -1793,10 +1793,25 @@ body.menu-open .menu-panel{display:block}
    inline-block keeps the bar hugging the word, never spanning the drawer. */
 .menu-grp::after{content:"";position:absolute;left:2px;right:-2px;bottom:0;height:2px;background:#D8A52E}
 /* Catherine's signature heart (her ask, 2026-08-09, the Sally differentiation
-   note in the navigation): the tiny tilted pink heart marks the three rows
-   that are HER curation — Style Star Edit, What's Trending, My Story. Her
-   decorative signature mark, deliberately distinct from the outline save
-   hearts on cards. Only those three rows; don't spread it. */
+   note in the navigation): the tiny tilted pink heart marks the rows that are
+   HER OWN — her curation or her own voice. Her decorative signature mark,
+   deliberately distinct from the outline save hearts on cards.
+   ▶ THE RULE, NOT A LIST: a row wears it when a PERSON chose what is on it.
+   Today that is Style Star Edit, Amazon Finds, What's Trending, My Story and
+   Style Journal — 5 of 23 rows. Shop your Style, Your Wishlist, the Mall and
+   the Wardrobe List are the app working, not Catherine speaking, so they carry
+   no mark however much of her taste is inside them.
+   ⚠️ THIS COMMENT USED TO NAME "the three rows ... Only those three rows" AND
+   IT WAS ALREADY STALE — Style Journal had joined and nobody updated it, so the
+   note forbade a spread that had already happened. A COUNT IN A COMMENT GOES
+   STALE THE SAME WAY A COUNT IN A TEST DOES. Naming the rule survives.
+   ⚠️ RESTRAINT IS STILL THE POINT: a maker's mark, not a sticker. 5 of 23 is
+   already the ceiling — if a sixth row wants one, ask whether a person really
+   chose its contents before adding it.
+   🚨 AMAZON FINDS AND THE EDIT ARE A MATCHED PAIR BY HER OWN DESIGN (same
+   frame, same foot, each naming the other), so they wear the mark together or
+   not at all. One without the other is "a rule applied to one half", in the
+   navigation. Asserted in findspage. */
 .menu-ch{width:11px;height:11px;margin-left:5px;vertical-align:-1px;transform:rotate(11deg);fill:#F49AC1}
 /* Her ask 2026-08-11, out of Sally's note: the hub rows should say a real
    person is behind this, the way the Menu rows already do. Same mark, same

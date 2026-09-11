@@ -400,6 +400,25 @@ ok('Amazon Finds has a way in from inside the app (the menu, beside the Edit)',
      return i > 0 && e > 0 && Math.abs(i - e) === 1
          && /openFinds/.test(rows[i].getAttribute('onclick') || '');
    }));
+/* 🩷 HER ASK 2026-09-11: "Should we put our heart on Amazon finds since they are
+   hand picked?" — and the answer came out of her own app rather than an opinion.
+   The mark means A PERSON CHOSE WHAT IS ON THIS ROW, and Amazon Finds is the one
+   page whose own subtitle says HAND SELECTED BY CATHERINE in the Edit's own teal.
+   🚨 THE TWO PAGES ARE A MATCHED PAIR BY HER DESIGN, so the assertion is CROSSWISE
+   like the closing links: they wear the mark TOGETHER. Marking one and not the
+   other is "a rule applied to one half" landing in the navigation — and a later
+   sweep is exactly how that happens. */
+const marked = await page.evaluate(() => Object.fromEntries(
+  [...document.querySelectorAll('.menu-panel .menu-row')]
+    .map(r => [r.textContent.trim().replace(/\s+/g, ' '), !!r.querySelector('.menu-ch')])));
+ok('the Edit wears her maker\'s mark', marked['Style Star Edit'] === true);
+ok('...and so does Amazon Finds, which is hand selected too', marked['Amazon Finds'] === true);
+/* ⚠️ AND THE RESTRAINT HALF, WHICH IS THE WHOLE REASON THE MARK MEANS ANYTHING:
+   the rows that are the APP WORKING carry none, however much of her taste is in
+   them. This is the check that would catch a sweep spraying hearts down the list. */
+for (const row of ['Shop your Style', 'Your Wishlist', 'Style Star Mall'])
+  ok(`${row} carries no mark — it is the app working, not Catherine speaking`,
+     marked[row] === false);
 
 console.log('\n10. NOTHING THREW');
 ok('no page errors', errors.length === 0, errors[0]);
