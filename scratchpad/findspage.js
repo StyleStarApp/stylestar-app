@@ -250,6 +250,7 @@ const foot = async (route, screen) => {
          to one screen would not be. */
       welds: document.querySelectorAll('#' + s + ' .dc-xlink .nb, #' + s + ' .dc-trend-link .nb').length,
       subtitleWeld: !!q('.dc-subtitle .nb'),
+    subtitleTail: (q('.dc-subtitle .nb') || {}).textContent || '',
       balanced: g(q('.dc-subtitle')).textWrap || g(q('.dc-subtitle')).textWrapStyle,
       linen: /rgba\(150, 140, 120/.test(g(document.querySelector('.ss')).backgroundImage),
     };
@@ -265,6 +266,17 @@ for (const [route, screen, label] of [['/finds', 's-finds', 'Amazon Finds'], ['/
      f.tlSize >= f.xlSize, f.tlSize + ' vs ' + f.xlSize);
   ok(label + ': the arrows are welded to their words, so none can strand', f.welds === 2, String(f.welds));
   ok(label + ': the closing heart is welded to her last words', f.subtitleWeld);
+  /* 🚨 HER RULING 2026-09-11, AND IT DELIBERATELY BREAKS THE HOUSE PATTERN, WHICH
+     IS EXACTLY WHY IT IS ASSERTED. Asked whether these two lines needed a period
+     before the heart, the app was MEASURED: 9 of 11 hearts across the whole app
+     close with NO period, her own "With love, Catherine ♥" among them. She was
+     shown that and chose the period anyway, for THESE TWO LINES ONLY:
+     "let's add the period just to these 2 spots on Finds and Edit. Keep the rest
+     of the app as is."
+     ▶ A future session will find the inconsistency and want to fix it. It must
+     not: the inconsistency IS the decision. */
+  ok(label + ': her subtitle ends with a period before the heart — her ruling',
+     /\.\s*$/.test(f.subtitleTail), JSON.stringify(f.subtitleTail));
   ok(label + ': the subtitle balances its lines at any width', /balance/.test(f.balanced || ''), f.balanced);
 }
 /* ⚠️ HER ASK WAS SCOPED TO ONE PAGE — "take out the background linen on THIS

@@ -1083,6 +1083,27 @@ it does the whole job her third page was meant to do — for free, with nothing 
 ⚠️ **AND IT AVOIDS PAIR-CURATION:** a page of splurge/save COUPLES would look beautiful and would force
 her to curate in twos, against her actual working pattern of one piece at a time.
 
+### ✍️ THE TWO CURATED SUBTITLES END WITH A PERIOD — HER RULING 2026-09-11, AND IT BREAKS THE HOUSE PATTERN ON PURPOSE
+▶ **HER QUESTION: *"at the top line of Edit it ends with I hope you'll love them too and the top line of
+Finds it says I hope you love these great finds as much as I do. Do we need a period at the end of those
+sentences right before the tilted heart?"***
+✅ **THE APP WAS MEASURED RATHER THAN GUESSED AT — every place a heart closes a line: 11 of them, and
+9 CARRY NO PERIOD**, including *"With love, Catherine ♥"* on three pages and her home founder line
+*"…with all my love & intention ♥"*. **The only two that keep one are the Mall subtitle and the Wardrobe
+how-to — neither is her speaking in the first person.**
+▶ **The recommendation given was NO PERIOD**, on the reasoning that a heart closing a warm line IS the
+full stop and a period first makes the sentence end twice.
+🚨🚨 **SHE WAS SHOWN THAT AND CHOSE THE PERIOD ANYWAY, SCOPED TIGHT: *"let's add the period just to these
+2 spots on Finds and Edit. Keep the rest of the app as is."*** ▶▶ **SO THE INCONSISTENCY IS THE DECISION,
+NOT A DEFECT.** ⚠️ **A future session WILL find these two lines disagreeing with the other nine and want
+to "unify" them. IT MUST NOT.** ✅ **Asserted on both pages in `findspage`, with her words in the comment.**
+⭐ **AND THE PATTERN WORTH KEEPING IS HOW THE QUESTION WAS ANSWERED: she asked a taste question and got
+a COUNT of her own app back, not an opinion.** Her reply: *"thank you for looking at all of it so
+carefully."* ▶ **Measure her own app before offering her a preference — she overrules from evidence
+happily, and she cannot overrule from an opinion.**
+⚠️ **BOTH PAGES CHANGED TOGETHER, exactly 2 characters, verified by diff** — the twin-page rule holds
+even when the change is a full stop.
+
 ### 🛒 AMAZON CANNOT BE VERIFIED FROM HERE — HER PRICES ARE THE ONLY SOURCE, SAY SO EVERY TIME
 🚨 **MEASURED 2026-09-11 on her first two new Finds pieces, and it settles a question that will recur
 every time she sends a piece: BOTH Amazon product pages are BOT-WALLED.** `B0GBTQDH5Y` returns a
