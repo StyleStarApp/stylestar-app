@@ -46,7 +46,7 @@ it several times that day as if it were her next step, and it was not: **she had
 | 24 | 🔗 **THE EDIT AS A SHAREABLE LINK — HER ASK, 2026-09-10: *"I want the Edit to be a shareable link."*** ▶▶ **YES IT NEEDS ITS OWN URL, AND THE MACHINERY IS ALREADY BUILT AND PROVEN EIGHT TIMES.** `_ROUTES` today: `/privacy` `/terms` `/story` `/faq` `/contact` `/trending` `/wardrobe` `/results`, plus `/journal/<slug>` and the token-carrying shared wishlist. **The Edit (`s-dream`) is simply not in it.** ▶ **THE BUILD IS THE DOCUMENTED THREE EDITS:** one `_ROUTES` line · one `[[redirects]]` block in `netlify.toml` (status **200**, a rewrite not a 301) · one line in `_openRoute()`. 🚨🚨 **AND THE TRAP, FOUND BY READING THE CODE BEFORE BUILDING: `_openRoute` MUST CALL `showDream()`, NEVER A BARE `show('s-dream')`.** **`showDream()` is what calls `_wlDecorateEdit()`, and `_wlDecorateEdit()` IS WHAT AFFILIATE-WRAPS EVERY EDIT LINK AT RUNTIME** (`index.html:9963`). ▶ **A direct landing that skipped it would render her whole Edit with RAW product links that earn NOTHING — the exact "one route of four forgot" shape as the `<<FIND>>` marker leak.** ⚠️ **Assert it in a test: land on the path cold and check an `.dc-item-btn` href contains `click.linksynergy.com`.** | Claude | ⏳ **OPEN — she asked for it** |
 | 25 | 🛒 **AN AMAZON FINDS PAGE — HER ASK, 2026-09-10, AND STRATEGICALLY IT IS THE BEST IDEA ON THIS BOARD.** ***"I want to make an Amazon finds page. Another Sharable page dedicated to Amazon finds. I want to also feature some of them on Star of the week and our normal edit."*** ▶▶ **WHY IT MATTERS MORE THAN IT LOOKS: THIS FILE HAS SAID FOR WEEKS THAT WHAT THE APP LACKS IS A MID-MARKET GENERALIST** (every fed store is `$$$`/`$$$$`, dress median $398, 0 of 200 dresses under $100). **Amazon IS that, and it is the one such programme she can join without being declined for traffic.** ⚠️ **SO HER INSTINCT ANSWERS THE AFFORDABILITY PROBLEM THIS FILE KEPT CALLING UNSOLVABLE-WITHOUT-USERS.** 🚨🚨 **BUT THE ORDER SHE PROPOSED IS BACKWARDS AND IT IS WORTH REAL MONEY TO GET RIGHT — SEE THE AMAZON BLOCK IN THE MONEY PATH.** ▶ **THE PAGE ITSELF NEEDS NO CATALOGUE AND NO API: hand-picked links, exactly like the Edit, which is also the only version that honours her own disclosure that every piece is personally selected by the founder.** | Claude to build, HERS to pick the pieces | ⏳ **OPEN — she asked for it** |
 | 24b | ✅✅ **THE EDIT IS A SHAREABLE LINK — BUILT AND LIVE 2026-09-10: `stylestar.app/edit`.** ▶ **SIX edits, not the three the routing note promised**, because sharing needs more than a route: the `netlify.toml` rewrite (200) · an `[[edge_functions]]` registration · `PAGES['/edit']` in `page-titles.js` · `_ROUTES` · `_PAGE_META` · an `_openRoute` branch · **and the sitemap entry (priority 0.9)**. 🚨🚨 **THE TRAP IT NEARLY SHIPPED WITH, AND IT WAS MEASURED: `_openRoute` MUST CALL `showDream()`.** Planting a bare `show('s-dream')` rendered **17 links on merchants she IS approved for completely UNWRAPPED** — earning nothing, on the one page she actually sends to people, **with every card looking perfectly normal.** ▶ **`scratchpad/editshare.js`, 26 checks, built around that money check and PROVEN TO BITE.** ⚠️ **The title and description live in TWO files that cannot import from each other; §4 of the suite asserts they match word for word.** ✅ **Verified on the SERVED file, not the deploy badge.** | — | ✅ done |
-| 25b | ✅✅ **AMAZON FINDS IS BUILT AND LIVE — `stylestar.app/finds`, 2026-09-10. ⭐⭐ HER FIRST PIECES LANDED 2026-09-11 AND IT IS IN THE SITEMAP NOW (priority 0.9).** Her ask: *"let's go ahead and move the Amazon pieces that are currently on the Edit over the Finds page now"* — **the Badu stacking bangles $16.99 and the PRETTYGARDEN maxi $46.99, MOVED not copied, so the Edit went 35 → 33 and holds no Amazon piece at all.** ⚠️ **THE BANGLES STAY IN `WEEK_STARS` ON PURPOSE — her own *"I want to also feature some of them on Star of the week"*. That table was NOT touched.** ✅ **IN THE APP'S NAV SINCE 2026-09-11, HER CALL: *"let's go ahead and put it in"*** — the MENU's Shop group, directly beneath Style Star Edit, calling `openFinds`. ▶ **It was kept out of the sitemap while it was empty — a crawler that meets an empty page first tends to keep believing it is empty.** 🚨 **THE NAMING DECISION, AND IT IS THE PART THAT MATTERS: THE HEADING SAYS *AMAZON FINDS* AND THE PATH SAYS `/finds`, DELIBERATELY DIFFERENT.** Her words: *"I want it to be Amazon Finds or something with Amazon in it FOR NOW. If later we get Target or kohls approved maybe could change."* ▶▶ **A HEADING IS FREE TO CHANGE; A PATH CAN NEVER MOVE ONCE SHARED (her own standing rule). Separating them is what makes her "maybe change later" actually possible.** ⚠️ **RENAME THE HEADING FREELY. NEVER RENAME THE PATH.** | — | ✅ live, **24 pieces**, indexed |
+| 25b | ✅✅ **AMAZON FINDS IS BUILT AND LIVE — `stylestar.app/finds`, 2026-09-10. ⭐⭐ HER FIRST PIECES LANDED 2026-09-11 AND IT IS IN THE SITEMAP NOW (priority 0.9).** Her ask: *"let's go ahead and move the Amazon pieces that are currently on the Edit over the Finds page now"* — **the Badu stacking bangles $16.99 and the PRETTYGARDEN maxi $46.99, MOVED not copied, so the Edit went 35 → 33 and holds no Amazon piece at all.** ⚠️ **THE BANGLES STAY IN `WEEK_STARS` ON PURPOSE — her own *"I want to also feature some of them on Star of the week"*. That table was NOT touched.** ✅ **IN THE APP'S NAV SINCE 2026-09-11, HER CALL: *"let's go ahead and put it in"*** — the MENU's Shop group, directly beneath Style Star Edit, calling `openFinds`. ▶ **It was kept out of the sitemap while it was empty — a crawler that meets an empty page first tends to keep believing it is empty.** 🚨 **THE NAMING DECISION, AND IT IS THE PART THAT MATTERS: THE HEADING SAYS *AMAZON FINDS* AND THE PATH SAYS `/finds`, DELIBERATELY DIFFERENT.** Her words: *"I want it to be Amazon Finds or something with Amazon in it FOR NOW. If later we get Target or kohls approved maybe could change."* ▶▶ **A HEADING IS FREE TO CHANGE; A PATH CAN NEVER MOVE ONCE SHARED (her own standing rule). Separating them is what makes her "maybe change later" actually possible.** ⚠️ **RENAME THE HEADING FREELY. NEVER RENAME THE PATH.** | — | ✅ live, **44 pieces in 8 categories**, indexed |
 | 12 | ~~The wall arrives in Google's order, not hers~~ ✅ **HER DECISION, BUILT AND LIVE 2026-09-10 — her ten dimensions order the browse row. Measured: Google sent `Old Navy > Nordstrom > Kohl's > Talbots`, she sees `Nordstrom > Talbots > Old Navy > Kohl's`.** | — | ✅ done |
 | 13 | ~~The app promises before it knows it can deliver~~ ✅ **HER DECISION, BUILT AND LIVE 2026-09-10 — the stylist's sentence is HELD until there are cards to keep it with. Retires a FAMILY of faults, not one.** | — | ✅ done |
 | 14 | ~~Affiliate shops should appear "somewhere in there"~~ ✅ **POSITION was already built (`_findSpread`, 2026-09-09). ⚠️ Her ruling was in NEITHER file; it is in the ledger now.** | — | ✅ done |
@@ -333,76 +333,39 @@ line further down contradicts this one, THIS ONE WINS.**
 2026-09-11". NOTHING WAS DELETED, and every rule it held was lifted out first.**
 
 ### ✅ WHAT LANDED TODAY — ALL LIVE, ALL VERIFIED ON THE SERVED FILE
-1. **AMAZON FINDS IS A REAL PAGE — `stylestar.app/finds`, 4 of her pieces, in the app's MENU, in the
-   sitemap, and SUBMITTED TO GOOGLE AND BING by her.** Her two Amazon pieces MOVED off the Edit
-   (so the Edit is **33**), plus the CRZ YOGA tank $32 and the Gold Ponytail Cuff $9.99 for 4.
-2. **THE TWO CURATED PAGES ARE A MATCHED PAIR** — same frame, same foot, each naming the other:
-   *"Click here to explore Amazon Finds"* / *"Click here to explore The Edit"*, **pink**, with the
-   turquoise trending line beneath. Finds wears her tan bleed and plain white paper; the Edit keeps
-   its linen and teal. **Her design notes, all of them, are in their own sections below.**
-3. **A CSS CHANGE CAN NO LONGER REACH A WOMAN LATE** — the stylesheet carries its own content hash.
-   **This is the fix for a whole class of "it looks like the deploy failed" faults.**
-4. **THE SITEMAP'S `<lastmod>` KEEPS ITSELF HONEST** on her three curation surfaces, so her new pieces
-   get crawled rather than waiting for Google to wander back.
-5. 🛒🛒 **AMAZON FINDS CAN BE ADDED IN BATCHES FROM A SPREADSHEET — HER ASK, AND SHE CHOSE THE BIG
-   VERSION: *"i want to do a larger batch."*** ▶ **`data/amazon-finds.csv` is the source of truth;
-   `node scripts/finds-from-csv.js data/amazon-finds.csv --write` renders it.** Columns are
-   **`name,store,price,note,url,category`** and every live piece is already in it, so the file
-   IS the template — she adds rows. **`scratchpad/findscsv.js`, 45 checks, no network.**
-   ⭐⭐⭐ **SECOND BATCH THE SAME DAY: HER 20-ROW SHEET, SO AMAZON FINDS IS 24.** Eight new pieces — a
-   WanderFull HydroBag, interchangeable purse chains, a cable knit sweater, a PRETTYGARDEN sundress, a
-   CRZ sports bra, Reebok trainers, shoe grips and a LEVEL8 luggage set — **$7.99 to $529.99**, her row
-   order, nothing removed. ⚠️ **The other 12 came back with their NOTES REWRITTEN** (em-dashes out), which
-   the importer applies silently: it reports added, removed and renamed pieces, **never a reworded note**.
-   ▶ **So a note change is invisible in the run output and visible only in the diff — read the diff.**
-   🚨🚨 **AND SHE GAVE TWO COPY RULES WITH IT, BOTH STANDING FROM 2026-09-11:** ***"1. No dashes in app
-   copy unless grammatically needed. 2. No colors in product titles."*** ▶ **Rule 2 is the same ruling she
-   made an hour earlier, now written as a rule rather than a sweep.** ⚠️ **The four originals were CHECKED
-   against both rather than assumed compliant — and they already were** (the only hyphen is *"built-in"*,
-   which rule 1 allows).
-   ⭐ **EXACTLY ONE EM-DASH SURVIVES ON THE WHOLE PAGE AND IT IS HERS: *"Interchangeable Gold Purse Chains
-   — 5 Pack"*.** ▶ **Flagged to her rather than edited, because "grammatically needed" is her judgement and
-   her copy is never rewritten to satisfy a rule she wrote.**
-   🚨 **AND IT TURNED THE COLOURWAY TEST RED ON GOOD NEWS, WHICH IS THIS FILE'S OWN LESSON ARRIVING ON
-   SCHEDULE.** The check forbade the EM-DASH CHARACTER; what she actually ruled off is an **appended
-   colourway**. ▶ **Rewritten to name the rule — a trailing dash followed by a colour word fails, "— 5
-   Pack" passes — and PROVEN TO BITE by planting *"Cropped Cable Knit Sweater — White"*.** ⚠️ **A second
-   hardcode came out in the same pass: `byAsin.size === 16` would have gone red on every future batch.
-   It counts the cards on the page now.** ⭐ **She ruled on the gold twice — *"keep the gold on the purse
-   chains"* — so gold-as-identity is asserted by name on both the chains and the ponytail cuff.**
-   ⭐⭐ **FIRST REAL BATCH, EARLIER THE SAME DAY: 12 PIECES.** Bags, hats, a visor, a
-   sunglasses case, two wraps, a shrug, a shirt, a belt and a steamer — **$8 to $43**, her own row order.
-   ▶ **She is adding more after this, so expect the CSV to grow again.**
-   🚨 **AND THE GUARD EARNED ITSELF ON ITS FIRST REAL USE: her spreadsheet held the 12 NEW pieces only, so
-   writing it as sent would have DELETED her four live ones.** The removals block refused and named them;
-   she confirmed *"I definitely don't want to delete the current 4 we have I meant to add, not replace."*
-   ▶▶ **A BATCH FILE IS A REPLACEMENT BY CONSTRUCTION AND AN ADDITION BY INTENT — those look identical in
-   a CSV, and only asking told them apart.** ✅ Her two unverified links (`B0G8FZ82QS` straw beach tote,
-   `B01IADNC8A` wide brim straw hat) were checked as far as this sandbox can — both live, neither a 404 —
-   and **SHE confirmed both in stock**, which is the only instrument that settles an Amazon piece.
-6. 💲 **THE FINDS PRICES ARE ROUNDED UP WITH A TILDE — `~$17`, `~$10 for 4`.** Her real figure with
-   cents stays on the card in `data-price`; the cents are never shown.
-⚠️ **READ POINT 1 TOGETHER WITH THE SERPAPI SECTION BELOW, or this reads as "shopping works" and it
-does not.** ▶ **Google's half of the product search is still intermittent — 1 search in 6 — and her
-own affiliate feed is carrying the product experience on its own.**
+🚨 **THE DAY RAN LONG AND THE SECOND HALF IS ALL HERS. Two pages and a queue are now in the shape she wants.**
+1. 🛒 **AMAZON FINDS IS 44 PIECES IN 8 CATEGORIES — `stylestar.app/finds`.** It began the day at 4.
+   **Her order, her category names, her copy.** Categories: *Sunglasses & Sunny Things · In My Kit · Bags ·
+   Easy Pieces · Shoes · Wraps & Layers · Jewelry & Other Accessories · Fitness & Active Things.*
+   ⚠️ **THE CATEGORY NAMES ARE HERS AND CLAUDE MAY NEVER INVENT ONE** — same rule as never picking her
+   products. **The column waits for her.**
+2. ✂️ **THE STYLE STAR EDIT IS 30** (from 33): she removed the **J. Reneé Soncino sandal** (found it on
+   Amazon and would rather sell it there), the **Felina bra**, and the **Good American jeans**.
+   ▶ **The Soncino is back on `/finds` at $129.95 in her new Shoes category.**
+3. ⭐ **STAR OF THE WEEK IS A 15-WEEK QUEUE RUNNING TO 13 DECEMBER** — was 9 weeks and looping in
+   November. **See its own section below; the schedule is written out there.**
+4. 📏 **THE CATEGORY HEADINGS WERE THE SMALLEST TEXT ON THE PAGE AND SHE CAUGHT IT** — 11.5px against a
+   20px product name. **Now 16px with real air around it. Her catch, a measured hierarchy inversion.**
+5. 💲 **TWO COPY RULES SHE GAVE, NOW STANDING:** *"1. No dashes in app copy unless grammatically needed.
+   2. No colors in product titles."* ▶ **And two conventions settled at her ask: A PACK GOES IN THE NAME**
+   (`Ponytail Cuff, 4 Pack`), **A BRAND GOES IN THE STORE COLUMN** (`CRZ YOGA · Amazon`, `PRETTYGARDEN ·
+   Amazon`). **Both were measured — 3 of 4 pieces already did it that way — not chosen by taste.**
 
 ### ▶▶ WHAT IS WAITING ON HER — HER OWN PRIORITY ORDER
-1. ⭐⭐⭐ **APPLY TO THE AFFILIATE PROGRAMMES. CJ IS FREE AND STILL NOT DONE** — weeks on the board now.
-   ▶ **The measured argument: 41 of her 131 shops publish their FULL catalogue publicly (43,556+
-   products, with SIZE and PER-SIZE STOCK).** Being their PARTNER turns that into feeds that PAY her —
-   Everlane · Boden · Tuckernuck · Universal Standard · Cuyana · Alo Yoga · Summersalt · Good American
-   · Veronica Beard. **DTC brands with affiliate managers, not Nordstrom.**
-2. ⏳ **THE OCT 1 CLOCK — THE ONLY DEADLINE ON HER WHOLE BOARD, ~3 WEEKS OUT.** Do NOT pay the Your
+1. ⏳ **THE OCT 1 CLOCK — THE ONLY DEADLINE ON HER WHOLE BOARD, ~3 WEEKS OUT.** Do NOT pay the Your
    Fashion Friend renewal; close the Orange County receipt **by email (`btpc@octaxcol.com`) or mail,
    NOT in person**; call **407-246-2204** about applying for Style Star's own receipt before or after
    Oct 1 so she does not pay twice.
-3. ⭐ **WHAT CAME BACK FROM THE PEOPLE SHE SHARED IT WITH.** Still unasked, still the most valuable
+2. ⭐⭐⭐ **APPLY TO THE AFFILIATE PROGRAMMES. CJ IS FREE AND STILL NOT DONE** — weeks on the board.
+   ▶ **41 of her shops publish their full catalogue publicly** — Everlane · Boden · Tuckernuck ·
+   Universal Standard · Cuyana · Alo Yoga · Summersalt · Good American · Veronica Beard.
+3. 💅 **THE DVF FLAG SCARF — ONE SMALL DECISION, HERS.** She parked it 2026-08-26 (*"the scarf was last
+   week, I don't want it to come back up as Star of the Week again"*) — **a TIMING call, not a verdict on
+   the piece.** It still holds its licensed photo. ▶ **Three weeks on, ask whether it goes back in.**
+4. ⭐ **WHAT CAME BACK FROM THE PEOPLE SHE SHARED IT WITH.** Still unasked, still the most valuable
    information this project can get.
-4. ⭐ **MORE PIECES FOR AMAZON FINDS AND THE EDIT.** ▶ **The single highest-value thing she can do that
-   needs nobody's approval — her curation is the moat, and it is the one half Claude may never do for
-   her.** **Offer it whenever the board is clear.**
-5. ⏸️ **THE FITTING-ROOM CONVERSATION.** Parked by her, thinking kept. **Ask what it MEANS to her; do
-   not arrive with the old menu.**
+5. ⭐ **MORE PIECES — she is on a roll and the machinery now makes it cheap.** Her curation is the moat.
+6. ⏸️ **THE FITTING-ROOM CONVERSATION.** Parked by her, thinking kept. **Ask what it MEANS to her.**
 
 ### ▶▶ WHAT IS OPEN FOR CLAUDE
 1. 🚨 **"COULDN'T LOAD OPTIONS RIGHT NOW"** — she photographed it. **The stylist call failing, not the
@@ -510,7 +473,8 @@ is in `CLAUDE-archive.md`.*
 deploy badge.** Standing rule; it held twice.
 
 ### ▶ TEST STATE — MEASURED 2026-09-11
-✅ **RE-MEASURED AFTER THE BATCH WORK: `findspage` **92** · `findscsv` **46** · `editshare` **30** · `affq` **42** · `linkwatch` **27** · `copy` **50**. Zero failures.**
+✅ **RE-MEASURED AT THE END OF 2026-09-11: `findspage` **101** · `findscsv` **50** · `editshare` **30** · `affq` **42** · `linkwatch` **27** · `copy` **50** · `starpx` **28**. Zero failures.**
+⚠️⚠️ **`curated` REPORTS 3 FAILURES AND THEY ARE PRE-EXISTING — PROVEN, NOT ASSUMED.** The same suite run in a worktree at `origin/main` gives the IDENTICAL six problems: `Madewell`, `COS` and `Marine Layer` are named in the frozen catalog CSV but are no longer keys in `STORES`. ▶ **These are her six DEACTIVATED catalog picks** (`p001` `p015` `p057` `p064` `p089` `p104`) — the shops closed, she froze the catalog on purpose, and this file already records that a dead link there "dies quietly." **So the test is crying wolf over a state she chose.** ⚠️ **THIS IS A SECOND, SEPARATE PRE-EXISTING `curated` FAILURE from the known "never ruffles" flake — do not confuse them, and do not wave either through.** ▶ **Worth a small fix (teach the converter that a deactivated row may name a dead store); not urgent; nothing is broken.**
 ⚠️ **THE OLD FIGURE HERE SAID `findspage` 47 AND IT WAS STALE** — the suite was already at 86 before a line was added today. ▶ **Re-measure before writing a count down; a number nobody re-runs is the same kind of stale note this file keeps getting caught by.** ⭐ **AND THE FOUR NEW GUARDS WERE PROVEN TO BITE, not merely written:** putting the tan
 tagline back and COPYING an Amazon piece instead of moving it turned `findspage` red on exactly the
 four checks meant to catch each — *"rgb(140, 90, 30) vs rgb(15, 166, 182)"* and *"the Edit is
@@ -521,17 +485,13 @@ Edit) and `affq` *"2 canonical Amazon"* on a screen that now has none. ▶ **Bot
 REWRITTEN TO NAME THE RULE — every curated screen's pieces are watched; every Amazon link anywhere is
 canonical — never to bump a number.** **This file's own standing lesson, applied.**
 
-### ▶▶ WHAT IS WAITING ON HER
-1. ⭐⭐ **WHICH OF HER REMAINING TWO TO DO NEXT — the SHAPELESS half (her profile never reaches the
-   finder) or the NICER STORES half (the wall is in Google's order, not hers).** ▶ **She said one at a
-   time. Ask which; do not start both.**
-3. ⏳ **THE OCT 1 CLOCK — STILL THE ONLY DEADLINE ON HER WHOLE BOARD, NOW ~3 WEEKS OUT.** Do NOT pay
-   the Your Fashion Friend renewal; close the Orange County receipt **by email (`btpc@octaxcol.com`) or
-   mail, NOT in person**; call **407-246-2204** about whether to apply for Style Star's own receipt
-   before or after Oct 1 so she does not pay twice.
-4. ⭐ **WHAT CAME BACK FROM THE PEOPLE SHE SHARED IT WITH.** Still unasked.
-5. ⏸️ **THE FITTING-ROOM CONVERSATION.** Still parked by her, thinking kept. **Ask what a fitting room
-   MEANS to her; do not re-propose the same menu.**
+⚠️ **A DUPLICATE "WHAT IS WAITING ON HER" LIST SAT HERE AND WAS REMOVED 2026-09-11 — it repeated the
+one at the top of this file in slightly different words, with its own numbering bug (1, 3, 4, 5).**
+▶▶ **TWO COPIES OF A LIST IS TWO LISTS TO KEEP CURRENT, AND ONE OF THEM ALWAYS GOES STALE.** This one
+already had: it still named the SHAPELESS and NICER-SHOPS forks as her live choice, and the nicer-shops
+half had been built and shipped on 2026-09-10. ▶ **The single list lives in "WHAT IS WAITING ON HER"
+near the top. Keep it there; do not start a second one.** *(Her still-parked profile/shapeless item is
+board row 11 and is tracked there.)*
 
 
 ## 📌📌 STANDING REFERENCE — WHAT IS STILL TRUE OUT OF 2026-09-06 → 2026-09-09
@@ -829,6 +789,63 @@ GOOGLE."** ▶ **So its Google indexing was fine all along and the worry was unf
 for six days for want of one lookup. ⭐ **THE LESSON IS ABOUT THE QUESTION, NOT THE PAGE: an unverified
 worry costs nothing to check and outlives every session it is not checked in.** **When a note says
 "unconfirmed" and she is already standing in the tool that confirms it, ask.**
+
+### ⭐⭐ STAR OF THE WEEK — HOW IT WORKS, AND THE ONE THING THAT WILL BITE THE NEXT SESSION
+🚨 **NONE OF THIS WAS IN THIS FILE BEFORE 2026-09-11. It lived only in code comments, so she had to ask
+what was scheduled — and the answer took reading three functions.** ▶ **A ruling that lives only in code
+is a ruling she will be asked for twice.**
+▶ **THE TWO TABLES, AND THEY ARE NOT THE SAME THING:**
+· **`WEEK_STARS` (34 entries) — the LIBRARY.** Every piece that has ever been a candidate. Being here
+does NOTHING on its own.
+· **`WEEK_STAR_PHOTO_ORDER` (15 names) — the WHITELIST, and the only thing that rotates.** A name here
+plus a photo the licensing gate accepts = it appears. **Everything else is inert.**
+🚨 **HER RULE, GIVEN 2026-09-11: *"star of the week is only for items we have photos of."*** ▶ **And a
+photo is only ours to show when `_affMid()` resolves — an AFFILIATE APPROVAL with that retailer is what
+licenses it, never the fact that the image is fetchable.** ⚠️⚠️ **SO THE STAR CAN ONLY EVER SHOW PIECES
+FROM THE NINE SHOPS THAT APPROVED HER, AND ALL NINE ARE LUXURY. That is why every Star is $45+, and no
+amount of curation changes it.** **19 of the 34 have no photo and can never rotate today.**
+🚨🚨 **THE TRAP, AND IT ALMOST SHIPPED: `WEEK_STAR_PHOTO_ORDER` IS NOT IN PLAY ORDER.** The star is
+`pool[floor(days-since-anchor / 7) mod pool.length]`, so the array is ROTATED relative to what a woman
+sees — **the entries at the TOP are the ones reached LAST, after the wrap.**
+▶▶ **CONSEQUENCE ONE: "append at the end" IS NOT SAFE, however much the list's own history says it is.**
+Appending her seven new pieces put them BEFORE the wrap and shoved the four pieces at indices 0-3 back
+by seven weeks — **her FARM Rio summer maxi would have landed on 13 December.** Caught only by computing
+the whole schedule before and after. **The seven were SPLIT instead, three at the tail and four at the
+head, so every existing date held.**
+▶▶ **CONSEQUENCE TWO: THE LENGTH IS THE MODULUS, so adding or removing ONE piece re-maps every week.**
+⚠️⚠️ **NEVER EDIT THIS LIST WITHOUT RE-RUNNING THE SCHEDULE AND CHECKING IT WEEK BY WEEK.** The anchor
+(`2026-08-09`) is load-bearing and must not be moved; reorder the list instead.
+⭐ **THE INSTRUMENT, AND USE IT RATHER THAN READING THE ARRAY:** open the app in Playwright and call its
+OWN `_weekStar(date)` for each Sunday. **Re-deriving the modulo by hand is how a date gets reported
+wrong.** *(`scratchpad/stars*.mjs` from that session are throwaway; write a fresh one, it is ten lines.)*
+▶ **THE LIVE SCHEDULE AS OF 2026-09-11 — 15 weeks, then it repeats from 20 Dec:**
+| Sun | Piece | Store | Price |
+|---|---|---|---|
+| Sep 6 | Saint Laurent SL M136 Sunglasses | COUTR | $363 |
+| Sep 13 | Vilebrequin Long Mesh Cover-Up Dress | Vilebrequin | $405 |
+| Sep 20 | Veronica Beard Crosbie Jean | Marissa Collections | $248 |
+| Sep 27 | Simkhai Stella Suede Block Heel Sandal | Olivela | $445 |
+| Oct 4 | Isabella Celini Stackable Love Bracelet | Etsy | ~$50 |
+| Oct 11 | Love Hearts Find Me Pendant Necklace | Jane Win · Olivela | $278 |
+| Oct 18 | DVF Jeanne Silk Jersey Wrap Dress | Diane von Furstenberg | $678 |
+| Oct 25 | Valentino Garavani Rockstud Medium Suede Pouch | Mytheresa | $790 |
+| Nov 1 | Gucci GG Canvas Mini Shoulder Bag | Mytheresa | $1,100 |
+| Nov 8 | Simkhai Devon Suede Tote | Olivela | $695 |
+| Nov 15 | Fleur du Mal Sculpt Molded Sports Bra | Fleur du Mal | $98 |
+| Nov 22 | Zoe Lev Diamond & 14k Gold Bezel Pendant Necklace | Olivela | $825 |
+| Nov 29 | Valentino Garavani VLOGO Reversible Belt | Mytheresa | $570 |
+| Dec 6 | Open Heart Necklace | Etsy | ~$45 |
+| Dec 13 | Valentino Square Oversized Sunglasses | Marissa Collections | $465 |
+⚠️ **RE-MEASURE THIS TABLE RATHER THAN TRUSTING IT — it is a snapshot, and every edit to the list moves
+it.** ▶ **It is here so she can be answered in one line instead of three functions.**
+▶ **RETIRED-NOT-DELETED, AND BOTH ARE DELIBERATE:** the **sold-out Serpui bag** (2026-09-08) and the
+**FARM Rio maxi** (2026-09-11, her *"we already used that farm rio dress"* — a TIMING call about one
+dress, not a rule about FARM Rio). **Both keep their `WEEK_STARS` entries because each carries a `pxPos`
+crop that `starpx` uses as a worked example.** ⚠️ **Deleting a row that already renders nowhere only
+throws the lesson away.**
+⚠️ **AND THE STAR QUEUE IS NOT A MIRROR OF THE EDIT.** A piece she removes from the Edit stays in the
+Star library — the bangles did when they moved to `/finds`, and the Soncino and Good American did on
+2026-09-11. **Photo-gated, not Edit-gated.**
 
 ### 🎨 THE FINDS PAGE IS THE EDIT IN HER OWN COLOURWAY — HER DESIGN NOTES, 2026-09-11
 ▶ **She tested the live page and sent five notes. All are built.** The shared Style Star logo is
@@ -1310,6 +1327,21 @@ invention — the Garnet Hill lesson was about inventing SILENTLY.**
   It counts CODE PATHS OUT OF THE APP, and an unnoticed outbound anchor is an untagged link that earns
   nothing. **A tripwire is supposed to be tripped: find the new anchor, check it is `sponsored` and
   `_affUrl`-wrapped, then bump the number with a line naming the template.**
+- 🚨🚨🚨 **PIN THE RULE, NEVER THE STRING — THIS COST FIVE ROUNDS IN ONE DAY (2026-09-11) AND EVERY ONE
+  WAS A CHECK WRITTEN HOURS EARLIER IN THE SAME SESSION.** Each failed on GOOD NEWS: her copy improved,
+  or she edited her own page, and a test written for the previous wording went red.
+  | what was pinned | what broke it | the rule it should have named |
+  |---|---|---|
+  | `name.includes('—')` | her legitimate *"— 5 Pack"* | no appended COLOURWAY |
+  | `note` contains `"gold or silver"` | her better *"both gold and silver"* | the note names BOTH METALS |
+  | `name === 'Ponytail Cuff'` | *"Ponytail Cuff, 4 Pack"* | the name carries no METAL |
+  | `Edit count === 33` | she removed two pieces | the importer cannot REACH the Edit |
+  | `class="dc-cat"` exactly | a second class was added | match `dc-cat[^"]*` |
+  ▶▶ **THE TELL IS ALWAYS THE SAME: the assertion names a VALUE she is free to change.** A count she
+  edits weekly, a word she is free to reword, an attribute another class can join. ⚠️ **AND IT KEEPS
+  HAPPENING BECAUSE THE STRING IS ALWAYS THE EASIER LINE TO WRITE** — the rule takes a sentence of
+  thought and the string takes none. ▶ **Before writing an assertion, ask: could SHE change this
+  legitimately tomorrow? If yes, it is not the rule.**
 - 🚨 **WHEN A TEST BREAKS, ASK WHETHER THE APP GOT WORSE OR MERELY BIGGER.** Four suites broke the day
   she was approved for a shop — **they failed on good news.** ▶ **If it merely got bigger, rewrite the
   assertion to name the RULE, never to bump the number.** All four got STRONGER in the rewrite.
@@ -1491,6 +1523,10 @@ that is the whole lesson of 2026-09-06 and it repeated twice more on 2026-09-07.
 | **AN EDIT NAME CARRIES NO COLOURWAY, AND MAY DISAGREE WITH THE SHOP'S OWN TITLE** | n/a — the stylist names no products at all | **the Edit's hand-written `.dc-item` names, and the rule is written into the markup beside them** | **▶ none; it is a judgement, and the markup carries the warning** | ✅ **HER TWO RULINGS, 2026-09-10, LIFTED INTO THE LEDGER WHEN THEIR SESSION BLOCK WAS ARCHIVED — a rule she gave never archives. (a) *"Let's take the dash and the word Beige off of this Edit item"*, then unprompted on the sandal *"don't call it brown, just leave the color out."* (b) Olivela's own title says *"Diamond & 14k Gold **LARGE** Bezel Pendant Necklace"* and her ruling is *"leave out the word large. They call it large, but it is not really large."* 🚨 THAT IS HER SALE-PRICE RULE ONE STEP OUT: a woman who arrives to find a piece DAINTIER than billed feels misled; one who finds it as delicate as described does not. ⚠️ A FUTURE SESSION WILL SEE THE MISMATCH WITH THE SHOP'S TITLE AND WANT TO "FIX" IT. It must not. ⚠️ The urls still say `beige`/`brown`/`large` — the shops' own product handles, never shown to a woman and not ours to change. 🚨🚨 **AND SHE SHARPENED IT INTO A TEST ON 2026-09-11, ON THE FINDS PAGE: IF THE NOTE BRAGS ABOUT THE COLOUR RANGE, THE NAME CARRIES NO COLOUR.** Her words: *"on the 3 pieces that name a color and then brag about the range - should we not say the color, that seems like the best fix there. She can see the colors when she clicks on it, we don't need to name it."* ▶ Three names lost their colourway first (the ones whose notes say *comes in lots of colors*) — 🚨🚨 **AND MINUTES LATER SHE WIDENED IT TO THE WHOLE PAGE: *"actually I don't think I want to put color on any of them."*** ▶▶ **SO NO NAME ON `/finds` CARRIES A COLOURWAY AT ALL — all 7 came off, her own PRETTYGARDEN maxi included.** ⚠️ **THE SCOPE IS THE APPENDED SUFFIX ONLY: "Gold Ponytail Cuff" keeps its gold, because that is the piece's identity rather than a colourway she picked.** ⚠️ **AND THE EDIT WAS NOT SWEPT — 4 of its 33 still carry one and she has not ruled on them; ask, do not assume.** ⭐ **A LOOK BEFORE THE SWEEP CAUGHT ONE THAT IS NOT A COLOUR AT ALL: the Edit's *"Align Pant — Full Length 28″"* matches the same em-dash pattern and is a LENGTH.** ▶ **A regex over her copy needs eyes on its matches before it runs.** ⭐ AND IT PAIRS WITH THE 2026-07-31 RULE RATHER THAN REPLACING IT: link to the BASE product when the note brags about range — now the NAME matches that link instead of arguing with it.** |
 | **A RESUME SHOWS HER THE PIECES SHE LEFT, NOT A FRESH SEARCH** | **Shop your Style: `_saveShopFind` stores the found row beside the six picks, and `_ssFindPaint` paints it before the waiting star is ever set going** | n/a — the shelves rebuild from the feed, and promise nothing about sameness | **ssfind 54, and the check answers the resume with DIFFERENT products so it can tell memory from a re-ask** | ✅ **HER CATCH, 2026-09-10: *"the whisper said... the same pieces waiting. So I clicked on it and this was not true."* 🚨 THE WHISPER IS A PROMISE, AND HALF THE SHELF WAS KEPT: the six text cards are advice, the PHOTOGRAPHS are what she came back for. ⚠️ `t` is never re-stamped by a late row, or a slow search would quietly extend the six-hour promise. 🚨🚨 AND THE CHECK GUARDING THIS PASSED ON THE BROKEN CODE FOR A WHOLE DAY, because the harness answered every search identically: A STUB THAT ALWAYS ANSWERS THE SAME THING CANNOT TELL "it remembered" FROM "it asked again".** |
 | **A PRICE SHE CANNOT CHECK IS ROUNDED UP, NEVER TO THE NEAREST** | n/a — the stylist names no prices at all, by construction | **`/finds`: `renderPrice()` in `scripts/finds-from-csv.js` ceilings her real figure and prints `~$17`; the exact cents stay on the card in `data-price`. The Edit keeps EXACT prices, because its shops can be read** | **findscsv 45 · findspage 92** | ✅ **HER ASK 2026-09-11, and the ROUNDING MODE was corrected before it shipped. The spec said "nearest", which prints ~$16 for a $16.25 piece — she arrives to find it DEARER than the page said, which is her own 2026-07-31 sale-price rule broken by a word. 🚨 CEILING ONLY: the cheaper surprise is the only recoverable one. ▶ WHY FINDS AND NOT THE EDIT IS A TRUTH DIFFERENCE, NOT A STYLE ONE — Amazon pages are bot-walled, so the price can never be verified from here and moves daily; the Edit's shops can be read. ⚠️ DO NOT UNIFY THE TWO PAGES. ⭐ AND THE EDIT ALREADY TILDES 6 OF ITS 33 PRICES, measured — the convention is hers already, not a new invention. ⚠️ A QUALIFIER SURVIVES THE ROUNDING: "$9.99 for 4" → "~$10 for 4", because four cuffs for ~$10 is a different offer from one.** |
+| **NO DASHES IN HER COPY UNLESS GRAMMATICALLY NEEDED** | n/a — the stylist writes no product copy | **`/finds` names and notes; the four originals were CHECKED against it, not assumed** | ▶ none — it is a judgement about her voice | ✅ **HER RULE, 2026-09-11, given with her 20-row sheet: *"1. No dashes in app copy unless grammatically needed."*** ⚠️ **DELIBERATELY UNTESTED. Her standing direction is fewer rules and breakable things, and "grammatically needed" is a judgement only she can make — a regex would fail on `2-in-1`, `Non-Slip`, `Roll-Up`, `built-in` and `3-Piece`, all of which are correct.** ▶ **THE ONE SURVIVING EM-DASH WAS HERS AND WAS FLAGGED RATHER THAN EDITED** — *"Interchangeable Gold Purse Chains — 5 Pack"* — and she changed it herself to a comma. **Never rewrite her copy to satisfy a rule she wrote.** |
+| **NO COLOURS IN PRODUCT TITLES — AND ONLY SHE KNOWS WHICH COLOURS ARE THE PIECE** | n/a | **`/finds`: no name carries an appended colourway; a colour that IS the piece's identity stays** | **findscsv 50 §7b** | ✅ **HER RULE 2026-09-11, widened by her from 3 pieces to the whole page: *"actually I don't think I want to put color on any of them."*** 🚨🚨 **AND THE PART THAT GENERALISES, LEARNED THE SAME DAY: "IS THIS COLOUR THE PIECE, OR A COLOURWAY?" IS A QUESTION ABOUT THE PRODUCT, NOT ABOUT THE WORDS.** The ledger's worked example used to be *"Gold Ponytail Cuff keeps its gold"* — then she found the cuff and the bangles **also come in silver**, so their gold had never been identity at all. **Both names lost it and both notes gained *"Comes in gold or silver."*** ▶ **The example moved to the purse chains, which she ruled on by name: *"keep the gold on the purse chains."*** ⚠️ **A NAME THAT DROPS ITS COLOUR MUST SAY SO IN THE NOTE, or a woman reaches a silver piece off a page that told her nothing. Asserted.** |
+| **A PACK GOES IN THE NAME; A BRAND GOES IN THE STORE COLUMN** | n/a | **`/finds`: `Ponytail Cuff, 4 Pack` · `CRZ YOGA · Amazon`, `PRETTYGARDEN · Amazon`** | ▶ none — a convention, not a promise | ✅ **HER ASK 2026-09-11: *"there are three CRZ YOGA pieces now, so worth picking one"* — and she left the choice to Claude.** ▶▶ **BOTH WERE DECIDED BY COUNTING HER OWN PAGE, NOT BY TASTE: 3 of 4 multipacks already put the pack in the NAME, and 10 of 11 branded pieces already put the brand in the STORE column.** ⭐ **She asked a taste question and got a count of her own app back — the pattern that has worked every time.** ⚠️ **AND A COLLISION WAS FLAGGED RATHER THAN RESOLVED SILENTLY: her "keep the four originals exactly as they are" and her "your call which way to standardise" cannot both hold, because the two pieces she asked about WERE originals. The later, more specific instruction won, and both changes were named to her.** ▶ **PRETTYGARDEN had the identical split and was NOT swept — she had written it that way in that very sheet, so she was asked. She said move it.** |
+| **A SECTION HEADING OUTRANKS WHAT IT GOVERNS** | n/a | **`/finds` category headings: bigger than her note and her store line, smaller than the product names, with more air above than sits between two cards** | **findspage 101** | ✅ **HER CATCH 2026-09-11: *"the font is small on those, i almost missed them when I was scrolling."*** ▶▶ **MEASURED, AND SHE HAD FOUND A REAL HIERARCHY INVERSION: 11.5px heading against a 20px product name and a 15.5px note — THE SECTION LABEL WAS THE SMALLEST TEXT ON THE PAGE.** On a page a woman scrolls, that label is the only thing telling her where she is. 🚨 **AND 16px NOT 15, BECAUSE A TEST SAID SO: 15 still lost to her 15.5px note and only LOOKED bigger because it is uppercase, bold and letterspaced. OPTICAL WEIGHT IS NOT SIZE, and "looks fine to me" is the judgement that let 11.5px ship.** ⚠️⚠️ **HER TWO ASKS ON THIS ELEMENT PULL OPPOSITE WAYS AN HOUR APART — "I almost missed them", then "too much white space" — AND THE ANSWER IS NOT A COMPROMISE, IT IS TWO DIFFERENT GAPS: a heading after a CARD keeps 38px; the FIRST heading follows the DISCLOSURE, has nothing to separate from, and takes 20px.** ▶ **The guard is RELATIONAL, never a pixel value, so it survives any restyle.** |
 🚨🚨 **THE "A PRODUCT PHOTO IS NEVER CROPPED" ROW IS SEPARATE FROM THE `px2` PHOTO ROW ON PURPOSE, AND
 THE DIFFERENCE IS THE USEFUL PART.** `pxPos`, `pxFit` and `px2` are **per-item overrides she or Claude
 choose by LOOKING at one known photograph** — the Star of the Week, an Edit pick. They work because
