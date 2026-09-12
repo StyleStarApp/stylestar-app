@@ -10854,7 +10854,7 @@ async function wlShareGet(){
   _wlShareBusy=true;
   if(btn){btn.disabled=true;btn.textContent='Making your link…'}
   _wlShareSay('Making your link…');
-  var ok=false;
+  var ok=false,expired=false;
   try{
     var email2='';try{email2=localStorage.getItem('ss_email')||''}catch(e){}
     var res=await fetch('/.netlify/functions/user-data',{
@@ -10865,11 +10865,27 @@ async function wlShareGet(){
       try{localStorage.setItem('ss_sharelink',d.shareToken)}catch(e){}
       ok=true;
     }
+    /* 🚨 A 403/token_required HERE MEANS HER SAVE TOKEN HAS EXPIRED (30 days,
+       see user-data.js). "Try again in a moment" is a promise the app cannot
+       keep: nothing on this device can mint a new token without her proving
+       ownership again, and every retry will 403 the same way forever. The
+       only real fix is the restore flow this app already has, which issues a
+       fresh token. Told separately from a genuine transient failure below,
+       same as every other honest-not-silent error state in this file. */
+    else if(res.status===403&&d&&d.reason==='token_required'){expired=true;}
   }catch(e){}
   _wlShareBusy=false;
   _wlRenderShare();_wlRenderStay();
-  if(!ok)_wlShareSay('That didn’t go through. Please try again in a moment.',true);
+  if(expired){
+    var m=document.getElementById('wlShareMsg');
+    if(m){m.style.color='#c0392b';m.innerHTML='Your saved link has expired. <b style="cursor:pointer;text-decoration:underline" onclick="_goRestore()">Restore your results</b> and try again.';}
+  }else if(!ok)_wlShareSay('That didn’t go through. Please try again in a moment.',true);
 }
+// Route an expired save/share token to the existing "Find my results" card
+// rather than a dead end. It lives on the welcome screen, so getting there
+// from anywhere else means navigating home first. show() is synchronous
+// (s-wel's markup already exists in the DOM), so this is safe to chain.
+function _goRestore(){show('s-wel');showRestore();}
 function wlShareCopy(){
   var t=_wlShareLink();if(!t)return;
   var url=_wlShareUrl(t);
