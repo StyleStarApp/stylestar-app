@@ -21462,3 +21462,185 @@ for six days for want of one lookup. ⭐ **THE LESSON IS ABOUT THE QUESTION, NOT
 worry costs nothing to check and outlives every session it is not checked in.** **When a note says
 "unconfirmed" and she is already standing in the tool that confirms it, ask.**
 
+
+
+# ARCHIVED 2026-09-12 — the 2026-09-11 (second session) "WHERE WE LEFT OFF" entry, verbatim
+## ▶▶▶ WHERE WE LEFT OFF — 2026-09-11 (second session). READ THIS FIRST.
+🚨 **THIS BLOCK IS THE CURRENT TRUTH. Everything below it is standing reference — if a line further
+down contradicts this one, THIS ONE WINS.**
+📁 **The earlier 2026-09-11 entry — including the day's whole "STANDING REFERENCE" narrative addition —
+moved to `CLAUDE-archive.md` in this commit, VERBATIM, under "ARCHIVED 2026-09-11 (second session)".**
+Nothing was deleted. The file had grown back to ~68,000 tokens because that day's build narrative was
+written straight into "STANDING REFERENCE" and never compacted — the standard archive pass is now
+applied to it too, the same method as every prior wave: archive verbatim first, then rewrite only what
+is still true.
+
+### ✅ CURRENT STATE, MEASURED
+- **The Style Star Edit is 28 items.** (35 → 33 when two Amazon pieces moved to `/finds` → 30 when she
+  removed the J. Reneé Soncino sandal, the Felina bra and the Good American jeans → 28 when she removed
+  the Lucky Brand Mindra Espadrille Wedge and the Align Pant. The Soncino is now on `/finds` at $129.95.)
+  ⚠️ **Both retired pieces stay in the `WEEK_STARS` library, untouched — the Star queue is not a mirror
+  of the Edit, and neither piece was ever in `WEEK_STAR_PHOTO_ORDER` (the rotating whitelist) anyway.**
+  ⚠️ **Every older figure in this file quoting 30, 33 or 35 as current is now stale —
+  they are historical measurements, not today's count.**
+- **Amazon Finds is 44 pieces in 8 categories**, her order and her category names, live at
+  `stylestar.app/finds`, in the sitemap, indexed by both Google and Bing.
+- ✅✅ **SHE'S APPROVED FOR AMAZON ASSOCIATES (CONDITIONAL) — 2026-09-12. `_AMZ_TAG` is live, every
+  Amazon link in the app earns.** The 180-day clock for 3 qualifying sales is now running. See "AMAZON
+  — WHAT CAN AND CANNOT BE DONE FROM HERE" below for what's wired and what isn't.
+- **Star of the Week is a 15-week queue running to 13 December**, then repeats. See "STAR OF THE WEEK"
+  below for the schedule and the rotation trap that nearly shipped a piece seven weeks early.
+- **`/edit` and `/finds` are both submitted to Google and Bing and indexed.** Neither needs resubmitting
+  for content changes — see the indexing rule under "THE FINDS PAGE" below.
+- 🚨 **SERPAPI'S OUTAGE IS STILL OPEN BUT NOW PARTIAL — roughly 1 search in 6 gets through.** Her own
+  feed fills the screen on every failure (`feedWhy: ok`, 11–24 cards), so a woman never sees it empty.
+  **Nothing to fix and nothing to buy.** Re-check before assuming it's over:
+  `curl -s https://status.serpapi.com/api/v2/summary.json` — `Google: major_outage` means it isn't.
+  Do not raise the 9-second per-call ceiling; a failure pinned to the millisecond on it is HUNG, not
+  slow. A single retry on a hung search is free (never billed) but costs a woman ~18s instead of ~9s for
+  the same honest sentence when both rolls fail — that trade is hers to approve, not Claude's to build
+  unasked, and it stops being worth raising the moment `googleFailed` reads false.
+
+### ▶▶ WHAT IS WAITING ON HER — her own priority order (full detail in the Master To-Do List above)
+1. ⏳ The Oct 1 tax-receipt clock (~3 weeks out) — the only real deadline on her board.
+2. ⭐⭐⭐ Apply to the affiliate programmes. CJ is free and still not done.
+3. 💅 The DVF flag scarf — a timing call, hers: does it go back into the Star queue?
+4. ⭐ More Edit/Finds pieces — she's on a roll and the machinery makes it cheap now.
+5. ⏸️ The fitting-room conversation — parked by her, thinking kept. Ask what it means to her.
+
+✅ **CLOSED, 2026-09-11 (second session): "what came back from the people she shared the app with" is
+NOT an open item.** She and Claude have already been over it in detail, in a conversation this file
+never captured. ⚠️ **DO NOT RE-ASK THIS.** She'll bring more tester feedback as she gathers it —
+ongoing, not a pending question.
+
+### ▶▶ WHAT IS OPEN FOR CLAUDE
+1. 🚨 "Couldn't load options right now" — she photographed it on Shop your Style; the stylist call
+   failing, not the search. Two of three known causes ruled out 2026-09-10; the remaining suspect is the
+   32KB prompt cap, measured at 104 characters of headroom. **Measure it before claiming it.**
+2. 💰 A price filter — a find request carries item · colour · fabric · cut · size · width and no price
+   field at all. When built, put `Try: tops under $100` and `Try: white jeans under $150` back verbatim.
+3. ⭐ Wire her Style Signature into the finder (board row 11, her *"many of them were shapeless"*) —
+   parked by her; hers to green-light, one thing at a time.
+4. ▶ Read her analytics. `track()` exists and nobody has looked. ⚠️ **No longer the gate on the Amazon
+   clock — she applied and was approved, so the clock is already running.** Still worth doing: it's the
+   thing that would tell her whether she's on track for the 3 sales inside 180 days, before day 180.
+5. ▶ A shared remembered cache — today's is per-browser. Must live server-only (Netlify Blobs), never
+   through the publishable key.
+
+### 🎯 STANDING RULE FOR CLAUDE, GIVEN 2026-09-10 — NEVER ASK HER TO MAKE A GIT DECISION
+Her words: *"Why are you asking me about putting something on main? I don't even know what that means.
+I count on you to decide what needs to be saved or archived or put on main or the branch and all of
+that. I need you to keep track of everything and be honest with me."* ▶ **Branch, commit, archive,
+merge to `main` — all of it is Claude's to decide and do, then report in one plain line** ("saved and
+live"). **The only thing that still goes to her is a PRODUCT decision** — what the app should do, what
+a woman sees, what her words mean. ⚠️ **The second half of her sentence is load-bearing too: "keep
+track of everything and be honest with me."** Deciding for her is not permission to be vague about what
+was decided — say what was saved and where, in one line. *(See also "THE ARCHIVING RULE" below, which
+this generalises — Claude's process, never hers to referee.)*
+
+### ⭐ THE LESSON THIS DAY EARNED
+🚨 **Four times she pushed back on a recommendation and was right, and each time the fix was the same:
+look for what SHE has seen and Claude has not — do not re-explain the recommendation.** She also asked,
+three times in one day, whether she was being unclear; she wasn't — restate the brief once, briefly, then
+show the measurement, and honour her ask for fewer words and one thing at a time.
+
+### ▶ TEST STATE — re-measured 2026-09-12, after the Edit dropped to 28
+`editshare` 30 · `findspage` 101 · `affq` 42 · `copy` 50 — zero failures (re-run after removing the
+Lucky Brand espadrille and Align Pant; `editshare` needed one fix, see the commit). `linkwatch` 27 ·
+`starpx` 28 · `findscsv` 50 unaffected, not re-run this session. `curated` reports 3 pre-existing,
+PROVEN failures — see "THREE KNOWN PRE-EXISTING FAILURES" further down; none of them touch the Edit,
+confirmed against a worktree at the pre-session baseline (`8140b92`); not a regression, do not chase it.
+
+
+
+
+# ARCHIVED 2026-09-12 — the Amazon disclosure wrap/centre/star-fix session narrative, verbatim (compacted in CLAUDE.md's AMAZON section)
+  🚨🚨 **RESTRUCTURED 2026-09-12, HER ASK — SHE FOUND THE COMBINED WORDING "CRINGY" ON THE LIVE `/finds`
+  PAGE.** Her words: *"is there way to make the disclosures look and sound less cringy?"* ▶ **Neither
+  sentence's WORDING changed — both are fixed (Amazon's is contractual, the generic one is her own
+  already-settled copy) — only PRESENTATION AND PLACEMENT moved:**
+  - **`/finds`** — the generic "Some links may earn a commission." line is now DROPPED. The whole page
+    is Amazon links, so it was one sentence restating the other; Amazon's own sentence alone covers it.
+    `.dc-disclosure` there reads only *"As an Amazon Associate, I earn from qualifying purchases."*
+  - **The Mall** — Amazon's sentence moved OFF the page-top blanket notice (which wrongly implied all
+    25 stores are an Amazon relationship) DOWN to sit specifically under the **"Value & Basics"**
+    category heading — the one category that actually contains an Amazon card. New `.mall-az` div,
+    injected in `renderMall()` only when `group.cat==='Value & Basics'`. The page-top `.dc-disclosure`
+    reverts to the generic line only. ⚠️ **If a second Amazon-tagged store ever lands in a different
+    category, that check needs a second home too** — it's keyed on the category, not on Amazon itself.
+  - **Everywhere both sentences still apply** (both Shop your Style `shopdisc` locations, Complete the
+    Look, the Shop your Style/wishlist screen, the stylist chat, both Wardrobe tabs, the Wishlist page)
+    — they now render on **separate lines**, via a new `.disc-az{display:block;margin-top:3px}` span
+    wrapping Amazon's sentence, so two short facts read as two facts rather than one sentence
+    restating itself. No wording changed, only the line break.
+  ⚠️ **SHE ALSO ASKED WHETHER "I" COULD BECOME "we" OR "Style Star LLC" — LEFT AS "I", DELIBERATELY,
+  PENDING CONFIRMATION.** Amazon's own materials require the phrase verbatim or "a substantially
+  similar statement previously allowed under this Agreement" — no authoritative source found either way
+  on whether a first-person swap qualifies, and she is bound by the Operating Agreement now. **Not
+  guessed at; flagged to her as a real open question if she wants to pursue getting it confirmed with
+  Amazon directly.** The reframe offered: "I" also matches Catherine's own first-person voice used
+  everywhere else in the app (the founder story, the Edit's "chosen by me").
+  ⚠️ **NOT on the Edit** — it currently carries zero Amazon links (both moved to `/finds`
+  2026-09-11), so adding the sentence there would claim a relationship not in view; add it the day an
+  Amazon piece returns to the Edit. ⚠️ **NOT on the Star of the Week `.wks-disc`** either, for the same
+  reason — no Amazon piece is in `WEEK_STAR_PHOTO_ORDER` today.
+  ▶ **The Finds page is the SEVENTH disclosure location** (the original six plus Finds); with Mall,
+  both Wardrobe tabs and the Wishlist counted too, Amazon's sentence now lives on eleven screens —
+  worded identically everywhere except Finds (Amazon's sentence alone) and the Mall (both sentences,
+  now in two different places on the page rather than stacked at the top).
+  🚨 **FIXED 2026-09-12, HER CATCH: "purchases" was wrapping alone onto a second line on Shop your
+  Style and the Wishlist.** Her words: *"I prefer how it looks on wardrobe list where it all stays on
+  one line."* ▶ **MEASURED, not guessed: those two screens, plus the stylist chat (found while
+  checking every location, she hadn't noticed it there yet), sit inside a frame wrapper with 28px of
+  side padding that Wardrobe's screen doesn't have to fight** — Wardrobe already bleeds its own `.scr`
+  into that same padding for unrelated reasons, which is why it never had this problem. `.disc-az` on
+  all three now carries a matching `-28px` margin, recovering that padding for just the disclosure
+  line (not the whole screen). ✅ **Verified with a real render at 390/375/360/320px: all three now
+  match Wardrobe's own behavior exactly, including wrapping only at the extreme 320px width, which
+  Wardrobe does too.** The Mall's disclosure and the three `.shopdisc` locations (photo results,
+  portrait, Complete the Look) were checked and never wrapped — no change made there.
+  🚨🚨 **THAT FIX SHIPPED WITH A SIDE EFFECT — HER VERY NEXT CATCH: the Shop your Style text went off
+  CENTRE, shifted left.** ▶ **MEASURED: `#s-shopstyle .ss-disc-top` still inherited `max-width:320px`
+  from `.shop-disclosure`, and with BOTH margins explicitly `-28px` (neither `auto`), the box's
+  computed width (344px) exceeded that cap — CSS's own over-constrained rule then silently
+  recalculates `margin-right` to force the fit, so the left edge bled as designed and the right edge
+  didn't, shifting the whole box (text included) left.** Proven on a real render: box centre landed
+  at 183px in a 390px-wide frame whose own centre is 195px. ✅ **Fix: `max-width:none` on that one
+  selector — nothing else needed it, the -28px bleed alone already comfortably fits the sentence.
+  Verified centred (183→195, matching the frame exactly) at 390 and 360px, no regression.**
+  ⚠️ **AND A SECOND SCREEN HAD BEEN MISSED ENTIRELY: `/finds`'s OWN `.dc-disclosure` still wrapped**,
+  because the earlier fix only touched `.disc-az` (a span used on screens carrying BOTH sentences);
+  `/finds` shows Amazon's sentence alone, with no span, so it was never in scope. ▶ **It sits behind
+  an EXTRA 8px `.dc-wrap` padding on top of `.inner`'s own 28px — two nested paddings, not one — so
+  it needed `-36px` (8+28), not `-28px`, to fully clear both and land flush with `.inner`'s own outer
+  edge.** Scoped to `#s-finds` only — the Edit's own `.dc-disclosure` is a much longer paragraph that
+  is SUPPOSED to wrap, and shares the same base selector. ✅ **Verified one line at 390/375/360/320px,
+  no overflow.**
+  ▶ **SHE ALSO FLAGGED THE STAR ON THAT SAME SHOP YOUR STYLE LOADING SCREEN AS OFF-CENTRE — MEASURED
+  AND IT IS NOT, HORIZONTALLY.** Its bounding box lands at exactly 195px in the 390px frame, matching
+  the frame's own centre precisely (confirmed both by the numbers and by rendering the exact wait-state
+  markup and looking at it). **No horizontal code change was made.**
+  🚨🚨 **HER REAL COMPLAINT WAS VERTICAL: she wanted the star centred between the disclosure's bottom
+  and the "Checking what's actually in stock..." caption below it — and it took TWO ROUNDS to get
+  right, because the first one balanced the gap the wrong way.**
+  ▶ **ROUND 1: `justify-content:flex-start`.** `.ss-find-wait` had used `justify-content:center`,
+  which centred the star+caption pair within the WHOLE 338px height reserved for the eventual
+  six-card row, not within the gap she was looking at — since the star and its caption sit only 14px
+  apart by design, that left 122px above the star and 14px below it. `flex-start` pulled the whole
+  pair up snug under the disclosure, which balanced the gaps but did it by moving the CAPTION up from
+  where it had always sat.
+  🚨🚨 **HER CORRECTION, SAME DAY: *"put the bottom phrase back where it was before and bring the star
+  down. Instead of bringing the words up."*** ▶ **SHE WAS RIGHT, AND IT GENERALISES: when two elements
+  are out of balance, the one a woman has already been looking at across every earlier build should
+  anchor — the one that's actually wrong is the one that should move.** ▶ **ROUND 2, MEASURED with the
+  star's own spin animation frozen first (its live CSS transform otherwise makes `getBoundingClientRect`
+  report a rotated, inflated size instead of its true 66px layout box):** under the ORIGINAL
+  `justify-content:center`, the caption sat at 351.5px and the disclosure ended at 149px. Centring the
+  66px star in that span puts it at 217px — 68px below the disclosure and 68px above the caption,
+  both equal. ✅ **BUILT as an explicit `margin-top:65px` on the star itself (not container-height
+  math), paired with the container `gap` widened from 14px to 68px** — so the caption lands back
+  within half a pixel of its original spot (measured: 351 vs 351.5) while the star sits at the true
+  midpoint. **Verified: gap-above and gap-below both measure exactly 68px, horizontal centring
+  unaffected, and looked at directly on a real render.** The unused remainder of the 338px box still
+  becomes empty space below the caption, exactly as before, so the "nothing may jump" reserved-height
+  guarantee is untouched.
