@@ -250,7 +250,7 @@
   ▶ RESTAMP AFTER ANY CSS EDIT:  node scripts/css-version.js --write
   ⚠️ DO NOT hand-type or "tidy" the value — it is derived from the file, and
   scratchpad/copy.js fails if it is stale. -->
-  <link rel="stylesheet" href="/styles.css?v=2e8e304839">
+  <link rel="stylesheet" href="/styles.css?v=3f37e0a1e4">
 </head>
 <body>
 <!-- build: quiz glow-up (chrome frame, gold knob, gold button, gold progress) 2026-07-11 r2 -->
@@ -10769,8 +10769,7 @@ function _wlRenderShare(){
   var h='<div class="wl-share">';
   if(tok){
     h+='<div class="wsh-t">Your wishlist is shared</div>'
-      +'<div class="wsh-s">Anyone with this link can see your list. It stays up to date as you add pieces. '
-      +'<b>Add a note to anything you want them to get right.</b></div>'
+      +'<div class="wsh-s">Anyone with this link can see your list. It stays up to date as you add pieces.</div>'
       +'<div class="wsh-box"><code id="wlShareUrl">'+_esc(_wlShareUrl(tok))+'</code>'
       +'<button class="wsh-cp" onclick="wlShareCopy()">Copy</button></div>'
       +'<div class="wsh-msg" id="wlShareMsg"></div>'
@@ -10966,10 +10965,15 @@ function _wlSetView(v){
   renderWishlist();
 }
 try{var _wlv=localStorage.getItem('ss_wl_view');if(_wlv==='grid')_wlView='grid';}catch(e){}
+// Her catch (2026-09-12): the two labels alone didn't read as tappable. Same
+// arrow glyph the Wardrobe/Trending tabs already use for exactly this ("we
+// did this for reference") -- not a new affordance invented here, the
+// existing one applied to a screen that was missing it.
+var _WL_VTAB_AR='<svg class="wl-vtab-ar" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12h13"/><path d="M12 6.5 18.5 12 12 17.5"/></svg>';
 function _wlViewToggleHtml(){
   return '<div class="wl-viewtabs" role="tablist">'
-    +'<span class="wl-vtab'+(_wlView==='list'?' on':'')+'" role="tab" aria-selected="'+(_wlView==='list'?'true':'false')+'" onclick="_wlSetView(\'list\')">List</span>'
-    +'<span class="wl-vtab'+(_wlView==='grid'?' on':'')+'" role="tab" aria-selected="'+(_wlView==='grid'?'true':'false')+'" onclick="_wlSetView(\'grid\')">Fitting Room</span>'
+    +'<span class="wl-vtab'+(_wlView==='list'?' on':'')+'" role="tab" aria-selected="'+(_wlView==='list'?'true':'false')+'" onclick="_wlSetView(\'list\')">List'+_WL_VTAB_AR+'</span>'
+    +'<span class="wl-vtab'+(_wlView==='grid'?' on':'')+'" role="tab" aria-selected="'+(_wlView==='grid'?'true':'false')+'" onclick="_wlSetView(\'grid\')">Fitting Room'+_WL_VTAB_AR+'</span>'
     +'</div>';
 }
 function _renderWlRows(list){

@@ -1577,8 +1577,14 @@ html.finds-velvet .ss.dream-mirror{background:linear-gradient(#fff,#fff) padding
    measured) but a single short word alone in a wide pill reads as floating
    with nowhere to sit -- nudged up so it reads as anchored to the tab rather
    than adrift in it. Both tabs share this, not just the one she looked at. */
-#s-wishlist .wl-vtab{flex:1;text-align:center;padding:7px 0 13px;font:600 12px/1 'Jost',sans-serif;letter-spacing:.09em;text-transform:uppercase;border:1px solid #d8c285;color:#8a8474;cursor:pointer;-webkit-tap-highlight-color:transparent}
+#s-wishlist .wl-vtab{flex:1;display:flex;align-items:center;justify-content:center;gap:6px;padding:7px 0 13px;font:600 12px/1 'Jost',sans-serif;letter-spacing:.09em;text-transform:uppercase;border:1px solid #d8c285;color:#8a8474;cursor:pointer;-webkit-tap-highlight-color:transparent}
 #s-wishlist .wl-vtab.on{background:#1a1a1a;color:#EACD68;border-color:#1a1a1a}
+/* Her catch (2026-09-12): the labels alone didn't read as tappable. Same
+   arrow, same two-tone treatment as .wdr-tab-ar (muted gold at rest, bright
+   gold when active) -- the app's own existing "this is tappable" mark,
+   applied here rather than invented fresh. */
+#s-wishlist .wl-vtab-ar{display:block;width:15px;height:15px;flex:none;color:#C9A44C}
+#s-wishlist .wl-vtab.on .wl-vtab-ar{color:#EACD68}
 /* Two columns is the whole point: big enough to actually judge, not a
    thumbnail strip. .wl-card's own padding already frames the row list at
    this width, so the grid sits inside the same outer edge. */
