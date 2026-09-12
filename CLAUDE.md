@@ -48,7 +48,7 @@ gathers it going forward — that's an open, ongoing thing, not a one-time quest
 | 24 | 🔗 **THE EDIT AS A SHAREABLE LINK — HER ASK, 2026-09-10: *"I want the Edit to be a shareable link."*** ▶▶ **YES IT NEEDS ITS OWN URL, AND THE MACHINERY IS ALREADY BUILT AND PROVEN EIGHT TIMES.** `_ROUTES` today: `/privacy` `/terms` `/story` `/faq` `/contact` `/trending` `/wardrobe` `/results`, plus `/journal/<slug>` and the token-carrying shared wishlist. **The Edit (`s-dream`) is simply not in it.** ▶ **THE BUILD IS THE DOCUMENTED THREE EDITS:** one `_ROUTES` line · one `[[redirects]]` block in `netlify.toml` (status **200**, a rewrite not a 301) · one line in `_openRoute()`. 🚨🚨 **AND THE TRAP, FOUND BY READING THE CODE BEFORE BUILDING: `_openRoute` MUST CALL `showDream()`, NEVER A BARE `show('s-dream')`.** **`showDream()` is what calls `_wlDecorateEdit()`, and `_wlDecorateEdit()` IS WHAT AFFILIATE-WRAPS EVERY EDIT LINK AT RUNTIME** (`index.html:9963`). ▶ **A direct landing that skipped it would render her whole Edit with RAW product links that earn NOTHING — the exact "one route of four forgot" shape as the `<<FIND>>` marker leak.** ⚠️ **Assert it in a test: land on the path cold and check an `.dc-item-btn` href contains `click.linksynergy.com`.** | Claude | ⏳ **OPEN — she asked for it** |
 | 25 | 🛒 **AN AMAZON FINDS PAGE — HER ASK, 2026-09-10, AND STRATEGICALLY IT IS THE BEST IDEA ON THIS BOARD.** ***"I want to make an Amazon finds page. Another Sharable page dedicated to Amazon finds. I want to also feature some of them on Star of the week and our normal edit."*** ▶▶ **WHY IT MATTERS MORE THAN IT LOOKS: THIS FILE HAS SAID FOR WEEKS THAT WHAT THE APP LACKS IS A MID-MARKET GENERALIST** (every fed store is `$$$`/`$$$$`, dress median $398, 0 of 200 dresses under $100). **Amazon IS that, and it is the one such programme she can join without being declined for traffic.** ⚠️ **SO HER INSTINCT ANSWERS THE AFFORDABILITY PROBLEM THIS FILE KEPT CALLING UNSOLVABLE-WITHOUT-USERS.** 🚨🚨 **BUT THE ORDER SHE PROPOSED IS BACKWARDS AND IT IS WORTH REAL MONEY TO GET RIGHT — SEE THE AMAZON BLOCK IN THE MONEY PATH.** ▶ **THE PAGE ITSELF NEEDS NO CATALOGUE AND NO API: hand-picked links, exactly like the Edit, which is also the only version that honours her own disclosure that every piece is personally selected by the founder.** | Claude to build, HERS to pick the pieces | ⏳ **OPEN — she asked for it** |
 | 24b | ✅✅ **THE EDIT IS A SHAREABLE LINK — BUILT AND LIVE 2026-09-10: `stylestar.app/edit`.** ▶ **SIX edits, not the three the routing note promised**, because sharing needs more than a route: the `netlify.toml` rewrite (200) · an `[[edge_functions]]` registration · `PAGES['/edit']` in `page-titles.js` · `_ROUTES` · `_PAGE_META` · an `_openRoute` branch · **and the sitemap entry (priority 0.9)**. 🚨🚨 **THE TRAP IT NEARLY SHIPPED WITH, AND IT WAS MEASURED: `_openRoute` MUST CALL `showDream()`.** Planting a bare `show('s-dream')` rendered **17 links on merchants she IS approved for completely UNWRAPPED** — earning nothing, on the one page she actually sends to people, **with every card looking perfectly normal.** ▶ **`scratchpad/editshare.js`, 26 checks, built around that money check and PROVEN TO BITE.** ⚠️ **The title and description live in TWO files that cannot import from each other; §4 of the suite asserts they match word for word.** ✅ **Verified on the SERVED file, not the deploy badge.** | — | ✅ done |
-| 25b | ✅✅ **AMAZON FINDS IS BUILT AND LIVE — `stylestar.app/finds`, 2026-09-10. ⭐⭐ HER FIRST PIECES LANDED 2026-09-11 AND IT IS IN THE SITEMAP NOW (priority 0.9).** Her ask: *"let's go ahead and move the Amazon pieces that are currently on the Edit over the Finds page now"* — **the Badu stacking bangles $16.99 and the PRETTYGARDEN maxi $46.99, MOVED not copied, so the Edit went 35 → 33 and holds no Amazon piece at all.** ⚠️ **THE BANGLES STAY IN `WEEK_STARS` ON PURPOSE — her own *"I want to also feature some of them on Star of the week"*. That table was NOT touched.** ✅ **IN THE APP'S NAV SINCE 2026-09-11, HER CALL: *"let's go ahead and put it in"*** — the MENU's Shop group, directly beneath Style Star Edit, calling `openFinds`. ▶ **It was kept out of the sitemap while it was empty — a crawler that meets an empty page first tends to keep believing it is empty.** 🚨 **THE NAMING DECISION, AND IT IS THE PART THAT MATTERS: THE HEADING SAYS *AMAZON FINDS* AND THE PATH SAYS `/finds`, DELIBERATELY DIFFERENT.** Her words: *"I want it to be Amazon Finds or something with Amazon in it FOR NOW. If later we get Target or kohls approved maybe could change."* ▶▶ **A HEADING IS FREE TO CHANGE; A PATH CAN NEVER MOVE ONCE SHARED (her own standing rule). Separating them is what makes her "maybe change later" actually possible.** ⚠️ **RENAME THE HEADING FREELY. NEVER RENAME THE PATH.** | — | ✅ live, **51 pieces in 8 categories** (2026-09-12 batch: +7 new, 6 note revisions), indexed |
+| 25b | ✅✅ **AMAZON FINDS IS BUILT AND LIVE — `stylestar.app/finds`, 2026-09-10. ⭐⭐ HER FIRST PIECES LANDED 2026-09-11 AND IT IS IN THE SITEMAP NOW (priority 0.9).** Her ask: *"let's go ahead and move the Amazon pieces that are currently on the Edit over the Finds page now"* — **the Badu stacking bangles $16.99 and the PRETTYGARDEN maxi $46.99, MOVED not copied, so the Edit went 35 → 33 and holds no Amazon piece at all.** ⚠️ **THE BANGLES STAY IN `WEEK_STARS` ON PURPOSE — her own *"I want to also feature some of them on Star of the week"*. That table was NOT touched.** ✅ **IN THE APP'S NAV SINCE 2026-09-11, HER CALL: *"let's go ahead and put it in"*** — the MENU's Shop group, directly beneath Style Star Edit, calling `openFinds`. ▶ **It was kept out of the sitemap while it was empty — a crawler that meets an empty page first tends to keep believing it is empty.** 🚨 **THE NAMING DECISION, AND IT IS THE PART THAT MATTERS: THE HEADING SAYS *AMAZON FINDS* AND THE PATH SAYS `/finds`, DELIBERATELY DIFFERENT.** Her words: *"I want it to be Amazon Finds or something with Amazon in it FOR NOW. If later we get Target or kohls approved maybe could change."* ▶▶ **A HEADING IS FREE TO CHANGE; A PATH CAN NEVER MOVE ONCE SHARED (her own standing rule). Separating them is what makes her "maybe change later" actually possible.** ⚠️ **RENAME THE HEADING FREELY. NEVER RENAME THE PATH.** | — | ✅ live, **53 pieces in 8 categories** (2026-09-12: +2 In My Kit pieces, then 25 title renames + 11 store-column brand clears — all applied as CSV renames matched by ASIN, not replacement rows, so notes/prices/links/categories held still), indexed |
 | 12 | ~~The wall arrives in Google's order, not hers~~ ✅ **HER DECISION, BUILT AND LIVE 2026-09-10 — her ten dimensions order the browse row. Measured: Google sent `Old Navy > Nordstrom > Kohl's > Talbots`, she sees `Nordstrom > Talbots > Old Navy > Kohl's`.** | — | ✅ done |
 | 13 | ~~The app promises before it knows it can deliver~~ ✅ **HER DECISION, BUILT AND LIVE 2026-09-10 — the stylist's sentence is HELD until there are cards to keep it with. Retires a FAMILY of faults, not one.** | — | ✅ done |
 | 14 | ~~Affiliate shops should appear "somewhere in there"~~ ✅ **POSITION was already built (`_findSpread`, 2026-09-09). ⚠️ Her ruling was in NEITHER file; it is in the ledger now.** | — | ✅ done |
@@ -277,12 +277,20 @@ that makes any future number mean something.**
 ### 📝 CONTENT — only she can do these
 - ▶ **MORE "WHAT'S TRENDING" ITEMS.** Claude drafts in her voice, **she approves/cuts/rewrites** — she is
   the trend authority. Re-sort seasonally; every addition relights the New pill automatically.
-- ✅✅ **MORE STYLE STAR EDIT ITEMS — SHE ADDED THREE ON 2026-09-10 AND THEY ARE LIVE.** Simkhai Devon
-  Suede Tote $695 · Simkhai Stella Suede Block Heel Sandal $445 · Zoe Lev Diamond & 14k Gold Bezel
-  Pendant Necklace $825, **all from Olivela, so all three EARN.** ▶ **The Edit is 28 items** (35 → 33
-  when two Amazon pieces moved to `/finds` → 30 when she removed the Soncino sandal, the Felina bra and
-  the Good American jeans → 28 when she removed the Lucky Brand espadrille wedge and the Align Pant),
-  ordered her way since 2026-09-10: **the shops that pay her lead, the text cards follow.** ⚠️ **CLAUDE MUST
+- ✅✅ **MORE STYLE STAR EDIT ITEMS — SHE ADDED THREE ON 2026-09-10, AND A FOURTH ON 2026-09-12, ALL LIVE.**
+  Simkhai Devon Suede Tote $695 · Simkhai Stella Suede Block Heel Sandal $445 · Zoe Lev Diamond & 14k
+  Gold Bezel Pendant Necklace $825 (all Olivela) · **Stella McCartney Falabella Mini Embellished Bag
+  $1,595 (Mytheresa), added 2026-09-12 and also seated in Star of the Week rotation the same day.**
+  ▶ **The Edit is 18 items** (35 → 33 when two Amazon pieces moved to `/finds` → 30 when she removed the
+  Soncino sandal, the Felina bra and the Good American jeans → 28 when she removed the Lucky Brand
+  espadrille wedge and the Align Pant → 18 on 2026-09-12, when she had eleven non-earning, no-photo
+  items deleted outright — her own explicit call, *"yes just delete all of them"* — after the Stella
+  McCartney bag went in). 🚨🚨 **EVERY ITEM ON THE EDIT NOW EARNS.** The deleted eleven (MZ Wallace tote,
+  Gucci sunglasses, Express trouser, Miss Bunny robe, a 14K gold name necklace, a Retreat linen pant,
+  L'AGENCE blouse, Cinq à Sept blazer, Seafolly bikini top, a Gilded Romance claw clip, Tommy Hilfiger
+  sandal) were the last non-affiliate, no-photo pieces on the page — their `WEEK_STARS` library entries
+  were left untouched, her instruction, since Star of the Week is photo-gated and Edit-gated separately.
+  Ordered her way since 2026-09-10: **the shops that pay her lead, the text cards follow.** ⚠️ **CLAUDE MUST
   NEVER PICK THE PRODUCTS** — the disclosure says every piece is personally selected by the founder.
   **Protect that.** ⭐ **The working pattern that produced three in one sitting: she sends a link, a
   price and her note; Claude verifies the price and stock against the shop's own data, strips the
@@ -330,94 +338,42 @@ that makes any future number mean something.**
 
 ---
 
-## ▶▶▶ WHERE WE LEFT OFF — 2026-09-12 (fourth session, end of session). READ THIS FIRST.
+## ▶▶▶ WHERE WE LEFT OFF — 2026-09-12 (fifth session, end of session). READ THIS FIRST.
 🚨 **THIS BLOCK IS THE CURRENT TRUTH. Everything below it is standing reference — if a line further
 down contradicts this one, THIS ONE WINS.**
-📁 **The third-session 2026-09-12 entry (the Mall/Finds reorder, the footer repoints) moved to
-`CLAUDE-archive.md` in this commit, VERBATIM**, under its own heading. Nothing was deleted.
+📁 **The fourth-session 2026-09-12 entry (the Supabase 401 incident, the token-adoption fix, the Fitting
+Room placeholder rebuild, ruling out the prompt-cap theory) moved to `CLAUDE-archive.md` in this commit,
+VERBATIM**, under its own heading. Nothing was deleted.
 
-### 🚨🚨 THE BIG FINDING THIS SESSION: SUPABASE WAS SILENTLY REJECTING EVERY SAVE, FOUND AND FIXED
-She reported the wishlist's "Get my link" button failing with *"That didn't go through."* ▶▶ **THE REAL
-CAUSE WAS NOT THE SHARE FEATURE — IT WAS THE DATABASE ITSELF.** Traced end to end with live diagnostics
-(never guessed): a direct test of the live save endpoint came back `"detail":"supabase 401"` — **the
-`SUPABASE_KEY` Netlify was using had gone stale, so NO save had been reaching the database, for an
-UNKNOWN PERIOD, for (most likely) EVERY user, not just her.**
-▶ **WHY IT WENT UNNOTICED: everything lives on-device first.** The wishlist, results and preferences all
-work fine locally; the database is only touched in the background, silently, and nothing surfaced a
-failure — until the share flow tried to read a saved row back and found nothing there.
-✅ **SHE FIXED IT HERSELF, LIVE, WALKING THROUGH IT TOGETHER:** confirmed in Supabase the project itself
-was healthy (not paused) → found the current `service_role` secret key under Project Settings → API →
-"Legacy anon, service_role API keys" → pasted it into Netlify's `SUPABASE_KEY` environment variable →
-triggered a redeploy. **Re-tested live immediately after: both the save endpoint (`success:true,
-saved:true`) and the actual share-link creation (`success:true, sharing:true, shareToken:...`) now work
-end to end.**
-⚠️ **A LIKELY EXPLANATION, NOT CONFIRMED:** Supabase's dashboard was showing a newer "Publishable and
-secret API keys" tab alongside the "Legacy anon, service_role" one she used — that split, plus a sudden
-401 she never caused, is consistent with Supabase rotating the underlying JWT signing secret on their
-side, which silently invalidates old legacy keys. Worth remembering if this recurs: check Supabase's own
-key pages first, not just "is the project paused."
-🚨🚨 **STILL OPEN, WORTH A LOOK: HOW LONG WAS THIS BROKEN, AND DID ANY REAL SIGNUP'S DATA NEVER MAKE IT
-TO THE DATABASE?** MailerLite signups kept arriving throughout (that call runs independently of the
-Supabase save), so her email list is NOT missing anyone — but any woman who completed the quiz, saved
-results, or built a wishlist during the broken window has data that lives ONLY on her own phone, with no
-server copy and no way to restore it on a new device. **No way to know the start date from here** —
-worth asking Supabase support for the API error history if she wants to know how far back it goes.
+### ✅ STELLA MCCARTNEY BAG ADDED TO THE EDIT AND STAR OF THE WEEK; ELEVEN NON-EARNING EDIT ITEMS DELETED
+She sent a Mytheresa link for the **Stella McCartney Falabella Mini Embellished Bag, $1,595** (her own
+photo choice, her own note about the bag "wearing a necklace"). Added to the Edit, and — her explicit
+ask — seated in `WEEK_STARS` and appended to the end of `WEEK_STAR_PHOTO_ORDER`. **The whole 16-week
+rotation was recomputed with the live `_weekStar()` logic before committing, not assumed** — see the
+updated schedule table under Star of the Week below; every date through Nov 15 held still, only the
+wrap-around tail (Nov 22 onward) moved one week later.
+▶ **THEN, HER OWN CALL: *"yes just delete all of them no worries on star of the week let them all go all
+11"*** — every remaining Edit item with no affiliate earnings and no photo came out (MZ Wallace tote,
+Gucci sunglasses, Express trouser, Miss Bunny robe, a 14K gold name necklace, a Retreat linen pant,
+L'AGENCE blouse, Cinq à Sept blazer, Seafolly bikini top, a Gilded Romance claw clip, Tommy Hilfiger
+sandal). **The Edit went 28 → 18, and every remaining item now earns.** Their `WEEK_STARS` library
+entries were deliberately left untouched — Star of the Week is photo-gated and Edit-gated separately,
+so removing an item from the Edit was never a reason to remove it from the Star library.
 
-### ✅ ALSO FOUND AND FIXED ALONG THE WAY: A REAL CLIENT-SIDE BUG, INDEPENDENT OF THE SUPABASE OUTAGE
-The server hands back a save token even on a FAILED save (502) — by design, so a retry of the SAME save
-can reuse it (see its own comment in `user-data.js`). **The client was adopting that token
-UNCONDITIONALLY**, so a device whose very first save ever failed walked away holding a real, valid,
-non-expiring-for-30-days token for an email with NO row behind it. Everything kept working locally, so
-nothing looked wrong, until "Get my link" tried to read that row back and 404'd in a way that looked
-identical to an expired-token 403 from the outside — which is what sent this session down the wrong path
-first. ▶ **FIXED: `saveUserRecord()` now only adopts the token (and backfills the email) from a save that
-actually succeeded (`res.ok`).** Proven with a new test that a 502 carrying a token no longer leaves the
-device believing it's synced. **This is now also a STANDING DON'T — see that section.**
-▶ **A genuinely useful, honest side-fix landed too, and it stays regardless of the Supabase incident:**
-"Get my link" now tells the difference between an EXPIRED token (403/token_required — nothing can fix
-itself, so it routes straight to the existing "Find my results" restore flow) and a genuine transient
-failure (keeps the old "try again" message, since retrying really can help there). `_goRestore()` is the
-new function; it navigates home and reveals the restore card since that UI only exists on `s-wel`.
-⚠️ **A temporary diagnostic tag was added mid-investigation (a small grey technical line under the error
-message) to find the real cause faster, then REMOVED once the cause was confirmed and fixed** — a debug
-string is not a place to leave something once it's done its job.
-🚨 **TWO DISPOSABLE TEST ARTIFACTS WERE LEFT BEHIND FROM VERIFYING THIS LIVE, FLAGGED TO HER:** one throwaway
-row in the Supabase `users` table and two subscribers in the "Style Star Signups" MailerLite group, all
-under `claude-diag-test-...@example.invalid` addresses. Harmless (no real person's data), easy to find
-and delete by searching "claude-diag-test", entirely optional to clean up.
-
-### ✅ THE FITTING ROOM PLACEHOLDER — REBUILT WITH HER, ITERATIVELY, OVER SEVERAL ROUNDS
-Her ask: improve the line art on the Fitting Room's no-photo placeholder (a small plain hanger alone in a
-lot of empty tan). Iterated LIVE with rendered mockups at true card size rather than guessing once:
-1. First round offered four directions (bigger hanger with a dress on it, a dashed "photo coming soon"
-   frame, a closet rail with two garments, the current baseline). **She liked the frame+caption from one
-   and the rod from another, but flagged the DRESS SHAPE as wrong** — a card can be a bag, a belt or
-   trousers, so hanging a garment silhouette on a generic placeholder looks broken the moment the real
-   item isn't a dress. ▶ **The lesson generalises: a placeholder that stands in for ANY item type must
-   never imply a specific one.**
-2. Second round dropped the garment entirely for three hangers + her gold star in the middle; she asked
-   for just the ONE hanger, and for the star's outline to be silver instead of gold.
-3. **FINAL, SHIPPED:** one plain hanger + her own star (gold gradient, `#9AA0A6` silver outline — the
-   EXACT same colors already used on `.dc-corner-star`, the Edit page's jewel star, reused not invented)
-   + a dashed "reserved space" frame + a "Photo coming soon" caption, all percentage-sized so it scales
-   with the 2-up grid at any phone width.
-🚨🚨 **HER CATCH, AND IT MATTERS: THE FIRST SHIPPED STAR WAS A HAND-DRAWN APPROXIMATION, NOT THE REAL
-ONE.** She asked outright *"is that star the same dimensions and shape as the stars we use throughout
-the app?"* — and it was not. The real mark (`_WL_STAR_PATH`, used 37 times elsewhere: Star of the Week,
-the Edit's corner star, etc.) has its own specific, hand-tuned point geometry; the placeholder used a
-similar-looking but genuinely different path. **FIXED to reference `_WL_STAR_PATH` directly** (not a
-second copy of the coordinates), so it can never quietly drift from the real mark again.
-▶ Verified against the real render at phone width (`scratchpad/fitroom.js`, 24/24 clean throughout every
-round) and the CSS content-hash was restamped per the project's own rule for any `styles.css` edit.
-
-### ▶ ONE MORE THING THIS SESSION SETTLED: THE 32KB PROMPT-CAP THEORY IS RULED OUT
-Board row 18 (*"Couldn't load options right now"* on Shop your Style) named the 32KB prompt cap as the
-remaining suspect, with the instruction *"measure it before claiming it."* ▶ **MEASURED: `scratchpad/
-promptcap.mjs` passes clean, 10/10, with real headroom on every shopping surface** (Shop your Style, the
-wantlist, Wardrobe Ideas) — the shrink ladder built for this in an earlier session is working. **A
-20-ask live sweep against the real model also came back 100% clean** — every reply parsed as valid JSON.
-🚨 **SO THE PROMPT CAP IS NOT THE CAUSE. The fault's real cause is still unknown** — this rules out the
-one lead the board had, it does not solve it. Next session needs a fresh theory, not this one repeated.
+### ✅ AMAZON FINDS: TWO NEW PIECES, THEN 25 TITLE RENAMES AND 11 STORE-COLUMN BRAND CLEARS
+Two new "In My Kit" pieces added first (Sleeve Roll-Up Holders $14.99, Tagging Gun Kit $27.95),
+taking the page to 53 pieces. **Then she reviewed her own titles and sent 25 exact old→new renames**,
+explicitly asking that these be applied as CSV renames — matched by ASIN, never by name — rather than
+replacement rows, since notes/prices/links/categories were all unchanged. **Separately, eleven of those
+renamed items now carry the brand in the title, so their STORE column was cleared to plain "Amazon"**
+so the brand doesn't print twice on the card. All applied via `scripts/finds-from-csv.js`, verified as
+genuine renames (not add/remove) by the importer's own ASIN-matching, and `--check` confirms the live
+page matches the CSV exactly.
+🚨 **CAUGHT AND FIXED ALONG THE WAY: `scratchpad/findspage.js` had the exact "pin the rule, never the
+string" bug its own comment warns about** — an assertion hardcoded `leftBehind.n >= 25` for "the Edit is
+still a full curated page," which went red the moment she had the eleven items deleted (a legitimate,
+her-own-call edit, not a regression). Rewritten to a low structural floor (`>= 5`) that only catches
+actual gutting, never her own editorial choices. `findscsv` 50/50, `findspage` 102/102 after the fix.
 
 ### ▶▶ WHAT IS WAITING ON HER — her own priority order (full detail in the Master To-Do List above)
 1. ⏳ The Oct 1 tax-receipt clock (~3 weeks out) — the only real deadline on her board.
@@ -428,9 +384,9 @@ one lead the board had, it does not solve it. Next session needs a fresh theory,
    real woman's save was silently lost during the outage.
 
 ### ▶▶ WHAT IS OPEN FOR CLAUDE
-1. 🚨 "Couldn't load options right now" on Shop your Style — the prompt-cap theory is now RULED OUT (see
-   above). Cause still genuinely unknown; needs a fresh live-diagnosis approach next time, not a repeat
-   of the cap measurement.
+1. 🚨 "Couldn't load options right now" on Shop your Style — the prompt-cap theory is RULED OUT (see the
+   archive). Cause still genuinely unknown; needs a fresh live-diagnosis approach, not a repeat of the
+   cap measurement.
 2. 💰 A price filter — a find request carries item · colour · fabric · cut · size · width and no price
    field at all. When built, put `Try: tops under $100` and `Try: white jeans under $150` back verbatim.
 3. ⭐ Wire her Style Signature into the finder (board row 11, her *"many of them were shapeless"*) —
@@ -439,10 +395,19 @@ one lead the board had, it does not solve it. Next session needs a fresh theory,
 5. ▶ A shared remembered cache — today's is per-browser. Must live server-only (Netlify Blobs), never
    through the publishable key.
 6. ▶ Amazon's disclosure "I" vs "we"/"Style Star LLC" — flagged to her, not guessed at.
-7. ▶ `affq.js`'s `EDIT_N` counter needs scoping to `#s-dream` — low priority, real debt.
+7. ▶ `affq.js`'s `EDIT_N` counter needs scoping to `#s-dream` — low priority, real debt (unchanged this
+   session; confirmed still pre-existing, not newly caused by the Edit deletions).
 🚨 **SERPAPI'S OUTAGE — RE-CHECK BEFORE ASSUMING IT'S OVER:**
-`curl -s https://status.serpapi.com/api/v2/summary.json` — `Google: major_outage` means it isn't. **Still
-showing `major_outage` as of this session.**
+`curl -s https://status.serpapi.com/api/v2/summary.json` — `Google: major_outage` means it isn't. Not
+re-checked this session; re-check before assuming it has resolved.
+
+### ▶ TEST STATE — re-measured 2026-09-12 (fifth session)
+`findscsv` 50/50 · `findspage` 102/102 (both re-run after the renames/store-clears and the assertion
+fix above). Not re-run this session, no code of theirs touched: `savetruth` 19/19 · `sharelink` 54/54 ·
+`fitroom` 24/24 · `promptcap` 10/10 · `copy` 50/50 · `hubs` 49/49 · `mallverify` 14/14 · `linkwatch` 27 ·
+`tabtops` 49 · `catmark` 132/3-pre-existing · `wldoortest` 55/65-pre-existing · `curated` 62-63/65 (3
+named pre-existing failures, see the standing section below) · `affq` 1 known pre-existing failure
+(the `EDIT_N` counter, see "WHAT IS OPEN FOR CLAUDE" above).
 
 ### 🎯 STANDING RULE FOR CLAUDE — NEVER ASK HER TO MAKE A GIT DECISION
 Her words: *"Why are you asking me about putting something on main? I don't even know what that means.
@@ -454,16 +419,6 @@ a woman sees, what her words mean. ⚠️ **The second half of her sentence is l
 track of everything and be honest with me."** Deciding for her is not permission to be vague about what
 was decided — say what was saved and where, in one line. *(See also "THE ARCHIVING RULE" below, which
 this generalises — Claude's process, never hers to referee.)*
-
-### ▶ TEST STATE — re-measured 2026-09-12 (fourth session)
-`savetruth` 19/19 · `sharelink` 54/54 · `fitroom` 24/24 (run repeatedly through every placeholder
-iteration) · `promptcap` 10/10 · `copy` 50/50 · both inline `<script>` blocks parse clean, checked after
-every edit this session. New, session-specific tests written and passing: a token-adoption test (proves
-a failed save no longer leaves a device believing it's synced) and an expired-token-vs-transient-failure
-test for the wishlist share message. Not re-run this session, no code of theirs touched: `hubs` 49/49 ·
-`mallverify` 14/14 · `findscsv` 50 · `findspage` 102 · `linkwatch` 27 · `tabtops` 49 · `catmark`
-132/3-pre-existing · `wldoortest` 55/65-pre-existing · `curated` 62-63/65 (3 named pre-existing failures
-— see the standing section below).
 
 ## 📌📌 STANDING REFERENCE — WHAT IS STILL TRUE (compacted from 2026-09-06 through 2026-09-11)
 🚨 **THE SESSION BLOCKS BEHIND THIS SECTION WERE ARCHIVED IN WAVES AND NOTHING WAS DELETED** — they are
@@ -743,11 +698,11 @@ because nobody wrote it down. Re-ask only if she says she has retaken the quiz.*
 
 ### ⭐⭐ STAR OF THE WEEK — HOW IT WORKS
 🚨 **HER RULE, 2026-09-11: *"star of the week is only for items we have photos of."*** Two tables, not
-the same thing: `WEEK_STARS` (34 entries) is the LIBRARY — being there does nothing on its own.
-`WEEK_STAR_PHOTO_ORDER` (15 names) is the WHITELIST, and the only thing that rotates. A photo is only
+the same thing: `WEEK_STARS` (35 entries) is the LIBRARY — being there does nothing on its own.
+`WEEK_STAR_PHOTO_ORDER` (16 names) is the WHITELIST, and the only thing that rotates. A photo is only
 ours to show when `_affMid()` resolves — an affiliate approval with that retailer licenses it, never the
 fact that the image is fetchable. ⚠️⚠️ **SO THE STAR CAN ONLY EVER SHOW PIECES FROM HER NINE APPROVED
-SHOPS, ALL LUXURY — that is why every Star is $45+, and no curation changes it.** 19 of the 34 have no
+SHOPS, ALL LUXURY — that is why every Star is $45+, and no curation changes it.** 19 of the 35 have no
 photo and can never rotate today.
 🚨🚨 **THE TRAP: THE PLAY ORDER IS NOT LIST ORDER.** The star is
 `pool[floor(days-since-anchor/7) mod pool.length]` — the array is ROTATED relative to what a woman sees,
@@ -757,8 +712,9 @@ earlier entries weeks later (caught only by computing the whole schedule before 
 ⚠️⚠️ **NEVER EDIT THIS LIST WITHOUT RE-RUNNING THE SCHEDULE, WEEK BY WEEK.** The anchor (`2026-08-09`) is
 load-bearing; reorder the list instead of moving it. ⭐ **Use the instrument, not hand math:** call the
 app's own `_weekStar(date)` in Playwright for each Sunday.
-▶ **THE LIVE SCHEDULE AS OF 2026-09-11 — 15 weeks, then repeats from 20 Dec** (re-measure rather than
-trusting this — every list edit moves it):
+▶ **THE LIVE SCHEDULE AS OF 2026-09-12 — 16 weeks, then repeats from 27 Dec** (re-measure rather than
+trusting this — every list edit moves it; this run re-computed with the live `_weekStar()` logic, not
+by hand):
 | Sun | Piece | Store | Price |
 |---|---|---|---|
 | Sep 6 | Saint Laurent SL M136 Sunglasses | COUTR | $363 |
@@ -772,15 +728,20 @@ trusting this — every list edit moves it):
 | Nov 1 | Gucci GG Canvas Mini Shoulder Bag | Mytheresa | $1,100 |
 | Nov 8 | Simkhai Devon Suede Tote | Olivela | $695 |
 | Nov 15 | Fleur du Mal Sculpt Molded Sports Bra | Fleur du Mal | $98 |
-| Nov 22 | Zoe Lev Diamond & 14k Gold Bezel Pendant Necklace | Olivela | $825 |
-| Nov 29 | Valentino Garavani VLOGO Reversible Belt | Mytheresa | $570 |
-| Dec 6 | Open Heart Necklace | Etsy | ~$45 |
-| Dec 13 | Valentino Square Oversized Sunglasses | Marissa Collections | $465 |
+| Nov 22 | Stella McCartney Falabella Mini Embellished Bag | Mytheresa | $1,595 |
+| Nov 29 | Zoe Lev Diamond & 14k Gold Bezel Pendant Necklace | Olivela | $825 |
+| Dec 6 | Valentino Garavani VLOGO Reversible Belt | Mytheresa | $570 |
+| Dec 13 | Open Heart Necklace | Etsy | ~$45 |
+| Dec 20 | Valentino Square Oversized Sunglasses | Marissa Collections | $465 |
+🚨 **ADDING THE STELLA MCCARTNEY BAG 2026-09-12 PROVED THE TRAP AGAIN:** appending it at the END of
+`WEEK_STAR_PHOTO_ORDER` (16th name) left every date through Nov 15 untouched and pushed Nov 22 onward
+one week later — exactly the mechanism this section warns about, verified week-by-week with `_weekStar()`
+before committing, not assumed.
 ▶ **Retired-not-deleted, both deliberate:** the sold-out Serpui bag and the FARM Rio maxi (a TIMING call
 about one dress, not a rule about FARM Rio) — both keep their `WEEK_STARS` entries because each carries
 a `pxPos` crop `starpx` uses as a worked example. ⚠️ **The Star queue is NOT a mirror of the Edit** — a
-piece removed from the Edit (the bangles, the Soncino, the Good American jeans) stays in the Star
-library. Photo-gated, not Edit-gated.
+piece removed from the Edit (the bangles, the Soncino, the Good American jeans, and now the eleven
+non-earning items removed 2026-09-12) stays in the Star library. Photo-gated, not Edit-gated.
 
 ### 🎨 THE FINDS PAGE — HER SETTLED DESIGN, AND WHY
 The Finds page shares the Edit's own frame (`dream-mirror` toggle, not a copy), hides the shared logo,
@@ -961,14 +922,18 @@ that's the first occurrence in the file. Slice the screen first (`index('id="s-f
 screens' item counts before doing anything else** — the cheapest habit that catches this every time.
 
 ### 💰 WHICH EDIT PIECES EARN
-Measured 2026-09-10 at 35 items (17 earning, 18 not) and again after moves to 33 — **the Edit is now 30,
-so both counts are stale; re-measure rather than quoting them.** What's still true regardless of count:
+🚨🚨 **AS OF 2026-09-12, ALL 18 EARN.** Measured 2026-09-10 at 35 items (17 earning, 18 not), then 33,
+then 30 as she trimmed non-earning pieces by hand — and on 2026-09-12 she had the last eleven
+non-affiliate, no-photo items deleted outright (see the Master To-Do List's Edit row for the names),
+leaving an 18-item page with no dead weight. **Re-measure before quoting this if the Edit changes
+again** — she may add more at any time. What's still true regardless of count:
 **`_wlDecorateEdit()` rewrites every `.dc-item-btn` href to an affiliate link AT RUNTIME**
 (`index.html:9963`) — the raw hrefs sitting in markup are the SOURCE, not the live link, so a `grep` for
 `_affUrl` in the Edit's markup finding zero proves nothing is broken. ⚠️ **Never hard-code affiliate URLs
 into the Edit's markup** — it would strand saved wishlist rows on a stale affiliate id and break her
-add-by-hand workflow. Nordstrom (declined for Impact/traffic) and Amazon (no `_AMZ_TAG` yet) are the two
-biggest earning-nothing blocks; both light up the moment their approval lands, on pieces already chosen.
+add-by-hand workflow. ⚠️ **Nordstrom is still the one live blocker left** (declined for Impact/traffic);
+Amazon now has `_AMZ_TAG` set but carries zero Edit items today (both her Amazon pieces live on `/finds`
+— see money-path and the Finds section).
 
 ### 🚨 ADDING A MERCHANT IS **FIVE** EDITS — and two of them fail SILENTLY
 **(1)** the `STORES` entry, `index.html` — **the only one that needs her** ·

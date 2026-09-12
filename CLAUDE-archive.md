@@ -11,6 +11,107 @@ The standing rules, current decisions, store system and open threads all live in
 
 ---
 
+## ▶▶▶ WHERE WE LEFT OFF — 2026-09-12 (fourth session, end of session). READ THIS FIRST.
+🚨 **THIS BLOCK IS THE CURRENT TRUTH. Everything below it is standing reference — if a line further
+down contradicts this one, THIS ONE WINS.**
+📁 **The third-session 2026-09-12 entry (the Mall/Finds reorder, the footer repoints) moved to
+`CLAUDE-archive.md` in this commit, VERBATIM**, under its own heading. Nothing was deleted.
+
+### 🚨🚨 THE BIG FINDING THIS SESSION: SUPABASE WAS SILENTLY REJECTING EVERY SAVE, FOUND AND FIXED
+She reported the wishlist's "Get my link" button failing with *"That didn't go through."* ▶▶ **THE REAL
+CAUSE WAS NOT THE SHARE FEATURE — IT WAS THE DATABASE ITSELF.** Traced end to end with live diagnostics
+(never guessed): a direct test of the live save endpoint came back `"detail":"supabase 401"` — **the
+`SUPABASE_KEY` Netlify was using had gone stale, so NO save had been reaching the database, for an
+UNKNOWN PERIOD, for (most likely) EVERY user, not just her.**
+▶ **WHY IT WENT UNNOTICED: everything lives on-device first.** The wishlist, results and preferences all
+work fine locally; the database is only touched in the background, silently, and nothing surfaced a
+failure — until the share flow tried to read a saved row back and found nothing there.
+✅ **SHE FIXED IT HERSELF, LIVE, WALKING THROUGH IT TOGETHER:** confirmed in Supabase the project itself
+was healthy (not paused) → found the current `service_role` secret key under Project Settings → API →
+"Legacy anon, service_role API keys" → pasted it into Netlify's `SUPABASE_KEY` environment variable →
+triggered a redeploy. **Re-tested live immediately after: both the save endpoint (`success:true,
+saved:true`) and the actual share-link creation (`success:true, sharing:true, shareToken:...`) now work
+end to end.**
+⚠️ **A LIKELY EXPLANATION, NOT CONFIRMED:** Supabase's dashboard was showing a newer "Publishable and
+secret API keys" tab alongside the "Legacy anon, service_role" one she used — that split, plus a sudden
+401 she never caused, is consistent with Supabase rotating the underlying JWT signing secret on their
+side, which silently invalidates old legacy keys. Worth remembering if this recurs: check Supabase's own
+key pages first, not just "is the project paused."
+🚨🚨 **STILL OPEN, WORTH A LOOK: HOW LONG WAS THIS BROKEN, AND DID ANY REAL SIGNUP'S DATA NEVER MAKE IT
+TO THE DATABASE?** MailerLite signups kept arriving throughout (that call runs independently of the
+Supabase save), so her email list is NOT missing anyone — but any woman who completed the quiz, saved
+results, or built a wishlist during the broken window has data that lives ONLY on her own phone, with no
+server copy and no way to restore it on a new device. **No way to know the start date from here** —
+worth asking Supabase support for the API error history if she wants to know how far back it goes.
+
+### ✅ ALSO FOUND AND FIXED ALONG THE WAY: A REAL CLIENT-SIDE BUG, INDEPENDENT OF THE SUPABASE OUTAGE
+The server hands back a save token even on a FAILED save (502) — by design, so a retry of the SAME save
+can reuse it (see its own comment in `user-data.js`). **The client was adopting that token
+UNCONDITIONALLY**, so a device whose very first save ever failed walked away holding a real, valid,
+non-expiring-for-30-days token for an email with NO row behind it. Everything kept working locally, so
+nothing looked wrong, until "Get my link" tried to read that row back and 404'd in a way that looked
+identical to an expired-token 403 from the outside — which is what sent this session down the wrong path
+first. ▶ **FIXED: `saveUserRecord()` now only adopts the token (and backfills the email) from a save that
+actually succeeded (`res.ok`).** Proven with a new test that a 502 carrying a token no longer leaves the
+device believing it's synced. **This is now also a STANDING DON'T — see that section.**
+▶ **A genuinely useful, honest side-fix landed too, and it stays regardless of the Supabase incident:**
+"Get my link" now tells the difference between an EXPIRED token (403/token_required — nothing can fix
+itself, so it routes straight to the existing "Find my results" restore flow) and a genuine transient
+failure (keeps the old "try again" message, since retrying really can help there). `_goRestore()` is the
+new function; it navigates home and reveals the restore card since that UI only exists on `s-wel`.
+⚠️ **A temporary diagnostic tag was added mid-investigation (a small grey technical line under the error
+message) to find the real cause faster, then REMOVED once the cause was confirmed and fixed** — a debug
+string is not a place to leave something once it's done its job.
+🚨 **TWO DISPOSABLE TEST ARTIFACTS WERE LEFT BEHIND FROM VERIFYING THIS LIVE, FLAGGED TO HER:** one throwaway
+row in the Supabase `users` table and two subscribers in the "Style Star Signups" MailerLite group, all
+under `claude-diag-test-...@example.invalid` addresses. Harmless (no real person's data), easy to find
+and delete by searching "claude-diag-test", entirely optional to clean up.
+
+### ✅ THE FITTING ROOM PLACEHOLDER — REBUILT WITH HER, ITERATIVELY, OVER SEVERAL ROUNDS
+Her ask: improve the line art on the Fitting Room's no-photo placeholder (a small plain hanger alone in a
+lot of empty tan). Iterated LIVE with rendered mockups at true card size rather than guessing once:
+1. First round offered four directions (bigger hanger with a dress on it, a dashed "photo coming soon"
+   frame, a closet rail with two garments, the current baseline). **She liked the frame+caption from one
+   and the rod from another, but flagged the DRESS SHAPE as wrong** — a card can be a bag, a belt or
+   trousers, so hanging a garment silhouette on a generic placeholder looks broken the moment the real
+   item isn't a dress. ▶ **The lesson generalises: a placeholder that stands in for ANY item type must
+   never imply a specific one.**
+2. Second round dropped the garment entirely for three hangers + her gold star in the middle; she asked
+   for just the ONE hanger, and for the star's outline to be silver instead of gold.
+3. **FINAL, SHIPPED:** one plain hanger + her own star (gold gradient, `#9AA0A6` silver outline — the
+   EXACT same colors already used on `.dc-corner-star`, the Edit page's jewel star, reused not invented)
+   + a dashed "reserved space" frame + a "Photo coming soon" caption, all percentage-sized so it scales
+   with the 2-up grid at any phone width.
+🚨🚨 **HER CATCH, AND IT MATTERS: THE FIRST SHIPPED STAR WAS A HAND-DRAWN APPROXIMATION, NOT THE REAL
+ONE.** She asked outright *"is that star the same dimensions and shape as the stars we use throughout
+the app?"* — and it was not. The real mark (`_WL_STAR_PATH`, used 37 times elsewhere: Star of the Week,
+the Edit's corner star, etc.) has its own specific, hand-tuned point geometry; the placeholder used a
+similar-looking but genuinely different path. **FIXED to reference `_WL_STAR_PATH` directly** (not a
+second copy of the coordinates), so it can never quietly drift from the real mark again.
+▶ Verified against the real render at phone width (`scratchpad/fitroom.js`, 24/24 clean throughout every
+round) and the CSS content-hash was restamped per the project's own rule for any `styles.css` edit.
+
+### ▶ ONE MORE THING THIS SESSION SETTLED: THE 32KB PROMPT-CAP THEORY IS RULED OUT
+Board row 18 (*"Couldn't load options right now"* on Shop your Style) named the 32KB prompt cap as the
+remaining suspect, with the instruction *"measure it before claiming it."* ▶ **MEASURED: `scratchpad/
+promptcap.mjs` passes clean, 10/10, with real headroom on every shopping surface** (Shop your Style, the
+wantlist, Wardrobe Ideas) — the shrink ladder built for this in an earlier session is working. **A
+20-ask live sweep against the real model also came back 100% clean** — every reply parsed as valid JSON.
+🚨 **SO THE PROMPT CAP IS NOT THE CAUSE. The fault's real cause is still unknown** — this rules out the
+one lead the board had, it does not solve it. Next session needs a fresh theory, not this one repeated.
+
+### ▶ TEST STATE — re-measured 2026-09-12 (fourth session)
+`savetruth` 19/19 · `sharelink` 54/54 · `fitroom` 24/24 (run repeatedly through every placeholder
+iteration) · `promptcap` 10/10 · `copy` 50/50 · both inline `<script>` blocks parse clean, checked after
+every edit this session. New, session-specific tests written and passing: a token-adoption test (proves
+a failed save no longer leaves a device believing it's synced) and an expired-token-vs-transient-failure
+test for the wishlist share message. Not re-run this session, no code of theirs touched: `hubs` 49/49 ·
+`mallverify` 14/14 · `findscsv` 50 · `findspage` 102 · `linkwatch` 27 · `tabtops` 49 · `catmark`
+132/3-pre-existing · `wldoortest` 55/65-pre-existing · `curated` 62-63/65 (3 named pre-existing failures
+— see the standing section below).
+
+---
+
 ## ▶▶▶ WHERE WE LEFT OFF — 2026-09-12 (third session, end of session). READ THIS FIRST.
 🚨 **THIS BLOCK IS THE CURRENT TRUTH. Everything below it is standing reference — if a line further
 down contradicts this one, THIS ONE WINS.**
