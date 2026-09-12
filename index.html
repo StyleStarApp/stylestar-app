@@ -250,7 +250,7 @@
   ▶ RESTAMP AFTER ANY CSS EDIT:  node scripts/css-version.js --write
   ⚠️ DO NOT hand-type or "tidy" the value — it is derived from the file, and
   scratchpad/copy.js fails if it is stale. -->
-  <link rel="stylesheet" href="/styles.css?v=3f37e0a1e4">
+  <link rel="stylesheet" href="/styles.css?v=c34a6486e7">
 </head>
 <body>
 <!-- build: quiz glow-up (chrome frame, gold knob, gold button, gold progress) 2026-07-11 r2 -->
@@ -10972,8 +10972,8 @@ try{var _wlv=localStorage.getItem('ss_wl_view');if(_wlv==='grid')_wlView='grid';
 var _WL_VTAB_AR='<svg class="wl-vtab-ar" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12h13"/><path d="M12 6.5 18.5 12 12 17.5"/></svg>';
 function _wlViewToggleHtml(){
   return '<div class="wl-viewtabs" role="tablist">'
-    +'<span class="wl-vtab'+(_wlView==='list'?' on':'')+'" role="tab" aria-selected="'+(_wlView==='list'?'true':'false')+'" onclick="_wlSetView(\'list\')">List'+_WL_VTAB_AR+'</span>'
-    +'<span class="wl-vtab'+(_wlView==='grid'?' on':'')+'" role="tab" aria-selected="'+(_wlView==='grid'?'true':'false')+'" onclick="_wlSetView(\'grid\')">Fitting Room'+_WL_VTAB_AR+'</span>'
+    +'<span class="wl-vtab'+(_wlView==='list'?' on':'')+'" data-view="list" role="tab" aria-selected="'+(_wlView==='list'?'true':'false')+'" onclick="_wlSetView(\'list\')">List'+_WL_VTAB_AR+'</span>'
+    +'<span class="wl-vtab'+(_wlView==='grid'?' on':'')+'" data-view="grid" role="tab" aria-selected="'+(_wlView==='grid'?'true':'false')+'" onclick="_wlSetView(\'grid\')">Fitting Room'+_WL_VTAB_AR+'</span>'
     +'</div>';
 }
 function _renderWlRows(list){

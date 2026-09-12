@@ -1572,18 +1572,23 @@ html.finds-velvet .ss.dream-mirror{background:linear-gradient(#fff,#fff) padding
    immediately as two real buttons — her mom's 2026-07-26 lesson: a control
    that doesn't look tappable might as well not be there. */
 #s-wishlist .wl-viewtabs{display:flex;gap:8px;margin:14px 0 0}
-/* Her catch (2026-09-12): "list is all by itself on one line... move that
-   word up." Centered was mathematically dead-center (10px above, 10px below,
-   measured) but a single short word alone in a wide pill reads as floating
-   with nowhere to sit -- nudged up so it reads as anchored to the tab rather
-   than adrift in it. Both tabs share this, not just the one she looked at. */
-#s-wishlist .wl-vtab{flex:1;display:flex;align-items:center;justify-content:center;gap:6px;padding:7px 0 13px;font:600 12px/1 'Jost',sans-serif;letter-spacing:.09em;text-transform:uppercase;border:1px solid #d8c285;color:#8a8474;cursor:pointer;-webkit-tap-highlight-color:transparent}
+/* Her catch (2026-09-12): the label alone didn't read as tappable, and her
+   first fix (centering it in the pill) wasn't it -- she asked to compare
+   this against .wdr-tab on Wardrobe/Trending, and the real thing stacks the
+   arrow BELOW the label on its own line, not beside it. This is that same
+   box model, byte-for-byte, so the two controls read as one shared language
+   rather than two similar-but-different ones. */
+#s-wishlist .wl-vtab{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;padding:9px 0 8px;font:600 12px/1 'Jost',sans-serif;letter-spacing:.09em;text-transform:uppercase;border:1px solid #d8c285;color:#8a8474;cursor:pointer;-webkit-tap-highlight-color:transparent}
 #s-wishlist .wl-vtab.on{background:#1a1a1a;color:#EACD68;border-color:#1a1a1a}
 /* Her catch (2026-09-12): the labels alone didn't read as tappable. Same
    arrow, same two-tone treatment as .wdr-tab-ar (muted gold at rest, bright
    gold when active) -- the app's own existing "this is tappable" mark,
-   applied here rather than invented fresh. */
-#s-wishlist .wl-vtab-ar{display:block;width:15px;height:15px;flex:none;color:#C9A44C}
+   applied here rather than invented fresh, at the same 19px size. And the
+   same outward-pointing pair Wardrobe already uses: the LEFT tab's arrow
+   mirrors to point left, the right tab's points right -- two tabs opening
+   away from each other, not a direction tied to which view is which. */
+#s-wishlist .wl-vtab-ar{display:block;width:19px;height:19px;flex:none;color:#C9A44C}
+#s-wishlist .wl-vtab[data-view="list"] .wl-vtab-ar{transform:scaleX(-1)}
 #s-wishlist .wl-vtab.on .wl-vtab-ar{color:#EACD68}
 /* Two columns is the whole point: big enough to actually judge, not a
    thumbnail strip. .wl-card's own padding already frames the row list at
