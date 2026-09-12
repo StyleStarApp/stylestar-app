@@ -330,78 +330,119 @@ that makes any future number mean something.**
 
 ---
 
-## ▶▶▶ WHERE WE LEFT OFF — 2026-09-12 (third session, end of session). READ THIS FIRST.
+## ▶▶▶ WHERE WE LEFT OFF — 2026-09-12 (fourth session, end of session). READ THIS FIRST.
 🚨 **THIS BLOCK IS THE CURRENT TRUTH. Everything below it is standing reference — if a line further
 down contradicts this one, THIS ONE WINS.**
-📁 **The second-session 2026-09-12 entry (the wishlist share-card tidy, the List View/Fitting Room
-toggle-arrow fix) moved to `CLAUDE-archive.md` in this commit, VERBATIM**, under its own heading.
-Nothing was deleted.
+📁 **The third-session 2026-09-12 entry (the Mall/Finds reorder, the footer repoints) moved to
+`CLAUDE-archive.md` in this commit, VERBATIM**, under its own heading. Nothing was deleted.
 
-### ✅ THIS SESSION'S WORK — HER TWO-THREAD ASK FROM LAST SESSION, ANSWERED AND SHIPPED
-Opened with last session's unscoped ask still open: change where the app suggests the Mall, and add
-Amazon Finds to the home hub. Talked it through with her rather than guessing, then built what she
-actually asked for, all measured and merged straight to `main`:
-1. **Answered her affiliate-wiring questions first, by reading the code, not recalling it.** Confirmed
-   `_affUrl()` is the ONE choke point every outbound shopping link in the app passes through — Mall,
-   chat, Wardrobe Ideas, the wishlist, the Edit, Finds, Star of the Week — so a store earns wherever its
-   link appears, never surface-by-surface. Today that's 7 of the Mall's 30 cards (FARM Rio, DVF, Olivela,
-   Marissa Collections, Mytheresa, Etsy, Amazon); the other 23 are plain links. ⚠️ **Vilebrequin, COUTR
-   and Fleur du Mal are approved but have no Mall card at all** — they earn only via the Star/Edit today.
-2. **The home hub's `Shop` card, on all THREE surfaces that build it** (`s-res`, the photo-results
-   `chub-in`, and the JS-built `s-wb` Welcome Back hub) — **Shop the Mall dropped, Amazon Finds added,
-   reordered to Shop your style → Shop Style Star Edit → Shop Amazon Finds → Your Wishlist**, her own
-   order. New row carries a hand-drawn line-art cardboard-box icon and, her catch, **the same pink
-   `.hub-ch` heart the Edit row wears** — Finds is hand-selected too. `showShop` fell clean out of the
-   `s-wb` hub builder's index sweep (index 6, now unused/orphaned there — harmless, never appended).
-   "Shop the Mall" stays on the hamburger Menu, untouched, her explicit call.
-3. **The global footer's "Shop" link** (`_stdFootHTML`, filled from ONE template onto ~20 screens) **and
-   the welcome screen's "Prefer to shop first?" quick link** — both repointed from `showShop()` (Mall) to
-   `openFinds()`. ⚠️ **Rendered and sent to her BEFORE shipping, her ask** — three screenshots proving the
-   footer's plain "Shop" label still reads the same but now lands on `/finds`.
-4. **The shared-wishlist page's own footer** (`_shTail`, what a friend sees on a `/list/<token>` link) —
-   found by grepping every `showShop()` call site rather than assuming there was only the one. Its
-   "Browse the Style Star Mall →" swapped for "Browse Amazon Finds ♥", matching the Edit link beside it.
-5. **The Mall itself now sorts each category with its earning stores first** — a new `_mallEarns(u)`
-   helper reads the SAME live facts `_affUrl` already uses (an `_AFF_MID` domain, or Amazon once
-   `_AMZ_TAG` is set), stable-sorted so her original order holds among the rest. ⚠️ **Never a hand-kept
-   list** — a future approval reorders the Mall on its own, nothing to update here.
-▶ Verified throughout: both inline `<script>` blocks parse; `scratchpad/hubs.js` 49/49 and
-`scratchpad/mallverify.js` 14/14 both clean; live-rendered the Mall's sort order and the footer's actual
-landing screen in Chromium before calling anything done, not just read the markup.
+### 🚨🚨 THE BIG FINDING THIS SESSION: SUPABASE WAS SILENTLY REJECTING EVERY SAVE, FOUND AND FIXED
+She reported the wishlist's "Get my link" button failing with *"That didn't go through."* ▶▶ **THE REAL
+CAUSE WAS NOT THE SHARE FEATURE — IT WAS THE DATABASE ITSELF.** Traced end to end with live diagnostics
+(never guessed): a direct test of the live save endpoint came back `"detail":"supabase 401"` — **the
+`SUPABASE_KEY` Netlify was using had gone stale, so NO save had been reaching the database, for an
+UNKNOWN PERIOD, for (most likely) EVERY user, not just her.**
+▶ **WHY IT WENT UNNOTICED: everything lives on-device first.** The wishlist, results and preferences all
+work fine locally; the database is only touched in the background, silently, and nothing surfaced a
+failure — until the share flow tried to read a saved row back and found nothing there.
+✅ **SHE FIXED IT HERSELF, LIVE, WALKING THROUGH IT TOGETHER:** confirmed in Supabase the project itself
+was healthy (not paused) → found the current `service_role` secret key under Project Settings → API →
+"Legacy anon, service_role API keys" → pasted it into Netlify's `SUPABASE_KEY` environment variable →
+triggered a redeploy. **Re-tested live immediately after: both the save endpoint (`success:true,
+saved:true`) and the actual share-link creation (`success:true, sharing:true, shareToken:...`) now work
+end to end.**
+⚠️ **A LIKELY EXPLANATION, NOT CONFIRMED:** Supabase's dashboard was showing a newer "Publishable and
+secret API keys" tab alongside the "Legacy anon, service_role" one she used — that split, plus a sudden
+401 she never caused, is consistent with Supabase rotating the underlying JWT signing secret on their
+side, which silently invalidates old legacy keys. Worth remembering if this recurs: check Supabase's own
+key pages first, not just "is the project paused."
+🚨🚨 **STILL OPEN, WORTH A LOOK: HOW LONG WAS THIS BROKEN, AND DID ANY REAL SIGNUP'S DATA NEVER MAKE IT
+TO THE DATABASE?** MailerLite signups kept arriving throughout (that call runs independently of the
+Supabase save), so her email list is NOT missing anyone — but any woman who completed the quiz, saved
+results, or built a wishlist during the broken window has data that lives ONLY on her own phone, with no
+server copy and no way to restore it on a new device. **No way to know the start date from here** —
+worth asking Supabase support for the API error history if she wants to know how far back it goes.
 
-### 🚨 FOUND BUT NOT FIXED — PRE-EXISTING, CONFIRMED UNRELATED TO THIS SESSION
-`scratchpad/affq.js`'s `EDIT_N` counter (`HTML.match(/<a class="dc-item-btn"/g)`) matches the WHOLE file,
-not sliced by screen id — so now that Amazon Finds also uses `.dc-item-btn`, it silently counts Finds'
-51 anchors as if they were Edit's. **Proven pre-existing**, not caused by today's work: ran the identical
-suite against the commit before this session's first edit, in an isolated worktree, and got the
-byte-identical failure. Same `.dc-*`-is-ambiguous-between-screens trap this file already names for
-`linkwatch` and the watchdog. ⚠️ **Left unfixed on purpose this session** (scope creep on a Mall/Finds
-product conversation) — worth a real look sometime: scope `EDIT_N` to `#s-dream` only, the way the
-DOM-based checks in the same file already correctly do.
+### ✅ ALSO FOUND AND FIXED ALONG THE WAY: A REAL CLIENT-SIDE BUG, INDEPENDENT OF THE SUPABASE OUTAGE
+The server hands back a save token even on a FAILED save (502) — by design, so a retry of the SAME save
+can reuse it (see its own comment in `user-data.js`). **The client was adopting that token
+UNCONDITIONALLY**, so a device whose very first save ever failed walked away holding a real, valid,
+non-expiring-for-30-days token for an email with NO row behind it. Everything kept working locally, so
+nothing looked wrong, until "Get my link" tried to read that row back and 404'd in a way that looked
+identical to an expired-token 403 from the outside — which is what sent this session down the wrong path
+first. ▶ **FIXED: `saveUserRecord()` now only adopts the token (and backfills the email) from a save that
+actually succeeded (`res.ok`).** Proven with a new test that a 502 carrying a token no longer leaves the
+device believing it's synced. **This is now also a STANDING DON'T — see that section.**
+▶ **A genuinely useful, honest side-fix landed too, and it stays regardless of the Supabase incident:**
+"Get my link" now tells the difference between an EXPIRED token (403/token_required — nothing can fix
+itself, so it routes straight to the existing "Find my results" restore flow) and a genuine transient
+failure (keeps the old "try again" message, since retrying really can help there). `_goRestore()` is the
+new function; it navigates home and reveals the restore card since that UI only exists on `s-wel`.
+⚠️ **A temporary diagnostic tag was added mid-investigation (a small grey technical line under the error
+message) to find the real cause faster, then REMOVED once the cause was confirmed and fixed** — a debug
+string is not a place to leave something once it's done its job.
+🚨 **TWO DISPOSABLE TEST ARTIFACTS WERE LEFT BEHIND FROM VERIFYING THIS LIVE, FLAGGED TO HER:** one throwaway
+row in the Supabase `users` table and two subscribers in the "Style Star Signups" MailerLite group, all
+under `claude-diag-test-...@example.invalid` addresses. Harmless (no real person's data), easy to find
+and delete by searching "claude-diag-test", entirely optional to clean up.
+
+### ✅ THE FITTING ROOM PLACEHOLDER — REBUILT WITH HER, ITERATIVELY, OVER SEVERAL ROUNDS
+Her ask: improve the line art on the Fitting Room's no-photo placeholder (a small plain hanger alone in a
+lot of empty tan). Iterated LIVE with rendered mockups at true card size rather than guessing once:
+1. First round offered four directions (bigger hanger with a dress on it, a dashed "photo coming soon"
+   frame, a closet rail with two garments, the current baseline). **She liked the frame+caption from one
+   and the rod from another, but flagged the DRESS SHAPE as wrong** — a card can be a bag, a belt or
+   trousers, so hanging a garment silhouette on a generic placeholder looks broken the moment the real
+   item isn't a dress. ▶ **The lesson generalises: a placeholder that stands in for ANY item type must
+   never imply a specific one.**
+2. Second round dropped the garment entirely for three hangers + her gold star in the middle; she asked
+   for just the ONE hanger, and for the star's outline to be silver instead of gold.
+3. **FINAL, SHIPPED:** one plain hanger + her own star (gold gradient, `#9AA0A6` silver outline — the
+   EXACT same colors already used on `.dc-corner-star`, the Edit page's jewel star, reused not invented)
+   + a dashed "reserved space" frame + a "Photo coming soon" caption, all percentage-sized so it scales
+   with the 2-up grid at any phone width.
+🚨🚨 **HER CATCH, AND IT MATTERS: THE FIRST SHIPPED STAR WAS A HAND-DRAWN APPROXIMATION, NOT THE REAL
+ONE.** She asked outright *"is that star the same dimensions and shape as the stars we use throughout
+the app?"* — and it was not. The real mark (`_WL_STAR_PATH`, used 37 times elsewhere: Star of the Week,
+the Edit's corner star, etc.) has its own specific, hand-tuned point geometry; the placeholder used a
+similar-looking but genuinely different path. **FIXED to reference `_WL_STAR_PATH` directly** (not a
+second copy of the coordinates), so it can never quietly drift from the real mark again.
+▶ Verified against the real render at phone width (`scratchpad/fitroom.js`, 24/24 clean throughout every
+round) and the CSS content-hash was restamped per the project's own rule for any `styles.css` edit.
+
+### ▶ ONE MORE THING THIS SESSION SETTLED: THE 32KB PROMPT-CAP THEORY IS RULED OUT
+Board row 18 (*"Couldn't load options right now"* on Shop your Style) named the 32KB prompt cap as the
+remaining suspect, with the instruction *"measure it before claiming it."* ▶ **MEASURED: `scratchpad/
+promptcap.mjs` passes clean, 10/10, with real headroom on every shopping surface** (Shop your Style, the
+wantlist, Wardrobe Ideas) — the shrink ladder built for this in an earlier session is working. **A
+20-ask live sweep against the real model also came back 100% clean** — every reply parsed as valid JSON.
+🚨 **SO THE PROMPT CAP IS NOT THE CAUSE. The fault's real cause is still unknown** — this rules out the
+one lead the board had, it does not solve it. Next session needs a fresh theory, not this one repeated.
 
 ### ▶▶ WHAT IS WAITING ON HER — her own priority order (full detail in the Master To-Do List above)
 1. ⏳ The Oct 1 tax-receipt clock (~3 weeks out) — the only real deadline on her board.
 2. ⭐⭐⭐ Apply to the affiliate programmes. CJ is free and still not done.
 3. ⭐ More Edit/Finds pieces — she's on a roll and the machinery makes it cheap now.
+4. ▶ Optional: clean up the two `claude-diag-test-...@example.invalid` artifacts in Supabase/MailerLite.
+5. ▶ Optional: ask Supabase support how far back the 401 errors go, if she wants to know whether any
+   real woman's save was silently lost during the outage.
 
 ### ▶▶ WHAT IS OPEN FOR CLAUDE
-1. 🚨 "Couldn't load options right now" — she photographed it on Shop your Style; the stylist call
-   failing, not the search. The remaining suspect is the 32KB prompt cap, measured at 104 characters of
-   headroom. **Measure it before claiming it.**
+1. 🚨 "Couldn't load options right now" on Shop your Style — the prompt-cap theory is now RULED OUT (see
+   above). Cause still genuinely unknown; needs a fresh live-diagnosis approach next time, not a repeat
+   of the cap measurement.
 2. 💰 A price filter — a find request carries item · colour · fabric · cut · size · width and no price
    field at all. When built, put `Try: tops under $100` and `Try: white jeans under $150` back verbatim.
 3. ⭐ Wire her Style Signature into the finder (board row 11, her *"many of them were shapeless"*) —
    parked by her; hers to green-light, one thing at a time.
-4. ▶ Read her analytics. `track()` exists and nobody has looked. Still worth doing: it's the thing that
-   would tell her whether she's on track for the 3 sales inside 180 days, before day 180.
+4. ▶ Read her analytics. `track()` exists and nobody has looked. Still worth doing.
 5. ▶ A shared remembered cache — today's is per-browser. Must live server-only (Netlify Blobs), never
    through the publishable key.
-6. ▶ Amazon's disclosure "I" vs "we"/"Style Star LLC" — flagged to her, not guessed at; a real open
-   question if she wants to pursue confirming it with Amazon directly.
-7. ▶ `affq.js`'s `EDIT_N` counter needs scoping to `#s-dream` — see above. Low priority, real debt.
-🚨 **SERPAPI'S OUTAGE IS STILL OPEN BUT PARTIAL — roughly 1 search in 6 gets through.** Her own feed
-fills the screen on every failure, so a woman never sees it empty. Re-check before assuming it's over:
-`curl -s https://status.serpapi.com/api/v2/summary.json` — `Google: major_outage` means it isn't.
+6. ▶ Amazon's disclosure "I" vs "we"/"Style Star LLC" — flagged to her, not guessed at.
+7. ▶ `affq.js`'s `EDIT_N` counter needs scoping to `#s-dream` — low priority, real debt.
+🚨 **SERPAPI'S OUTAGE — RE-CHECK BEFORE ASSUMING IT'S OVER:**
+`curl -s https://status.serpapi.com/api/v2/summary.json` — `Google: major_outage` means it isn't. **Still
+showing `major_outage` as of this session.**
 
 ### 🎯 STANDING RULE FOR CLAUDE — NEVER ASK HER TO MAKE A GIT DECISION
 Her words: *"Why are you asking me about putting something on main? I don't even know what that means.
@@ -414,13 +455,15 @@ track of everything and be honest with me."** Deciding for her is not permission
 was decided — say what was saved and where, in one line. *(See also "THE ARCHIVING RULE" below, which
 this generalises — Claude's process, never hers to referee.)*
 
-### ▶ TEST STATE — re-measured 2026-09-12 (third session)
-`hubs.js` 49/49, `mallverify.js` 14/14 (run twice, clean both times), both script blocks parse clean.
-Not re-run this session, no code of theirs touched: `findscsv` 50 · `findspage` 102 · `linkwatch` 27 ·
-`copy` 50 · `tabtops` 49 · `catmark` 132/3-pre-existing · `wldoortest` 55/65-pre-existing · `curated`
-62-63/65 (3 named pre-existing failures — see the standing section below).
-
-
+### ▶ TEST STATE — re-measured 2026-09-12 (fourth session)
+`savetruth` 19/19 · `sharelink` 54/54 · `fitroom` 24/24 (run repeatedly through every placeholder
+iteration) · `promptcap` 10/10 · `copy` 50/50 · both inline `<script>` blocks parse clean, checked after
+every edit this session. New, session-specific tests written and passing: a token-adoption test (proves
+a failed save no longer leaves a device believing it's synced) and an expired-token-vs-transient-failure
+test for the wishlist share message. Not re-run this session, no code of theirs touched: `hubs` 49/49 ·
+`mallverify` 14/14 · `findscsv` 50 · `findspage` 102 · `linkwatch` 27 · `tabtops` 49 · `catmark`
+132/3-pre-existing · `wldoortest` 55/65-pre-existing · `curated` 62-63/65 (3 named pre-existing failures
+— see the standing section below).
 
 ## 📌📌 STANDING REFERENCE — WHAT IS STILL TRUE (compacted from 2026-09-06 through 2026-09-11)
 🚨 **THE SESSION BLOCKS BEHIND THIS SECTION WERE ARCHIVED IN WAVES AND NOTHING WAS DELETED** — they are
@@ -946,6 +989,13 @@ and be able to add them without having to go through all."* ⚠️ **A draft she
 invention — the Garnet Hill lesson was about inventing SILENTLY.**
 
 ### 🚨 STANDING DON'Ts LIFTED OUT OF THE ARCHIVED BLOCKS — every one was paid for
+- ⚠️⚠️ **NEVER ADOPT A SAVE TOKEN FROM A RESPONSE THAT WASN'T A SUCCESS.** `user-data.js` hands back a
+  token even on a FAILED save (502) — by design, so a retry of the SAME save can reuse it. `saveUserRecord()`
+  on the client used to adopt it unconditionally, found 2026-09-12: a device whose very first save ever
+  failed (the Supabase-401 incident that day) walked away holding a real, valid token for an email with
+  NO row behind it, and everything kept working locally until "Get my link" tried to read that row back
+  and 404'd in a way that looked exactly like an expired token from the outside. **Gate every token/email
+  adoption on `res.ok`, never just on the field being present.**
 - ⚠️⚠️ **DO NOT RE-ADD A WEB SEARCH TOOL TO THE STYLIST CHAT "to help her find more."** That is exactly
   what invented four dresses and four prices for her. **The finder is the only product route in chat.**
 - ⚠️ **DO NOT REBUILD THE STORE WORD INDEX.** A rarity-weighted index over her 100 store descriptions
@@ -2113,6 +2163,23 @@ Shopbop, and I did not know. Measured immediately: the archive held 234 mentions
 but the archive is not loaded at session start, so from inside a session it may as well not exist.
 ▶▶ **THIS IS LIVE OPERATIONAL STATUS, WHICH IS AN OPEN THREAD, WHICH BY THIS FILE'S OWN RULE IS NEVER
 ARCHIVED. Keep it here and keep it current.** Her words: *"all of that is important to overall strategy."*
+
+🚨🚨 **DATABASE INCIDENT, FOUND AND FIXED 2026-09-12 (fourth session) — LIVE OPERATIONAL STATUS, NEVER
+ARCHIVES.** The `SUPABASE_KEY` Netlify was using went stale (Supabase rejecting it with a 401), so **no
+save reached the database for an unknown period, for most likely every user, not just her.** Found via a
+live diagnostic on the wishlist share endpoint, fixed by her: got the current `service_role` secret from
+Supabase (Project Settings → API → the legacy keys tab) and updated it in Netlify, then redeployed.
+✅ **RE-VERIFIED LIVE, FIXED:** both the save endpoint and real share-link creation now succeed end to
+end. ⚠️ **STILL OPEN AND WORTH DOING IF SHE WANTS TO KNOW: no way from here to tell how long it was
+broken, or whether any real woman's save was silently lost during the window** (her own testing/local use
+kept working regardless, since everything lives on-device first) — Supabase support could tell her their
+API error history if she asks. **MailerLite signups were unaffected** (that call runs independently of
+the Supabase save), so her email list itself is not missing anyone.
+▶ **The likely trigger, not confirmed:** Supabase silently rotating the underlying JWT signing secret,
+which invalidates old legacy `anon`/`service_role` keys without warning. If `SUPABASE_KEY` ever goes
+stale again with no code change on this side, check Supabase's own API-keys page FIRST, not just whether
+the project is paused. Full story of the hunt is in this session's "WHERE WE LEFT OFF" above (moves to
+`CLAUDE-archive.md` next session, but the incident line here does not).
 
 👥👥 **SHE HAS SHARED THE APP — 2026-09-09, HER WORDS: *"I have already asked many friends and put it out
 on Instagram."*** 🚨 **LIVE OPERATIONAL STATUS, WHICH BY THIS FILE'S OWN RULE NEVER ARCHIVES.** ▶ **It is

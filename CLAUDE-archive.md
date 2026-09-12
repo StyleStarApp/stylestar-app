@@ -11,6 +11,101 @@ The standing rules, current decisions, store system and open threads all live in
 
 ---
 
+## ▶▶▶ WHERE WE LEFT OFF — 2026-09-12 (third session, end of session). READ THIS FIRST.
+🚨 **THIS BLOCK IS THE CURRENT TRUTH. Everything below it is standing reference — if a line further
+down contradicts this one, THIS ONE WINS.**
+📁 **The second-session 2026-09-12 entry (the wishlist share-card tidy, the List View/Fitting Room
+toggle-arrow fix) moved to `CLAUDE-archive.md` in this commit, VERBATIM**, under its own heading.
+Nothing was deleted.
+
+### ✅ THIS SESSION'S WORK — HER TWO-THREAD ASK FROM LAST SESSION, ANSWERED AND SHIPPED
+Opened with last session's unscoped ask still open: change where the app suggests the Mall, and add
+Amazon Finds to the home hub. Talked it through with her rather than guessing, then built what she
+actually asked for, all measured and merged straight to `main`:
+1. **Answered her affiliate-wiring questions first, by reading the code, not recalling it.** Confirmed
+   `_affUrl()` is the ONE choke point every outbound shopping link in the app passes through — Mall,
+   chat, Wardrobe Ideas, the wishlist, the Edit, Finds, Star of the Week — so a store earns wherever its
+   link appears, never surface-by-surface. Today that's 7 of the Mall's 30 cards (FARM Rio, DVF, Olivela,
+   Marissa Collections, Mytheresa, Etsy, Amazon); the other 23 are plain links. ⚠️ **Vilebrequin, COUTR
+   and Fleur du Mal are approved but have no Mall card at all** — they earn only via the Star/Edit today.
+2. **The home hub's `Shop` card, on all THREE surfaces that build it** (`s-res`, the photo-results
+   `chub-in`, and the JS-built `s-wb` Welcome Back hub) — **Shop the Mall dropped, Amazon Finds added,
+   reordered to Shop your style → Shop Style Star Edit → Shop Amazon Finds → Your Wishlist**, her own
+   order. New row carries a hand-drawn line-art cardboard-box icon and, her catch, **the same pink
+   `.hub-ch` heart the Edit row wears** — Finds is hand-selected too. `showShop` fell clean out of the
+   `s-wb` hub builder's index sweep (index 6, now unused/orphaned there — harmless, never appended).
+   "Shop the Mall" stays on the hamburger Menu, untouched, her explicit call.
+3. **The global footer's "Shop" link** (`_stdFootHTML`, filled from ONE template onto ~20 screens) **and
+   the welcome screen's "Prefer to shop first?" quick link** — both repointed from `showShop()` (Mall) to
+   `openFinds()`. ⚠️ **Rendered and sent to her BEFORE shipping, her ask** — three screenshots proving the
+   footer's plain "Shop" label still reads the same but now lands on `/finds`.
+4. **The shared-wishlist page's own footer** (`_shTail`, what a friend sees on a `/list/<token>` link) —
+   found by grepping every `showShop()` call site rather than assuming there was only the one. Its
+   "Browse the Style Star Mall →" swapped for "Browse Amazon Finds ♥", matching the Edit link beside it.
+5. **The Mall itself now sorts each category with its earning stores first** — a new `_mallEarns(u)`
+   helper reads the SAME live facts `_affUrl` already uses (an `_AFF_MID` domain, or Amazon once
+   `_AMZ_TAG` is set), stable-sorted so her original order holds among the rest. ⚠️ **Never a hand-kept
+   list** — a future approval reorders the Mall on its own, nothing to update here.
+▶ Verified throughout: both inline `<script>` blocks parse; `scratchpad/hubs.js` 49/49 and
+`scratchpad/mallverify.js` 14/14 both clean; live-rendered the Mall's sort order and the footer's actual
+landing screen in Chromium before calling anything done, not just read the markup.
+
+### 🚨 FOUND BUT NOT FIXED — PRE-EXISTING, CONFIRMED UNRELATED TO THIS SESSION
+`scratchpad/affq.js`'s `EDIT_N` counter (`HTML.match(/<a class="dc-item-btn"/g)`) matches the WHOLE file,
+not sliced by screen id — so now that Amazon Finds also uses `.dc-item-btn`, it silently counts Finds'
+51 anchors as if they were Edit's. **Proven pre-existing**, not caused by today's work: ran the identical
+suite against the commit before this session's first edit, in an isolated worktree, and got the
+byte-identical failure. Same `.dc-*`-is-ambiguous-between-screens trap this file already names for
+`linkwatch` and the watchdog. ⚠️ **Left unfixed on purpose this session** (scope creep on a Mall/Finds
+product conversation) — worth a real look sometime: scope `EDIT_N` to `#s-dream` only, the way the
+DOM-based checks in the same file already correctly do.
+
+### ▶▶ WHAT IS WAITING ON HER — her own priority order (full detail in the Master To-Do List above)
+1. ⏳ The Oct 1 tax-receipt clock (~3 weeks out) — the only real deadline on her board.
+2. ⭐⭐⭐ Apply to the affiliate programmes. CJ is free and still not done.
+3. ⭐ More Edit/Finds pieces — she's on a roll and the machinery makes it cheap now.
+
+### ▶▶ WHAT IS OPEN FOR CLAUDE
+1. 🚨 "Couldn't load options right now" — she photographed it on Shop your Style; the stylist call
+   failing, not the search. The remaining suspect is the 32KB prompt cap, measured at 104 characters of
+   headroom. **Measure it before claiming it.**
+2. 💰 A price filter — a find request carries item · colour · fabric · cut · size · width and no price
+   field at all. When built, put `Try: tops under $100` and `Try: white jeans under $150` back verbatim.
+3. ⭐ Wire her Style Signature into the finder (board row 11, her *"many of them were shapeless"*) —
+   parked by her; hers to green-light, one thing at a time.
+4. ▶ Read her analytics. `track()` exists and nobody has looked. Still worth doing: it's the thing that
+   would tell her whether she's on track for the 3 sales inside 180 days, before day 180.
+5. ▶ A shared remembered cache — today's is per-browser. Must live server-only (Netlify Blobs), never
+   through the publishable key.
+6. ▶ Amazon's disclosure "I" vs "we"/"Style Star LLC" — flagged to her, not guessed at; a real open
+   question if she wants to pursue confirming it with Amazon directly.
+7. ▶ `affq.js`'s `EDIT_N` counter needs scoping to `#s-dream` — see above. Low priority, real debt.
+🚨 **SERPAPI'S OUTAGE IS STILL OPEN BUT PARTIAL — roughly 1 search in 6 gets through.** Her own feed
+fills the screen on every failure, so a woman never sees it empty. Re-check before assuming it's over:
+`curl -s https://status.serpapi.com/api/v2/summary.json` — `Google: major_outage` means it isn't.
+
+### 🎯 STANDING RULE FOR CLAUDE — NEVER ASK HER TO MAKE A GIT DECISION
+Her words: *"Why are you asking me about putting something on main? I don't even know what that means.
+I count on you to decide what needs to be saved or archived or put on main or the branch and all of
+that. I need you to keep track of everything and be honest with me."* ▶ **Branch, commit, archive,
+merge to `main` — all of it is Claude's to decide and do, then report in one plain line** ("saved and
+live"). **The only thing that still goes to her is a PRODUCT decision** — what the app should do, what
+a woman sees, what her words mean. ⚠️ **The second half of her sentence is load-bearing too: "keep
+track of everything and be honest with me."** Deciding for her is not permission to be vague about what
+was decided — say what was saved and where, in one line. *(See also "THE ARCHIVING RULE" below, which
+this generalises — Claude's process, never hers to referee.)*
+
+### ▶ TEST STATE — re-measured 2026-09-12 (third session)
+`hubs.js` 49/49, `mallverify.js` 14/14 (run twice, clean both times), both script blocks parse clean.
+Not re-run this session, no code of theirs touched: `findscsv` 50 · `findspage` 102 · `linkwatch` 27 ·
+`copy` 50 · `tabtops` 49 · `catmark` 132/3-pre-existing · `wldoortest` 55/65-pre-existing · `curated`
+62-63/65 (3 named pre-existing failures — see the standing section below).
+
+
+
+---
+
+
 ## ▶▶▶ WHERE WE LEFT OFF — 2026-09-12 (second session, end of session). READ THIS FIRST.
 🚨 **THIS BLOCK IS THE CURRENT TRUTH. Everything below it is standing reference — if a line further
 down contradicts this one, THIS ONE WINS.**
