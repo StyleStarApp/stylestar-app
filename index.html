@@ -250,7 +250,7 @@
   ▶ RESTAMP AFTER ANY CSS EDIT:  node scripts/css-version.js --write
   ⚠️ DO NOT hand-type or "tidy" the value — it is derived from the file, and
   scratchpad/copy.js fails if it is stale. -->
-  <link rel="stylesheet" href="/styles.css?v=c34a6486e7">
+  <link rel="stylesheet" href="/styles.css?v=6276fa37c5">
 </head>
 <body>
 <!-- build: quiz glow-up (chrome frame, gold knob, gold button, gold progress) 2026-07-11 r2 -->
@@ -10436,7 +10436,18 @@ var _wlToastTimer=null,_wlSyncTimer=null;
 // built twice, because it has to render identically whether a card starts
 // with no image (the AI never found a real product) or a real photo LINK
 // fails after the fact (a dead hotlink) -- one honest fallback, one place.
-var _WL_GRID_PLACEHOLDER='<span class="wl-gplaceholder"><svg viewBox="0 0 24 24" fill="none" stroke="#C99A2C" stroke-width="1.3"><path d="M8 4.5c0-1.4 1.8-2.5 4-2.5s4 1.1 4 2.5"/><path d="M6 8 2.3 18.4c-.2.6.3 1.2.9 1.2H8"/><path d="M18 8l3.7 10.4c.2.6-.3 1.2-.9 1.2H16"/><path d="M6 8c0-1.7 2.7-3 6-3s6 1.3 6 3l-2 3H8Z"/><path d="M10 11v10M14 11v10"/></svg></span>';
+/* ⭐ REBUILT 2026-09-12, HER ASK. The plain hanger was too small and too plain
+   for the empty tan space, and her first fix (a hanger with a dress on it)
+   was wrong for a reason she caught immediately: a card can be a bag, a
+   belt or trousers, so hanging a DRESS on the placeholder looks broken the
+   moment the real item isn't one. ▶ Now it is genuinely generic: one plain
+   hanger (nothing drawn hangs on it -- no garment shape to be wrong about),
+   her own gold-with-silver-outline star (the same mark and the same colors
+   as `.dc-corner-star` on the Edit page, `#9AA0A6` silver over the same
+   gold gradient -- reused rather than invented, so it reads as HER mark
+   wherever it appears), a dashed frame reading as reserved space rather
+   than a broken image, and "Photo coming soon" naming what it is. */
+var _WL_GRID_PLACEHOLDER='<span class="wl-gplaceholder"><span class="wl-gpframe"></span><svg viewBox="0 0 100 130" fill="none"><defs><radialGradient id="wlgStar" cx="42%" cy="34%" r="72%"><stop offset="0" stop-color="#FDF0B8"/><stop offset=".38" stop-color="#F4D877"/><stop offset=".72" stop-color="#E8B944"/><stop offset="1" stop-color="#CE9A26"/></radialGradient></defs><path d="M10 20h80" stroke="#C99A2C" stroke-width="1.8" stroke-linecap="round"/><circle cx="12" cy="20" r="2" fill="#C99A2C"/><circle cx="88" cy="20" r="2" fill="#C99A2C"/><path d="M50 20v6" stroke="#C99A2C" stroke-width="1.7" stroke-linecap="round"/><path d="M50 26 L34 42 L66 42 Z" stroke="#C99A2C" stroke-width="1.7" stroke-linejoin="round"/><g transform="translate(50,66) scale(2.9)"><path d="M0 -9.7L1.48 -3.7L7.4 -3.6L2.6 0.1L4.3 5.9L0 2.4L-4.3 5.9L-2.6 0.1L-7.4 -3.6L-1.48 -3.7Z" fill="url(#wlgStar)" stroke="#9AA0A6" stroke-width="0.55" stroke-linejoin="round"/></g></svg><span class="wl-gpcap">Photo coming soon</span></span>';
 function _wlGridImgFail(img){
   var card=img.closest?img.closest('.wl-gcard'):null;
   img.outerHTML=_WL_GRID_PLACEHOLDER;

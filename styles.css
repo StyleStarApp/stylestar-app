@@ -1604,8 +1604,19 @@ html.finds-velvet .ss.dream-mirror{background:linear-gradient(#fff,#fff) padding
    arriving from the SAME unknown-shape sources, so `contain` in a fixed
    frame is the honesty rule one screen further out, not a look picked here. */
 #s-wishlist .wl-gcard img{display:block;width:100%;aspect-ratio:3/4;object-fit:contain;background:#F5EFE2}
-#s-wishlist .wl-gplaceholder{display:flex;align-items:center;justify-content:center;aspect-ratio:3/4;background:#F5EFE2}
-#s-wishlist .wl-gplaceholder svg{width:34px;height:34px}
+/* ⭐ REBUILT 2026-09-12, HER ASK: one plain hanger (never a garment shape --
+   a card can be a bag, a belt or trousers, so a dress silhouette reads as
+   wrong the moment the real item isn't one) and her own silver-edged gold
+   star, inside a dashed "reserved space" frame with a caption naming what
+   it is, rather than a small icon lost in a lot of empty tan. Percentage
+   sizing throughout so it scales with the card, since this grid is 2-up on
+   a phone and the card width is not a fixed number. */
+#s-wishlist .wl-gplaceholder{display:flex;align-items:center;justify-content:center;aspect-ratio:3/4;background:#F5EFE2;position:relative}
+#s-wishlist .wl-gplaceholder svg{width:56%;height:56%;position:relative;z-index:1;margin-top:-6%}
+/* The frame's bottom sits clear of the caption below it -- they used to share
+   the same edge and the dashes read as a strikethrough over the words. */
+#s-wishlist .wl-gpframe{position:absolute;top:11%;left:11%;right:11%;bottom:20%;border:1.5px dashed #D8A52E;border-radius:2px;pointer-events:none}
+#s-wishlist .wl-gpcap{position:absolute;left:0;right:0;bottom:8%;text-align:center;font:500 9px/1.3 'Jost',sans-serif;letter-spacing:.05em;text-transform:uppercase;color:#a8925a}
 #s-wishlist .wl-gtext{padding:9px 10px 11px}
 #s-wishlist .wl-gnm{display:block;font:600 12.5px/1.3 'Jost',sans-serif;color:#26221c;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
 #s-wishlist .wl-gst{display:block;font:500 9.5px/1.35 'Jost',sans-serif;letter-spacing:.05em;text-transform:uppercase;color:#6b6355;margin-top:3px}
