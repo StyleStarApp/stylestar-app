@@ -1566,7 +1566,12 @@ html.finds-velvet .ss.dream-mirror{background:linear-gradient(#fff,#fff) padding
    immediately as two real buttons — her mom's 2026-07-26 lesson: a control
    that doesn't look tappable might as well not be there. */
 #s-wishlist .wl-viewtabs{display:flex;gap:8px;margin:14px 0 0}
-#s-wishlist .wl-vtab{flex:1;text-align:center;padding:10px 0;font:600 12px/1 'Jost',sans-serif;letter-spacing:.09em;text-transform:uppercase;border:1px solid #d8c285;color:#8a8474;cursor:pointer;-webkit-tap-highlight-color:transparent}
+/* Her catch (2026-09-12): "list is all by itself on one line... move that
+   word up." Centered was mathematically dead-center (10px above, 10px below,
+   measured) but a single short word alone in a wide pill reads as floating
+   with nowhere to sit -- nudged up so it reads as anchored to the tab rather
+   than adrift in it. Both tabs share this, not just the one she looked at. */
+#s-wishlist .wl-vtab{flex:1;text-align:center;padding:7px 0 13px;font:600 12px/1 'Jost',sans-serif;letter-spacing:.09em;text-transform:uppercase;border:1px solid #d8c285;color:#8a8474;cursor:pointer;-webkit-tap-highlight-color:transparent}
 #s-wishlist .wl-vtab.on{background:#1a1a1a;color:#EACD68;border-color:#1a1a1a}
 /* Two columns is the whole point: big enough to actually judge, not a
    thumbnail strip. .wl-card's own padding already frames the row list at
