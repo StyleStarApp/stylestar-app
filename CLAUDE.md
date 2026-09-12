@@ -889,12 +889,23 @@ maintain. 🚨 **HER OWN LINE, ON BOTH PAGES, EACH POINTING AT THE OTHER — NEV
   is SUPPOSED to wrap, and shares the same base selector. ✅ **Verified one line at 390/375/360/320px,
   no overflow.**
   ▶ **SHE ALSO FLAGGED THE STAR ON THAT SAME SHOP YOUR STYLE LOADING SCREEN AS OFF-CENTRE — MEASURED
-  AND IT IS NOT.** Its bounding box lands at exactly 195px in the 390px frame, matching the frame's
-  own centre precisely (confirmed both by the numbers and by rendering the exact wait-state markup
-  and looking at it). **No code change made — there was nothing to fix.** The likely explanation: the
-  disclosure text directly above it WAS genuinely shifted left at the time, which probably made the
-  whole screen read as "leaning left," the star included. Worth a fresh look now that the text is
-  fixed, but do not go looking for a star bug that measurement says isn't there.
+  AND IT IS NOT, HORIZONTALLY.** Its bounding box lands at exactly 195px in the 390px frame, matching
+  the frame's own centre precisely (confirmed both by the numbers and by rendering the exact wait-state
+  markup and looking at it). **No horizontal code change was made.**
+  🚨🚨 **BUT SHE CAME BACK WITH THE REAL COMPLAINT, AND IT WAS VERTICAL: she wanted the star centred
+  in the visible gap between the disclosure's bottom and the "Checking what's actually in stock..."
+  caption below it.** ▶ **MEASURED WHY IT WASN'T: `.ss-find-wait` used `justify-content:center`, which
+  centres the star+caption pair within the WHOLE 338px height reserved for the eventual six-card row —
+  not within the gap she was actually looking at.** Since the star and its own caption sit only 14px
+  apart by deliberate design (their own `gap`), that left **122px of empty space above the star and
+  just 14px below it, an 8-to-1 split** — invisible as a bug in the CSS itself (the two empty halves of
+  the 338px box are symmetric, 122 vs 120) but obvious on her phone, because nothing marks where the
+  reserved box actually ends. ✅ **FIXED: `justify-content:flex-start`** drops the star+caption pair
+  right under the disclosure instead, so the gap above now roughly matches the gap below (measured:
+  3px vs 14px, down from 122px vs 14px) — **verified both numerically and by rendering and looking at
+  it.** The unused remainder of the 338px box simply becomes empty space below the caption, which is
+  exactly what happens today anyway once real cards replace this loading state, so **the "nothing may
+  jump" reserved-height guarantee is untouched — same 338px, just repositioned within it.**
 - ▶ **Amazon's trademark rules** (read from their own guidelines): a descriptive heading like "Amazon
   Finds" is fine; their marks may never appear in a domain/subdomain (a second reason the path is
   `/finds`); displaying their LOGO triggers a further attribution requirement — so the page uses only
