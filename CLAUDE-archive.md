@@ -11,6 +11,61 @@ The standing rules, current decisions, store system and open threads all live in
 
 ---
 
+## ▶▶▶ WHERE WE LEFT OFF — 2026-09-12 (sixth session, end of session). READ THIS FIRST.
+🚨 **THIS BLOCK IS THE CURRENT TRUTH. Everything below it is standing reference — if a line further
+down contradicts this one, THIS ONE WINS.**
+📁 **The fifth-session 2026-09-12 entry (the Stella McCartney bag, the Edit deletions, the Finds
+renames) moved to `CLAUDE-archive.md` in this commit, VERBATIM**, under its own heading. Nothing was
+deleted.
+
+### 🚨🚨 HER CATCH: HER SAVE TOKEN HAD DRIFTED TO THE WRONG ACCOUNT — FOUND, ROOT-CAUSED, REPAIR BUILT
+She reported: *"My wishlist is full of items but when I texted myself the link of wishlist it sent me
+one item that is not on my list"* — her real wishlist has many pieces, but the link she texted herself
+opened on a page showing exactly ONE unfamiliar item ("Belted Midi Dress," Bloomingdales) plus a note
+she never wrote ("Notes test does this work?").
+**ROUND ONE, REAL BUT NOT THE WHOLE STORY:** `_wlShareLink()` cached a minted share token forever with
+no check that it still matched the email this device was currently saving under (`ss_email`) — fixed by
+tagging every mint with its owner email and refusing/clearing a mismatched or untagged one
+(`scratchpad/sharelink-drift.mjs`, 6/6). **She tried it and got the exact same wrong content again** —
+telling proof this guard alone couldn't be the whole fix, because it only catches a token DRIFTING away
+from the current `ss_email`. If both had been wrong TOGETHER, consistently, from the very start, there
+would be nothing to detect as a mismatch.
+🚨🚨 **ROUND TWO, THE REAL ROOT CAUSE — CONFIRMED LIVE, NOT GUESSED:** the share link's account identity
+is never actually decided by `ss_email` at all — it comes from her **save token** (`_ssToken()`), which
+the server decrypts to an email server-side. Read her real email's Supabase row directly, safely,
+through the app's own existing "Find my results" email-code exchange (never a raw database query): it
+has **NO `wardrobe` field at all**, placeholder quiz answers (`[6,6,6,...]`), a generic un-personal
+portrait, and `updatedAt: 2026-07-17`. ▶▶ **HER SAVE TOKEN HAS BEEN AUTHENTICATING AS A DIFFERENT
+ACCOUNT — ALMOST CERTAINLY A LEFTOVER FROM TESTING THE SHARELINK FEATURE ITSELF ON 2026-08-21 — FOR
+CLOSE TO TWO MONTHS.** Every real save she's made since July has landed only on her phone; her real
+email's row on the server has been frozen at an early placeholder that whole time.
+✅ **BUILT: a one-time recovery path, `?resync=<a fresh save token>` in `index.html`'s boot sequence.**
+Deliberately NOT the existing `?r=` restore link, which PULLS the server's (wrong, stale) data over her
+phone's real data — exactly backwards here. `?resync=` POINTS the device at the correct account and
+PUSHES her phone's own already-correct local data (wardrobe, wishlist, prefs, real quiz answers) up to
+it, never reading anything back from the server. Proven safe against a mocked network, no real account
+touched by the test: `scratchpad/resync-repair.mjs`, 9/9.
+🚨 **AND A SECOND ROUND, THE SAME SESSION: `?resync=` TURNED OUT TO BE UNREACHABLE FOR HER SPECIFICALLY.**
+She opens Style Star from a HOME SCREEN ICON, not Safari — and a home-screen web app is its own storage
+container, separate from Safari (the exact reason `_applyRestoredRecord`'s comment already gives for why
+`ss_email` has to be derived from the token). A link tapped in Messages/Notes would open in Safari, a
+container with none of her real data in it, and the repair would push a near-empty profile instead of
+her real one. ✅ **BUILT INSTEAD: an in-app control, "Reconnect my saved account"**, added to the
+Wishlist screen's share box (`_wlRenderShare()`/`_wlReconnectPrompt()`) — reachable from INSIDE the
+running app on whichever device she opens it from, the one place her real local data actually lives.
+Tapping it prompts for the code, then runs the identical push. Proven: `scratchpad/reconnect-prompt.mjs`,
+7/7, including that a cancelled/blank prompt changes nothing.
+
+### ▶ TEST STATE — re-measured 2026-09-12 (sixth session)
+`sharelink` 54/54 (server-side, untouched, re-run to confirm the client-only fix didn't need it to
+change) · `sharelink-drift` 6/6, new, built for this fix · `savetruth` 19/19 (re-run, unrelated code
+adjacent to it). Not touched or re-run this session: `findscsv` 50 · `findspage` 102 · `fitroom` 24 ·
+`promptcap` 10 · `copy` 50 · `hubs` 49 · `mallverify` 14 · `linkwatch` 27 · `tabtops` 49 · `catmark`
+132/3-pre-existing · `wldoortest` 55/65-pre-existing · `curated` 62-63/65 (3 named pre-existing
+failures, see the standing section below) · `affq` 1 known pre-existing failure.
+
+---
+
 ## ▶▶▶ WHERE WE LEFT OFF — 2026-09-12 (fifth session, end of session). READ THIS FIRST.
 🚨 **THIS BLOCK IS THE CURRENT TRUTH. Everything below it is standing reference — if a line further
 down contradicts this one, THIS ONE WINS.**

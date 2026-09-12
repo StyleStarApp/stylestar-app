@@ -338,70 +338,44 @@ that makes any future number mean something.**
 
 ---
 
-## ▶▶▶ WHERE WE LEFT OFF — 2026-09-12 (sixth session, end of session). READ THIS FIRST.
+## ▶▶▶ WHERE WE LEFT OFF — 2026-09-12 (seventh session, end of session). READ THIS FIRST.
 🚨 **THIS BLOCK IS THE CURRENT TRUTH. Everything below it is standing reference — if a line further
 down contradicts this one, THIS ONE WINS.**
-📁 **The fifth-session 2026-09-12 entry (the Stella McCartney bag, the Edit deletions, the Finds
-renames) moved to `CLAUDE-archive.md` in this commit, VERBATIM**, under its own heading. Nothing was
-deleted.
+📁 **The sixth-session 2026-09-12 entry (the save-token drift discovery, the `?resync=` and "Reconnect
+my saved account" builds) moved to `CLAUDE-archive.md` in this commit, VERBATIM**, under its own
+heading. Nothing was deleted.
 
-### 🚨🚨 HER CATCH: HER SAVE TOKEN HAD DRIFTED TO THE WRONG ACCOUNT — FOUND, ROOT-CAUSED, REPAIR BUILT
-She reported: *"My wishlist is full of items but when I texted myself the link of wishlist it sent me
-one item that is not on my list"* — her real wishlist has many pieces, but the link she texted herself
-opened on a page showing exactly ONE unfamiliar item ("Belted Midi Dress," Bloomingdales) plus a note
-she never wrote ("Notes test does this work?").
-**ROUND ONE, REAL BUT NOT THE WHOLE STORY:** `_wlShareLink()` cached a minted share token forever with
-no check that it still matched the email this device was currently saving under (`ss_email`) — fixed by
-tagging every mint with its owner email and refusing/clearing a mismatched or untagged one
-(`scratchpad/sharelink-drift.mjs`, 6/6). **She tried it and got the exact same wrong content again** —
-telling proof this guard alone couldn't be the whole fix, because it only catches a token DRIFTING away
-from the current `ss_email`. If both had been wrong TOGETHER, consistently, from the very start, there
-would be nothing to detect as a mismatch.
-🚨🚨 **ROUND TWO, THE REAL ROOT CAUSE — CONFIRMED LIVE, NOT GUESSED:** the share link's account identity
-is never actually decided by `ss_email` at all — it comes from her **save token** (`_ssToken()`), which
-the server decrypts to an email server-side. Read her real email's Supabase row directly, safely,
-through the app's own existing "Find my results" email-code exchange (never a raw database query): it
-has **NO `wardrobe` field at all**, placeholder quiz answers (`[6,6,6,...]`), a generic un-personal
-portrait, and `updatedAt: 2026-07-17`. ▶▶ **HER SAVE TOKEN HAS BEEN AUTHENTICATING AS A DIFFERENT
-ACCOUNT — ALMOST CERTAINLY A LEFTOVER FROM TESTING THE SHARELINK FEATURE ITSELF ON 2026-08-21 — FOR
-CLOSE TO TWO MONTHS.** Every real save she's made since July has landed only on her phone; her real
-email's row on the server has been frozen at an early placeholder that whole time. **This is a bigger,
-separate, still-open finding — see the never-archiving incident entry in the Affiliate Status section.**
-✅ **BUILT: a one-time recovery path, `?resync=<a fresh save token>` in `index.html`'s boot sequence.**
-Deliberately NOT the existing `?r=` restore link, which PULLS the server's (wrong, stale) data over her
-phone's real data — exactly backwards here. `?resync=` POINTS the device at the correct account and
-PUSHES her phone's own already-correct local data (wardrobe, wishlist, prefs, real quiz answers) up to
-it, never reading anything back from the server. Proven safe against a mocked network, no real account
-touched by the test: `scratchpad/resync-repair.mjs`, 9/9.
-🚨 **AND A SECOND ROUND, THE SAME SESSION: `?resync=` TURNED OUT TO BE UNREACHABLE FOR HER SPECIFICALLY.**
-She opens Style Star from a HOME SCREEN ICON, not Safari — and a home-screen web app is its own storage
-container, separate from Safari (the exact reason `_applyRestoredRecord`'s comment already gives for why
-`ss_email` has to be derived from the token). A link tapped in Messages/Notes would open in Safari, a
-container with none of her real data in it, and the repair would push a near-empty profile instead of
-her real one. ✅ **BUILT INSTEAD: an in-app control, "Reconnect my saved account"**, added to the
-Wishlist screen's share box (`_wlRenderShare()`/`_wlReconnectPrompt()`) — reachable from INSIDE the
-running app on whichever device she opens it from, the one place her real local data actually lives.
-Tapping it prompts for the code, then runs the identical push. Proven: `scratchpad/reconnect-prompt.mjs`,
-7/7, including that a cancelled/blank prompt changes nothing. **This is the one she was actually sent
-to use — the `?resync=` URL path stays in the code as a second option for a future case where the
-account in question DOES use plain Safari, but was never the live fix for her.**
-⚠️ **NOT YET CONFIRMED WORKING ON HER ACTUAL PHONE — she has the reconnect code and has not yet reported
-back.** Once she taps it and confirms "Get my link" shows her real wishlist, this needs three things:
-(1) mark this incident entry fixed, (2) remove BOTH the temporary `?resync=` boot handling and the
-"Reconnect my saved account" control from `index.html` in a follow-up commit — neither was ever meant to
-stay in the shared app permanently, and (3) consider whether `?r=`'s pull-and-overwrite behavior needs a
-general safety net for the next woman this could happen to (a save-token drift is not provably unique to
-a dev/test history — worth thinking about once this specific fire is out).
+### ✅✅ CONFIRMED FIXED: SHE USED THE RECONNECT CONTROL, "GET MY LINK" NOW SHOWS HER REAL WISHLIST
+She tapped "Reconnect my saved account," pasted the code, and confirmed it worked. **Her real save
+token is now correctly tied to her real account, and her real wardrobe/wishlist/prefs/quiz answers are
+finally saved to the server for the first time since 2026-07-17.**
+▶ **SHE ASKED THE RIGHT NEXT QUESTION: "will this be broken for all our other users too?"** ▶▶ **NO —
+answered plainly, with the reasoning, not just reassurance.** The mismatch could only happen because a
+save token got planted pointing at a different account, and the only time that has ever occurred is
+during LIVE TESTING on Cath's own phone/browser while building the sharelink feature — never on any
+other real woman's device. A normal signup mints a token tied to her own email on day one, and nothing
+in the ordinary app flow ever swaps it out from under her. **So this specific incident could not have
+reached anyone but her.** ▶ **What DID ship for everyone, though: the sharelink-drift guard**
+(`_wlShareLink()` refusing/clearing a token that doesn't match the current `ss_email`) is a genuine
+safety net now protecting every user, for whatever future reason a similar drift might ever occur.
+🚨 **CLEANUP DONE, AS PROMISED IN THE PRIOR ENTRY:** both temporary recovery mechanisms — the `?resync=`
+boot-time URL handling and the "Reconnect my saved account" in-app control — were **removed from
+`index.html`** now that they've done their one job, along with their two now-obsolete test files
+(`scratchpad/resync-repair.mjs`, `scratchpad/reconnect-prompt.mjs`). ⚠️ **NOTHING PERMANENT WAS LEFT
+BEHIND FOR THIS INCIDENT** except the sharelink-drift guard itself (which stays — it's a real
+improvement, not a recovery tool) and this written record. Re-ran `sharelink` (54/54), `sharelink-drift`
+(6/6), `savetruth` (19/19) and `copy` (50/50) after removing the temporary code — no regressions.
+▶ **THE ONE THING FROM THE PRIOR ENTRY DELIBERATELY NOT DONE:** a general safety net for `?r=`'s
+pull-and-overwrite behavior, in case a save-token drift ever recurs for a different reason on a
+different account. Given the incident is now confirmed unique to Cath's own dev-testing history and
+fully closed, this is downgraded to a "worth remembering" line rather than an open task — see below.
 
 ### ▶▶ WHAT IS WAITING ON HER — her own priority order (full detail in the Master To-Do List above)
 1. ⏳ The Oct 1 tax-receipt clock (~3 weeks out) — the only real deadline on her board.
 2. ⭐⭐⭐ Apply to the affiliate programmes. CJ is free and still not done.
 3. ⭐ More Edit/Finds pieces — she's on a roll and the machinery makes it cheap now.
-4. 🚨 **HIGH PRIORITY: tap the one-time repair link she was sent (see the incident entry above) on the
-   SAME PHONE her wishlist actually lives on.** Until then, her real wishlist/preferences/quiz answers
-   exist only on that one device with no server backup at all.
-5. ▶ Optional: clean up the two `claude-diag-test-...@example.invalid` artifacts in Supabase/MailerLite.
-6. ▶ Optional: ask Supabase support how far back the 401 errors go, if she wants to know whether any
+4. ▶ Optional: clean up the two `claude-diag-test-...@example.invalid` artifacts in Supabase/MailerLite.
+5. ▶ Optional: ask Supabase support how far back the 401 errors go, if she wants to know whether any
    real woman's save was silently lost during the outage.
 
 ### ▶▶ WHAT IS OPEN FOR CLAUDE
@@ -418,18 +392,22 @@ a dev/test history — worth thinking about once this specific fire is out).
 6. ▶ Amazon's disclosure "I" vs "we"/"Style Star LLC" — flagged to her, not guessed at.
 7. ▶ `affq.js`'s `EDIT_N` counter needs scoping to `#s-dream` — low priority, real debt.
 8. ▶ Optional, low stakes: find and neutralise the old "Belted Midi Dress" test account's share, if she
-   wants it gone rather than just harmless.
+   wants it gone rather than just harmless — needs the actual old token or a Supabase lookup by hand.
+9. ▶ Worth remembering, not an open task: if a save-token drift ever recurs on a different account for a
+   different reason, `?r=`'s pull-and-overwrite behavior would clobber that device's local data the same
+   way `?resync=` was built to avoid for Cath. No general safety net was built for this — it was judged
+   not worth the permanent complexity for an incident now confirmed unique to one dev-testing history.
 🚨 **SERPAPI'S OUTAGE — RE-CHECK BEFORE ASSUMING IT'S OVER:**
 `curl -s https://status.serpapi.com/api/v2/summary.json` — `Google: major_outage` means it isn't. Not
 re-checked this session; re-check before assuming it has resolved.
 
-### ▶ TEST STATE — re-measured 2026-09-12 (sixth session)
-`sharelink` 54/54 (server-side, untouched, re-run to confirm the client-only fix didn't need it to
-change) · `sharelink-drift` 6/6, new, built for this fix · `savetruth` 19/19 (re-run, unrelated code
-adjacent to it). Not touched or re-run this session: `findscsv` 50 · `findspage` 102 · `fitroom` 24 ·
-`promptcap` 10 · `copy` 50 · `hubs` 49 · `mallverify` 14 · `linkwatch` 27 · `tabtops` 49 · `catmark`
-132/3-pre-existing · `wldoortest` 55/65-pre-existing · `curated` 62-63/65 (3 named pre-existing
-failures, see the standing section below) · `affq` 1 known pre-existing failure.
+### ▶ TEST STATE — re-measured 2026-09-12 (seventh session)
+`sharelink` 54/54 · `sharelink-drift` 6/6 · `savetruth` 19/19 · `copy` 50/50 (all re-run after removing
+the temporary `?resync=`/reconnect-control code, confirming the cleanup broke nothing). Not touched or
+re-run this session: `findscsv` 50 · `findspage` 102 · `fitroom` 24 · `promptcap` 10 · `hubs` 49 ·
+`mallverify` 14 · `linkwatch` 27 · `tabtops` 49 · `catmark` 132/3-pre-existing · `wldoortest`
+55/65-pre-existing · `curated` 62-63/65 (3 named pre-existing failures, see the standing section below)
+· `affq` 1 known pre-existing failure.
 
 ### 🎯 STANDING RULE FOR CLAUDE — NEVER ASK HER TO MAKE A GIT DECISION
 Her words: *"Why are you asking me about putting something on main? I don't even know what that means.
@@ -2179,48 +2157,44 @@ stale again with no code change on this side, check Supabase's own API-keys page
 the project is paused. Full story of the hunt is in this session's "WHERE WE LEFT OFF" above (moves to
 `CLAUDE-archive.md` next session, but the incident line here does not).
 
-🚨🚨 **A SECOND, SEPARATE INCIDENT, FOUND 2026-09-12 (sixth session), STILL OPEN — LIVE OPERATIONAL
-STATUS, NEVER ARCHIVES: HER OWN PHONE'S SAVE TOKEN HAS BEEN POINTING AT THE WRONG ACCOUNT FOR MONTHS.**
+🚨🚨 **A SECOND, SEPARATE INCIDENT, FOUND AND FIXED 2026-09-12 (sixth/seventh sessions) — LIVE
+OPERATIONAL STATUS, NEVER ARCHIVES: HER OWN PHONE'S SAVE TOKEN HAD BEEN POINTING AT THE WRONG ACCOUNT
+FOR MONTHS.**
 ▶ **WHAT SHE SAW:** she texted herself her own wishlist share link and it opened to one item she never
 saved ("Belted Midi Dress," Bloomingdales) plus a note she never wrote ("Notes test does this work?"),
 instead of her real, many-item wishlist.
 ✅ **CONFIRMED LIVE, NOT GUESSED:** her real email's Supabase row (`cath.ellspermann@icloud.com`) was
 read directly (safely — the existing "Find my results" email-code exchange, never a raw database
-query) and it has **NO `wardrobe` field at all, generic placeholder quiz answers (`[6,6,6,...]`), a
+query) and had **NO `wardrobe` field at all, generic placeholder quiz answers (`[6,6,6,...]`), a
 generic un-personalized portrait, and `updatedAt: 2026-07-17`.** ▶▶ **HER REAL WISHLIST, HER REAL
-SLIDER ANSWERS AND HER REAL PORTRAIT HAVE APPARENTLY NEVER REACHED THE SERVER, SINCE JULY 17 —
-EVERYTHING SHE HAS DONE SINCE THEN HAS LIVED ONLY ON HER PHONE.** The "Belted Midi Dress" content is
-almost certainly a *different* account entirely (likely a leftover from testing the sharelink feature
-on 2026-08-21) that her phone's save token has been silently authenticating as, this whole time.
-⚠️ **WHY THIS IS WORSE THAN IT LOOKS: her phone is the ONLY copy of everything she's built since
-July.** If that one device were ever lost, reset, or had its browser data cleared, there would be
-nothing to restore from — the server's copy is nearly two months stale and missing her wishlist
-entirely.
-✅ **BUILT, NOT YET CONFIRMED WORKING: a one-time recovery path.** `index.html`'s boot sequence now
-handles `?resync=<a fresh save token>` — deliberately NOT the existing `?r=` restore link, because that
-one PULLS the server's (wrong, stale) copy over her phone's real data, which here would make things
-worse. `?resync=` instead POINTS the device at the correct account (a token obtained via the safe
-email-code exchange, tied to her real email) and PUSHES her phone's own already-correct local data up
-to it — wardrobe, wishlist, prefs, real quiz answers — never reading anything back from the server.
-✅ Proven safe in isolation (mocked network, no real account touched): `scratchpad/resync-repair.mjs`,
-9/9. 🚨 **BUT `?resync=` TURNED OUT TO BE UNREACHABLE FOR HER: she opens Style Star from a home-screen
-icon, a separate storage container from Safari, where a link tapped in Messages would actually land.**
-✅ **BUILT INSTEAD, THE ONE SHE WAS ACTUALLY SENT: an in-app "Reconnect my saved account" control** on
-the Wishlist screen's share box (`_wlReconnectPrompt()`), reachable from inside the already-running
-app on whichever device she taps it — the one place her real data lives. Prompts for the code, runs the
-identical push. Proven: `scratchpad/reconnect-prompt.mjs`, 7/7. `?resync=` stays in the code as a second
-option for a future case that genuinely is Safari-based, but was never the live fix here.
-✅ **A related, real client bug fixed the same session and already shipped:** the cached wishlist
-share link (`ss_sharelink`) used to be trusted forever with no check that it still matched the
-account currently signed in on that device — now tagged with the email it was minted for and cleared
-the moment that stops matching (`scratchpad/sharelink-drift.mjs`, 6/6). This alone couldn't fix her
-case (her device's `ss_email` had been consistently wrong all along, so nothing had drifted to catch),
-but it is the second half of making sure this can never happen silently again.
-⚠️ **STILL OPEN: she has not yet used the reconnect control.** Once she does, and it succeeds, this
-line should be rewritten to say so plainly, and BOTH the temporary `?resync=` boot handling and the
-"Reconnect my saved account" control should be removed from `index.html` in a follow-up commit (a
-temporary recovery lever, not a permanent one — same instinct as removing a debug tag once it's done
-its job). ▶ **DO NOT consider this closed until she confirms "Get my link" shows her real wishlist.**
+SLIDER ANSWERS AND HER REAL PORTRAIT HAD NEVER REACHED THE SERVER, SINCE JULY 17 — EVERYTHING SHE HAD
+DONE SINCE THEN HAD LIVED ONLY ON HER PHONE.** The "Belted Midi Dress" content was almost certainly a
+*different* account entirely (a leftover from testing the sharelink feature on 2026-08-21) that her
+phone's save token had been silently authenticating as, this whole time.
+✅✅ **FIXED AND CONFIRMED WORKING, 2026-09-12 (seventh session).** She used an in-app "Reconnect my
+saved account" control (built specifically because she opens Style Star from a home-screen icon, a
+storage container separate from Safari, so a link tapped in Messages could never have reached her real
+data) — pasted a fresh save token obtained via the safe email-code exchange, which pushed her phone's
+own already-correct local data (wardrobe, wishlist, prefs, real quiz answers) up to her real account,
+never reading anything back from the server. **She confirmed "Get my link" now shows her real
+wishlist.** Both temporary recovery mechanisms built for this (`?resync=` in the boot sequence, the
+"Reconnect my saved account" control) were removed from `index.html` once confirmed working — neither
+was ever meant to stay in the shared app permanently.
+▶ **HER OWN FOLLOW-UP QUESTION, AND IT WAS THE RIGHT ONE TO ASK: *"will this be broken for all our
+other users too?"*** ▶▶ **ANSWERED PLAINLY: NO.** The mismatch could only happen because a save token
+got planted pointing at a different account, and the only time that has ever occurred is live testing
+on Cath's own device while building the sharelink feature — never on any other real woman's device. A
+normal signup mints a token tied to her own email on day one and nothing in ordinary use ever swaps it.
+**So this specific incident could not have reached anyone but her.**
+✅ **WHAT DID ship for every user, and stays permanently:** the cached wishlist share link
+(`ss_sharelink`) used to be trusted forever with no check that it still matched the account currently
+signed in on that device — now tagged with the email it was minted for and cleared the moment that
+stops matching (`scratchpad/sharelink-drift.mjs`, 6/6). This is a genuine safety net for every account
+going forward, whatever future cause a similar drift might have.
+▶ **NOT BUILT, AND JUDGED NOT WORTH IT:** a general safety net for `?r=`'s pull-and-overwrite behavior,
+in case a save-token drift ever recurs on a different account for a different reason. Downgraded from
+an open task to a "worth remembering" line, since the incident is now confirmed unique to one
+dev-testing history and fully closed — see "WHAT IS OPEN FOR CLAUDE" for where that note lives.
 
 👥👥 **SHE HAS SHARED THE APP — 2026-09-09, HER WORDS: *"I have already asked many friends and put it out
 on Instagram."*** 🚨 **LIVE OPERATIONAL STATUS, WHICH BY THIS FILE'S OWN RULE NEVER ARCHIVES.** ▶ **It is
