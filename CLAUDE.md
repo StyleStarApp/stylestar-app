@@ -871,6 +871,30 @@ maintain. 🚨 **HER OWN LINE, ON BOTH PAGES, EACH POINTING AT THE OTHER — NEV
   match Wardrobe's own behavior exactly, including wrapping only at the extreme 320px width, which
   Wardrobe does too.** The Mall's disclosure and the three `.shopdisc` locations (photo results,
   portrait, Complete the Look) were checked and never wrapped — no change made there.
+  🚨🚨 **THAT FIX SHIPPED WITH A SIDE EFFECT — HER VERY NEXT CATCH: the Shop your Style text went off
+  CENTRE, shifted left.** ▶ **MEASURED: `#s-shopstyle .ss-disc-top` still inherited `max-width:320px`
+  from `.shop-disclosure`, and with BOTH margins explicitly `-28px` (neither `auto`), the box's
+  computed width (344px) exceeded that cap — CSS's own over-constrained rule then silently
+  recalculates `margin-right` to force the fit, so the left edge bled as designed and the right edge
+  didn't, shifting the whole box (text included) left.** Proven on a real render: box centre landed
+  at 183px in a 390px-wide frame whose own centre is 195px. ✅ **Fix: `max-width:none` on that one
+  selector — nothing else needed it, the -28px bleed alone already comfortably fits the sentence.
+  Verified centred (183→195, matching the frame exactly) at 390 and 360px, no regression.**
+  ⚠️ **AND A SECOND SCREEN HAD BEEN MISSED ENTIRELY: `/finds`'s OWN `.dc-disclosure` still wrapped**,
+  because the earlier fix only touched `.disc-az` (a span used on screens carrying BOTH sentences);
+  `/finds` shows Amazon's sentence alone, with no span, so it was never in scope. ▶ **It sits behind
+  an EXTRA 8px `.dc-wrap` padding on top of `.inner`'s own 28px — two nested paddings, not one — so
+  it needed `-36px` (8+28), not `-28px`, to fully clear both and land flush with `.inner`'s own outer
+  edge.** Scoped to `#s-finds` only — the Edit's own `.dc-disclosure` is a much longer paragraph that
+  is SUPPOSED to wrap, and shares the same base selector. ✅ **Verified one line at 390/375/360/320px,
+  no overflow.**
+  ▶ **SHE ALSO FLAGGED THE STAR ON THAT SAME SHOP YOUR STYLE LOADING SCREEN AS OFF-CENTRE — MEASURED
+  AND IT IS NOT.** Its bounding box lands at exactly 195px in the 390px frame, matching the frame's
+  own centre precisely (confirmed both by the numbers and by rendering the exact wait-state markup
+  and looking at it). **No code change made — there was nothing to fix.** The likely explanation: the
+  disclosure text directly above it WAS genuinely shifted left at the time, which probably made the
+  whole screen read as "leaning left," the star included. Worth a fresh look now that the text is
+  fixed, but do not go looking for a star bug that measurement says isn't there.
 - ▶ **Amazon's trademark rules** (read from their own guidelines): a descriptive heading like "Amazon
   Finds" is fine; their marks may never appear in a domain/subdomain (a second reason the path is
   `/finds`); displaying their LOGO triggers a further attribution requirement — so the page uses only
