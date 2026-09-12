@@ -238,14 +238,18 @@ const leftBehind = await page.evaluate(() => ({
             .filter(a => /(^|\.)amazon\.com\//.test(a.href)).length,
 }));
 ok('they really LEFT the Edit — it holds no Amazon piece', leftBehind.amazon === 0, String(leftBehind.amazon));
-/* 🚨 THIS COUNTED 33 AND WENT RED THE DAY SHE REMOVED TWO EDIT PIECES BY HAND —
-   good news failing a check, again. The rule this line exists for is that MOVING her
-   Amazon pieces to /finds did not empty the Edit, not that the Edit is a fixed size:
-   it is hand-maintained markup and its count is hers to change whenever she likes.
-   ▶ Asserted as "still a real page", with the Amazon check above carrying the actual
-   claim. A count she edits weekly can never be a useful assertion. */
-ok('and the Edit is still a full curated page, not gutted by the move',
-   leftBehind.n >= 25, String(leftBehind.n));
+/* 🚨🚨 THIS PINNED 25 AND WENT RED AGAIN 2026-09-12 WHEN SHE DELETED ELEVEN
+   NON-EARNING, NO-PHOTO EDIT ITEMS BY HER OWN EXPLICIT CALL (28 → 18) — the
+   exact same shape of failure as the 33-count version of this line: a count
+   she is free to change, pinned as if it were a promise. THE RULE this line
+   exists for is that moving her Amazon pieces to /finds did not empty the
+   Edit, not that the Edit sits above any particular size — it is
+   hand-maintained markup and its count is hers to change whenever she likes.
+   ▶ FIXED to a low structural floor (5) that only catches actual gutting —
+   an empty or near-empty page — never her own editorial choices, however
+   far she takes them. The Amazon check above still carries the real claim. */
+ok('and the Edit is still a real curated page, not gutted by the move',
+   leftBehind.n >= 5, String(leftBehind.n));
 
 console.log('\n8b. THE PRICES ARE ROUNDED UP WITH A TILDE — her ask, 2026-09-11');
 /* 🚨 WHY THIS PAGE AND NOT THE EDIT, AND IT IS A TRUTH DIFFERENCE RATHER THAN A
