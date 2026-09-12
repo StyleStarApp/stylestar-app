@@ -10826,7 +10826,15 @@ function _wlRenderShare(){
       +'stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round" '
       +'aria-hidden="true"><path d="M4 12h13"/><path d="M12 6.5 18.5 12 12 17.5"/></svg></div>'
       +'<div><button class="wsh-btn" id="wlShareBtn" onclick="wlShareGet()">Get my link</button></div>'
-      +'<div class="wsh-msg" id="wlShareMsg"></div>';
+      +'<div class="wsh-msg" id="wlShareMsg"></div>'
+      // 🚨 TEMPORARY, 2026-09-12 — remove once she confirms the reconnect worked.
+      // Her save token had drifted to a different account with no way to fix it
+      // from a URL she taps (she opens Style Star from her home screen, a
+      // separate storage container from Safari where an emailed link would
+      // land), so this is a control reachable from INSIDE the running app —
+      // the one place her real local data actually lives. See the "second,
+      // separate incident" entry in CLAUDE.md.
+      +'<span class="wsh-stop" role="button" onclick="_wlReconnectPrompt()" style="display:block;margin-top:14px">Reconnect my saved account</span>';
   }
   el.innerHTML=h+'</div>';
 }
@@ -10910,6 +10918,29 @@ function wlShareCopy(){
   if(navigator.clipboard&&navigator.clipboard.writeText){
     navigator.clipboard.writeText(url).then(done).catch(function(){_wlShareSay('Copy the link above.',true)});
   }else{_wlShareSay('Copy the link above.',true)}
+}
+// 🚨 TEMPORARY, 2026-09-12 — remove once she confirms the reconnect worked
+// (see the "second, separate incident" entry in CLAUDE.md). Runs the same
+// PUSH the ?resync= boot path runs, but from inside the already-running
+// app, on whichever device she taps it from — the one place her real local
+// wardrobe/prefs/answers actually live, since her save token had drifted to
+// a different account and an emailed link would land in Safari's separate
+// storage container instead of her home-screen app's.
+async function _wlReconnectPrompt(){
+  var tok=prompt('Paste the reconnect code Claude sent you:');
+  if(!tok)return;
+  tok=tok.trim();
+  if(!tok)return;
+  _wlShareSay('Reconnecting your saved account…');
+  try{
+    _setSsToken(tok);
+    try{localStorage.removeItem('ss_email')}catch(e){}
+    var r=await saveUserRecord('',buildFullUserData());
+    if(r&&r.ok&&r.json&&r.json.email){try{localStorage.setItem('ss_email',String(r.json.email))}catch(e){}}
+    try{localStorage.removeItem('ss_sharelink');localStorage.removeItem('ss_sharelink_email')}catch(e){}
+    _wlShareSay(r&&r.ok?'Reconnected! Tap "Get my link" again.':'That didn’t go through. Please try again.',!(r&&r.ok));
+  }catch(e){_wlShareSay('That didn’t go through. Please try again.',true);}
+  _wlRenderShare();_wlRenderStay();
 }
 async function wlShareStop(){
   // ⚠️ THE ONLY IRREVERSIBLE THING IN THIS FEATURE, so it is the only one that

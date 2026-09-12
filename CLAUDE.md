@@ -373,13 +373,25 @@ phone's real data — exactly backwards here. `?resync=` POINTS the device at th
 PUSHES her phone's own already-correct local data (wardrobe, wishlist, prefs, real quiz answers) up to
 it, never reading anything back from the server. Proven safe against a mocked network, no real account
 touched by the test: `scratchpad/resync-repair.mjs`, 9/9.
-⚠️ **NOT YET CONFIRMED WORKING ON HER ACTUAL PHONE — she has the repair link and has not yet reported
+🚨 **AND A SECOND ROUND, THE SAME SESSION: `?resync=` TURNED OUT TO BE UNREACHABLE FOR HER SPECIFICALLY.**
+She opens Style Star from a HOME SCREEN ICON, not Safari — and a home-screen web app is its own storage
+container, separate from Safari (the exact reason `_applyRestoredRecord`'s comment already gives for why
+`ss_email` has to be derived from the token). A link tapped in Messages/Notes would open in Safari, a
+container with none of her real data in it, and the repair would push a near-empty profile instead of
+her real one. ✅ **BUILT INSTEAD: an in-app control, "Reconnect my saved account"**, added to the
+Wishlist screen's share box (`_wlRenderShare()`/`_wlReconnectPrompt()`) — reachable from INSIDE the
+running app on whichever device she opens it from, the one place her real local data actually lives.
+Tapping it prompts for the code, then runs the identical push. Proven: `scratchpad/reconnect-prompt.mjs`,
+7/7, including that a cancelled/blank prompt changes nothing. **This is the one she was actually sent
+to use — the `?resync=` URL path stays in the code as a second option for a future case where the
+account in question DOES use plain Safari, but was never the live fix for her.**
+⚠️ **NOT YET CONFIRMED WORKING ON HER ACTUAL PHONE — she has the reconnect code and has not yet reported
 back.** Once she taps it and confirms "Get my link" shows her real wishlist, this needs three things:
-(1) mark the incident entry fixed, (2) remove the one-time `?resync=` handling from `index.html` in a
-follow-up commit — a temporary recovery lever, never meant to stay in the shared app forever, and
-(3) consider whether `?r=`'s pull-and-overwrite behavior needs a general safety net for the next woman
-this could happen to (a save-token drift is not provably unique to a dev/test history — worth thinking
-about once this specific fire is out).
+(1) mark this incident entry fixed, (2) remove BOTH the temporary `?resync=` boot handling and the
+"Reconnect my saved account" control from `index.html` in a follow-up commit — neither was ever meant to
+stay in the shared app permanently, and (3) consider whether `?r=`'s pull-and-overwrite behavior needs a
+general safety net for the next woman this could happen to (a save-token drift is not provably unique to
+a dev/test history — worth thinking about once this specific fire is out).
 
 ### ▶▶ WHAT IS WAITING ON HER — her own priority order (full detail in the Master To-Do List above)
 1. ⏳ The Oct 1 tax-receipt clock (~3 weeks out) — the only real deadline on her board.
@@ -2191,17 +2203,24 @@ worse. `?resync=` instead POINTS the device at the correct account (a token obta
 email-code exchange, tied to her real email) and PUSHES her phone's own already-correct local data up
 to it — wardrobe, wishlist, prefs, real quiz answers — never reading anything back from the server.
 ✅ Proven safe in isolation (mocked network, no real account touched): `scratchpad/resync-repair.mjs`,
-9/9. ✅ **A related, real client bug fixed the same session and already shipped:** the cached wishlist
+9/9. 🚨 **BUT `?resync=` TURNED OUT TO BE UNREACHABLE FOR HER: she opens Style Star from a home-screen
+icon, a separate storage container from Safari, where a link tapped in Messages would actually land.**
+✅ **BUILT INSTEAD, THE ONE SHE WAS ACTUALLY SENT: an in-app "Reconnect my saved account" control** on
+the Wishlist screen's share box (`_wlReconnectPrompt()`), reachable from inside the already-running
+app on whichever device she taps it — the one place her real data lives. Prompts for the code, runs the
+identical push. Proven: `scratchpad/reconnect-prompt.mjs`, 7/7. `?resync=` stays in the code as a second
+option for a future case that genuinely is Safari-based, but was never the live fix here.
+✅ **A related, real client bug fixed the same session and already shipped:** the cached wishlist
 share link (`ss_sharelink`) used to be trusted forever with no check that it still matched the
 account currently signed in on that device — now tagged with the email it was minted for and cleared
 the moment that stops matching (`scratchpad/sharelink-drift.mjs`, 6/6). This alone couldn't fix her
 case (her device's `ss_email` had been consistently wrong all along, so nothing had drifted to catch),
 but it is the second half of making sure this can never happen silently again.
-⚠️ **STILL OPEN: she has not yet tapped the one-time repair link.** Once she does, and it succeeds, this
-line should be rewritten to say so plainly, and the one-time `?resync=` handling should be removed from
-`index.html` in a follow-up commit (a temporary recovery lever, not a permanent one — same instinct as
-removing a debug tag once it's done its job). ▶ **DO NOT consider this closed until she confirms "Get
-my link" shows her real wishlist.**
+⚠️ **STILL OPEN: she has not yet used the reconnect control.** Once she does, and it succeeds, this
+line should be rewritten to say so plainly, and BOTH the temporary `?resync=` boot handling and the
+"Reconnect my saved account" control should be removed from `index.html` in a follow-up commit (a
+temporary recovery lever, not a permanent one — same instinct as removing a debug tag once it's done
+its job). ▶ **DO NOT consider this closed until she confirms "Get my link" shows her real wishlist.**
 
 👥👥 **SHE HAS SHARED THE APP — 2026-09-09, HER WORDS: *"I have already asked many friends and put it out
 on Instagram."*** 🚨 **LIVE OPERATIONAL STATUS, WHICH BY THIS FILE'S OWN RULE NEVER ARCHIVES.** ▶ **It is
