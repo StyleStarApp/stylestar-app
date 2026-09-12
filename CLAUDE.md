@@ -338,49 +338,64 @@ that makes any future number mean something.**
 
 ---
 
-## ▶▶▶ WHERE WE LEFT OFF — 2026-09-12 (fifth session, end of session). READ THIS FIRST.
+## ▶▶▶ WHERE WE LEFT OFF — 2026-09-12 (sixth session, end of session). READ THIS FIRST.
 🚨 **THIS BLOCK IS THE CURRENT TRUTH. Everything below it is standing reference — if a line further
 down contradicts this one, THIS ONE WINS.**
-📁 **The fourth-session 2026-09-12 entry (the Supabase 401 incident, the token-adoption fix, the Fitting
-Room placeholder rebuild, ruling out the prompt-cap theory) moved to `CLAUDE-archive.md` in this commit,
-VERBATIM**, under its own heading. Nothing was deleted.
+📁 **The fifth-session 2026-09-12 entry (the Stella McCartney bag, the Edit deletions, the Finds
+renames) moved to `CLAUDE-archive.md` in this commit, VERBATIM**, under its own heading. Nothing was
+deleted.
 
-### ✅ STELLA MCCARTNEY BAG ADDED TO THE EDIT AND STAR OF THE WEEK; ELEVEN NON-EARNING EDIT ITEMS DELETED
-She sent a Mytheresa link for the **Stella McCartney Falabella Mini Embellished Bag, $1,595** (her own
-photo choice, her own note about the bag "wearing a necklace"). Added to the Edit, and — her explicit
-ask — seated in `WEEK_STARS` and appended to the end of `WEEK_STAR_PHOTO_ORDER`. **The whole 16-week
-rotation was recomputed with the live `_weekStar()` logic before committing, not assumed** — see the
-updated schedule table under Star of the Week below; every date through Nov 15 held still, only the
-wrap-around tail (Nov 22 onward) moved one week later.
-▶ **THEN, HER OWN CALL: *"yes just delete all of them no worries on star of the week let them all go all
-11"*** — every remaining Edit item with no affiliate earnings and no photo came out (MZ Wallace tote,
-Gucci sunglasses, Express trouser, Miss Bunny robe, a 14K gold name necklace, a Retreat linen pant,
-L'AGENCE blouse, Cinq à Sept blazer, Seafolly bikini top, a Gilded Romance claw clip, Tommy Hilfiger
-sandal). **The Edit went 28 → 18, and every remaining item now earns.** Their `WEEK_STARS` library
-entries were deliberately left untouched — Star of the Week is photo-gated and Edit-gated separately,
-so removing an item from the Edit was never a reason to remove it from the Star library.
-
-### ✅ AMAZON FINDS: TWO NEW PIECES, THEN 25 TITLE RENAMES AND 11 STORE-COLUMN BRAND CLEARS
-Two new "In My Kit" pieces added first (Sleeve Roll-Up Holders $14.99, Tagging Gun Kit $27.95),
-taking the page to 53 pieces. **Then she reviewed her own titles and sent 25 exact old→new renames**,
-explicitly asking that these be applied as CSV renames — matched by ASIN, never by name — rather than
-replacement rows, since notes/prices/links/categories were all unchanged. **Separately, eleven of those
-renamed items now carry the brand in the title, so their STORE column was cleared to plain "Amazon"**
-so the brand doesn't print twice on the card. All applied via `scripts/finds-from-csv.js`, verified as
-genuine renames (not add/remove) by the importer's own ASIN-matching, and `--check` confirms the live
-page matches the CSV exactly.
-🚨 **CAUGHT AND FIXED ALONG THE WAY: `scratchpad/findspage.js` had the exact "pin the rule, never the
-string" bug its own comment warns about** — an assertion hardcoded `leftBehind.n >= 25` for "the Edit is
-still a full curated page," which went red the moment she had the eleven items deleted (a legitimate,
-her-own-call edit, not a regression). Rewritten to a low structural floor (`>= 5`) that only catches
-actual gutting, never her own editorial choices. `findscsv` 50/50, `findspage` 102/102 after the fix.
+### 🚨🚨 HER CATCH: A SHARED WISHLIST LINK CAN SILENTLY DRIFT TO THE WRONG ACCOUNT'S LIST — FOUND AND FIXED
+She reported: *"My wishlist is full of items but when I texted myself the link of wishlist it sent me
+one item that is not on my list"* — her real wishlist has many pieces, but the link she texted herself
+opened on a page showing exactly ONE unfamiliar item ("Belted Midi Dress," Bloomingdales) plus a note
+she never wrote ("Notes test does this work?").
+▶ **THE ROOT CAUSE, TRACED THROUGH THE CODE, NOT GUESSED:** the server side of sharing has always been
+correct — `?share=<token>` decrypts the token to an EMAIL and does a LIVE lookup of that email's row in
+Supabase every time (`netlify/functions/user-data.js`), so it can never itself go stale. **The bug was
+entirely client-side.** The moment a share link is minted, its token is cached forever in
+`localStorage.ss_sharelink` (`index.html`, `wlShareGet()`), and the wishlist screen just displays
+whatever is cached there as "Your wishlist is shared" — **with no check that the cached token still
+belongs to whichever email this device is CURRENTLY saving under (`ss_email`).** If that ever drifts —
+a restore under a different address, an early test save before her real address settled in, anything
+that changes which email a device is saving as — the OLD token keeps being shown, still copyable, still
+pointing a perfectly live GET straight at the OLD account's row, which nobody has touched since. Her
+one stray item and test note are almost certainly exactly that: leftover content from when the
+sharelink feature itself was being built and tested live (2026-08-21), never cleaned up because nothing
+ever told the app the cached link no longer matched her current account.
+✅ **FIXED:** `_wlShareLink()` now tags every minted token with the email it was minted for
+(`ss_sharelink_email`) and refuses to show or copy it the moment that stops matching `ss_email` —
+clearing both keys so it can't keep being silently re-displayed. **A token cached before this fix
+shipped carries no owner tag at all and is refused for that reason alone** — there is no way to prove
+it still belongs to this device, so the safe default is to distrust it, not assume it. `wlShareStop()`
+now clears the owner tag alongside the token too.
+🚨 **WHAT THIS MEANS FOR HER, PLAINLY: the very next time she opens Your Wishlist, the "already shared"
+box will be gone and she'll see "Get my link" again — that is the fix working, not a new problem.**
+Tapping it mints a brand-new link, correctly tied to her real current account and her real current
+list. **Any OLD link she has already sent to herself or anyone else (the one that showed the wrong
+item) is now simply dead weight — replace it with the fresh one, once she taps to get it.**
+✅ **VERIFIED BY CONSTRUCTION**, since the real bug can't be reproduced without her actual old cached
+token (this session has no access to her phone's localStorage): `scratchpad/sharelink-drift.mjs`, a new
+6-check Playwright suite against the real app, proves (1) a token minted for the current email is
+trusted, (2) a token minted for a DIFFERENT email is refused and cleared, (3) a legacy token with no
+owner tag at all is refused rather than assumed hers, (4) a freshly minted token is tagged with the
+minting email, (5) "Stop sharing" clears both the token and its tag. All 6 pass. The existing
+server-side suite, `sharelink` (54 checks), was re-run untouched and still passes — this was a
+client-only bug, and nothing about the server's own guarantees needed to change.
+⚠️ **STILL OPEN, WORTH A LOOK IF SHE WANTS TO KNOW: whose leftover test row is the "Belted Midi Dress"
+account, and is `_share.on` still `true` on it?** No way to find that from here without the old token
+itself. Low stakes — nobody but whoever still has that old dead link can reach it, and the fix means no
+new drift can happen — but if she wants it tidied up, it would need the actual old token or a Supabase
+lookup by hand.
 
 ### ▶▶ WHAT IS WAITING ON HER — her own priority order (full detail in the Master To-Do List above)
 1. ⏳ The Oct 1 tax-receipt clock (~3 weeks out) — the only real deadline on her board.
 2. ⭐⭐⭐ Apply to the affiliate programmes. CJ is free and still not done.
 3. ⭐ More Edit/Finds pieces — she's on a roll and the machinery makes it cheap now.
-4. ▶ Optional: clean up the two `claude-diag-test-...@example.invalid` artifacts in Supabase/MailerLite.
-5. ▶ Optional: ask Supabase support how far back the 401 errors go, if she wants to know whether any
+4. ▶ Tap "Get my link" again on the wishlist — her old cached link is now correctly refused; a fresh
+   one is a live, single tap away.
+5. ▶ Optional: clean up the two `claude-diag-test-...@example.invalid` artifacts in Supabase/MailerLite.
+6. ▶ Optional: ask Supabase support how far back the 401 errors go, if she wants to know whether any
    real woman's save was silently lost during the outage.
 
 ### ▶▶ WHAT IS OPEN FOR CLAUDE
@@ -395,19 +410,20 @@ actual gutting, never her own editorial choices. `findscsv` 50/50, `findspage` 1
 5. ▶ A shared remembered cache — today's is per-browser. Must live server-only (Netlify Blobs), never
    through the publishable key.
 6. ▶ Amazon's disclosure "I" vs "we"/"Style Star LLC" — flagged to her, not guessed at.
-7. ▶ `affq.js`'s `EDIT_N` counter needs scoping to `#s-dream` — low priority, real debt (unchanged this
-   session; confirmed still pre-existing, not newly caused by the Edit deletions).
+7. ▶ `affq.js`'s `EDIT_N` counter needs scoping to `#s-dream` — low priority, real debt.
+8. ▶ Optional, low stakes: find and neutralise the old "Belted Midi Dress" test account's share, if she
+   wants it gone rather than just harmless.
 🚨 **SERPAPI'S OUTAGE — RE-CHECK BEFORE ASSUMING IT'S OVER:**
 `curl -s https://status.serpapi.com/api/v2/summary.json` — `Google: major_outage` means it isn't. Not
 re-checked this session; re-check before assuming it has resolved.
 
-### ▶ TEST STATE — re-measured 2026-09-12 (fifth session)
-`findscsv` 50/50 · `findspage` 102/102 (both re-run after the renames/store-clears and the assertion
-fix above). Not re-run this session, no code of theirs touched: `savetruth` 19/19 · `sharelink` 54/54 ·
-`fitroom` 24/24 · `promptcap` 10/10 · `copy` 50/50 · `hubs` 49/49 · `mallverify` 14/14 · `linkwatch` 27 ·
-`tabtops` 49 · `catmark` 132/3-pre-existing · `wldoortest` 55/65-pre-existing · `curated` 62-63/65 (3
-named pre-existing failures, see the standing section below) · `affq` 1 known pre-existing failure
-(the `EDIT_N` counter, see "WHAT IS OPEN FOR CLAUDE" above).
+### ▶ TEST STATE — re-measured 2026-09-12 (sixth session)
+`sharelink` 54/54 (server-side, untouched, re-run to confirm the client-only fix didn't need it to
+change) · `sharelink-drift` 6/6, new, built for this fix · `savetruth` 19/19 (re-run, unrelated code
+adjacent to it). Not touched or re-run this session: `findscsv` 50 · `findspage` 102 · `fitroom` 24 ·
+`promptcap` 10 · `copy` 50 · `hubs` 49 · `mallverify` 14 · `linkwatch` 27 · `tabtops` 49 · `catmark`
+132/3-pre-existing · `wldoortest` 55/65-pre-existing · `curated` 62-63/65 (3 named pre-existing
+failures, see the standing section below) · `affq` 1 known pre-existing failure.
 
 ### 🎯 STANDING RULE FOR CLAUDE — NEVER ASK HER TO MAKE A GIT DECISION
 Her words: *"Why are you asking me about putting something on main? I don't even know what that means.
@@ -961,6 +977,17 @@ invention — the Garnet Hill lesson was about inventing SILENTLY.**
   NO row behind it, and everything kept working locally until "Get my link" tried to read that row back
   and 404'd in a way that looked exactly like an expired token from the outside. **Gate every token/email
   adoption on `res.ok`, never just on the field being present.**
+- ⚠️⚠️ **A CACHED TOKEN MUST BE TIED TO THE ACCOUNT IT WAS MINTED FOR, NEVER TRUSTED FOREVER.**
+  `ss_sharelink` (the wishlist share link) was cached in localStorage the moment it was minted and
+  shown as "Your wishlist is shared" indefinitely, with no check that it still matched `ss_email` —
+  found 2026-09-12 when she texted herself her own share link and it opened to one stray item and a
+  test note that were never hers, almost certainly left over from testing the feature live back on
+  2026-08-21. **Fixed by tagging every minted token with the email it was minted for
+  (`ss_sharelink_email`) and refusing to show/copy it — clearing it out — the moment that stops
+  matching the current `ss_email`, including any token cached before this fix shipped (no tag = not
+  trusted).** The lesson generalises past this one token: any value cached client-side that encodes
+  "which account," never just "what," needs its own account tag checked on every read, not just on
+  the day it was written.
 - ⚠️⚠️ **DO NOT RE-ADD A WEB SEARCH TOOL TO THE STYLIST CHAT "to help her find more."** That is exactly
   what invented four dresses and four prices for her. **The finder is the only product route in chat.**
 - ⚠️ **DO NOT REBUILD THE STORE WORD INDEX.** A rarity-weighted index over her 100 store descriptions

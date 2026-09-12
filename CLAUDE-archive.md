@@ -11,6 +11,53 @@ The standing rules, current decisions, store system and open threads all live in
 
 ---
 
+## ▶▶▶ WHERE WE LEFT OFF — 2026-09-12 (fifth session, end of session). READ THIS FIRST.
+🚨 **THIS BLOCK IS THE CURRENT TRUTH. Everything below it is standing reference — if a line further
+down contradicts this one, THIS ONE WINS.**
+📁 **The fourth-session 2026-09-12 entry (the Supabase 401 incident, the token-adoption fix, the Fitting
+Room placeholder rebuild, ruling out the prompt-cap theory) moved to `CLAUDE-archive.md` in this commit,
+VERBATIM**, under its own heading. Nothing was deleted.
+
+### ✅ STELLA MCCARTNEY BAG ADDED TO THE EDIT AND STAR OF THE WEEK; ELEVEN NON-EARNING EDIT ITEMS DELETED
+She sent a Mytheresa link for the **Stella McCartney Falabella Mini Embellished Bag, $1,595** (her own
+photo choice, her own note about the bag "wearing a necklace"). Added to the Edit, and — her explicit
+ask — seated in `WEEK_STARS` and appended to the end of `WEEK_STAR_PHOTO_ORDER`. **The whole 16-week
+rotation was recomputed with the live `_weekStar()` logic before committing, not assumed** — see the
+updated schedule table under Star of the Week below; every date through Nov 15 held still, only the
+wrap-around tail (Nov 22 onward) moved one week later.
+▶ **THEN, HER OWN CALL: *"yes just delete all of them no worries on star of the week let them all go all
+11"*** — every remaining Edit item with no affiliate earnings and no photo came out (MZ Wallace tote,
+Gucci sunglasses, Express trouser, Miss Bunny robe, a 14K gold name necklace, a Retreat linen pant,
+L'AGENCE blouse, Cinq à Sept blazer, Seafolly bikini top, a Gilded Romance claw clip, Tommy Hilfiger
+sandal). **The Edit went 28 → 18, and every remaining item now earns.** Their `WEEK_STARS` library
+entries were deliberately left untouched — Star of the Week is photo-gated and Edit-gated separately,
+so removing an item from the Edit was never a reason to remove it from the Star library.
+
+### ✅ AMAZON FINDS: TWO NEW PIECES, THEN 25 TITLE RENAMES AND 11 STORE-COLUMN BRAND CLEARS
+Two new "In My Kit" pieces added first (Sleeve Roll-Up Holders $14.99, Tagging Gun Kit $27.95),
+taking the page to 53 pieces. **Then she reviewed her own titles and sent 25 exact old→new renames**,
+explicitly asking that these be applied as CSV renames — matched by ASIN, never by name — rather than
+replacement rows, since notes/prices/links/categories were all unchanged. **Separately, eleven of those
+renamed items now carry the brand in the title, so their STORE column was cleared to plain "Amazon"**
+so the brand doesn't print twice on the card. All applied via `scripts/finds-from-csv.js`, verified as
+genuine renames (not add/remove) by the importer's own ASIN-matching, and `--check` confirms the live
+page matches the CSV exactly.
+🚨 **CAUGHT AND FIXED ALONG THE WAY: `scratchpad/findspage.js` had the exact "pin the rule, never the
+string" bug its own comment warns about** — an assertion hardcoded `leftBehind.n >= 25` for "the Edit is
+still a full curated page," which went red the moment she had the eleven items deleted (a legitimate,
+her-own-call edit, not a regression). Rewritten to a low structural floor (`>= 5`) that only catches
+actual gutting, never her own editorial choices. `findscsv` 50/50, `findspage` 102/102 after the fix.
+
+### ▶ TEST STATE — re-measured 2026-09-12 (fifth session)
+`findscsv` 50/50 · `findspage` 102/102 (both re-run after the renames/store-clears and the assertion
+fix above). Not re-run this session, no code of theirs touched: `savetruth` 19/19 · `sharelink` 54/54 ·
+`fitroom` 24/24 · `promptcap` 10/10 · `copy` 50/50 · `hubs` 49/49 · `mallverify` 14/14 · `linkwatch` 27 ·
+`tabtops` 49 · `catmark` 132/3-pre-existing · `wldoortest` 55/65-pre-existing · `curated` 62-63/65 (3
+named pre-existing failures, see the standing section below) · `affq` 1 known pre-existing failure
+(the `EDIT_N` counter, see "WHAT IS OPEN FOR CLAUDE" above).
+
+---
+
 ## ▶▶▶ WHERE WE LEFT OFF — 2026-09-12 (fourth session, end of session). READ THIS FIRST.
 🚨 **THIS BLOCK IS THE CURRENT TRUTH. Everything below it is standing reference — if a line further
 down contradicts this one, THIS ONE WINS.**

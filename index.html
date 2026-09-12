@@ -10763,7 +10763,38 @@ function wlListNoteSave(){
 //   shared state without a round trip.
 var _wlShareAsk=false;   // her email is being asked for inside the share card
 var _wlShareBusy=false;
-function _wlShareLink(){try{return localStorage.getItem('ss_sharelink')||''}catch(e){return''}}
+// 🚨🚨 HER CATCH, 2026-09-12: her wishlist held many pieces, but the link she
+// texted herself opened to ONE item and a stray "Notes test does this work?"
+// note she never wrote. ▶ THE CAUSE: `ss_sharelink` was cached in her phone's
+// localStorage the moment it was minted and then trusted FOREVER, with no
+// check that it still belongs to whichever email this device is currently
+// saving under (`ss_email`). Her device's `ss_email` can change underneath
+// it — a restore under a different address, an early save before her real
+// address settled in — and every one of those leaves the OLD token sitting
+// there, still rendered as "Your wishlist is shared," still copyable, still
+// pointing a live GET straight at whatever account it was minted for. The
+// server side is not the bug: `?share=` always reads that account's CURRENT
+// row, so an old token faithfully keeps showing an old (or wrong) account's
+// list forever, never her real one. ⚠️ FIX: tag the cached token with the
+// email it was minted for (`ss_sharelink_email`) and refuse to show or copy
+// it the moment that stops matching `ss_email` — including every token
+// cached before this fix shipped, which carries no tag at all and so can
+// never be proven to still belong here. A forced one-tap re-share is the
+// honest cost of a link that can no longer silently drift to someone else's
+// account.
+function _wlShareLink(){
+  try{
+    var t=localStorage.getItem('ss_sharelink')||'';
+    if(!t)return'';
+    var owner=localStorage.getItem('ss_sharelink_email')||'';
+    var cur=localStorage.getItem('ss_email')||'';
+    if(!owner||owner!==cur){
+      try{localStorage.removeItem('ss_sharelink');localStorage.removeItem('ss_sharelink_email')}catch(e){}
+      return'';
+    }
+    return t;
+  }catch(e){return''}
+}
 function _wlShareUrl(t){return 'https://stylestar.app/list/'+t}
 function _wlRenderShare(){
   var el=document.getElementById('wlShare');
@@ -10847,7 +10878,7 @@ async function wlShareGet(){
       body:JSON.stringify({email:email2,token:_ssToken(),share:'on'})});
     var d=await res.json();
     if(res.ok&&d&&d.shareToken){
-      try{localStorage.setItem('ss_sharelink',d.shareToken)}catch(e){}
+      try{localStorage.setItem('ss_sharelink',d.shareToken);localStorage.setItem('ss_sharelink_email',email2)}catch(e){}
       ok=true;
     }
     /* 🚨 A 403/token_required HERE MEANS HER SAVE TOKEN HAS EXPIRED (30 days,
@@ -10895,7 +10926,7 @@ async function wlShareStop(){
       method:'POST',headers:{'Content-Type':'application/json'},
       body:JSON.stringify({email:email,token:_ssToken(),share:'off'})});
   }catch(e){}
-  try{localStorage.removeItem('ss_sharelink')}catch(e){}
+  try{localStorage.removeItem('ss_sharelink');localStorage.removeItem('ss_sharelink_email')}catch(e){}
   _wlShareBusy=false;
   _wlRenderShare();_wlRenderStay();
 }
