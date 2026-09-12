@@ -826,16 +826,40 @@ maintain. 🚨 **HER OWN LINE, ON BOTH PAGES, EACH POINTING AT THE OTHER — NEV
   status ever changes (revoked, or moves to unconditional), it belongs here, live operational status.
   ✅ **Amazon's required sentence, her exact wording, is now on every screen an Amazon link can
   reach** — *"As an Amazon Associate, I earn from qualifying purchases."* (note the comma — this is
-  HER wording, not the placeholder that used to sit in this comment). It rides alongside the existing
-  "Some links may earn a commission." line, never replacing it, on: both Shop your Style `shopdisc`
-  locations (style portrait + photo results) · Complete the Look · the Shop your Style/wishlist screen ·
-  the stylist chat · the Finds page · the Mall · both Wardrobe tabs (checklist + trending) · the
-  Wishlist page. ⚠️ **NOT on the Edit** — it currently carries zero Amazon links (both moved to `/finds`
+  HER wording, not the placeholder that used to sit in this comment).
+  🚨🚨 **RESTRUCTURED 2026-09-12, HER ASK — SHE FOUND THE COMBINED WORDING "CRINGY" ON THE LIVE `/finds`
+  PAGE.** Her words: *"is there way to make the disclosures look and sound less cringy?"* ▶ **Neither
+  sentence's WORDING changed — both are fixed (Amazon's is contractual, the generic one is her own
+  already-settled copy) — only PRESENTATION AND PLACEMENT moved:**
+  - **`/finds`** — the generic "Some links may earn a commission." line is now DROPPED. The whole page
+    is Amazon links, so it was one sentence restating the other; Amazon's own sentence alone covers it.
+    `.dc-disclosure` there reads only *"As an Amazon Associate, I earn from qualifying purchases."*
+  - **The Mall** — Amazon's sentence moved OFF the page-top blanket notice (which wrongly implied all
+    25 stores are an Amazon relationship) DOWN to sit specifically under the **"Value & Basics"**
+    category heading — the one category that actually contains an Amazon card. New `.mall-az` div,
+    injected in `renderMall()` only when `group.cat==='Value & Basics'`. The page-top `.dc-disclosure`
+    reverts to the generic line only. ⚠️ **If a second Amazon-tagged store ever lands in a different
+    category, that check needs a second home too** — it's keyed on the category, not on Amazon itself.
+  - **Everywhere both sentences still apply** (both Shop your Style `shopdisc` locations, Complete the
+    Look, the Shop your Style/wishlist screen, the stylist chat, both Wardrobe tabs, the Wishlist page)
+    — they now render on **separate lines**, via a new `.disc-az{display:block;margin-top:3px}` span
+    wrapping Amazon's sentence, so two short facts read as two facts rather than one sentence
+    restating itself. No wording changed, only the line break.
+  ⚠️ **SHE ALSO ASKED WHETHER "I" COULD BECOME "we" OR "Style Star LLC" — LEFT AS "I", DELIBERATELY,
+  PENDING CONFIRMATION.** Amazon's own materials require the phrase verbatim or "a substantially
+  similar statement previously allowed under this Agreement" — no authoritative source found either way
+  on whether a first-person swap qualifies, and she is bound by the Operating Agreement now. **Not
+  guessed at; flagged to her as a real open question if she wants to pursue getting it confirmed with
+  Amazon directly.** The reframe offered: "I" also matches Catherine's own first-person voice used
+  everywhere else in the app (the founder story, the Edit's "chosen by me").
+  ⚠️ **NOT on the Edit** — it currently carries zero Amazon links (both moved to `/finds`
   2026-09-11), so adding the sentence there would claim a relationship not in view; add it the day an
   Amazon piece returns to the Edit. ⚠️ **NOT on the Star of the Week `.wks-disc`** either, for the same
   reason — no Amazon piece is in `WEEK_STAR_PHOTO_ORDER` today.
   ▶ **The Finds page is the SEVENTH disclosure location** (the original six plus Finds); with Mall,
-  both Wardrobe tabs and the Wishlist counted too, Amazon's sentence now lives on eleven screens.
+  both Wardrobe tabs and the Wishlist counted too, Amazon's sentence now lives on eleven screens —
+  worded identically everywhere except Finds (Amazon's sentence alone) and the Mall (both sentences,
+  now in two different places on the page rather than stacked at the top).
 - ▶ **Amazon's trademark rules** (read from their own guidelines): a descriptive heading like "Amazon
   Finds" is fine; their marks may never appear in a domain/subdomain (a second reason the path is
   `/finds`); displaying their LOGO triggers a further attribution requirement — so the page uses only
