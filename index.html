@@ -10882,13 +10882,13 @@ async function wlShareGet(){
   _wlShareBusy=true;
   if(btn){btn.disabled=true;btn.textContent='Making your link…'}
   _wlShareSay('Making your link…');
-  var ok=false,expired=false,_diag='';
+  var ok=false,expired=false;
   try{
     var email2='';try{email2=localStorage.getItem('ss_email')||''}catch(e){}
     var res=await fetch('/.netlify/functions/user-data',{
       method:'POST',headers:{'Content-Type':'application/json'},
       body:JSON.stringify({email:email2,token:_ssToken(),share:'on'})});
-    var d=null;try{d=await res.json()}catch(eJ){_diag='status '+res.status+', body was not JSON';}
+    var d=await res.json();
     if(res.ok&&d&&d.shareToken){
       try{localStorage.setItem('ss_sharelink',d.shareToken)}catch(e){}
       ok=true;
@@ -10901,24 +10901,13 @@ async function wlShareGet(){
        fresh token. Told separately from a genuine transient failure below,
        same as every other honest-not-silent error state in this file. */
     else if(res.status===403&&d&&d.reason==='token_required'){expired=true;}
-    else if(!ok&&!_diag){_diag='status '+res.status+(d&&d.error?', '+d.error:'')+(d&&d.reason?' ('+d.reason+')':'');}
-  }catch(e){_diag='network: '+(e&&e.message?e.message:e);}
+  }catch(e){}
   _wlShareBusy=false;
   _wlRenderShare();_wlRenderStay();
   if(expired){
     var m=document.getElementById('wlShareMsg');
     if(m){m.style.color='#c0392b';m.innerHTML='Your saved link has expired. <b style="cursor:pointer;text-decoration:underline" onclick="_goRestore()">Restore your results</b> and try again.';}
-  }else if(!ok){
-    _wlShareSay('That didn’t go through. Please try again in a moment.',true);
-    /* ⚠️ TEMPORARY, 2026-09-12: her real failure did not match the
-       token-expiry diagnosis, so a plain-language tag rides along under the
-       honest line -- small and grey, not part of the promise to her -- to
-       find out what actually happens on the next real attempt. Pull this
-       the moment the real cause is known; a debug string in a customer
-       message is not a place to leave something. */
-    var m2=document.getElementById('wlShareMsg');
-    if(m2&&_diag)m2.innerHTML+='<br><span style="font-size:10.5px;color:#a8a294">('+_esc(_diag)+')</span>';
-  }
+  }else if(!ok)_wlShareSay('That didn’t go through. Please try again in a moment.',true);
 }
 // Route an expired save/share token to the existing "Find my results" card
 // rather than a dead end. It lives on the welcome screen, so getting there
