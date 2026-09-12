@@ -250,7 +250,7 @@
   ▶ RESTAMP AFTER ANY CSS EDIT:  node scripts/css-version.js --write
   ⚠️ DO NOT hand-type or "tidy" the value — it is derived from the file, and
   scratchpad/copy.js fails if it is stale. -->
-  <link rel="stylesheet" href="/styles.css?v=9b531df5b7">
+  <link rel="stylesheet" href="/styles.css?v=f888d5e603">
 </head>
 <body>
 <!-- build: quiz glow-up (chrome frame, gold knob, gold button, gold progress) 2026-07-11 r2 -->
@@ -713,7 +713,7 @@
         <div class="shop-title">Shop your style</div>
         <div class="shop-sub">Shopping ideas based on your style portrait</div>
         <div id="shopContent"></div>
-        <div class="shopdisc" style="text-align:center;margin-top:12px">Some links may earn a commission. As an Amazon Associate, I earn from qualifying purchases.</div>
+        <div class="shopdisc" style="text-align:center;margin-top:12px">Some links may earn a commission. <span class="disc-az">As an Amazon Associate, I earn from qualifying purchases.</span></div>
       </div>
 
       <!-- Keep-your-portrait save block → existing save flow (_persistSave) -->
@@ -888,7 +888,7 @@
           <div class="ht-tip" data-hearttip style="display:none">Tip: <b>save it first</b> <span class="ht-h"><svg viewBox="0 0 24 24" fill="none" stroke="#C8971E" stroke-width="1.9" aria-hidden="true"><path d="M12 21.6 C10.7 18.9 8.2 17 5.9 14.7 C3.6 12.4 2 10.4 2 7.7 C2 4.8 4.2 2.7 7 2.7 C9.5 2.7 11.3 4.6 12 7.1 C12.7 4.6 14.5 2.7 17 2.7 C19.8 2.7 22 4.8 22 7.7 C22 10.4 20.4 12.4 18.1 14.7 C15.8 17 13.3 18.9 12 21.6 Z"/></svg></span>, then explore. Your saves will be waiting in <b>Your Wishlist</b>.</div>
           <div class="wl-door" data-wldoor style="display:none"></div>
           <div class="shoplist" id="pShopList"></div>
-          <div class="shopdisc">Some links may earn a commission. As an Amazon Associate, I earn from qualifying purchases.</div>
+          <div class="shopdisc">Some links may earn a commission. <span class="disc-az">As an Amazon Associate, I earn from qualifying purchases.</span></div>
         </div>
       </div>
     </div>
@@ -1003,7 +1003,7 @@
         <div class="shop-title">Shop your style</div>
         <div class="shop-sub" id="shopSubPhoto">Shopping ideas picked for you</div>
         <div id="shopContentPhoto"></div>
-        <div class="shopdisc" style="text-align:center;margin-top:12px">Some links may earn a commission. As an Amazon Associate, I earn from qualifying purchases.</div>
+        <div class="shopdisc" style="text-align:center;margin-top:12px">Some links may earn a commission. <span class="disc-az">As an Amazon Associate, I earn from qualifying purchases.</span></div>
       </div>
 
       <!-- Save profile (quiz-takers only). FUTURE: "Email me these tips & links" slots in right here. -->
@@ -1191,7 +1191,7 @@
        first one without ever passing it. The Edit and the Mall were moved above
        their products on 2026-07-31 for exactly this reason and this screen was
        the last one still doing it the old way. Her call 2026-08-22. -->
-  <div class="shop-disclosure ss-disc-top">Some links may earn a commission. As an Amazon Associate, I earn from qualifying purchases.</div>
+  <div class="shop-disclosure ss-disc-top">Some links may earn a commission. <span class="disc-az">As an Amazon Associate, I earn from qualifying purchases.</span></div>
   <div id="shopStyleContent"><div class="shop-loading"><div class="shop-star-wrap"><svg class="shop-star-main" viewBox="0 0 24 24"><defs><radialGradient id="shopStarG" cx="42%" cy="36%" r="70%"><stop offset="0" stop-color="#FFFCEF"/><stop offset=".4" stop-color="#F9E5A0"/><stop offset=".75" stop-color="#F0CB5E"/><stop offset="1" stop-color="#E6B845"/></radialGradient></defs><path fill="url(#shopStarG)" stroke="#B7BCC2" stroke-width="1.1" stroke-linejoin="round" d="M12 1.6L14.47 8.6L21.89 8.79L15.99 13.3L18.11 20.41L12 16.2L5.89 20.41L8.01 13.3L2.11 8.79L9.53 8.6Z"/></svg></div>Finding your perfect pieces&hellip;</div></div>
   <!-- The escalation sits BELOW the pieces, her call after live testing: with the
        ask above them the top had grown to label + box + link before she saw a single
@@ -1320,7 +1320,7 @@
          ▶ `<details>` rather than a scripted toggle: native, keyboard and
            screen-reader friendly, and no JavaScript to break. -->
     <details class="chat-privacy"><summary>&#128274; Private to you</summary>Your photos and messages go to our AI stylist to be understood in the moment. Style Star never stores them, and no one here reads them. Your chat history stays on your own device.</details>
-    <div class="chat-disclosure">Some links may earn a commission. As an Amazon Associate, I earn from qualifying purchases.</div>
+    <div class="chat-disclosure">Some links may earn a commission. <span class="disc-az">As an Amazon Associate, I earn from qualifying purchases.</span></div>
     <div id="chatFresh" style="text-align:center;margin:0 0 2px"><button class="chat-fresh" onclick="askClearChat()">Start a fresh conversation</button></div>
     <div class="chat-input-wrap">
       <button class="chat-photo-btn" onclick="document.getElementById('chatPhotoIn').click()" aria-label="Send a photo">📸</button>
@@ -1915,7 +1915,7 @@
     <div class="dc-tagline"><svg class="pinkheart hl" viewBox="0 0 24 24"><path d="M12 21.6 C10.7 18.9 8.2 17 5.9 14.7 C3.6 12.4 2 10.4 2 7.7 C2 4.8 4.2 2.7 7 2.7 C9.5 2.7 11.3 4.6 12 7.1 C12.7 4.6 14.5 2.7 17 2.7 C19.8 2.7 22 4.8 22 7.7 C22 10.4 20.4 12.4 18.1 14.7 C15.8 17 13.3 18.9 12 21.6 Z"/></svg><span>Hand selected by Catherine</span><svg class="pinkheart" viewBox="0 0 24 24"><path d="M12 21.6 C10.7 18.9 8.2 17 5.9 14.7 C3.6 12.4 2 10.4 2 7.7 C2 4.8 4.2 2.7 7 2.7 C9.5 2.7 11.3 4.6 12 7.1 C12.7 4.6 14.5 2.7 17 2.7 C19.8 2.7 22 4.8 22 7.7 C22 10.4 20.4 12.4 18.1 14.7 C15.8 17 13.3 18.9 12 21.6 Z"/></svg></div>
     <div class="dc-subtitle">Every piece here is chosen by me. I hope you love these great finds as much as <span class="nb">I do. <svg class="pinkheart" style="width:15px;height:15px;vertical-align:-2px" viewBox="0 0 24 24"><path d="M12 21.6 C10.7 18.9 8.2 17 5.9 14.7 C3.6 12.4 2 10.4 2 7.7 C2 4.8 4.2 2.7 7 2.7 C9.5 2.7 11.3 4.6 12 7.1 C12.7 4.6 14.5 2.7 17 2.7 C19.8 2.7 22 4.8 22 7.7 C22 10.4 20.4 12.4 18.1 14.7 C15.8 17 13.3 18.9 12 21.6 Z"/></svg></span></div>
 
-    <div class="dc-disclosure">Some links may earn a commission. As an Amazon Associate, I earn from qualifying purchases.</div>
+    <div class="dc-disclosure">As an Amazon Associate, I earn from qualifying purchases.</div>
 
     <!-- ⚠️ HER PIECES, and ONLY hers. The disclosure on every curated
          surface says each piece is personally selected by the founder, so
@@ -2335,7 +2335,7 @@
         <div class="mall-sign-logo">Style Star Mall</div>
         <div class="mall-sign-sub">Enjoy shopping my favorite stores. These are the places I love, all in one&nbsp;spot.<svg class="pinkheart" style="width:13px;height:13px;margin-left:3px" viewBox="0 0 24 24"><path d="M12 21.6 C10.7 18.9 8.2 17 5.9 14.7 C3.6 12.4 2 10.4 2 7.7 C2 4.8 4.2 2.7 7 2.7 C9.5 2.7 11.3 4.6 12 7.1 C12.7 4.6 14.5 2.7 17 2.7 C19.8 2.7 22 4.8 22 7.7 C22 10.4 20.4 12.4 18.1 14.7 C15.8 17 13.3 18.9 12 21.6 Z"/></svg></div>
       </div>
-      <div class="dc-disclosure">Some links may earn a commission. As an Amazon Associate, I earn from qualifying purchases.</div>
+      <div class="dc-disclosure">Some links may earn a commission.</div>
       <div id="mallContent"></div>
       <button class="btn-outline" onclick="closeShop()" style="max-width:260px;margin:1.2rem auto 0;display:block">Back</button>
       <div class="mall-foot" data-std-foot></div>
@@ -2385,7 +2385,7 @@
        made collapsible again, this notice has to move back out. -->
   <div class="wdr-pane" data-pane="list">
     <div class="wdr-howto" id="wdrHowto"><div class="wdr-trend-by hw-full-hdr"><svg class="pinkheart hl" viewBox="0 0 24 24"><path d="M12 21.6 C10.7 18.9 8.2 17 5.9 14.7 C3.6 12.4 2 10.4 2 7.7 C2 4.8 4.2 2.7 7 2.7 C9.5 2.7 11.3 4.6 12 7.1 C12.7 4.6 14.5 2.7 17 2.7 C19.8 2.7 22 4.8 22 7.7 C22 10.4 20.4 12.4 18.1 14.7 C15.8 17 13.3 18.9 12 21.6 Z"/></svg><span>MY CLIENT CHECKLIST</span><svg class="pinkheart" viewBox="0 0 24 24"><path d="M12 21.6 C10.7 18.9 8.2 17 5.9 14.7 C3.6 12.4 2 10.4 2 7.7 C2 4.8 4.2 2.7 7 2.7 C9.5 2.7 11.3 4.6 12 7.1 C12.7 4.6 14.5 2.7 17 2.7 C19.8 2.7 22 4.8 22 7.7 C22 10.4 20.4 12.4 18.1 14.7 C15.8 17 13.3 18.9 12 21.6 Z"/></svg></div><span class="hw-full">This is the checklist I use in every closet consultation to build a well-rounded beautiful wardrobe. Tap the <b>star</b> on all the items you&rsquo;d like to add to your closet. Then tap <b>Ideas</b> to see them in your style.<svg class="pinkheart" style="width:13px;height:13px;margin-left:4px;vertical-align:-1px" viewBox="0 0 24 24"><path d="M12 21.6 C10.7 18.9 8.2 17 5.9 14.7 C3.6 12.4 2 10.4 2 7.7 C2 4.8 4.2 2.7 7 2.7 C9.5 2.7 11.3 4.6 12 7.1 C12.7 4.6 14.5 2.7 17 2.7 C19.8 2.7 22 4.8 22 7.7 C22 10.4 20.4 12.4 18.1 14.7 C15.8 17 13.3 18.9 12 21.6 Z"/></svg></span></div>
-    <div class="wdr-disclosure">Some links may earn a commission. As an Amazon Associate, I earn from qualifying purchases.</div>
+    <div class="wdr-disclosure">Some links may earn a commission. <span class="disc-az">As an Amazon Associate, I earn from qualifying purchases.</span></div>
     <div class="wdr-card">
       <div id="wdrListBody"></div>
       <div class="wdr-add">
@@ -2470,7 +2470,7 @@
     <div class="wdr-trend-by"><svg class="pinkheart hl" viewBox="0 0 24 24"><path d="M12 21.6 C10.7 18.9 8.2 17 5.9 14.7 C3.6 12.4 2 10.4 2 7.7 C2 4.8 4.2 2.7 7 2.7 C9.5 2.7 11.3 4.6 12 7.1 C12.7 4.6 14.5 2.7 17 2.7 C19.8 2.7 22 4.8 22 7.7 C22 10.4 20.4 12.4 18.1 14.7 C15.8 17 13.3 18.9 12 21.6 Z"/></svg><span>CURATED BY CATHERINE</span><svg class="pinkheart" viewBox="0 0 24 24"><path d="M12 21.6 C10.7 18.9 8.2 17 5.9 14.7 C3.6 12.4 2 10.4 2 7.7 C2 4.8 4.2 2.7 7 2.7 C9.5 2.7 11.3 4.6 12 7.1 C12.7 4.6 14.5 2.7 17 2.7 C19.8 2.7 22 4.8 22 7.7 C22 10.4 20.4 12.4 18.1 14.7 C15.8 17 13.3 18.9 12 21.6 Z"/></svg></div>
     <div class="wdr-trend-note"><b>Here&rsquo;s What&rsquo;s IN for Fall 2026.</b> This season is full of rich details, glam fabrics, and feminine accents. The colors go deeper, the fabrics get plush, and a defined waist is giving outfits a fresh silhouette<svg class="pinkheart" style="width:14px;height:14px;margin-left:4px;vertical-align:-2px" viewBox="0 0 24 24"><path d="M12 21.6 C10.7 18.9 8.2 17 5.9 14.7 C3.6 12.4 2 10.4 2 7.7 C2 4.8 4.2 2.7 7 2.7 C9.5 2.7 11.3 4.6 12 7.1 C12.7 4.6 14.5 2.7 17 2.7 C19.8 2.7 22 4.8 22 7.7 C22 10.4 20.4 12.4 18.1 14.7 C15.8 17 13.3 18.9 12 21.6 Z"/></svg></div>
   </div>
-  <div class="wdr-disclosure">Some links may earn a commission. As an Amazon Associate, I earn from qualifying purchases.</div>
+  <div class="wdr-disclosure">Some links may earn a commission. <span class="disc-az">As an Amazon Associate, I earn from qualifying purchases.</span></div>
   <div class="wdr-tstack" id="wdrTrendBody">
     <div class="wdr-tcard"><div class="ttf">Chocolate Brown</div><div class="tnf">Rich, warm, and luxurious. This is the neutral of the season.</div></div>
     <div class="wdr-tcard"><div class="ttf">Faux Fur</div><div class="tnf">Cozy meets fabulous. Faux fur adds texture and drama.</div></div>
@@ -8726,7 +8726,15 @@ function renderMall(){
   if(!c||c.dataset.built)return;
   let h='';
   mallStores.forEach(function(group){
-    h+='<div class="mall-cat">'+group.cat+'</div><div class="mall-grid">';
+    h+='<div class="mall-cat">'+group.cat+'</div>';
+    // ⚠️ 2026-09-12, HER ASK: Amazon's required sentence lives HERE, not at the
+    // page top -- this is the one category that actually contains an Amazon
+    // card, so this is where the disclosure belongs. If a second Amazon-tagged
+    // store is ever added to a DIFFERENT category, this check needs a second
+    // home too; it is keyed on the CATEGORY containing Amazon, not on Amazon
+    // itself, because the sentence reads as introducing the section.
+    if(group.cat==='Value & Basics')h+='<div class="mall-az">As an Amazon Associate, I earn from qualifying purchases.</div>';
+    h+='<div class="mall-grid">';
     group.stores.forEach(function(s){
       /* ⚠️⚠️ THE MALL WAS THE ONE SHOPPING SURFACE WHOSE LINKS COULD NEVER EARN.
          It rendered s.u RAW, so it was the single place a store URL becomes an
@@ -10847,7 +10855,7 @@ function renderWishlist(){
   var h='<div class="wl-lead">Here&rsquo;s everything you saved, ready when you are. '
    +'Tap <b>+ Add a note</b> to say your size, color, etc. '
    +'Tap the <b>&times;</b> to take an item off your list.</div>'
-   +'<div class="wl-disclosure">Some links may earn a commission. As an Amazon Associate, I earn from qualifying purchases.</div>'
+   +'<div class="wl-disclosure">Some links may earn a commission. <span class="disc-az">As an Amazon Associate, I earn from qualifying purchases.</span></div>'
    +'<div class="wl-card">';
   list.forEach(function(it){
     // Three kinds of exact-URL row now: pick (Cath's Edit, badged), own with a

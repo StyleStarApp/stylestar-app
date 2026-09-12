@@ -998,6 +998,15 @@ html.finds-velvet .ss.dream-mirror{background:linear-gradient(#fff,#fff) padding
    first colour tried (#9a9a9a) measured 2.5:1 against the chat background, which
    fails. #6e6e6e matches .shop-disclosure everywhere else and measures ~5:1. */
 .chat-disclosure{font-size:11px;color:#6e6e6e;text-align:center;padding:0;line-height:1.25}
+/* ⚠️ 2026-09-12, HER ASK: TWO DISCLOSURE SENTENCES RUN TOGETHER READ AS ONE
+   REPEATING ITSELF. Amazon's required sentence must stay word-for-word and the
+   generic commission line must stay too (this screen can surface both Amazon
+   and non-Amazon links), so neither sentence could be cut or reworded here --
+   the only lever left was PRESENTATION. `.disc-az` puts Amazon's sentence on
+   its own line with a small gap, so the two read as two short distinct facts
+   rather than one sentence restating itself. Inherits its parent's font-size
+   and colour on purpose -- it is not a second, louder notice, just a break. */
+.disc-az{display:block;margin-top:3px}
 /* ⚠️ THE VERTICAL PADDING STOPS AT 1px AND THAT IS A FLOOR, NOT A LEFTOVER.
    This is a BUTTON, and its padding is its tap target. At 0 it is ~14px tall,
    which is under every thumb guideline and worst for exactly the women this
@@ -2483,6 +2492,16 @@ body.card-fb{padding:0}
 .save-toast .stay-input{max-width:100%;width:100%;text-align:center;padding:11px 14px;font-size:14px}
 .save-toast .btn-p{margin-top:10px;max-width:100%;padding:13px}
 .mall-cat{font-size:11px;letter-spacing:2px;text-transform:uppercase;color:#1a1a1a;font-weight:700;margin:1.7rem 0 0.85rem;text-align:center;text-shadow:0 1px 0 rgba(255,255,255,.6)}
+/* ⚠️ 2026-09-12, HER ASK: AMAZON'S DISCLOSURE MOVED OFF THE MALL'S TOP AND
+   DOWN TO VALUE & BASICS, WHERE THE AMAZON CARD ACTUALLY IS. The page-top
+   .dc-disclosure covers all 25 stores and stays generic on purpose; this one
+   names Amazon specifically and sits only under the one category that
+   contains it -- closer to FTC's own "near the link" placement guidance than
+   a blanket notice at the top ever was, and it stops implying every Mall
+   store is an Amazon relationship. Negative top margin pulls it up against
+   .mall-cat's own 0.85rem bottom margin, so it reads as part of the category
+   label, not a stray line before the cards. */
+.mall-az{font-size:11px;color:#6b6459;text-align:center;margin:-0.6rem 0 0.85rem}
 .mall-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
 .mall-card{position:relative;display:flex;flex-direction:column;justify-content:space-between;background:linear-gradient(180deg,#ffffff,#fbfaf7);border:2.5px solid #161616;border-radius:0;padding:13px 13px 12px;text-decoration:none;transition:transform .2s,box-shadow .2s;min-height:112px;box-shadow:0 8px 18px -11px rgba(20,15,5,.5)}
 .mall-card::before{content:"";position:absolute;left:4px;right:4px;top:4px;bottom:4px;border:1px solid rgba(22,22,22,.13);pointer-events:none}
