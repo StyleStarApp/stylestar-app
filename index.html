@@ -6201,11 +6201,24 @@ function saveUserRecord(email,data){
     body:JSON.stringify(body)
   }).then(function(res){
     return res.json().then(function(j){
-      if(j&&j.token)_setSsToken(j.token);
+      /* 🚨🚨 FOUND 2026-09-12, HER CATCH: the server hands back a token EVEN ON
+         A FAILED SAVE (502 "we could not save to your account") -- it is
+         derived purely from the address so a retry can reuse it, and the
+         comment on that response says so. But this line used to adopt it
+         unconditionally, which means a device whose FIRST EVER save failed
+         (Supabase 401 that day) still walked away holding a real, valid,
+         non-expiring-for-30-days token FOR AN EMAIL WITH NO ROW BEHIND IT.
+         Everything kept working locally, so nothing looked wrong, until she
+         tapped "Get my link" -- the first thing that actually reads the row
+         back -- and got a 404 that looked exactly like an expired-token 403
+         from the outside. ▶ Only adopt a token from a save that actually
+         succeeded; a failed save's token exists so a RETRY of the SAME save
+         can reuse it, not so this device can quietly believe it is synced. */
+      if(res.ok&&j&&j.token)_setSsToken(j.token);
       // Backfill the address on a device that never recorded one. This is what
       // repairs a phone that restored BEFORE the fix shipped: the first save
       // after it teaches the device which account it is.
-      if(j&&j.email){try{if(!localStorage.getItem('ss_email'))localStorage.setItem('ss_email',String(j.email))}catch(e){}}
+      if(res.ok&&j&&j.email){try{if(!localStorage.getItem('ss_email'))localStorage.setItem('ss_email',String(j.email))}catch(e){}}
       return {ok:res.ok,status:res.status,json:j};
     }).catch(function(){return {ok:res.ok,status:res.status,json:null}});
   });
