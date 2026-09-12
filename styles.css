@@ -1703,9 +1703,22 @@ html.finds-velvet .ss.dream-mirror{background:linear-gradient(#fff,#fff) padding
    reasons (#s-wardrobe,#s-trending above). -28px here fully cancels this
    `.inner`'s own declared padding (1.75rem), landing flush against its inner
    edge and safely short of the 11px black frame border -- never touches the
-   frame. `max-width:320px` (inherited from `.shop-disclosure`) still caps the
-   result, so this can never render wider than before at a tablet width. */
-#s-shopstyle .ss-disc-top{font-size:11.5px;margin:9px -28px 3px}
+   frame.
+   🚨🚨 SECOND CATCH, 2026-09-12, SAME SESSION: her next screenshot showed the
+   text itself sitting off-centre, shifted left. MEASURED why: `max-width:320px`
+   (inherited from `.shop-disclosure`) was still active, and with BOTH
+   margin-left and margin-right explicitly set to -28px (neither is `auto`),
+   the box's auto-computed width (288+56=344) exceeds that max-width -- so per
+   the CSS spec's over-constrained rule, the browser clamps width to 320 and,
+   in LTR, silently RECALCULATES margin-right to make the box fit, while
+   margin-left keeps its full -28px. The left edge bleeds exactly as designed;
+   the right edge does not, so the whole box (and the centred text inside it)
+   shifts left. PROVEN: a real render measured the box's centre at 183px in a
+   390px-wide frame whose own centre is 195px -- a 12px shift, matching this
+   exactly. ▶ `max-width:none` removes the clamp entirely; nothing else needs
+   it here, since -28px alone (not chasing max-width) already lands comfortably
+   under the ~300px the sentence needs at every real phone width. */
+#s-shopstyle .ss-disc-top{font-size:11.5px;margin:9px -28px 3px;max-width:none}
 /* HER CALL 2026-08-22: it steps back while the star is spinning. A disclosure
    belongs NEAR THE LINKS, and while the pieces are still being found there are
    no links on the screen at all, so it was a commission notice sitting alone
@@ -2063,6 +2076,19 @@ body.menu-open .menu-panel{display:block}
 #s-dream .dc-cat.is-first,#s-finds .dc-cat.is-first{margin-top:1.25rem}
 #s-dream .dc-cat::after,#s-finds .dc-cat::after{content:"";position:absolute;left:50%;transform:translateX(-50%);bottom:0;width:54px;height:2.5px;background:#E0B84C}
 #s-dream .dc-disclosure,#s-finds .dc-disclosure{font-family:'Lora',Georgia,serif;font-size:11.5px;color:#8a8172;margin:0 0 5px;line-height:1.65}
+/* ⚠️ 2026-09-12, HER CATCH: "purchases" alone on a second line here too, the
+   same family as the Shop your Style/Wishlist/chat fix above but with an
+   extra wrapper in the way. MEASURED: `.dc-disclosure` sits inside `.dc-wrap`
+   (8px padding each side) which itself sits inside `.inner` (28px padding
+   each side) -- TWO nested paddings between this text and the frame, not
+   one, so the same -28px used elsewhere left it still 12-15px short and it
+   kept wrapping below ~380px wide. -36px (8+28) cancels BOTH paddings, landing
+   the text flush against `.inner`'s own outer edge -- proven to match exactly
+   (the resulting width equals `.inner`'s measured outer width at every size
+   tested). Scoped to `#s-finds` only: the Edit's own `.dc-disclosure` is a
+   much longer paragraph that is SUPPOSED to wrap, and must keep the shared
+   base rule above untouched. */
+#s-finds .dc-disclosure{margin:0 -36px 5px}
 .dc-sign{font-family:'Dancing Script',cursive;font-weight:600;font-size:30px;color:#C8A24B;line-height:1.15;margin:1.7rem 0 0}
 /* The third of her three sign-offs, matched to the other two: the gap was a
    TRAILING SPACE in the text node (7.8px). ⚠️ Position lives HERE, never
