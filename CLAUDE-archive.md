@@ -11,6 +11,140 @@ The standing rules, current decisions, store system and open threads all live in
 
 ---
 
+## ▶▶▶ WHERE WE LEFT OFF — 2026-09-12 (second session). READ THIS FIRST.
+🚨 **THIS BLOCK IS THE CURRENT TRUTH. Everything below it is standing reference — if a line further
+down contradicts this one, THIS ONE WINS.**
+📁 **The first-session 2026-09-12 entry moved to `CLAUDE-archive.md` in this commit, VERBATIM**, under
+its own "WHERE WE LEFT OFF — 2026-09-12" heading. Nothing was deleted.
+
+### ✅ THIS SESSION'S WORK, ALL MEASURED AND LIVE
+1. **A 13-row Amazon Finds batch, her spreadsheet.** 7 new pieces (Tory Burch sunglasses, two mirrors,
+   two Lacoste polos, Sam Edelman mules, SLIP hair ties) appended to their existing categories, and 6
+   note-only revisions to pieces already on the page (the Hustler and Meg jeans, the trench coat, the
+   belt bag, the crochet handbag, the HydroBag) — matched by ASIN, never by name, so a note edit could
+   never misread as a removal-and-re-add. **Amazon Finds: 44 → 51 pieces, still 8 categories.** The Edit
+   was untouched (still 28). `findscsv` 50, `findspage` 102, `linkwatch` 27 all clean; sitemap `<lastmod>`
+   restamped for `/finds`.
+2. **The wishlist "door" — her ask, and it turned out bigger than the two pages she named.** Her words:
+   *"on the amazon finds page and edit page we don't have an easy way for her to get to wishlist... I
+   can't remember about the other pages."* ▶▶ **SHE WAS RIGHT TO SUSPECT MORE — an audit of every place
+   `_wlSaveBtn` renders found the door (`_syncHeartTip()`'s "N saved · See Your Wishlist →" line, plus
+   its "save it first" tip for a first-time saver) existed on only THREE of nine heart-bearing surfaces**
+   (Complete the Look, Shop your Style, the stylist chat). **Added to the six that had none: the Edit,
+   Amazon Finds, the "Shop your style" inline block on both the Style Portrait and the photo results, the
+   Wardrobe checklist's Ideas carousels, and the Star of the Week widget on the home hub.** No new
+   mechanism built — every addition reuses the SAME shared component and the SAME global sync function,
+   which already runs on every screen change and every save, so nothing needed wiring by hand.
+   ⚠️ **ONE REAL BUG CAUGHT BUILDING IT:** the Star of the Week widget sits on the home hub's dark
+   `#0c0c0e` shell, and the door's default dark-ink styling is illegible there. A same-specificity
+   override lost to the base rule on source order alone; fixed by scoping to `#wbStar` (matching the
+   `#wbStar .wl-save` pattern already beside it) and reusing colours already proven on that exact
+   background (`#CFC9BB` body, `#F2D889` link — both already load-bearing on `.wks-disc` and the "Read
+   your full Style Portrait" button). **Verified with a real save flowing through `wishToggle()` on all
+   four newly-touched screens, including a click-through from Finds landing on the wishlist itself.**
+   `copy` 50, `findspage` 102, `tabtops` 49 all clean; `wldoortest` unchanged at its pre-existing 10/65
+   (proven pre-existing against the commit before this session's edits, not a regression — see below).
+3. ✅✅ **THE FITTING ROOM — BUILT AND LIVE, 2026-09-12.** She reviewed real screenshots and said *"That
+   looks right, go ahead and merge it live."* Her ask, resurfacing the parked 2026-09-09 thread
+   (board row 23): a second way to look at the SAME wishlist — the row list she has, plus a photo grid
+   for comparing pieces side by side, no second list to save into. Her own framing: *"a place for
+   comparison... take a moment to be alone and decide calmly."*
+   ▶ **BUILT: a List/Fitting Room toggle on `#s-wishlist`, persisted in localStorage, both views reading
+   the SAME `_wlList()` and sharing ONE `_wlRowMeta()` for what a saved row may honestly claim** (never a
+   second copy of that logic — the exact shape that leaked the `<<FIND>>` marker before). A piece with no
+   real product found gets a plain named placeholder card, same frame as a photo, never a broken-image
+   icon or a blank gap. **A PRODUCT PHOTO IS NEVER CROPPED applies here too** — `object-fit:contain`,
+   same as the finder's own cards, because these are frequently the SAME photo from the SAME
+   unknown-shape sources.
+   🚨🚨 **THREE REAL GAPS FOUND AND FIXED WHILE BUILDING IT, ALL PRE-EXISTING, NONE HER FAULT:** the
+   Wardrobe Ideas feed cards, Star of the Week, and the Edit/Finds pages all already SHOW a photo on
+   their card but never passed it into the saved wishlist entry — only the chat/Shop your Style finder
+   cards did. Fixed in all three (`_curatedCard`, `_renderWeekStar`'s new shared `_wkStarPxSrc()`
+   respecting the SAME affiliate-licensing gate as the card itself, and `_wlEditItems()` reading the
+   already-rendered `.dc-item-px`).
+   🚨🚨🚨 **THE BIGGEST CATCH: `_normalizeWardrobe()` — which re-runs on EVERY fresh load, not just the
+   save — never carried `image` through its wishlist mapper at all.** A photo would have saved
+   perfectly, shown perfectly, and then silently vanished the next time she opened the app. Fixed with
+   the same https-only guard used everywhere an image url reaches the DOM. **This would have quietly
+   undone the whole feature days after shipping it, on every existing save, with no error anywhere.**
+   ✅ **`scratchpad/fitroom.js`, 24 checks, built new for this — asserts the toggle, all three card
+   shapes, the broken-photo fallback (proven both by the real proxy's own immediate rejection AND by
+   direct invocation, since a headless browser's lazy-load timing is not something this sandbox
+   reproduces reliably), the crop rule, delete-from-grid staying in sync with the real list, no
+   sideways overflow at 320-390px, and the reload-survival fix itself.** `wlnote` 71, `weekstar` 54/55
+   (the 1 failure is the documented stale-"today" scheduling test, unrelated), `curated` 62/65 (the
+   documented pre-existing baseline, unrelated), `copy` 50 — all clean, no regressions.
+   ⚠️ **PHOTOS THEMSELVES COULD NOT BE SCREENSHOTTED RELIABLY FROM THIS SANDBOX** — the same documented
+   Chromium/proxy limitation as every retail-site check in this file (`curl` reaches images.unsplash.com
+   fine; headless Chromium here does not, reliably). **One test run DID load a real photo correctly and
+   it is asserted in `fitroom.js`** — the mechanism is proven, just not screenshot-able on demand. Look
+   at it live on her phone once merged; that is the real test, same as everything else this sandbox
+   cannot render.
+   ⭐ **TWO REAL CATCHES FROM HER OWN LOOK AT THE SCREENSHOTS, BOTH FIXED AND LIVE:**
+   (a) the `.wl-vtab` LIST/FITTING ROOM toggle labels were mathematically dead-center (measured: 10px
+   above, 10px below, identical in both tabs) but a short word alone in a wide pill reads as floating —
+   nudged up to `padding:7px 0 13px` after rendering three candidates and picking the one that read as
+   anchored without crowding the top border.
+   (b) **THE FIRST ROUND WAS THE WRONG FIX** — her *"move that word up"* was read as being about the tab
+   label (a real issue, left in place) when she actually meant "list." dangling alone on the last line
+   of the lead sentence, a text widow. Fixed with the same `text-wrap:balance` + `.nb` weld combo used
+   everywhere else in the app for exactly this (the Finds/Edit subtitle hearts). ▶ **THE LESSON: when a
+   correction doesn't visibly match what you built, don't assume she's describing the same element
+   twice — ask, or look harder at what element she's actually quoting.** She was quoting the lead
+   sentence's own words ("Tap the × to take an item off your list") almost verbatim; the tab labels
+   never said "off your list" anywhere.
+   ▶ **HER PARKED IDEA #4, DELIBERATELY NOT TOUCHED — her own call: *"I don't want to complicate things
+   and that might be more shop your style category... let's stay focused here."*** Better outfit
+   presentation on Shop your Style is a real, separate thread for a future session, not folded into this.
+4. **A FOLLOW-UP ROUND ON THE FITTING ROOM, SAME SESSION, AFTER THE FIRST MERGE.** She looked again and
+   asked to delete a line from the wishlist share card, and to make the List/Fitting Room toggle read as
+   tappable the way Wardrobe's own tabs do. Built, she then said the arrows "don't look right" and asked
+   for a direct comparison against the real Wardrobe/Trending tabs — the render showed the real control
+   stacks its arrow BELOW the label (column layout) at 19px, with the pair pointing outward from each
+   other (left tab mirrored, right tab not), while the first build had put the arrow inline beside the
+   label. Rebuilt to the identical box model; she then asked whether "List" should read "List View" so
+   the pairing with "Fitting Room" reads as two views of one list rather than two destinations — done.
+   Both fixed, `fitroom.js` 24/24 clean throughout, verified at 320px with no wrap. **Also answered, while
+   she asked:** the wishlist page has no public route or sitemap entry at all, and the shared `/list/
+   <token>` page a friend actually opens is a wholly separate render (`_renderSharedList`) that never
+   shows this toggle — so neither change needed reindexing or touches anyone she's already shared a list
+   with. **MERGED LIVE.**
+
+### ✅ CURRENT STATE, MEASURED
+- **The Style Star Edit is 28 items**, **Amazon Finds is 51 pieces in 8 categories** — live at
+  `stylestar.app/finds`, in the sitemap, indexed by both Google and Bing.
+- ✅✅ **SHE'S APPROVED FOR AMAZON ASSOCIATES (CONDITIONAL). `_AMZ_TAG` is live, every Amazon link in the
+  app earns.** The 180-day clock for 3 qualifying sales is running.
+- **Star of the Week is a 15-week queue running to 13 December**, then repeats. See "STAR OF THE WEEK"
+  below for the schedule and the rotation trap that nearly shipped a piece seven weeks early.
+- 🚨 **SERPAPI'S OUTAGE IS STILL OPEN BUT PARTIAL — roughly 1 search in 6 gets through.** Her own feed
+  fills the screen on every failure, so a woman never sees it empty. **Nothing to fix and nothing to
+  buy.** Re-check before assuming it's over: `curl -s https://status.serpapi.com/api/v2/summary.json` —
+  `Google: major_outage` means it isn't.
+
+### ⭐ THE LESSON THIS SESSION EARNED
+🚨 **When she says "I can't remember about the other pages," that is an invitation to audit, not a
+question to answer from memory.** She named two screens; the real gap was six, because the same
+component (the wishlist "door") had only ever been added to a screen when someone happened to be
+working on that screen already — never as a sweep across every place a heart can be tapped. ▶ **The
+sentence to keep, same family as the Rule Ledger's own thesis: a component added surface-by-surface, as
+each surface came up, is a component that drifts. Grep for every call site of the thing she's asking
+about before answering how many places are missing it.**
+🚨 **AND A SECOND LESSON FROM THE FOLLOW-UP ROUND: A REFERENCE SHE NAMES ("compare it to Wardrobe") IS
+NOT OPTIONAL HOMEWORK — RENDER IT, DON'T RECALL IT.** The first arrow build was built from memory of the
+`.wdr-tab` rule (right, in outline) without actually re-rendering it side by side, and it still came out
+wrong in the one detail that mattered — inline vs. stacked. When she names a specific existing control as
+the standard to match, screenshot that control fresh before touching CSS, not after she says it looks off.
+
+### ▶ TEST STATE — re-measured 2026-09-12 (second session, end of session)
+`fitroom` 24/24 · `findscsv` 50 · `findspage` 102 · `linkwatch` 27 · `copy` 50 · `tabtops` 49 all clean,
+no regressions. `catmark` 132 passed / 3 pre-existing failures, exactly the documented baseline.
+`wldoortest` unchanged at 55/65 (10 pre-existing failures — proven pre-existing by running the identical
+suite against the commit before this session's edits and getting the identical 10 failures; not something
+this session's changes caused or should chase).
+
+---
+
 ## SESSION 2026-09-06 (logged as 09-08 in the original heading) — A MEN'S SHIRT ON HER TOPS SHELF, AND WHY "WE FIXED THAT" WAS TRUE AND USELESS)
 
 ### 🚨🚨 WHAT SHE FOUND, IN ONE SCREENSHOT
