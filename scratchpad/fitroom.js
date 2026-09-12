@@ -58,7 +58,7 @@ function seed(pg){
   await pg.evaluate(()=>openWishlist());
   await pg.waitForTimeout(300);
   console.log('1. Two views, one list');
-  ok('list view is the default', await pg.evaluate(()=>document.querySelector('#s-wishlist .wl-viewtabs .wl-vtab.on').textContent.trim())==='List');
+  ok('list view is the default', await pg.evaluate(()=>document.querySelector('#s-wishlist .wl-viewtabs .wl-vtab.on').textContent.trim())==='List View');
   ok('the row list renders', (await pg.evaluate(()=>document.querySelectorAll('#s-wishlist .wl-row').length))===3);
   ok('no grid yet', (await pg.evaluate(()=>document.querySelectorAll('#s-wishlist .wl-gcard').length))===0);
 
