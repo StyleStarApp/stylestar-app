@@ -405,10 +405,12 @@ look for what SHE has seen and Claude has not — do not re-explain the recommen
 three times in one day, whether she was being unclear; she wasn't — restate the brief once, briefly, then
 show the measurement, and honour her ask for fewer words and one thing at a time.
 
-### ▶ TEST STATE — end of 2026-09-11
-`findspage` 101 · `findscsv` 50 · `editshare` 30 · `affq` 42 · `linkwatch` 27 · `copy` 50 · `starpx` 28 —
-zero failures. `curated` reports 3 pre-existing, PROVEN failures (her six deactivated catalog stores —
-see "A KNOWN PRE-EXISTING FAILURE" further down); not a regression, do not chase it.
+### ▶ TEST STATE — re-measured 2026-09-12, after the Edit dropped to 28
+`editshare` 30 · `findspage` 101 · `affq` 42 · `copy` 50 — zero failures (re-run after removing the
+Lucky Brand espadrille and Align Pant; `editshare` needed one fix, see the commit). `linkwatch` 27 ·
+`starpx` 28 · `findscsv` 50 unaffected, not re-run this session. `curated` reports 3 pre-existing,
+PROVEN failures — see "THREE KNOWN PRE-EXISTING FAILURES" further down; none of them touch the Edit,
+confirmed against a worktree at the pre-session baseline (`8140b92`); not a regression, do not chase it.
 
 
 
@@ -926,7 +928,7 @@ invention — the Garnet Hill lesson was about inventing SILENTLY.**
   studio backdrop as though it were the dress.** ▶ **Reporting that number to her unchecked would have
   been a fault she then had to disprove herself.**
 
-### ⚠️⚠️ A KNOWN PRE-EXISTING FAILURE IN `curated.js` — DO NOT PANIC, AND DO NOT DISMISS IT EITHER
+### ⚠️⚠️ THREE KNOWN PRE-EXISTING FAILURES IN `curated.js` — DO NOT PANIC, AND DO NOT DISMISS THEM EITHER
 🚨 **`curated` reports 64/1 on *"never ruffles" removes the ruffled item*, and it is NOT a regression.**
 ▶ **PROVEN by running the SAME suite in a worktree at `097585b` and getting the IDENTICAL failure.** It
 also passed 65/0 twice the same day, so it is **time- or state-dependent, not code-dependent.**
@@ -935,8 +937,18 @@ many checks in one page and earlier ones mark pieces "seen this week", so by the
 the rotation state has moved.**
 🚨🚨 **FIX IT WITH AN ISOLATED CONTEXT, NEVER BY LOOSENING THE ASSERTION: it guards the never-wear list,
 which exists because of a box of shift dresses, and a test that cries wolf on THAT rule teaches the next
-session to wave it through.** ⚠️ **Until then: if this one check fails, verify against `097585b` before
-believing it; if ANY OTHER check in `curated` fails, treat it as real.**
+session to wave it through.**
+⚠️ **THE SECOND ONE: *"good CSV converts clean"* fails on her six DEACTIVATED catalog picks**
+(`p001` `p015` `p057` `p064` `p089` `p104` — Madewell, COS, Marine Layer named in the frozen catalog CSV
+but no longer keys in `STORES`, because she froze the catalog and those shops closed). Not a bug; the
+converter doesn't yet know a deactivated row may name a dead store.
+⚠️ **THE THIRD, ADDED 2026-09-12 AFTER IT WAS WRONGLY ASSUMED TO NEED CHECKING: *"every family sees ≥3
+jeans"* is ALSO pre-existing** — proven the same way, against a worktree at `8140b92` (the commit before
+this line was written), which reproduces it identically. It has nothing to do with the Edit; it's a
+catalog/feed coverage gap unrelated to anything a session touches by removing an Edit item.
+🚨 **SO: `curated` PASSES AT 62-63 OF 65, NOT 65 OF 65, ON A CLEAN CHECKOUT — three named failures, all
+proven pre-existing.** ⚠️ **If any OTHER check in `curated` fails, treat it as real** — verify against
+the current `origin/main` HEAD in a worktree before believing a new one, the same method used here.
 
 ### ▶ WHAT IS STILL OPEN OUT OF THOSE DAYS
 1. ⚠️ **THE PRICES, AND NO CODE FIXES IT.** Every fed store is `$$$`/`$$$$`. Live medians: **dresses
