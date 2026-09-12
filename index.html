@@ -453,7 +453,7 @@
 
     <div id="restoreSection">
       <div class="hm-help first">Already taken the quiz? <b onclick="showRestore()">Restore your results &rarr;</b></div>
-      <div class="hm-help">Prefer to shop first? <b onclick="showShop()">Browse the Mall &rarr;</b></div>
+      <div class="hm-help">Prefer to shop first? <b onclick="openFinds()">Browse Amazon Finds &rarr;</b></div>
     </div>
     <div id="restoreForm" style="display:none">
       <div id="restoreAsk">
@@ -3688,7 +3688,7 @@ function _stdFootHTML(sid){
   var star='<span class="star">&#9733;</span>';
   var main=[];
   if(sid!=='s-wel'&&sid!=='s-wb')main.push('<span class="lnk" onclick="goHome()">Home</span>');
-  if(sid!=='s-shop')main.push('<span class="lnk" onclick="showShop()">Shop</span>');
+  if(sid!=='s-finds')main.push('<span class="lnk" onclick="openFinds()">Shop</span>');
   // Her own Instagram, so rel is "noopener" and NOT "sponsored" — that keyword
   // marks a paid or affiliate link, and tagging our own account would be a
   // false signal. aria-label because the link is an icon with no text.
