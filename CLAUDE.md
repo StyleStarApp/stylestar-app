@@ -345,55 +345,49 @@ down contradicts this one, THIS ONE WINS.**
 renames) moved to `CLAUDE-archive.md` in this commit, VERBATIM**, under its own heading. Nothing was
 deleted.
 
-### 🚨🚨 HER CATCH: A SHARED WISHLIST LINK CAN SILENTLY DRIFT TO THE WRONG ACCOUNT'S LIST — FOUND AND FIXED
+### 🚨🚨 HER CATCH: HER SAVE TOKEN HAD DRIFTED TO THE WRONG ACCOUNT — FOUND, ROOT-CAUSED, REPAIR BUILT
 She reported: *"My wishlist is full of items but when I texted myself the link of wishlist it sent me
 one item that is not on my list"* — her real wishlist has many pieces, but the link she texted herself
 opened on a page showing exactly ONE unfamiliar item ("Belted Midi Dress," Bloomingdales) plus a note
 she never wrote ("Notes test does this work?").
-▶ **THE ROOT CAUSE, TRACED THROUGH THE CODE, NOT GUESSED:** the server side of sharing has always been
-correct — `?share=<token>` decrypts the token to an EMAIL and does a LIVE lookup of that email's row in
-Supabase every time (`netlify/functions/user-data.js`), so it can never itself go stale. **The bug was
-entirely client-side.** The moment a share link is minted, its token is cached forever in
-`localStorage.ss_sharelink` (`index.html`, `wlShareGet()`), and the wishlist screen just displays
-whatever is cached there as "Your wishlist is shared" — **with no check that the cached token still
-belongs to whichever email this device is CURRENTLY saving under (`ss_email`).** If that ever drifts —
-a restore under a different address, an early test save before her real address settled in, anything
-that changes which email a device is saving as — the OLD token keeps being shown, still copyable, still
-pointing a perfectly live GET straight at the OLD account's row, which nobody has touched since. Her
-one stray item and test note are almost certainly exactly that: leftover content from when the
-sharelink feature itself was being built and tested live (2026-08-21), never cleaned up because nothing
-ever told the app the cached link no longer matched her current account.
-✅ **FIXED:** `_wlShareLink()` now tags every minted token with the email it was minted for
-(`ss_sharelink_email`) and refuses to show or copy it the moment that stops matching `ss_email` —
-clearing both keys so it can't keep being silently re-displayed. **A token cached before this fix
-shipped carries no owner tag at all and is refused for that reason alone** — there is no way to prove
-it still belongs to this device, so the safe default is to distrust it, not assume it. `wlShareStop()`
-now clears the owner tag alongside the token too.
-🚨 **WHAT THIS MEANS FOR HER, PLAINLY: the very next time she opens Your Wishlist, the "already shared"
-box will be gone and she'll see "Get my link" again — that is the fix working, not a new problem.**
-Tapping it mints a brand-new link, correctly tied to her real current account and her real current
-list. **Any OLD link she has already sent to herself or anyone else (the one that showed the wrong
-item) is now simply dead weight — replace it with the fresh one, once she taps to get it.**
-✅ **VERIFIED BY CONSTRUCTION**, since the real bug can't be reproduced without her actual old cached
-token (this session has no access to her phone's localStorage): `scratchpad/sharelink-drift.mjs`, a new
-6-check Playwright suite against the real app, proves (1) a token minted for the current email is
-trusted, (2) a token minted for a DIFFERENT email is refused and cleared, (3) a legacy token with no
-owner tag at all is refused rather than assumed hers, (4) a freshly minted token is tagged with the
-minting email, (5) "Stop sharing" clears both the token and its tag. All 6 pass. The existing
-server-side suite, `sharelink` (54 checks), was re-run untouched and still passes — this was a
-client-only bug, and nothing about the server's own guarantees needed to change.
-⚠️ **STILL OPEN, WORTH A LOOK IF SHE WANTS TO KNOW: whose leftover test row is the "Belted Midi Dress"
-account, and is `_share.on` still `true` on it?** No way to find that from here without the old token
-itself. Low stakes — nobody but whoever still has that old dead link can reach it, and the fix means no
-new drift can happen — but if she wants it tidied up, it would need the actual old token or a Supabase
-lookup by hand.
+**ROUND ONE, REAL BUT NOT THE WHOLE STORY:** `_wlShareLink()` cached a minted share token forever with
+no check that it still matched the email this device was currently saving under (`ss_email`) — fixed by
+tagging every mint with its owner email and refusing/clearing a mismatched or untagged one
+(`scratchpad/sharelink-drift.mjs`, 6/6). **She tried it and got the exact same wrong content again** —
+telling proof this guard alone couldn't be the whole fix, because it only catches a token DRIFTING away
+from the current `ss_email`. If both had been wrong TOGETHER, consistently, from the very start, there
+would be nothing to detect as a mismatch.
+🚨🚨 **ROUND TWO, THE REAL ROOT CAUSE — CONFIRMED LIVE, NOT GUESSED:** the share link's account identity
+is never actually decided by `ss_email` at all — it comes from her **save token** (`_ssToken()`), which
+the server decrypts to an email server-side. Read her real email's Supabase row directly, safely,
+through the app's own existing "Find my results" email-code exchange (never a raw database query): it
+has **NO `wardrobe` field at all**, placeholder quiz answers (`[6,6,6,...]`), a generic un-personal
+portrait, and `updatedAt: 2026-07-17`. ▶▶ **HER SAVE TOKEN HAS BEEN AUTHENTICATING AS A DIFFERENT
+ACCOUNT — ALMOST CERTAINLY A LEFTOVER FROM TESTING THE SHARELINK FEATURE ITSELF ON 2026-08-21 — FOR
+CLOSE TO TWO MONTHS.** Every real save she's made since July has landed only on her phone; her real
+email's row on the server has been frozen at an early placeholder that whole time. **This is a bigger,
+separate, still-open finding — see the never-archiving incident entry in the Affiliate Status section.**
+✅ **BUILT: a one-time recovery path, `?resync=<a fresh save token>` in `index.html`'s boot sequence.**
+Deliberately NOT the existing `?r=` restore link, which PULLS the server's (wrong, stale) data over her
+phone's real data — exactly backwards here. `?resync=` POINTS the device at the correct account and
+PUSHES her phone's own already-correct local data (wardrobe, wishlist, prefs, real quiz answers) up to
+it, never reading anything back from the server. Proven safe against a mocked network, no real account
+touched by the test: `scratchpad/resync-repair.mjs`, 9/9.
+⚠️ **NOT YET CONFIRMED WORKING ON HER ACTUAL PHONE — she has the repair link and has not yet reported
+back.** Once she taps it and confirms "Get my link" shows her real wishlist, this needs three things:
+(1) mark the incident entry fixed, (2) remove the one-time `?resync=` handling from `index.html` in a
+follow-up commit — a temporary recovery lever, never meant to stay in the shared app forever, and
+(3) consider whether `?r=`'s pull-and-overwrite behavior needs a general safety net for the next woman
+this could happen to (a save-token drift is not provably unique to a dev/test history — worth thinking
+about once this specific fire is out).
 
 ### ▶▶ WHAT IS WAITING ON HER — her own priority order (full detail in the Master To-Do List above)
 1. ⏳ The Oct 1 tax-receipt clock (~3 weeks out) — the only real deadline on her board.
 2. ⭐⭐⭐ Apply to the affiliate programmes. CJ is free and still not done.
 3. ⭐ More Edit/Finds pieces — she's on a roll and the machinery makes it cheap now.
-4. ▶ Tap "Get my link" again on the wishlist — her old cached link is now correctly refused; a fresh
-   one is a live, single tap away.
+4. 🚨 **HIGH PRIORITY: tap the one-time repair link she was sent (see the incident entry above) on the
+   SAME PHONE her wishlist actually lives on.** Until then, her real wishlist/preferences/quiz answers
+   exist only on that one device with no server backup at all.
 5. ▶ Optional: clean up the two `claude-diag-test-...@example.invalid` artifacts in Supabase/MailerLite.
 6. ▶ Optional: ask Supabase support how far back the 401 errors go, if she wants to know whether any
    real woman's save was silently lost during the outage.
@@ -2172,6 +2166,42 @@ which invalidates old legacy `anon`/`service_role` keys without warning. If `SUP
 stale again with no code change on this side, check Supabase's own API-keys page FIRST, not just whether
 the project is paused. Full story of the hunt is in this session's "WHERE WE LEFT OFF" above (moves to
 `CLAUDE-archive.md` next session, but the incident line here does not).
+
+🚨🚨 **A SECOND, SEPARATE INCIDENT, FOUND 2026-09-12 (sixth session), STILL OPEN — LIVE OPERATIONAL
+STATUS, NEVER ARCHIVES: HER OWN PHONE'S SAVE TOKEN HAS BEEN POINTING AT THE WRONG ACCOUNT FOR MONTHS.**
+▶ **WHAT SHE SAW:** she texted herself her own wishlist share link and it opened to one item she never
+saved ("Belted Midi Dress," Bloomingdales) plus a note she never wrote ("Notes test does this work?"),
+instead of her real, many-item wishlist.
+✅ **CONFIRMED LIVE, NOT GUESSED:** her real email's Supabase row (`cath.ellspermann@icloud.com`) was
+read directly (safely — the existing "Find my results" email-code exchange, never a raw database
+query) and it has **NO `wardrobe` field at all, generic placeholder quiz answers (`[6,6,6,...]`), a
+generic un-personalized portrait, and `updatedAt: 2026-07-17`.** ▶▶ **HER REAL WISHLIST, HER REAL
+SLIDER ANSWERS AND HER REAL PORTRAIT HAVE APPARENTLY NEVER REACHED THE SERVER, SINCE JULY 17 —
+EVERYTHING SHE HAS DONE SINCE THEN HAS LIVED ONLY ON HER PHONE.** The "Belted Midi Dress" content is
+almost certainly a *different* account entirely (likely a leftover from testing the sharelink feature
+on 2026-08-21) that her phone's save token has been silently authenticating as, this whole time.
+⚠️ **WHY THIS IS WORSE THAN IT LOOKS: her phone is the ONLY copy of everything she's built since
+July.** If that one device were ever lost, reset, or had its browser data cleared, there would be
+nothing to restore from — the server's copy is nearly two months stale and missing her wishlist
+entirely.
+✅ **BUILT, NOT YET CONFIRMED WORKING: a one-time recovery path.** `index.html`'s boot sequence now
+handles `?resync=<a fresh save token>` — deliberately NOT the existing `?r=` restore link, because that
+one PULLS the server's (wrong, stale) copy over her phone's real data, which here would make things
+worse. `?resync=` instead POINTS the device at the correct account (a token obtained via the safe
+email-code exchange, tied to her real email) and PUSHES her phone's own already-correct local data up
+to it — wardrobe, wishlist, prefs, real quiz answers — never reading anything back from the server.
+✅ Proven safe in isolation (mocked network, no real account touched): `scratchpad/resync-repair.mjs`,
+9/9. ✅ **A related, real client bug fixed the same session and already shipped:** the cached wishlist
+share link (`ss_sharelink`) used to be trusted forever with no check that it still matched the
+account currently signed in on that device — now tagged with the email it was minted for and cleared
+the moment that stops matching (`scratchpad/sharelink-drift.mjs`, 6/6). This alone couldn't fix her
+case (her device's `ss_email` had been consistently wrong all along, so nothing had drifted to catch),
+but it is the second half of making sure this can never happen silently again.
+⚠️ **STILL OPEN: she has not yet tapped the one-time repair link.** Once she does, and it succeeds, this
+line should be rewritten to say so plainly, and the one-time `?resync=` handling should be removed from
+`index.html` in a follow-up commit (a temporary recovery lever, not a permanent one — same instinct as
+removing a debug tag once it's done its job). ▶ **DO NOT consider this closed until she confirms "Get
+my link" shows her real wishlist.**
 
 👥👥 **SHE HAS SHARED THE APP — 2026-09-09, HER WORDS: *"I have already asked many friends and put it out
 on Instagram."*** 🚨 **LIVE OPERATIONAL STATUS, WHICH BY THIS FILE'S OWN RULE NEVER ARCHIVES.** ▶ **It is

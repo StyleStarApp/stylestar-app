@@ -14499,6 +14499,39 @@ function maybePlayEntrance(){
   // would persist the empty default over everything she had already marked.
   try{wardrobeData=loadWardrobeData();}catch(e){}
   try{_wlSyncBadges();}catch(e){}
+  // 🚨🚨 A ONE-TIME RECOVERY PATH, 2026-09-12 -- NOT A GENERAL FEATURE, REMOVE
+  // AFTER USE. Her save token had drifted to a different account than her
+  // real email, so every background save had been silently landing (or
+  // silently failing to land) on the wrong row for months -- her phone's
+  // OWN wardrobe/wishlist was always correct, the server's copy was frozen
+  // on an old placeholder. `?r=` (autoRestoreFromLink, below) is the wrong
+  // tool for this: it PULLS the server's copy over her local data, which
+  // here would mean overwriting her real, current wishlist with the stale
+  // placeholder it doesn't even have. `?resync=<a fresh save token>` instead
+  // PUSHES: it points this device at the correct account and immediately
+  // saves her ALREADY-CORRECT local data (buildFullUserData(), read after
+  // wardrobeData/prefs are loaded, same as any normal save) up to it, never
+  // reading anything back from the server. ss_email is cleared first so the
+  // server derives the correct address from the token itself, never from
+  // whatever wrong value was cached alongside the old, drifted token.
+  var resyncTok='';
+  try{resyncTok=new URLSearchParams(location.search).get('resync')||''}catch(e){}
+  if(resyncTok){
+    var ltR=document.querySelector('#s-load .load-t');if(ltR)ltR.textContent='Reconnecting your saved account…';
+    show('s-load',true);
+    (async function(){
+      try{
+        _setSsToken(resyncTok);
+        try{localStorage.removeItem('ss_email')}catch(e){}
+        var r=await saveUserRecord('',buildFullUserData());
+        if(r&&r.ok&&r.json&&r.json.email){try{localStorage.setItem('ss_email',String(r.json.email))}catch(e){}}
+        try{localStorage.removeItem('ss_sharelink');localStorage.removeItem('ss_sharelink_email')}catch(e){}
+      }catch(e){}
+      try{history.replaceState({},'',location.pathname)}catch(e){}
+      fallbackInitialScreen();maybePlayEntrance();
+    })();
+    return;
+  }
   var hasToken=false;
   try{hasToken=!!new URLSearchParams(location.search).get('r')}catch(e){}
   if(hasToken){
