@@ -378,11 +378,32 @@ to match, screenshot that control fresh before touching CSS, not after she says 
   buy.** Re-check before assuming it's over: `curl -s https://status.serpapi.com/api/v2/summary.json` —
   `Google: major_outage` means it isn't.
 
+### 🆕 HER NEXT ASK, 2026-09-12, TO OPEN WITH NEXT SESSION
+Her words: *"What I want to look at next is changing where we suggest to shop the mall and adding into
+the hub the Amazon finds."* Two threads, NEITHER SCOPED YET — nothing built, nothing designed, ask her
+what she means before touching code:
+1. ▶ **"Changing where we suggest to shop the Mall"** — what's wrong with today's placement isn't said
+   yet. **Current state, checked in the code so the next session starts from fact, not memory:** on the
+   home hub's `Shop` card, "Shop the Mall" is the LAST of four rows, in this order — Shop your style,
+   Your Wishlist, Shop Style Star Edit, Shop the Mall. Ask her what she wants different (a different
+   position in this list? surfaced somewhere else entirely? something about when the app suggests it in
+   chat/Wardrobe Ideas rather than this hub row?) before proposing anything.
+2. ▶ **"Adding into the hub the Amazon Finds"** — today Amazon Finds has NO presence in the home hub at
+   all. Its only entry point is the hamburger menu's Shop group, beneath the Edit (built 2026-09-11, see
+   board row 25b). She wants a hub row too, presumably alongside "Shop Style Star Edit" and "Shop the
+   Mall" in the same `Shop` card — but where in that list, and what it should say, is hers to pick, not
+   to assume.
+▶ **BOTH BELONG IN THE SAME `hub-shop` CARD** (`index.html` ~line 661-679), so they are naturally one
+sitting, not two separate builds — likely worth discussing together before writing any markup.
+
+✅ **CLOSED, 2026-09-12: the DVF flag scarf is NOT a Star-queue timing call.** Her words: *"We already
+used it as our first star of the week. It does not need to go into the rotation again."* Taken off the
+board entirely — nothing left to decide.
+
 ### ▶▶ WHAT IS WAITING ON HER — her own priority order (full detail in the Master To-Do List above)
 1. ⏳ The Oct 1 tax-receipt clock (~3 weeks out) — the only real deadline on her board.
 2. ⭐⭐⭐ Apply to the affiliate programmes. CJ is free and still not done.
-3. 💅 The DVF flag scarf — a timing call, hers: does it go back into the Star queue?
-4. ⭐ More Edit/Finds pieces — she's on a roll and the machinery makes it cheap now (proved again this
+3. ⭐ More Edit/Finds pieces — she's on a roll and the machinery makes it cheap now (proved again this
    session — 13 rows in one batch).
 
 ✅ **STILL CLOSED: "what came back from the people she shared the app with" is NOT an open item** — do
