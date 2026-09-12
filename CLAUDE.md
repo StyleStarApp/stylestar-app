@@ -48,7 +48,7 @@ gathers it going forward — that's an open, ongoing thing, not a one-time quest
 | 24 | 🔗 **THE EDIT AS A SHAREABLE LINK — HER ASK, 2026-09-10: *"I want the Edit to be a shareable link."*** ▶▶ **YES IT NEEDS ITS OWN URL, AND THE MACHINERY IS ALREADY BUILT AND PROVEN EIGHT TIMES.** `_ROUTES` today: `/privacy` `/terms` `/story` `/faq` `/contact` `/trending` `/wardrobe` `/results`, plus `/journal/<slug>` and the token-carrying shared wishlist. **The Edit (`s-dream`) is simply not in it.** ▶ **THE BUILD IS THE DOCUMENTED THREE EDITS:** one `_ROUTES` line · one `[[redirects]]` block in `netlify.toml` (status **200**, a rewrite not a 301) · one line in `_openRoute()`. 🚨🚨 **AND THE TRAP, FOUND BY READING THE CODE BEFORE BUILDING: `_openRoute` MUST CALL `showDream()`, NEVER A BARE `show('s-dream')`.** **`showDream()` is what calls `_wlDecorateEdit()`, and `_wlDecorateEdit()` IS WHAT AFFILIATE-WRAPS EVERY EDIT LINK AT RUNTIME** (`index.html:9963`). ▶ **A direct landing that skipped it would render her whole Edit with RAW product links that earn NOTHING — the exact "one route of four forgot" shape as the `<<FIND>>` marker leak.** ⚠️ **Assert it in a test: land on the path cold and check an `.dc-item-btn` href contains `click.linksynergy.com`.** | Claude | ⏳ **OPEN — she asked for it** |
 | 25 | 🛒 **AN AMAZON FINDS PAGE — HER ASK, 2026-09-10, AND STRATEGICALLY IT IS THE BEST IDEA ON THIS BOARD.** ***"I want to make an Amazon finds page. Another Sharable page dedicated to Amazon finds. I want to also feature some of them on Star of the week and our normal edit."*** ▶▶ **WHY IT MATTERS MORE THAN IT LOOKS: THIS FILE HAS SAID FOR WEEKS THAT WHAT THE APP LACKS IS A MID-MARKET GENERALIST** (every fed store is `$$$`/`$$$$`, dress median $398, 0 of 200 dresses under $100). **Amazon IS that, and it is the one such programme she can join without being declined for traffic.** ⚠️ **SO HER INSTINCT ANSWERS THE AFFORDABILITY PROBLEM THIS FILE KEPT CALLING UNSOLVABLE-WITHOUT-USERS.** 🚨🚨 **BUT THE ORDER SHE PROPOSED IS BACKWARDS AND IT IS WORTH REAL MONEY TO GET RIGHT — SEE THE AMAZON BLOCK IN THE MONEY PATH.** ▶ **THE PAGE ITSELF NEEDS NO CATALOGUE AND NO API: hand-picked links, exactly like the Edit, which is also the only version that honours her own disclosure that every piece is personally selected by the founder.** | Claude to build, HERS to pick the pieces | ⏳ **OPEN — she asked for it** |
 | 24b | ✅✅ **THE EDIT IS A SHAREABLE LINK — BUILT AND LIVE 2026-09-10: `stylestar.app/edit`.** ▶ **SIX edits, not the three the routing note promised**, because sharing needs more than a route: the `netlify.toml` rewrite (200) · an `[[edge_functions]]` registration · `PAGES['/edit']` in `page-titles.js` · `_ROUTES` · `_PAGE_META` · an `_openRoute` branch · **and the sitemap entry (priority 0.9)**. 🚨🚨 **THE TRAP IT NEARLY SHIPPED WITH, AND IT WAS MEASURED: `_openRoute` MUST CALL `showDream()`.** Planting a bare `show('s-dream')` rendered **17 links on merchants she IS approved for completely UNWRAPPED** — earning nothing, on the one page she actually sends to people, **with every card looking perfectly normal.** ▶ **`scratchpad/editshare.js`, 26 checks, built around that money check and PROVEN TO BITE.** ⚠️ **The title and description live in TWO files that cannot import from each other; §4 of the suite asserts they match word for word.** ✅ **Verified on the SERVED file, not the deploy badge.** | — | ✅ done |
-| 25b | ✅✅ **AMAZON FINDS IS BUILT AND LIVE — `stylestar.app/finds`, 2026-09-10. ⭐⭐ HER FIRST PIECES LANDED 2026-09-11 AND IT IS IN THE SITEMAP NOW (priority 0.9).** Her ask: *"let's go ahead and move the Amazon pieces that are currently on the Edit over the Finds page now"* — **the Badu stacking bangles $16.99 and the PRETTYGARDEN maxi $46.99, MOVED not copied, so the Edit went 35 → 33 and holds no Amazon piece at all.** ⚠️ **THE BANGLES STAY IN `WEEK_STARS` ON PURPOSE — her own *"I want to also feature some of them on Star of the week"*. That table was NOT touched.** ✅ **IN THE APP'S NAV SINCE 2026-09-11, HER CALL: *"let's go ahead and put it in"*** — the MENU's Shop group, directly beneath Style Star Edit, calling `openFinds`. ▶ **It was kept out of the sitemap while it was empty — a crawler that meets an empty page first tends to keep believing it is empty.** 🚨 **THE NAMING DECISION, AND IT IS THE PART THAT MATTERS: THE HEADING SAYS *AMAZON FINDS* AND THE PATH SAYS `/finds`, DELIBERATELY DIFFERENT.** Her words: *"I want it to be Amazon Finds or something with Amazon in it FOR NOW. If later we get Target or kohls approved maybe could change."* ▶▶ **A HEADING IS FREE TO CHANGE; A PATH CAN NEVER MOVE ONCE SHARED (her own standing rule). Separating them is what makes her "maybe change later" actually possible.** ⚠️ **RENAME THE HEADING FREELY. NEVER RENAME THE PATH.** | — | ✅ live, **44 pieces in 8 categories**, indexed |
+| 25b | ✅✅ **AMAZON FINDS IS BUILT AND LIVE — `stylestar.app/finds`, 2026-09-10. ⭐⭐ HER FIRST PIECES LANDED 2026-09-11 AND IT IS IN THE SITEMAP NOW (priority 0.9).** Her ask: *"let's go ahead and move the Amazon pieces that are currently on the Edit over the Finds page now"* — **the Badu stacking bangles $16.99 and the PRETTYGARDEN maxi $46.99, MOVED not copied, so the Edit went 35 → 33 and holds no Amazon piece at all.** ⚠️ **THE BANGLES STAY IN `WEEK_STARS` ON PURPOSE — her own *"I want to also feature some of them on Star of the week"*. That table was NOT touched.** ✅ **IN THE APP'S NAV SINCE 2026-09-11, HER CALL: *"let's go ahead and put it in"*** — the MENU's Shop group, directly beneath Style Star Edit, calling `openFinds`. ▶ **It was kept out of the sitemap while it was empty — a crawler that meets an empty page first tends to keep believing it is empty.** 🚨 **THE NAMING DECISION, AND IT IS THE PART THAT MATTERS: THE HEADING SAYS *AMAZON FINDS* AND THE PATH SAYS `/finds`, DELIBERATELY DIFFERENT.** Her words: *"I want it to be Amazon Finds or something with Amazon in it FOR NOW. If later we get Target or kohls approved maybe could change."* ▶▶ **A HEADING IS FREE TO CHANGE; A PATH CAN NEVER MOVE ONCE SHARED (her own standing rule). Separating them is what makes her "maybe change later" actually possible.** ⚠️ **RENAME THE HEADING FREELY. NEVER RENAME THE PATH.** | — | ✅ live, **51 pieces in 8 categories** (2026-09-12 batch: +7 new, 6 note revisions), indexed |
 | 12 | ~~The wall arrives in Google's order, not hers~~ ✅ **HER DECISION, BUILT AND LIVE 2026-09-10 — her ten dimensions order the browse row. Measured: Google sent `Old Navy > Nordstrom > Kohl's > Talbots`, she sees `Nordstrom > Talbots > Old Navy > Kohl's`.** | — | ✅ done |
 | 13 | ~~The app promises before it knows it can deliver~~ ✅ **HER DECISION, BUILT AND LIVE 2026-09-10 — the stylist's sentence is HELD until there are cards to keep it with. Retires a FAMILY of faults, not one.** | — | ✅ done |
 | 14 | ~~Affiliate shops should appear "somewhere in there"~~ ✅ **POSITION was already built (`_findSpread`, 2026-09-09). ⚠️ Her ruling was in NEITHER file; it is in the ledger now.** | — | ✅ done |
@@ -330,54 +330,58 @@ that makes any future number mean something.**
 
 ---
 
-## ▶▶▶ WHERE WE LEFT OFF — 2026-09-12. READ THIS FIRST.
+## ▶▶▶ WHERE WE LEFT OFF — 2026-09-12 (second session). READ THIS FIRST.
 🚨 **THIS BLOCK IS THE CURRENT TRUTH. Everything below it is standing reference — if a line further
 down contradicts this one, THIS ONE WINS.**
-📁 **The 2026-09-11 (second session) entry moved to `CLAUDE-archive.md` in this commit, VERBATIM, under
-"ARCHIVED 2026-09-12 — the 2026-09-11 (second session) WHERE WE LEFT OFF entry".** Nothing was deleted.
-This session's own Amazon-disclosure/wrap/centre/star saga, which had been written as detailed narrative
-straight into the AMAZON standing section below, is also archived verbatim there and compacted into
-"what's still true" — the same failure mode this file has needed correcting from before, fixed the same
-way each time.
+📁 **The first-session 2026-09-12 entry moved to `CLAUDE-archive.md` in this commit, VERBATIM**, under
+its own "WHERE WE LEFT OFF — 2026-09-12" heading. Nothing was deleted.
 
-### ✅ THIS SESSION'S WORK, ALL MEASURED, VERIFIED WITH REAL RENDERS AND LIVE
-1. **The Amazon disclosure "cringy" fix, her ask.** `/finds` drops the now-redundant generic disclosure
-   line; the Mall's Amazon sentence moved off the page-top blanket notice to sit under the "Value &
-   Basics" heading, the one category with an Amazon card; every other screen carrying both sentences now
-   renders them on separate lines via a new `.disc-az` span. No wording changed anywhere, only
-   presentation and placement — see "AMAZON — WHAT CAN AND CANNOT BE DONE FROM HERE" below for detail
-   and what's still open.
-2. **Three of her own catches on that same work, all fixed:** "purchases" wrapping onto its own line on
-   Shop your Style, the Wishlist and chat (fixed, matches Wardrobe's own behavior) · that fix's
-   off-centre side effect on Shop your Style (a CSS over-constrained-margin bug, fixed with
-   `max-width:none`) · a second, separately-missed wrap on `/finds`'s own standalone disclosure (fixed
-   with its own margin, scoped to that screen).
-3. **The Shop your Style waiting star, her ask, two rounds** — centred between the disclosure and its
-   caption, ending in `margin-top:65px` on the star and `gap:68px` on the container after her explicit
-   correction that the caption (not the star) should stay put. Full detail below.
+### ✅ THIS SESSION'S WORK, ALL MEASURED AND LIVE
+1. **A 13-row Amazon Finds batch, her spreadsheet.** 7 new pieces (Tory Burch sunglasses, two mirrors,
+   two Lacoste polos, Sam Edelman mules, SLIP hair ties) appended to their existing categories, and 6
+   note-only revisions to pieces already on the page (the Hustler and Meg jeans, the trench coat, the
+   belt bag, the crochet handbag, the HydroBag) — matched by ASIN, never by name, so a note edit could
+   never misread as a removal-and-re-add. **Amazon Finds: 44 → 51 pieces, still 8 categories.** The Edit
+   was untouched (still 28). `findscsv` 50, `findspage` 102, `linkwatch` 27 all clean; sitemap `<lastmod>`
+   restamped for `/finds`.
+2. **The wishlist "door" — her ask, and it turned out bigger than the two pages she named.** Her words:
+   *"on the amazon finds page and edit page we don't have an easy way for her to get to wishlist... I
+   can't remember about the other pages."* ▶▶ **SHE WAS RIGHT TO SUSPECT MORE — an audit of every place
+   `_wlSaveBtn` renders found the door (`_syncHeartTip()`'s "N saved · See Your Wishlist →" line, plus
+   its "save it first" tip for a first-time saver) existed on only THREE of nine heart-bearing surfaces**
+   (Complete the Look, Shop your Style, the stylist chat). **Added to the six that had none: the Edit,
+   Amazon Finds, the "Shop your style" inline block on both the Style Portrait and the photo results, the
+   Wardrobe checklist's Ideas carousels, and the Star of the Week widget on the home hub.** No new
+   mechanism built — every addition reuses the SAME shared component and the SAME global sync function,
+   which already runs on every screen change and every save, so nothing needed wiring by hand.
+   ⚠️ **ONE REAL BUG CAUGHT BUILDING IT:** the Star of the Week widget sits on the home hub's dark
+   `#0c0c0e` shell, and the door's default dark-ink styling is illegible there. A same-specificity
+   override lost to the base rule on source order alone; fixed by scoping to `#wbStar` (matching the
+   `#wbStar .wl-save` pattern already beside it) and reusing colours already proven on that exact
+   background (`#CFC9BB` body, `#F2D889` link — both already load-bearing on `.wks-disc` and the "Read
+   your full Style Portrait" button). **Verified with a real save flowing through `wishToggle()` on all
+   four newly-touched screens, including a click-through from Finds landing on the wishlist itself.**
+   `copy` 50, `findspage` 102, `tabtops` 49 all clean; `wldoortest` unchanged at its pre-existing 10/65
+   (proven pre-existing against the commit before this session's edits, not a regression — see below).
 
 ### ✅ CURRENT STATE, MEASURED
-- **The Style Star Edit is 28 items**, **Amazon Finds is 44 pieces in 8 categories** — her order, her
-  category names, live at `stylestar.app/finds`, in the sitemap, indexed by both Google and Bing. Every
-  older figure in this file quoting 30, 33 or 35 for the Edit is stale.
+- **The Style Star Edit is 28 items**, **Amazon Finds is 51 pieces in 8 categories** — live at
+  `stylestar.app/finds`, in the sitemap, indexed by both Google and Bing.
 - ✅✅ **SHE'S APPROVED FOR AMAZON ASSOCIATES (CONDITIONAL). `_AMZ_TAG` is live, every Amazon link in the
-  app earns.** The 180-day clock for 3 qualifying sales is running. See "AMAZON — WHAT CAN AND CANNOT BE
-  DONE FROM HERE" below for what's wired and what isn't.
+  app earns.** The 180-day clock for 3 qualifying sales is running.
 - **Star of the Week is a 15-week queue running to 13 December**, then repeats. See "STAR OF THE WEEK"
   below for the schedule and the rotation trap that nearly shipped a piece seven weeks early.
-- **`/edit` and `/finds` are both submitted to Google and Bing and indexed.** Neither needs resubmitting
-  for content changes — see the indexing rule under "THE FINDS PAGE" below.
 - 🚨 **SERPAPI'S OUTAGE IS STILL OPEN BUT PARTIAL — roughly 1 search in 6 gets through.** Her own feed
   fills the screen on every failure, so a woman never sees it empty. **Nothing to fix and nothing to
   buy.** Re-check before assuming it's over: `curl -s https://status.serpapi.com/api/v2/summary.json` —
-  `Google: major_outage` means it isn't. Do not raise the 9-second per-call ceiling; a failure pinned to
-  the millisecond on it is HUNG, not slow.
+  `Google: major_outage` means it isn't.
 
 ### ▶▶ WHAT IS WAITING ON HER — her own priority order (full detail in the Master To-Do List above)
 1. ⏳ The Oct 1 tax-receipt clock (~3 weeks out) — the only real deadline on her board.
 2. ⭐⭐⭐ Apply to the affiliate programmes. CJ is free and still not done.
 3. 💅 The DVF flag scarf — a timing call, hers: does it go back into the Star queue?
-4. ⭐ More Edit/Finds pieces — she's on a roll and the machinery makes it cheap now.
+4. ⭐ More Edit/Finds pieces — she's on a roll and the machinery makes it cheap now (proved again this
+   session — 13 rows in one batch).
 5. ⏸️ The fitting-room conversation — parked by her, thinking kept. Ask what it means to her.
 
 ✅ **STILL CLOSED: "what came back from the people she shared the app with" is NOT an open item** — do
@@ -410,20 +414,20 @@ was decided — say what was saved and where, in one line. *(See also "THE ARCHI
 this generalises — Claude's process, never hers to referee.)*
 
 ### ⭐ THE LESSON THIS SESSION EARNED
-🚨 **The same shape as 2026-09-10, in a new costume: when she corrects a fix, the correction usually
-names WHICH element should anchor and which should move — not "somewhere in between."** The first pass
-at centring the waiting star was a mathematically valid fix that moved the wrong element (the caption
-she had always seen in one spot); her correction named the anchor explicitly: *"put the bottom phrase
-back where it was before and bring the star down. Instead of bringing the words up."* ▶ **Ask which side
-is allowed to move — don't assume the fix is the average of the two.**
+🚨 **When she says "I can't remember about the other pages," that is an invitation to audit, not a
+question to answer from memory.** She named two screens; the real gap was six, because the same
+component (the wishlist "door") had only ever been added to a screen when someone happened to be
+working on that screen already — never as a sweep across every place a heart can be tapped. ▶ **The
+sentence to keep, same family as the Rule Ledger's own thesis: a component added surface-by-surface, as
+each surface came up, is a component that drifts. Grep for every call site of the thing she's asking
+about before answering how many places are missing it.**
 
-### ▶ TEST STATE — re-measured 2026-09-12
-`copy` 50/50 · `catmark` 132 passed / 3 pre-existing sandbox-network-limitation failures (unchanged,
-harmless — the sandbox cannot reach the real product-find endpoint) · `tabtops` 49/49 · `findspage`
-102/102. All clean, no regressions. `editshare` 30 · `affq` 42 · `linkwatch` 27 · `starpx` 28 ·
-`findscsv` 50 unaffected from the prior session, not re-run this session. `curated` still reports the
-3 pre-existing, PROVEN failures — see "THREE KNOWN PRE-EXISTING FAILURES" further down; not a
-regression, do not chase it.
+### ▶ TEST STATE — re-measured 2026-09-12 (second session)
+`findscsv` 50 · `findspage` 102 · `linkwatch` 27 · `copy` 50 · `tabtops` 49 all clean, no regressions.
+`catmark` 132 passed / 3 pre-existing failures, exactly the documented baseline. `wldoortest` unchanged
+at 55/65 (10 pre-existing failures — proven pre-existing by running the identical suite against the
+commit before this session's edits and getting the identical 10 failures; not something this session's
+changes caused or should chase).
 
 
 

@@ -21644,3 +21644,98 @@ confirmed against a worktree at the pre-session baseline (`8140b92`); not a regr
   unaffected, and looked at directly on a real render.** The unused remainder of the 338px box still
   becomes empty space below the caption, exactly as before, so the "nothing may jump" reserved-height
   guarantee is untouched.
+
+## ▶▶▶ WHERE WE LEFT OFF — 2026-09-12. READ THIS FIRST.
+🚨 **THIS BLOCK IS THE CURRENT TRUTH. Everything below it is standing reference — if a line further
+down contradicts this one, THIS ONE WINS.**
+📁 **The 2026-09-11 (second session) entry moved to `CLAUDE-archive.md` in this commit, VERBATIM, under
+"ARCHIVED 2026-09-12 — the 2026-09-11 (second session) WHERE WE LEFT OFF entry".** Nothing was deleted.
+This session's own Amazon-disclosure/wrap/centre/star saga, which had been written as detailed narrative
+straight into the AMAZON standing section below, is also archived verbatim there and compacted into
+"what's still true" — the same failure mode this file has needed correcting from before, fixed the same
+way each time.
+
+### ✅ THIS SESSION'S WORK, ALL MEASURED, VERIFIED WITH REAL RENDERS AND LIVE
+1. **The Amazon disclosure "cringy" fix, her ask.** `/finds` drops the now-redundant generic disclosure
+   line; the Mall's Amazon sentence moved off the page-top blanket notice to sit under the "Value &
+   Basics" heading, the one category with an Amazon card; every other screen carrying both sentences now
+   renders them on separate lines via a new `.disc-az` span. No wording changed anywhere, only
+   presentation and placement — see "AMAZON — WHAT CAN AND CANNOT BE DONE FROM HERE" below for detail
+   and what's still open.
+2. **Three of her own catches on that same work, all fixed:** "purchases" wrapping onto its own line on
+   Shop your Style, the Wishlist and chat (fixed, matches Wardrobe's own behavior) · that fix's
+   off-centre side effect on Shop your Style (a CSS over-constrained-margin bug, fixed with
+   `max-width:none`) · a second, separately-missed wrap on `/finds`'s own standalone disclosure (fixed
+   with its own margin, scoped to that screen).
+3. **The Shop your Style waiting star, her ask, two rounds** — centred between the disclosure and its
+   caption, ending in `margin-top:65px` on the star and `gap:68px` on the container after her explicit
+   correction that the caption (not the star) should stay put. Full detail below.
+
+### ✅ CURRENT STATE, MEASURED
+- **The Style Star Edit is 28 items**, **Amazon Finds is 44 pieces in 8 categories** — her order, her
+  category names, live at `stylestar.app/finds`, in the sitemap, indexed by both Google and Bing. Every
+  older figure in this file quoting 30, 33 or 35 for the Edit is stale.
+- ✅✅ **SHE'S APPROVED FOR AMAZON ASSOCIATES (CONDITIONAL). `_AMZ_TAG` is live, every Amazon link in the
+  app earns.** The 180-day clock for 3 qualifying sales is running. See "AMAZON — WHAT CAN AND CANNOT BE
+  DONE FROM HERE" below for what's wired and what isn't.
+- **Star of the Week is a 15-week queue running to 13 December**, then repeats. See "STAR OF THE WEEK"
+  below for the schedule and the rotation trap that nearly shipped a piece seven weeks early.
+- **`/edit` and `/finds` are both submitted to Google and Bing and indexed.** Neither needs resubmitting
+  for content changes — see the indexing rule under "THE FINDS PAGE" below.
+- 🚨 **SERPAPI'S OUTAGE IS STILL OPEN BUT PARTIAL — roughly 1 search in 6 gets through.** Her own feed
+  fills the screen on every failure, so a woman never sees it empty. **Nothing to fix and nothing to
+  buy.** Re-check before assuming it's over: `curl -s https://status.serpapi.com/api/v2/summary.json` —
+  `Google: major_outage` means it isn't. Do not raise the 9-second per-call ceiling; a failure pinned to
+  the millisecond on it is HUNG, not slow.
+
+### ▶▶ WHAT IS WAITING ON HER — her own priority order (full detail in the Master To-Do List above)
+1. ⏳ The Oct 1 tax-receipt clock (~3 weeks out) — the only real deadline on her board.
+2. ⭐⭐⭐ Apply to the affiliate programmes. CJ is free and still not done.
+3. 💅 The DVF flag scarf — a timing call, hers: does it go back into the Star queue?
+4. ⭐ More Edit/Finds pieces — she's on a roll and the machinery makes it cheap now.
+5. ⏸️ The fitting-room conversation — parked by her, thinking kept. Ask what it means to her.
+
+✅ **STILL CLOSED: "what came back from the people she shared the app with" is NOT an open item** — do
+not re-ask; she'll bring more tester feedback as she gathers it, ongoing, not a pending question.
+
+### ▶▶ WHAT IS OPEN FOR CLAUDE
+1. 🚨 "Couldn't load options right now" — she photographed it on Shop your Style; the stylist call
+   failing, not the search. The remaining suspect is the 32KB prompt cap, measured at 104 characters of
+   headroom. **Measure it before claiming it.**
+2. 💰 A price filter — a find request carries item · colour · fabric · cut · size · width and no price
+   field at all. When built, put `Try: tops under $100` and `Try: white jeans under $150` back verbatim.
+3. ⭐ Wire her Style Signature into the finder (board row 11, her *"many of them were shapeless"*) —
+   parked by her; hers to green-light, one thing at a time.
+4. ▶ Read her analytics. `track()` exists and nobody has looked. Still worth doing: it's the thing that
+   would tell her whether she's on track for the 3 sales inside 180 days, before day 180.
+5. ▶ A shared remembered cache — today's is per-browser. Must live server-only (Netlify Blobs), never
+   through the publishable key.
+6. ▶ Amazon's disclosure "I" vs "we"/"Style Star LLC" — flagged to her, not guessed at; a real open
+   question if she wants to pursue confirming it with Amazon directly.
+
+### 🎯 STANDING RULE FOR CLAUDE — NEVER ASK HER TO MAKE A GIT DECISION
+Her words: *"Why are you asking me about putting something on main? I don't even know what that means.
+I count on you to decide what needs to be saved or archived or put on main or the branch and all of
+that. I need you to keep track of everything and be honest with me."* ▶ **Branch, commit, archive,
+merge to `main` — all of it is Claude's to decide and do, then report in one plain line** ("saved and
+live"). **The only thing that still goes to her is a PRODUCT decision** — what the app should do, what
+a woman sees, what her words mean. ⚠️ **The second half of her sentence is load-bearing too: "keep
+track of everything and be honest with me."** Deciding for her is not permission to be vague about what
+was decided — say what was saved and where, in one line. *(See also "THE ARCHIVING RULE" below, which
+this generalises — Claude's process, never hers to referee.)*
+
+### ⭐ THE LESSON THIS SESSION EARNED
+🚨 **The same shape as 2026-09-10, in a new costume: when she corrects a fix, the correction usually
+names WHICH element should anchor and which should move — not "somewhere in between."** The first pass
+at centring the waiting star was a mathematically valid fix that moved the wrong element (the caption
+she had always seen in one spot); her correction named the anchor explicitly: *"put the bottom phrase
+back where it was before and bring the star down. Instead of bringing the words up."* ▶ **Ask which side
+is allowed to move — don't assume the fix is the average of the two.**
+
+### ▶ TEST STATE — re-measured 2026-09-12
+`copy` 50/50 · `catmark` 132 passed / 3 pre-existing sandbox-network-limitation failures (unchanged,
+harmless — the sandbox cannot reach the real product-find endpoint) · `tabtops` 49/49 · `findspage`
+102/102. All clean, no regressions. `editshare` 30 · `affq` 42 · `linkwatch` 27 · `starpx` 28 ·
+`findscsv` 50 unaffected from the prior session, not re-run this session. `curated` still reports the
+3 pre-existing, PROVEN failures — see "THREE KNOWN PRE-EXISTING FAILURES" further down; not a
+regression, do not chase it.

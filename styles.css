@@ -2964,6 +2964,20 @@ body.card-fb{padding:0}
    #wbStar's own next child, so at 7px the disclosure sat exactly ON the frame's
    bottom edge (measured gap 0 at 390/375/360/320). This buys it 7px of air. */
 .wks-disc{font-family:'Jost',sans-serif;font-size:11px;line-height:1.4;color:#CFC9BB;text-align:center;margin-top:14px}
+/* THE DOOR BACK TO HER WISHLIST, ONE SAVE LATER (2026-09-12, her ask -- "she
+   needs an easy way to find her way to the wishlist"). Same shared component
+   as everywhere else it renders (`.wl-door`, `_syncHeartTip()`), but this is
+   the one copy that sits on the dark dressing-room shell rather than white
+   paper, so its ink needs its own colours -- reused, not invented: #CFC9BB is
+   .wks-disc's own body colour on this exact background, and #F2D889 is the
+   "Read your full Style Portrait" gold, already measured at 13.92:1 here. */
+/* #wbStar-scoped, not .wb-wl-door alone: the bare class sits at the SAME
+   specificity as .wl-door and .wl-door .wl-door-go below, which are LATER in
+   the file and so would win on source order alone, right back to the dark
+   ink this rule exists to override. Scoping to the id is what makes the
+   dark-background colours win regardless of where either rule sits. */
+#wbStar .wl-door{color:#CFC9BB;margin:10px auto 0;max-width:280px;font-size:13.5px}
+#wbStar .wl-door .wl-door-go{color:#F2D889}
 /* MORE FROM THE EDIT (2026-08-26, her idea — "would it be possible to have
    The Edit items slide sideways... have the Star of the week on the front
    page and the rest slide over as Edit pages"). Her pick "A" from a 3-way
