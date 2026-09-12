@@ -860,6 +860,17 @@ maintain. 🚨 **HER OWN LINE, ON BOTH PAGES, EACH POINTING AT THE OTHER — NEV
   both Wardrobe tabs and the Wishlist counted too, Amazon's sentence now lives on eleven screens —
   worded identically everywhere except Finds (Amazon's sentence alone) and the Mall (both sentences,
   now in two different places on the page rather than stacked at the top).
+  🚨 **FIXED 2026-09-12, HER CATCH: "purchases" was wrapping alone onto a second line on Shop your
+  Style and the Wishlist.** Her words: *"I prefer how it looks on wardrobe list where it all stays on
+  one line."* ▶ **MEASURED, not guessed: those two screens, plus the stylist chat (found while
+  checking every location, she hadn't noticed it there yet), sit inside a frame wrapper with 28px of
+  side padding that Wardrobe's screen doesn't have to fight** — Wardrobe already bleeds its own `.scr`
+  into that same padding for unrelated reasons, which is why it never had this problem. `.disc-az` on
+  all three now carries a matching `-28px` margin, recovering that padding for just the disclosure
+  line (not the whole screen). ✅ **Verified with a real render at 390/375/360/320px: all three now
+  match Wardrobe's own behavior exactly, including wrapping only at the extreme 320px width, which
+  Wardrobe does too.** The Mall's disclosure and the three `.shopdisc` locations (photo results,
+  portrait, Complete the Look) were checked and never wrapped — no change made there.
 - ▶ **Amazon's trademark rules** (read from their own guidelines): a descriptive heading like "Amazon
   Finds" is fine; their marks may never appear in a domain/subdomain (a second reason the path is
   `/finds`); displaying their LOGO triggers a further attribution requirement — so the page uses only
