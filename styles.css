@@ -4015,22 +4015,32 @@ body.ss-play .hm-entrance{animation:ssOverlayOut .55s ease 1.6s forwards}
    a speck, which is what she photographed. **If she wants it bigger or smaller
    still, it is this one number.** */
 /* ⚠️ 2026-09-12, HER CATCH: "centre the star between the disclosure and
-   'Checking what's actually in stock...'". MEASURED, not guessed: with
-   `justify-content:center` the star+caption pair was centred in the whole
-   338px RESERVED box, not in the visible gap she was looking at -- since the
-   caption sits only 14px below the star (their own deliberate `gap`), that
-   left 122px of empty air above the star and just 14px below it, an 8-to-1
-   imbalance, even though the two empty halves of the 338px box were
-   themselves symmetric (122 vs 120) and therefore invisible as a problem in
-   the CSS, only visible on her phone. ▶ `flex-start` drops the star+caption
-   pair right under the disclosure instead, so the gap above the star now
-   roughly matches the 14px gap below it -- the star reads as centred between
-   the two things she is actually comparing. The unused remainder of the
-   338px box simply becomes empty space BELOW the caption, which is exactly
-   what happens today anyway once real cards replace this state, so nothing
-   about the "nothing may jump" reserved-height guarantee changes. */
+   'Checking what's actually in stock...'". FIRST ATTEMPT: `justify-content:
+   flex-start` pulled the star+caption pair up to sit right under the
+   disclosure, which balanced the two gaps but did it by moving the CAPTION
+   up from where it had always sat.
+   🚨🚨 HER CORRECTION, SAME DAY: *"put the bottom phrase back where it was
+   before and bring the star down. Instead of bringing the words up."* ▶ SHE
+   IS RIGHT, AND IT IS THE BETTER FIX: the caption's original position is
+   what a woman has already been looking at through every earlier build of
+   this screen, so IT should anchor, not move -- the star is the one thing
+   that was wrong, so the star is the one thing that should travel.
+   ✅ MEASURED, both states real-rendered with the star's spin animation
+   frozen first (its live CSS transform otherwise makes getBoundingClientRect
+   report a rotated, inflated bounding box, not its true 66px layout size):
+   captionTargetTop = 351.5px under the ORIGINAL `justify-content:center`,
+   disclosure bottom = 149px. Centring the 66px star in that 202.5px span
+   puts its top at 217px -- 68px below the disclosure AND 68px above the
+   restored caption position, both gaps equal. `flex-start` plus an explicit
+   `margin-top` on the star alone (not a container-level rule) delivers that
+   directly, deterministically, with no dependency on the 338px reserved
+   height's own arithmetic -- and the flex `gap` (star to caption) simply
+   widens to match, landing the caption back at ~351px, matching her ask to
+   the pixel. The unused remainder of the 338px box still becomes empty
+   space below the caption exactly as before, so the "nothing may jump"
+   reserved-height guarantee is untouched. */
 .ss-find-wait{height:338px;display:flex;flex-direction:column;align-items:center;
-  justify-content:flex-start;gap:14px}
+  justify-content:flex-start;gap:68px}
 /* 🚨🚨 THE GOLD STAR, NOT THE PINK ONE — HER RULING, 2026-09-09, given while
    choosing the size: "66px but I want the gold one not pink. Pink only for the
    chat."
@@ -4047,8 +4057,14 @@ body.ss-play .hm-entrance{animation:ssOverlayOut .55s ease 1.6s forwards}
    star is in its list. Only the SIZE and the COLOUR differ.
    ▶ 66px is HER pick, chosen by looking at 30 / 42 / 54 / 66 rendered on the real
    screen mid-search at her phone's true size. It is one number if she wants it
-   moved. */
-.ss-find-wait .ss-find-star{width:66px;height:66px;flex:0 0 66px;
+   moved.
+   ⚠️ `margin-top:65px` IS THE "BRING THE STAR DOWN" HALF OF HER 2026-09-12
+   CORRECTION ABOVE -- it is what actually moves the star, while the caption
+   stays where `justify-content:flex-start` + the container's own `gap`
+   already puts it. Paired with that 68px `gap`, both numbers came from one
+   real measurement, not two guesses; changing one without the other will
+   throw the balance off again. */
+.ss-find-wait .ss-find-star{width:66px;height:66px;flex:0 0 66px;margin-top:65px;
   animation:spin 1.7s linear infinite reverse;transform-origin:50% 50%}
 @media(prefers-reduced-motion:reduce){.ss-find-wait .ss-find-star{animation:none}}
 /* ⚠️ HER WORDS, from `_FIND_STEPS`, and they rotate as the search goes on so it
