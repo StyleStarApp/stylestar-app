@@ -8791,6 +8791,16 @@ const mallStores=[
     {n:'Etsy',d:'Handmade, vintage finds and personalized jewelry & gifts',u:'https://www.etsy.com'}
   ]}
 ];
+// A store "earns" here in the exact sense _affUrl wraps its link -- an
+// approved Rakuten advertiser (in _AFF_MID) or Amazon once _AMZ_TAG is set.
+// Never a hand-kept list: it reads the same live facts _affUrl itself uses,
+// so a new approval reorders the Mall on its own, with nothing to update here.
+function _mallEarns(u){
+  var h='';
+  try{h=new URL(u).hostname.toLowerCase().replace(/^www\./,'');}catch(e){return false;}
+  if(h==='amazon.com'||h.slice(-11)==='.amazon.com')return !!_AMZ_TAG;
+  return !!_affMid(u);
+}
 function renderMall(){
   const c=document.getElementById('mallContent');
   if(!c||c.dataset.built)return;
@@ -8805,7 +8815,13 @@ function renderMall(){
     // itself, because the sentence reads as introducing the section.
     if(group.cat==='Value & Basics')h+='<div class="mall-az">As an Amazon Associate, I earn from qualifying purchases.</div>';
     h+='<div class="mall-grid">';
-    group.stores.forEach(function(s){
+    // 2026-09-12, her ask: the stores that actually earn should lead each
+    // category, not sit wherever they happen to fall alphabetically. A STABLE
+    // sort, so within "earns" / "doesn't earn" her original ordering holds.
+    var sorted=group.stores.slice().sort(function(a,b){
+      return (_mallEarns(b.u)?1:0)-(_mallEarns(a.u)?1:0);
+    });
+    sorted.forEach(function(s){
       /* ⚠️⚠️ THE MALL WAS THE ONE SHOPPING SURFACE WHOSE LINKS COULD NEVER EARN.
          It rendered s.u RAW, so it was the single place a store URL becomes an
          href without passing through _affUrl -- and affwrap.js, the sweep whose
@@ -11313,7 +11329,11 @@ function _shTail(){
     +'<path d="M12 21.6 C10.7 18.9 8.2 17 5.9 14.7 C3.6 12.4 2 10.4 2 7.7 C2 4.8 4.2 2.7 7 2.7 '
     +'C9.5 2.7 11.3 4.6 12 7.1 C12.7 4.6 14.5 2.7 17 2.7 C19.8 2.7 22 4.8 22 7.7 C22 10.4 20.4 12.4 '
     +'18.1 14.7 C15.8 17 13.3 18.9 12 21.6 Z"/></svg></span>'
-    +'<span class="sh-f2" onclick="showShop()">Browse the Style Star Mall &rarr;</span>'
+    +'<span class="sh-f2" onclick="openFinds()">Browse Amazon Finds<svg class="pinkheart" '
+    +'style="width:12px;height:12px;margin-left:5px;vertical-align:-1px" viewBox="0 0 24 24">'
+    +'<path d="M12 21.6 C10.7 18.9 8.2 17 5.9 14.7 C3.6 12.4 2 10.4 2 7.7 C2 4.8 4.2 2.7 7 2.7 '
+    +'C9.5 2.7 11.3 4.6 12 7.1 C12.7 4.6 14.5 2.7 17 2.7 C19.8 2.7 22 4.8 22 7.7 C22 10.4 20.4 12.4 '
+    +'18.1 14.7 C15.8 17 13.3 18.9 12 21.6 Z"/></svg></span>'
     +'<div class="sh-mark"><span class="pref-word">Style <span class="st">Star</span></span></div>'
     +'<div class="sh-legal">'
     +'<span class="lnk" onclick="showPrivacy()">Privacy</span> &middot; '
