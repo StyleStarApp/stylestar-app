@@ -250,7 +250,7 @@
   ▶ RESTAMP AFTER ANY CSS EDIT:  node scripts/css-version.js --write
   ⚠️ DO NOT hand-type or "tidy" the value — it is derived from the file, and
   scratchpad/copy.js fails if it is stale. -->
-  <link rel="stylesheet" href="/styles.css?v=6141677946">
+  <link rel="stylesheet" href="/styles.css?v=c7646aeed6">
 </head>
 <body>
 <!-- build: quiz glow-up (chrome frame, gold knob, gold button, gold progress) 2026-07-11 r2 -->
@@ -9033,6 +9033,14 @@ function _normalizeWardrobe(d){
     // an AI suggestion and rebuilds a search. A hand-edited or unsafe URL is
     // stripped here, and the row honestly falls back to the search link.
     else if(x.own){o.own=true;var ou=_wlSafeUrl(x.url);if(ou)o.url=ou;}
+    // ⚠️ WITHOUT THIS LINE THE PHOTO NEVER SURVIVES A RELOAD. wishToggle()
+    // stores it, but this function re-normalizes on every load (Supabase,
+    // localStorage, a fresh session), and its record shape is built fresh
+    // here field by field -- a field this map doesn't name is silently gone
+    // the next time she opens the app, even though it saved perfectly fine a
+    // moment ago. Same https-only guard as everywhere else an image url
+    // reaches the DOM, because this record also arrives hand-editable.
+    if(typeof x.image==='string'&&/^https:\/\//.test(x.image))o.image=x.image;
     return o;
   });
   // HER OPEN NOTE (2026-08-21, item two): one paragraph for whoever is shopping
@@ -10006,11 +10014,11 @@ function _curatedCard(x){
   // `name` is what she reads; `idName` is the UNCHANGED merchant name the
   // wishlist id is built from, so tidying the display can never orphan a piece
   // she already hearted or break stale()'s saved-item lookup in curatedPicks.
-  const saveItem={name:shownName,idName:x.name,store:x.retailer,search:(x.brand+' '+x.name),exact:true,url:x.url,price:'$'+x.price};
-  const note=_wdrTrimNote(x.note);
   // https only, on purpose: the image url is catalog data, and an href-shaped
   // field that reaches the DOM is never trusted for its scheme.
   const pic=(typeof x.image==='string'&&/^https:\/\//.test(x.image))?x.image:'';
+  const saveItem={name:shownName,idName:x.name,store:x.retailer,search:(x.brand+' '+x.name),exact:true,url:x.url,price:'$'+x.price,image:pic};
+  const note=_wdrTrimNote(x.note);
   // alt is deliberately EMPTY: the brand and the full product name sit
   // directly beneath, so a described image would read the piece out twice.
   // onerror restores the ordinary no-photo card exactly — the photo's own
@@ -10403,6 +10411,17 @@ var _WL_STAR_PATH='M12 1.6L14.47 8.6L21.89 8.79L15.99 13.3L18.11 20.41L12 16.2L5
 var _WL_HEART_PATH='M12 21.6 C10.7 18.9 8.2 17 5.9 14.7 C3.6 12.4 2 10.4 2 7.7 C2 4.8 4.2 2.7 7 2.7 C9.5 2.7 11.3 4.6 12 7.1 C12.7 4.6 14.5 2.7 17 2.7 C19.8 2.7 22 4.8 22 7.7 C22 10.4 20.4 12.4 18.1 14.7 C15.8 17 13.3 18.9 12 21.6 Z';
 var _wlReg={};              // id -> {name,store,search}; filled as cards render
 var _wlToastTimer=null,_wlSyncTimer=null;
+// The fitting-room grid's no-photo card: a plain hanger, the same frame as a
+// real photo, never a broken-image icon. Shared as a constant rather than
+// built twice, because it has to render identically whether a card starts
+// with no image (the AI never found a real product) or a real photo LINK
+// fails after the fact (a dead hotlink) -- one honest fallback, one place.
+var _WL_GRID_PLACEHOLDER='<span class="wl-gplaceholder"><svg viewBox="0 0 24 24" fill="none" stroke="#C99A2C" stroke-width="1.3"><path d="M8 4.5c0-1.4 1.8-2.5 4-2.5s4 1.1 4 2.5"/><path d="M6 8 2.3 18.4c-.2.6.3 1.2.9 1.2H8"/><path d="M18 8l3.7 10.4c.2.6-.3 1.2-.9 1.2H16"/><path d="M6 8c0-1.7 2.7-3 6-3s6 1.3 6 3l-2 3H8Z"/><path d="M10 11v10M14 11v10"/></svg></span>';
+function _wlGridImgFail(img){
+  var card=img.closest?img.closest('.wl-gcard'):null;
+  img.outerHTML=_WL_GRID_PLACEHOLDER;
+  if(card)card.classList.add('noimg');
+}
 var wishlistPrevScreen='s-wb';
 
 function _wlSlug(v){return String(v||'').toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-+|-+$/g,'').slice(0,64)}
@@ -10487,8 +10506,14 @@ function _wlEditItems(){
     var el=els[i],n=el.querySelector('.dc-item-name'),a=el.querySelector('.dc-item-btn');
     if(!n||!a)continue;
     var st=el.querySelector('.dc-store'),pr=el.querySelector('.dc-price');
+    // A stacked pair (px2) carries two <img>; the FIRST is always the primary
+    // view (h() above renders it eager, first), so it is the one honest single
+    // photo to carry into a save -- the wishlist thumbnail is not the place to
+    // reproduce a two-photo stack built for a much bigger card.
+    var px=el.querySelector('.dc-item-px img, img.dc-item-px');
     out.push({el:el,name:n.textContent.trim(),store:st?st.textContent.trim():'',
-              price:pr?pr.textContent.trim():'',url:a.getAttribute('href')||'',pick:true});
+              price:pr?pr.textContent.trim():'',url:a.getAttribute('href')||'',pick:true,
+              image:(px&&px.src)||''});
   }
   return out;
 }
@@ -10911,6 +10936,91 @@ function _wlEmptyHtml(){
     +'</div></div>';
 }
 function wishlistShopCta(){try{openShopStyle()}catch(e){show('s-wel')}}
+/* ONE place computes what a saved row may honestly claim, shared by the row
+   list AND the fitting-room grid (2026-09-12, her ask -- a comparison view,
+   not a second list). Building the grid as a second copy of this logic is
+   exactly the "second card loop" shape that leaked the <<FIND>> marker and
+   caused the two-row regression; this is the fix applied here before it was
+   ever needed here. */
+function _wlRowMeta(it){
+  // Three kinds of exact-URL row: pick (Cath's Edit, badged), own with a
+  // pasted link ("Your pick"), and exact (a catalog piece saved from the
+  // wardrobe shelf -- real URL and price but deliberately NO badge, her
+  // 2026-08-14 call: the catalog is unattributed).
+  var pick=!!it.pick,own=!!it.own,catx=!!it.exact,url='',exact=false;
+  if(pick||catx)url=_affUrl(_wlSafeUrl(it.url));
+  else if(own&&it.url){url=_affUrl(_wlSafeUrl(it.url));exact=!!url;}
+  var exactLink=!!url;
+  if(!pick&&!url){try{url=getStoreUrl(it.store,it.name,it.search)}catch(e){url=''}}
+  var label=(pick||exact||(catx&&exactLink))?'Shop it':'Find it';
+  return {pick:pick,own:own,catx:catx,exact:exact,exactLink:exactLink,url:url,label:label};
+}
+// Her list, her mirror, and now two ways to look at it (2026-09-12): the row
+// list she has always had, and a fitting room -- the saved pieces as a grid
+// of photographs, big enough to actually compare fit and price side by side.
+// ⚠️ ONE LIST. Never a second thing to save into -- see the ledger on why a
+// second list would add resistance she ruled against.
+var _wlView='list';
+function _wlSetView(v){
+  if(v!==_wlView){_wlView=v;try{localStorage.setItem('ss_wl_view',v)}catch(e){}}
+  renderWishlist();
+}
+try{var _wlv=localStorage.getItem('ss_wl_view');if(_wlv==='grid')_wlView='grid';}catch(e){}
+function _wlViewToggleHtml(){
+  return '<div class="wl-viewtabs" role="tablist">'
+    +'<span class="wl-vtab'+(_wlView==='list'?' on':'')+'" role="tab" aria-selected="'+(_wlView==='list'?'true':'false')+'" onclick="_wlSetView(\'list\')">List</span>'
+    +'<span class="wl-vtab'+(_wlView==='grid'?' on':'')+'" role="tab" aria-selected="'+(_wlView==='grid'?'true':'false')+'" onclick="_wlSetView(\'grid\')">Fitting Room</span>'
+    +'</div>';
+}
+function _renderWlRows(list){
+  var h='<div class="wl-card">';
+  list.forEach(function(it){
+    var m=_wlRowMeta(it);
+    // ⚠️ Only a row that actually carries a note switches to top alignment.
+    // Doing it to every row would lift the ✕ and the Shop it button on a screen
+    // she has already blessed, to fix a problem those rows do not have.
+    var hasNote=!!(it.note||_wlNoteOpen===it.id);   // marks the row for the tests
+    h+='<div class="wl-row'+(m.pick?' pick':'')+(m.own?' own':'')+(hasNote?' hasnote':'')+'">'
+      +'<span class="wl-del" role="button" title="Remove" aria-label="Remove '+_esc(it.name)+'" onclick="wishRemove(\''+it.id+'\')">&times;</span>'
+      +'<div class="wl-b">'
+      +(m.pick?'<span class="wl-pick"><svg viewBox="0 0 24 24"><path d="'+_WL_HEART_PATH+'"/></svg>Catherine&rsquo;s pick</span>':'')
+      +(m.exact?'<span class="wl-own"><svg viewBox="0 0 24 24"><path d="'+_WL_HEART_PATH+'"/></svg>Your pick</span>':'')
+      +'<span class="wl-nm">'+_esc(it.name)+'</span>'
+      +(it.store?'<span class="wl-st">'+_esc(it.store)
+      +((m.pick||m.catx)&&it.price?'<span class="wl-pr">'+_esc(it.price)+'</span>':'')+'</span>':'')
+      +_wlNoteBlock(it)+'</div>'
+      +(m.url?'<a class="wl-go" href="'+_esc(m.url)+'" target="_blank" rel="sponsored noopener">'+m.label+' &rarr;</a>':'')
+      +'</div>';
+  });
+  h+='</div>';
+  return h;
+}
+// The photo grid. A piece with no real photo (an AI-suggested "we think this
+// exists" pick with nothing verified) gets a plain named card in the SAME
+// frame rather than a broken image or a missing tile -- the grid stays
+// intentional even where a photo genuinely does not exist yet.
+function _renderWlGrid(list){
+  var h='<div class="wl-grid">';
+  list.forEach(function(it){
+    var m=_wlRowMeta(it);
+    var img=(typeof it.image==='string'&&/^https:\/\//.test(it.image))?it.image:'';
+    h+='<div class="wl-gcard'+(img?'':' noimg')+'">'
+      +'<span class="wl-del" role="button" title="Remove" aria-label="Remove '+_esc(it.name)+'" onclick="wishRemove(\''+it.id+'\')">&times;</span>'
+      +(m.url?'<a class="wl-ggo" href="'+_esc(m.url)+'" target="_blank" rel="sponsored noopener">':'<span class="wl-ggo">')
+      +(img?'<img src="'+_esc(img)+'" alt="" loading="lazy" decoding="async" onerror="_wlGridImgFail(this)">'
+           :_WL_GRID_PLACEHOLDER)
+      +'<div class="wl-gtext">'
+      +(m.pick?'<span class="wl-pick"><svg viewBox="0 0 24 24"><path d="'+_WL_HEART_PATH+'"/></svg>Catherine&rsquo;s pick</span>':'')
+      +'<span class="wl-gnm">'+_esc(it.name)+'</span>'
+      +(it.store?'<span class="wl-gst">'+_esc(it.store)
+      +((m.pick||m.catx)&&it.price?' &middot; '+_esc(it.price):'')+'</span>':'')
+      +'</div>'
+      +(m.url?'</a>':'</span>')
+      +'</div>';
+  });
+  h+='</div>';
+  return h;
+}
 function renderWishlist(){
   var body=document.getElementById('wlBody');
   if(!body)return;
@@ -10919,37 +11029,12 @@ function renderWishlist(){
   // The disclosure rides with the links: it is rendered here, not in the markup,
   // so it is never shown on an empty page where there is nothing to disclose.
   var h='<div class="wl-lead">Here&rsquo;s everything you saved, ready when you are. '
-   +'Tap <b>+ Add a note</b> to say your size, color, etc. '
-   +'Tap the <b>&times;</b> to take an item off your list.</div>'
+   +(_wlView==='grid'?'Tap a photo to shop it, or the <b>&times;</b> to take it off your list.'
+     :'Tap <b>+ Add a note</b> to say your size, color, etc. Tap the <b>&times;</b> to take an item off your list.')
+   +'</div>'
    +'<div class="wl-disclosure">Some links may earn a commission. <span class="disc-az">As an Amazon Associate, I earn from qualifying purchases.</span></div>'
-   +'<div class="wl-card">';
-  list.forEach(function(it){
-    // Three kinds of exact-URL row now: pick (Cath's Edit, badged), own with a
-    // pasted link ("Your pick"), and exact (a catalog piece saved from the
-    // wardrobe shelf -- real URL and price but deliberately NO badge, her
-    // 2026-08-14 call: the catalog is unattributed).
-    var pick=!!it.pick,own=!!it.own,catx=!!it.exact,url='',exact=false;
-    if(pick||catx)url=_affUrl(_wlSafeUrl(it.url));
-    else if(own&&it.url){url=_affUrl(_wlSafeUrl(it.url));exact=!!url;}
-    var exactLink=!!url;
-    if(!pick&&!url){try{url=getStoreUrl(it.store,it.name,it.search)}catch(e){url=''}}
-    // ⚠️ Only a row that actually carries a note switches to top alignment.
-    // Doing it to every row would lift the ✕ and the Shop it button on a screen
-    // she has already blessed, to fix a problem those rows do not have.
-    var hasNote=!!(it.note||_wlNoteOpen===it.id);   // marks the row for the tests
-    h+='<div class="wl-row'+(pick?' pick':'')+(own?' own':'')+(hasNote?' hasnote':'')+'">'
-      +'<span class="wl-del" role="button" title="Remove" aria-label="Remove '+_esc(it.name)+'" onclick="wishRemove(\''+it.id+'\')">&times;</span>'
-      +'<div class="wl-b">'
-      +(pick?'<span class="wl-pick"><svg viewBox="0 0 24 24"><path d="'+_WL_HEART_PATH+'"/></svg>Catherine&rsquo;s pick</span>':'')
-      +(exact?'<span class="wl-own"><svg viewBox="0 0 24 24"><path d="'+_WL_HEART_PATH+'"/></svg>Your pick</span>':'')
-      +'<span class="wl-nm">'+_esc(it.name)+'</span>'
-      +(it.store?'<span class="wl-st">'+_esc(it.store)
-      +((pick||catx)&&it.price?'<span class="wl-pr">'+_esc(it.price)+'</span>':'')+'</span>':'')
-      +_wlNoteBlock(it)+'</div>'
-      +(url?'<a class="wl-go" href="'+_esc(url)+'" target="_blank" rel="sponsored noopener">'+((pick||exact||(catx&&exactLink))?'Shop it':'Find it')+' &rarr;</a>':'')
-      +'</div>';
-  });
-  h+='</div>';
+   +_wlViewToggleHtml()
+   +(_wlView==='grid'?_renderWlGrid(list):_renderWlRows(list));
   body.innerHTML=h;
   _wlRenderAdd();
   _wlRenderListNote();
@@ -13836,11 +13921,19 @@ var _OWN_PX_RE=/^stars\/[a-z0-9][a-z0-9._-]*\.(jpe?g|png|webp)$/i;
    ⚠️ ownPx WINS when both are present: it is always licensed and always hers.
    ⚠️ A malformed ownPx, or a px on an unapproved store, renders NOTHING rather
       than a broken image or a liability. Silence is the safe failure here. */
+// Pulled out of _wkStarPxTag so the wishlist save (which needs the SAME
+// licensed photo, not a second copy of the gate) can ask for it too. Two
+// copies of a licensing check is how a photo ends up shown somewhere it was
+// never cleared for -- the same lesson as every other rule in this file.
+function _wkStarPxSrc(S){
+  if(!S)return '';
+  if(S.ownPx&&_OWN_PX_RE.test(S.ownPx))return S.ownPx;
+  if(S.px&&_affMid(S.url)&&_wlSafeUrl(S.px))return S.px;
+  return '';
+}
 function _wkStarPxTag(S,cls){
   if(!S)return '';
-  var src='';
-  if(S.ownPx&&_OWN_PX_RE.test(S.ownPx))src=S.ownPx;
-  else if(S.px&&_affMid(S.url)&&_wlSafeUrl(S.px))src=S.px;
+  var src=_wkStarPxSrc(S);
   if(!src)return '';
   // ⚠️ pxPos, OPTIONAL and PER ITEM: her catch on the FARM Rio dress, 2026-08-26
   // -- "the model's feet are cut off at the bottom and there is empty space at
@@ -13941,7 +14034,8 @@ function _renderWeekStar(){
   var el=document.getElementById('wbStar');if(!el)return;
   var WEEK_STAR=_weekStar();
   if(!WEEK_STAR||!WEEK_STAR.n||!_wlSafeUrl(WEEK_STAR.url)){el.classList.remove('on');el.innerHTML='';return;}
-  var item={name:WEEK_STAR.n,store:WEEK_STAR.store,pick:true,url:WEEK_STAR.url,price:WEEK_STAR.price};
+  var item={name:WEEK_STAR.n,store:WEEK_STAR.store,pick:true,url:WEEK_STAR.url,price:WEEK_STAR.price,
+    image:_wkStarPxSrc(WEEK_STAR)};
   // The licensing gate lives in _wkStarPxTag — read the note there before
   // touching photos on either Star surface.
   // Size is her pick 2026-08-20 from three rendered options: 140px keeps the whole

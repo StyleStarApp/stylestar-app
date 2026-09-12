@@ -44,7 +44,7 @@ gathers it going forward — that's an open, ongoing thing, not a one-time quest
 | 22 | 💰 **A PRICE FILTER — THE SEARCH HAS NO PRICE FIELD AT ALL.** A find request carries item · colour · fabric · cut · size · width and nothing else, so *"under $100"* was never filtered, only ignored. ▶ **When it is built, put `Try: tops under $100` and `Try: white jeans under $150` straight back — the only thing wrong with them was that they were promises.** | Claude, hers to green-light | ⏳ **OPEN** |
 | 19 | ⭐⭐⭐ **APPLY TO THE 41 BRANDS THAT PUBLISH CATALOGUES** — Everlane · Boden · Tuckernuck · Universal Standard · Cuyana · Alo Yoga · Summersalt · Good American · Veronica Beard and more. **CJ is FREE and still not done.** | **HERS, and worth more than anything Claude can build** | ⏳ **OPEN** |
 | 11 | ⏸️ **THE FINDER HAS NEVER BEEN SHOWN HER STYLE PROFILE** — her *"I like fitted clothing and many of them were shapeless"*. She is **8 leaning fitted** on her own Style Signature and the finder gets an item and a cut, nothing else. **PARKED BY HER 2026-09-10: *"Let's park that piece for right now."*** ▶ **Not dropped — it keeps its place on this list and she reopens it.** | Hers | ⏸️ **PARKED, NOT STARTED** |
-| 23 | 🛍️ **IMPROVE THE WISHLIST PAGE — HER ASK, 2026-09-10.** ▶ **Verified in the code the same day: `renderWishlist` exists and the saves are real** (`{id,name,store,search,url,price,image}`, and a saved piece has carried a PHOTOGRAPH since 2026-09-09), **so this is improving a real page, not building one.** ⚠️ **THE PARKED FITTING-ROOM THINKING IS THE SAME THREAD — read it before starting** (one list, two views; the grid of photographs; the thing a wishlist never does is EMPTY). **`fitting-room` appears in the code exactly ONCE, as a comment saying nothing renders it yet.** ▶ **ASK HER WHAT SHE WANTS IMPROVED before designing; do not arrive with the old menu.** | Claude, hers to steer | ⏳ **OPEN — she asked for it** |
+| 23 | 🛍️ **IMPROVE THE WISHLIST PAGE — HER ASK, 2026-09-10, ANSWERED 2026-09-12: THE FITTING ROOM.** She confirmed it's for comparison — fit, price, does it work with what she owns, is it worth the money — and greenlit building it the same session. **BUILT: a List/Fitting Room toggle, same list, no second thing to save into.** Full detail in this session's WHERE WE LEFT OFF entry above (the reload-survival bug it caught, the three upstream photo gaps it fixed, the 24-check suite). 🚨 **ON A BRANCH, NOT YET MERGED — she has not seen it yet.** | — | ⏳ **BUILT, awaiting her look** |
 | 24 | 🔗 **THE EDIT AS A SHAREABLE LINK — HER ASK, 2026-09-10: *"I want the Edit to be a shareable link."*** ▶▶ **YES IT NEEDS ITS OWN URL, AND THE MACHINERY IS ALREADY BUILT AND PROVEN EIGHT TIMES.** `_ROUTES` today: `/privacy` `/terms` `/story` `/faq` `/contact` `/trending` `/wardrobe` `/results`, plus `/journal/<slug>` and the token-carrying shared wishlist. **The Edit (`s-dream`) is simply not in it.** ▶ **THE BUILD IS THE DOCUMENTED THREE EDITS:** one `_ROUTES` line · one `[[redirects]]` block in `netlify.toml` (status **200**, a rewrite not a 301) · one line in `_openRoute()`. 🚨🚨 **AND THE TRAP, FOUND BY READING THE CODE BEFORE BUILDING: `_openRoute` MUST CALL `showDream()`, NEVER A BARE `show('s-dream')`.** **`showDream()` is what calls `_wlDecorateEdit()`, and `_wlDecorateEdit()` IS WHAT AFFILIATE-WRAPS EVERY EDIT LINK AT RUNTIME** (`index.html:9963`). ▶ **A direct landing that skipped it would render her whole Edit with RAW product links that earn NOTHING — the exact "one route of four forgot" shape as the `<<FIND>>` marker leak.** ⚠️ **Assert it in a test: land on the path cold and check an `.dc-item-btn` href contains `click.linksynergy.com`.** | Claude | ⏳ **OPEN — she asked for it** |
 | 25 | 🛒 **AN AMAZON FINDS PAGE — HER ASK, 2026-09-10, AND STRATEGICALLY IT IS THE BEST IDEA ON THIS BOARD.** ***"I want to make an Amazon finds page. Another Sharable page dedicated to Amazon finds. I want to also feature some of them on Star of the week and our normal edit."*** ▶▶ **WHY IT MATTERS MORE THAN IT LOOKS: THIS FILE HAS SAID FOR WEEKS THAT WHAT THE APP LACKS IS A MID-MARKET GENERALIST** (every fed store is `$$$`/`$$$$`, dress median $398, 0 of 200 dresses under $100). **Amazon IS that, and it is the one such programme she can join without being declined for traffic.** ⚠️ **SO HER INSTINCT ANSWERS THE AFFORDABILITY PROBLEM THIS FILE KEPT CALLING UNSOLVABLE-WITHOUT-USERS.** 🚨🚨 **BUT THE ORDER SHE PROPOSED IS BACKWARDS AND IT IS WORTH REAL MONEY TO GET RIGHT — SEE THE AMAZON BLOCK IN THE MONEY PATH.** ▶ **THE PAGE ITSELF NEEDS NO CATALOGUE AND NO API: hand-picked links, exactly like the Edit, which is also the only version that honours her own disclosure that every piece is personally selected by the founder.** | Claude to build, HERS to pick the pieces | ⏳ **OPEN — she asked for it** |
 | 24b | ✅✅ **THE EDIT IS A SHAREABLE LINK — BUILT AND LIVE 2026-09-10: `stylestar.app/edit`.** ▶ **SIX edits, not the three the routing note promised**, because sharing needs more than a route: the `netlify.toml` rewrite (200) · an `[[edge_functions]]` registration · `PAGES['/edit']` in `page-titles.js` · `_ROUTES` · `_PAGE_META` · an `_openRoute` branch · **and the sitemap entry (priority 0.9)**. 🚨🚨 **THE TRAP IT NEARLY SHIPPED WITH, AND IT WAS MEASURED: `_openRoute` MUST CALL `showDream()`.** Planting a bare `show('s-dream')` rendered **17 links on merchants she IS approved for completely UNWRAPPED** — earning nothing, on the one page she actually sends to people, **with every card looking perfectly normal.** ▶ **`scratchpad/editshare.js`, 26 checks, built around that money check and PROVEN TO BITE.** ⚠️ **The title and description live in TWO files that cannot import from each other; §4 of the suite asserts they match word for word.** ✅ **Verified on the SERVED file, not the deploy badge.** | — | ✅ done |
@@ -363,6 +363,46 @@ its own "WHERE WE LEFT OFF — 2026-09-12" heading. Nothing was deleted.
    four newly-touched screens, including a click-through from Finds landing on the wishlist itself.**
    `copy` 50, `findspage` 102, `tabtops` 49 all clean; `wldoortest` unchanged at its pre-existing 10/65
    (proven pre-existing against the commit before this session's edits, not a regression — see below).
+3. 🚨🚨 **THE FITTING ROOM — BUILT, ON A BRANCH, ⏳ NOT YET MERGED TO MAIN. She still needs to see it and
+   react before this goes live**, per her own "I'll bring you real screenshots before anything goes
+   live." **Read this row before saying it is done.** Her ask, resurfacing the parked 2026-09-09 thread
+   (board row 23): a second way to look at the SAME wishlist — the row list she has, plus a photo grid
+   for comparing pieces side by side, no second list to save into. Her own framing: *"a place for
+   comparison... take a moment to be alone and decide calmly."*
+   ▶ **BUILT: a List/Fitting Room toggle on `#s-wishlist`, persisted in localStorage, both views reading
+   the SAME `_wlList()` and sharing ONE `_wlRowMeta()` for what a saved row may honestly claim** (never a
+   second copy of that logic — the exact shape that leaked the `<<FIND>>` marker before). A piece with no
+   real product found gets a plain named placeholder card, same frame as a photo, never a broken-image
+   icon or a blank gap. **A PRODUCT PHOTO IS NEVER CROPPED applies here too** — `object-fit:contain`,
+   same as the finder's own cards, because these are frequently the SAME photo from the SAME
+   unknown-shape sources.
+   🚨🚨 **THREE REAL GAPS FOUND AND FIXED WHILE BUILDING IT, ALL PRE-EXISTING, NONE HER FAULT:** the
+   Wardrobe Ideas feed cards, Star of the Week, and the Edit/Finds pages all already SHOW a photo on
+   their card but never passed it into the saved wishlist entry — only the chat/Shop your Style finder
+   cards did. Fixed in all three (`_curatedCard`, `_renderWeekStar`'s new shared `_wkStarPxSrc()`
+   respecting the SAME affiliate-licensing gate as the card itself, and `_wlEditItems()` reading the
+   already-rendered `.dc-item-px`).
+   🚨🚨🚨 **THE BIGGEST CATCH: `_normalizeWardrobe()` — which re-runs on EVERY fresh load, not just the
+   save — never carried `image` through its wishlist mapper at all.** A photo would have saved
+   perfectly, shown perfectly, and then silently vanished the next time she opened the app. Fixed with
+   the same https-only guard used everywhere an image url reaches the DOM. **This would have quietly
+   undone the whole feature days after shipping it, on every existing save, with no error anywhere.**
+   ✅ **`scratchpad/fitroom.js`, 24 checks, built new for this — asserts the toggle, all three card
+   shapes, the broken-photo fallback (proven both by the real proxy's own immediate rejection AND by
+   direct invocation, since a headless browser's lazy-load timing is not something this sandbox
+   reproduces reliably), the crop rule, delete-from-grid staying in sync with the real list, no
+   sideways overflow at 320-390px, and the reload-survival fix itself.** `wlnote` 71, `weekstar` 54/55
+   (the 1 failure is the documented stale-"today" scheduling test, unrelated), `curated` 62/65 (the
+   documented pre-existing baseline, unrelated), `copy` 50 — all clean, no regressions.
+   ⚠️ **PHOTOS THEMSELVES COULD NOT BE SCREENSHOTTED RELIABLY FROM THIS SANDBOX** — the same documented
+   Chromium/proxy limitation as every retail-site check in this file (`curl` reaches images.unsplash.com
+   fine; headless Chromium here does not, reliably). **One test run DID load a real photo correctly and
+   it is asserted in `fitroom.js`** — the mechanism is proven, just not screenshot-able on demand. Look
+   at it live on her phone once merged; that is the real test, same as everything else this sandbox
+   cannot render.
+   ▶ **HER PARKED IDEA #4, DELIBERATELY NOT TOUCHED — her own call: *"I don't want to complicate things
+   and that might be more shop your style category... let's stay focused here."*** Better outfit
+   presentation on Shop your Style is a real, separate thread for a future session, not folded into this.
 
 ### ✅ CURRENT STATE, MEASURED
 - **The Style Star Edit is 28 items**, **Amazon Finds is 51 pieces in 8 categories** — live at
