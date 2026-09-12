@@ -11,6 +11,129 @@ The standing rules, current decisions, store system and open threads all live in
 
 ---
 
+## ▶▶▶ WHERE WE LEFT OFF — 2026-09-12 (second session, end of session). READ THIS FIRST.
+🚨 **THIS BLOCK IS THE CURRENT TRUTH. Everything below it is standing reference — if a line further
+down contradicts this one, THIS ONE WINS.**
+📁 **This session's earlier "WHERE WE LEFT OFF" entry (the Amazon Finds batch, the wishlist door sweep,
+the Fitting Room build) moved to `CLAUDE-archive.md` in this commit, VERBATIM**, under its own heading.
+Nothing was deleted.
+
+### ✅ THE LAST ROUND OF THIS SESSION, ALL MEASURED AND MERGED LIVE
+After the Fitting Room went live she looked again and asked for two more things, plus two questions:
+1. **Deleted a line from the wishlist share card** — "Add a note to anything you want them to get
+   right" — her call, it no longer applied to the current share flow.
+2. **Made the List/Fitting Room toggle read as tappable**, matching the arrow treatment already on
+   Wardrobe's own "My List"/"What's Trending" tabs. ⚠️ **THE FIRST BUILD WAS WRONG, AND SHE CAUGHT IT:**
+   built from memory of the `.wdr-tab` CSS rule rather than a fresh render, it put the arrow inline
+   beside the label; the real control stacks the arrow BELOW the label (column layout) at 19px, with the
+   pair pointing outward from each other (left tab's arrow mirrored left, right tab's plain right).
+   Rendered the real Wardrobe tabs fresh, matched the box model exactly, confirmed no wrap at 320px.
+3. **Renamed "List" to "List View"** on her ask — paired with "Fitting Room," the bare word "List" read
+   as a destination rather than a second way of looking at the same saved items; "List View" makes the
+   pairing self-explanatory.
+4. **Answered her two questions rather than guessing:** does this page need reindexing, and does a
+   shared wishlist link show the toggle. **No to both, for two separate reasons** — `s-wishlist` has no
+   public route or sitemap entry at all (unlike `/edit` and `/finds`), and the link a friend actually
+   opens (`/list/<token>`) renders through an entirely separate function, `_renderSharedList`, which
+   never calls the toggle in the first place. Confirmed by reading the code, not assumed.
+▶ `fitroom.js` 24/24 clean throughout both fixes. **ALL MERGED LIVE.**
+
+### ⭐ THE LESSON THIS ROUND EARNED
+🚨 **A REFERENCE SHE NAMES ("compare it to Wardrobe") IS NOT OPTIONAL HOMEWORK — RENDER IT, DON'T
+RECALL IT.** The first arrow build was built from memory of a CSS rule read earlier in the session,
+without re-screenshotting the actual control side by side — and it still came out wrong in the one
+detail that mattered (inline vs. stacked). **When she names a specific existing control as the standard
+to match, screenshot that control fresh before touching CSS, not after she says it looks off.**
+
+### ✅ CURRENT STATE, MEASURED
+- **The Style Star Edit is 28 items**, **Amazon Finds is 51 pieces in 8 categories** — live at
+  `stylestar.app/finds`, in the sitemap, indexed by both Google and Bing.
+- ✅✅ **SHE'S APPROVED FOR AMAZON ASSOCIATES (CONDITIONAL). `_AMZ_TAG` is live, every Amazon link in the
+  app earns.** The 180-day clock for 3 qualifying sales is running.
+- **Star of the Week is a 15-week queue running to 13 December**, then repeats. See "STAR OF THE WEEK"
+  below for the schedule and the rotation trap that nearly shipped a piece seven weeks early.
+- ✅ **THE FITTING ROOM IS LIVE** — a List View/Fitting Room toggle on the wishlist, same list, two ways
+  to look at it. See the archive for the full build story.
+- 🚨 **SERPAPI'S OUTAGE IS STILL OPEN BUT PARTIAL — roughly 1 search in 6 gets through.** Her own feed
+  fills the screen on every failure, so a woman never sees it empty. **Nothing to fix and nothing to
+  buy.** Re-check before assuming it's over: `curl -s https://status.serpapi.com/api/v2/summary.json` —
+  `Google: major_outage` means it isn't.
+
+### 🆕 HER NEXT ASK, 2026-09-12, TO OPEN WITH NEXT SESSION
+Her words: *"What I want to look at next is changing where we suggest to shop the mall and adding into
+the hub the Amazon finds."* Two threads, NEITHER SCOPED YET — nothing built, nothing designed, ask her
+what she means before touching code:
+1. ▶ **"Changing where we suggest to shop the Mall"** — what's wrong with today's placement isn't said
+   yet. **Current state, checked in the code so the next session starts from fact, not memory:** on the
+   home hub's `Shop` card, "Shop the Mall" is the LAST of four rows, in this order — Shop your style,
+   Your Wishlist, Shop Style Star Edit, Shop the Mall. Ask her what she wants different (a different
+   position in this list? surfaced somewhere else entirely? something about when the app suggests it in
+   chat/Wardrobe Ideas rather than this hub row?) before proposing anything.
+2. ▶ **"Adding into the hub the Amazon Finds"** — today Amazon Finds has NO presence in the home hub at
+   all. Its only entry point is the hamburger menu's Shop group, beneath the Edit (built 2026-09-11, see
+   board row 25b). She wants a hub row too, presumably alongside "Shop Style Star Edit" and "Shop the
+   Mall" in the same `Shop` card — but where in that list, and what it should say, is hers to pick, not
+   to assume.
+▶ **BOTH BELONG IN THE SAME `hub-shop` CARD** (`index.html` ~line 661-679), so they are naturally one
+sitting, not two separate builds — likely worth discussing together before writing any markup.
+
+✅ **CLOSED, 2026-09-12: the DVF flag scarf is NOT a Star-queue timing call.** Her words: *"We already
+used it as our first star of the week. It does not need to go into the rotation again."* Taken off the
+board entirely — nothing left to decide.
+
+### ▶▶ WHAT IS WAITING ON HER — her own priority order (full detail in the Master To-Do List above)
+1. ⏳ The Oct 1 tax-receipt clock (~3 weeks out) — the only real deadline on her board.
+2. ⭐⭐⭐ Apply to the affiliate programmes. CJ is free and still not done.
+3. ⭐ More Edit/Finds pieces — she's on a roll and the machinery makes it cheap now (proved again this
+   session — 13 rows in one batch).
+
+✅ **STILL CLOSED: "what came back from the people she shared the app with" is NOT an open item** — do
+not re-ask; she'll bring more tester feedback as she gathers it, ongoing, not a pending question.
+
+### ▶▶ WHAT IS OPEN FOR CLAUDE
+1. 🚨 "Couldn't load options right now" — she photographed it on Shop your Style; the stylist call
+   failing, not the search. The remaining suspect is the 32KB prompt cap, measured at 104 characters of
+   headroom. **Measure it before claiming it.**
+2. 💰 A price filter — a find request carries item · colour · fabric · cut · size · width and no price
+   field at all. When built, put `Try: tops under $100` and `Try: white jeans under $150` back verbatim.
+3. ⭐ Wire her Style Signature into the finder (board row 11, her *"many of them were shapeless"*) —
+   parked by her; hers to green-light, one thing at a time.
+4. ▶ Read her analytics. `track()` exists and nobody has looked. Still worth doing: it's the thing that
+   would tell her whether she's on track for the 3 sales inside 180 days, before day 180.
+5. ▶ A shared remembered cache — today's is per-browser. Must live server-only (Netlify Blobs), never
+   through the publishable key.
+6. ▶ Amazon's disclosure "I" vs "we"/"Style Star LLC" — flagged to her, not guessed at; a real open
+   question if she wants to pursue confirming it with Amazon directly.
+
+### 🎯 STANDING RULE FOR CLAUDE — NEVER ASK HER TO MAKE A GIT DECISION
+Her words: *"Why are you asking me about putting something on main? I don't even know what that means.
+I count on you to decide what needs to be saved or archived or put on main or the branch and all of
+that. I need you to keep track of everything and be honest with me."* ▶ **Branch, commit, archive,
+merge to `main` — all of it is Claude's to decide and do, then report in one plain line** ("saved and
+live"). **The only thing that still goes to her is a PRODUCT decision** — what the app should do, what
+a woman sees, what her words mean. ⚠️ **The second half of her sentence is load-bearing too: "keep
+track of everything and be honest with me."** Deciding for her is not permission to be vague about what
+was decided — say what was saved and where, in one line. *(See also "THE ARCHIVING RULE" below, which
+this generalises — Claude's process, never hers to referee.)*
+
+### ⭐ THE LESSON THIS SESSION EARNED
+🚨 **When she says "I can't remember about the other pages," that is an invitation to audit, not a
+question to answer from memory.** She named two screens; the real gap was six, because the same
+component (the wishlist "door") had only ever been added to a screen when someone happened to be
+working on that screen already — never as a sweep across every place a heart can be tapped. ▶ **The
+sentence to keep, same family as the Rule Ledger's own thesis: a component added surface-by-surface, as
+each surface came up, is a component that drifts. Grep for every call site of the thing she's asking
+about before answering how many places are missing it.**
+
+### ▶ TEST STATE — re-measured 2026-09-12 (second session)
+`findscsv` 50 · `findspage` 102 · `linkwatch` 27 · `copy` 50 · `tabtops` 49 all clean, no regressions.
+`catmark` 132 passed / 3 pre-existing failures, exactly the documented baseline. `wldoortest` unchanged
+at 55/65 (10 pre-existing failures — proven pre-existing by running the identical suite against the
+commit before this session's edits and getting the identical 10 failures; not something this session's
+changes caused or should chase).
+
+---
+
 ## ▶▶▶ WHERE WE LEFT OFF — 2026-09-12 (second session). READ THIS FIRST.
 🚨 **THIS BLOCK IS THE CURRENT TRUTH. Everything below it is standing reference — if a line further
 down contradicts this one, THIS ONE WINS.**
