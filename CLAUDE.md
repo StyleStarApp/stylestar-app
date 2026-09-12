@@ -104,7 +104,9 @@ that makes any future number mean something.**
 - ▶ **AWIN — 3 applications PENDING:** Jackie Mack Designs · TERI JON · Under Armour US. ⚠️ **NONE of
   them fixes the price problem** — activewear, jewellery and eveningwear respectively (her own
   correction, and the measurement upheld it).
-- ▶ **CJ — free, no clock, "costs nothing but an evening." NOT DONE.** The cheapest open move on the board.
+- ✅ **CJ — ACCOUNT CREATED AND ACTIVE, 2026-09-12.** No individual advertiser programs applied to yet —
+  that's the next step, prioritizing the mid-market DTC names (Everlane, Boden, Tuckernuck, Universal
+  Standard, Cuyana, Alo Yoga, Summersalt, Good American, Veronica Beard) over whatever CJ surfaces first.
 - ▶ **NORDSTROM CREATORS** (`nordstromcreators.com`) — door 2 for Nordstrom, when her follower count is
   not the weakest thing she brings.
 - ▶ **REAPPLY to Impact, Bloomingdale's and Shopbop** from a stronger position. All three declined for
@@ -338,41 +340,48 @@ that makes any future number mean something.**
 
 ---
 
-## ▶▶▶ WHERE WE LEFT OFF — 2026-09-12 (seventh session, end of session). READ THIS FIRST.
+## ▶▶▶ WHERE WE LEFT OFF — 2026-09-12 (eighth session, end of session). READ THIS FIRST.
 🚨 **THIS BLOCK IS THE CURRENT TRUTH. Everything below it is standing reference — if a line further
 down contradicts this one, THIS ONE WINS.**
-📁 **The sixth-session 2026-09-12 entry (the save-token drift discovery, the `?resync=` and "Reconnect
-my saved account" builds) moved to `CLAUDE-archive.md` in this commit, VERBATIM**, under its own
-heading. Nothing was deleted.
+📁 **The seventh-session 2026-09-12 entry (the confirmed sharelink-drift fix, the `?resync=`/reconnect
+cleanup) moved to `CLAUDE-archive.md` in this commit, VERBATIM**, under its own heading. Nothing was
+deleted.
+⚠️ **No app code changed this session.** This was Cath working live through the actual CJ Affiliate
+publisher signup in her own browser, screen by screen, with Claude walking her through each field.
 
-### ✅✅ CONFIRMED FIXED: SHE USED THE RECONNECT CONTROL, "GET MY LINK" NOW SHOWS HER REAL WISHLIST
-She tapped "Reconnect my saved account," pasted the code, and confirmed it worked. **Her real save
-token is now correctly tied to her real account, and her real wardrobe/wishlist/prefs/quiz answers are
-finally saved to the server for the first time since 2026-07-17.**
-▶ **SHE ASKED THE RIGHT NEXT QUESTION: "will this be broken for all our other users too?"** ▶▶ **NO —
-answered plainly, with the reasoning, not just reassurance.** The mismatch could only happen because a
-save token got planted pointing at a different account, and the only time that has ever occurred is
-during LIVE TESTING on Cath's own phone/browser while building the sharelink feature — never on any
-other real woman's device. A normal signup mints a token tied to her own email on day one, and nothing
-in the ordinary app flow ever swaps it out from under her. **So this specific incident could not have
-reached anyone but her.** ▶ **What DID ship for everyone, though: the sharelink-drift guard**
-(`_wlShareLink()` refusing/clearing a token that doesn't match the current `ss_email`) is a genuine
-safety net now protecting every user, for whatever future reason a similar drift might ever occur.
-🚨 **CLEANUP DONE, AS PROMISED IN THE PRIOR ENTRY:** both temporary recovery mechanisms — the `?resync=`
-boot-time URL handling and the "Reconnect my saved account" in-app control — were **removed from
-`index.html`** now that they've done their one job, along with their two now-obsolete test files
-(`scratchpad/resync-repair.mjs`, `scratchpad/reconnect-prompt.mjs`). ⚠️ **NOTHING PERMANENT WAS LEFT
-BEHIND FOR THIS INCIDENT** except the sharelink-drift guard itself (which stays — it's a real
-improvement, not a recovery tool) and this written record. Re-ran `sharelink` (54/54), `sharelink-drift`
-(6/6), `savetruth` (19/19) and `copy` (50/50) after removing the temporary code — no regressions.
-▶ **THE ONE THING FROM THE PRIOR ENTRY DELIBERATELY NOT DONE:** a general safety net for `?r=`'s
-pull-and-overwrite behavior, in case a save-token drift ever recurs for a different reason on a
-different account. Given the incident is now confirmed unique to Cath's own dev-testing history and
-fully closed, this is downgraded to a "worth remembering" line rather than an open task — see below.
+### ✅✅ CJ AFFILIATE — DONE. ACCOUNT CREATED AND ACTIVE, HER #2 MONEY-PATH ITEM FOR WEEKS.
+**"CJ is free and still not done" is retired — it is done and the account is live.** Cath completed
+the full publisher signup tonight: Users (created her Superuser login, caught and fixed a stray
+duplicate "Operator" user with a broken name field along the way — the fix was logging in as the
+actual Superuser, since only that role can manage account settings), Network Profile (business
+description filed), tax info (a W-9 filed under her **personal SSN**, which is correct — a
+single-member LLC that hasn't elected corporate tax treatment is a disregarded entity for tax
+purposes, so the name+TIN on a W-9 is the individual, not the LLC's EIN; the money still lands in the
+LLC's own bank account, which is what actually keeps the books separated), Account Information
+(caught and fixed: the Organization Name field said "Style Star, LLC" — the actual filed legal name is
+**Style Star by Catherine, LLC**, doc L26000395689 — corrected to match), Payment Settings (business
+bank account added, Truist, account holder name "Style Star by Catherine, LLC"; CJ will place a
+verification phone call on their own timeline before the account can actually be paid — nothing to do
+but wait for that call), and a Promotional Property (**"Style Star"**, Website type, primary
+promotional model **Product Comparison, Reviews, or Discovery** with **Content/Blog/Media** as
+secondary, tagged). ✅ **CJ's own onboarding screen confirmed: "Your Account Has Been Activated... you
+may now begin applying to join advertiser programs."**
+▶ **NOT DONE YET, AND IT'S THE ACTUAL NEXT STEP: she has not applied to any individual advertiser
+program inside CJ yet.** Account-level approval and per-advertiser approval are separate — being
+active on the network just means she can now browse the Partners tab and apply one program at a time,
+the same way AWIN and Rakuten work. ⭐⭐⭐ **PRIORITY ORDER FOR WHICH ADVERTISERS TO APPLY TO FIRST: the
+mid-market DTC brands from the "41 shops publish their full catalogue" measurement — Everlane · Boden ·
+Tuckernuck · Universal Standard · Cuyana · Alo Yoga · Summersalt · Good American · Veronica Beard —
+ahead of any luxury name CJ's own directory might surface first.** Those are the ones that could
+actually move the affordability problem this file keeps coming back to; nothing else on the board does.
+⚠️ **Not verified from here which specific network each of those brands is actually on** — CJ's own
+advertiser directory (inside the account, "Advertisers"/Partners tab) is the only reliable way to check;
+don't assume all nine are on CJ specifically.
 
 ### ▶▶ WHAT IS WAITING ON HER — her own priority order (full detail in the Master To-Do List above)
 1. ⏳ The Oct 1 tax-receipt clock (~3 weeks out) — the only real deadline on her board.
-2. ⭐⭐⭐ Apply to the affiliate programmes. CJ is free and still not done.
+2. ⭐⭐⭐ **Apply to individual advertiser programs inside CJ**, now that the account itself is active —
+   start with the mid-market DTC names above.
 3. ⭐ More Edit/Finds pieces — she's on a roll and the machinery makes it cheap now.
 4. ▶ Optional: clean up the two `claude-diag-test-...@example.invalid` artifacts in Supabase/MailerLite.
 5. ▶ Optional: ask Supabase support how far back the 401 errors go, if she wants to know whether any
@@ -401,13 +410,12 @@ fully closed, this is downgraded to a "worth remembering" line rather than an op
 `curl -s https://status.serpapi.com/api/v2/summary.json` — `Google: major_outage` means it isn't. Not
 re-checked this session; re-check before assuming it has resolved.
 
-### ▶ TEST STATE — re-measured 2026-09-12 (seventh session)
-`sharelink` 54/54 · `sharelink-drift` 6/6 · `savetruth` 19/19 · `copy` 50/50 (all re-run after removing
-the temporary `?resync=`/reconnect-control code, confirming the cleanup broke nothing). Not touched or
-re-run this session: `findscsv` 50 · `findspage` 102 · `fitroom` 24 · `promptcap` 10 · `hubs` 49 ·
-`mallverify` 14 · `linkwatch` 27 · `tabtops` 49 · `catmark` 132/3-pre-existing · `wldoortest`
-55/65-pre-existing · `curated` 62-63/65 (3 named pre-existing failures, see the standing section below)
-· `affq` 1 known pre-existing failure.
+### ▶ TEST STATE — unchanged this session (no code touched)
+Last measured 2026-09-12 (seventh session): `sharelink` 54/54 · `sharelink-drift` 6/6 · `savetruth`
+19/19 · `copy` 50/50. Not touched or re-run since: `findscsv` 50 · `findspage` 102 · `fitroom` 24 ·
+`promptcap` 10 · `hubs` 49 · `mallverify` 14 · `linkwatch` 27 · `tabtops` 49 · `catmark`
+132/3-pre-existing · `wldoortest` 55/65-pre-existing · `curated` 62-63/65 (3 named pre-existing
+failures, see the standing section below) · `affq` 1 known pre-existing failure.
 
 ### 🎯 STANDING RULE FOR CLAUDE — NEVER ASK HER TO MAKE A GIT DECISION
 Her words: *"Why are you asking me about putting something on main? I don't even know what that means.
@@ -1491,8 +1499,9 @@ because it's saved on GitHub.
 2026-09-08: the LLC is active, the EIN is issued, the trademarks are filed, and she now has the
 BUSINESS BANK ACCOUNT INCLUDING CREDIT AND DEBIT CARDS.** ▶▶ **So "waiting on the legal chain" is NOT a
 reason to defer an affiliate application any more — and it was the reason for two months. The next
-sequence item is LIVE: apply.** ⚠️ **CJ is free and still not done; that is the cheapest open move on
-the board.** **Amazon still goes LAST, for the 180-day clock, which is a separate reason and still holds.**
+sequence item is LIVE: apply.** ✅ **CJ's account is now created and active (2026-09-12) — next is
+applying to individual advertiser programs inside it.** **Amazon still goes LAST, for the 180-day
+clock, which is a separate reason and still holds.**
 ▶ *The original decision, kept because it explains why the gap existed:*
 Cath decided to **wait** on applying to affiliate programs until the **LLC, EIN, and
 business bank account** are set up — so all affiliate income flows through the business
@@ -2282,7 +2291,9 @@ the strongest argument this file has for her own stated growth edge — *more so
    honest one. Say it plainly instead of naming a brand that sounds like progress.
    ▶ **THE LESSON FOR THIS FILE: "the only mid-market thing pending" is NOT the same claim as "the thing
    that fixes affordability", and it silently became one.** She caught it; the numbers agreed with her.
-2. **CJ** — free, no clock, "costs nothing but an evening". Not done yet.
+2. ✅ **CJ** — account created and ACTIVE, 2026-09-12. Still to do: apply to individual advertiser
+   programs inside it — prioritize the mid-market DTC names (Everlane, Boden, Tuckernuck, Universal
+   Standard, Cuyana, Alo Yoga, Summersalt, Good American, Veronica Beard) over whatever CJ surfaces first.
 3. **NORDSTROM CREATORS** (`nordstromcreators.com`, Impact's creator product) — **door 2 for Nordstrom**,
    when her follower count is not the weakest thing she brings.
 4. **AMAZON — SHE ASKED TO APPLY 2026-09-10, AND THE FACTS WERE RE-CHECKED LIVE RATHER THAN RECALLED.**

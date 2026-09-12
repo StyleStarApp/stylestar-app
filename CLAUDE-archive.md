@@ -11,6 +11,79 @@ The standing rules, current decisions, store system and open threads all live in
 
 ---
 
+## ▶▶▶ WHERE WE LEFT OFF — 2026-09-12 (seventh session, end of session). ARCHIVED.
+🚨 **THIS BLOCK IS THE CURRENT TRUTH. Everything below it is standing reference — if a line further
+down contradicts this one, THIS ONE WINS.**
+📁 **The sixth-session 2026-09-12 entry (the save-token drift discovery, the `?resync=` and "Reconnect
+my saved account" builds) moved to `CLAUDE-archive.md` in this commit, VERBATIM**, under its own
+heading. Nothing was deleted.
+
+### ✅✅ CONFIRMED FIXED: SHE USED THE RECONNECT CONTROL, "GET MY LINK" NOW SHOWS HER REAL WISHLIST
+She tapped "Reconnect my saved account," pasted the code, and confirmed it worked. **Her real save
+token is now correctly tied to her real account, and her real wardrobe/wishlist/prefs/quiz answers are
+finally saved to the server for the first time since 2026-07-17.**
+▶ **SHE ASKED THE RIGHT NEXT QUESTION: "will this be broken for all our other users too?"** ▶▶ **NO —
+answered plainly, with the reasoning, not just reassurance.** The mismatch could only happen because a
+save token got planted pointing at a different account, and the only time that has ever occurred is
+during LIVE TESTING on Cath's own phone/browser while building the sharelink feature — never on any
+other real woman's device. A normal signup mints a token tied to her own email on day one, and nothing
+in the ordinary app flow ever swaps it out from under her. **So this specific incident could not have
+reached anyone but her.** ▶ **What DID ship for everyone, though: the sharelink-drift guard**
+(`_wlShareLink()` refusing/clearing a token that doesn't match the current `ss_email`) is a genuine
+safety net now protecting every user, for whatever future reason a similar drift might ever occur.
+🚨 **CLEANUP DONE, AS PROMISED IN THE PRIOR ENTRY:** both temporary recovery mechanisms — the `?resync=`
+boot-time URL handling and the "Reconnect my saved account" in-app control — were **removed from
+`index.html`** now that they've done their one job, along with their two now-obsolete test files
+(`scratchpad/resync-repair.mjs`, `scratchpad/reconnect-prompt.mjs`). ⚠️ **NOTHING PERMANENT WAS LEFT
+BEHIND FOR THIS INCIDENT** except the sharelink-drift guard itself (which stays — it's a real
+improvement, not a recovery tool) and this written record. Re-ran `sharelink` (54/54), `sharelink-drift`
+(6/6), `savetruth` (19/19) and `copy` (50/50) after removing the temporary code — no regressions.
+▶ **THE ONE THING FROM THE PRIOR ENTRY DELIBERATELY NOT DONE:** a general safety net for `?r=`'s
+pull-and-overwrite behavior, in case a save-token drift ever recurs for a different reason on a
+different account. Given the incident is now confirmed unique to Cath's own dev-testing history and
+fully closed, this is downgraded to a "worth remembering" line rather than an open task — see below.
+
+### ▶▶ WHAT IS WAITING ON HER — her own priority order (full detail in the Master To-Do List above)
+1. ⏳ The Oct 1 tax-receipt clock (~3 weeks out) — the only real deadline on her board.
+2. ⭐⭐⭐ Apply to the affiliate programmes. CJ is free and still not done.
+3. ⭐ More Edit/Finds pieces — she's on a roll and the machinery makes it cheap now.
+4. ▶ Optional: clean up the two `claude-diag-test-...@example.invalid` artifacts in Supabase/MailerLite.
+5. ▶ Optional: ask Supabase support how far back the 401 errors go, if she wants to know whether any
+   real woman's save was silently lost during the outage.
+
+### ▶▶ WHAT IS OPEN FOR CLAUDE
+1. 🚨 "Couldn't load options right now" on Shop your Style — the prompt-cap theory is RULED OUT (see the
+   archive). Cause still genuinely unknown; needs a fresh live-diagnosis approach, not a repeat of the
+   cap measurement.
+2. 💰 A price filter — a find request carries item · colour · fabric · cut · size · width and no price
+   field at all. When built, put `Try: tops under $100` and `Try: white jeans under $150` back verbatim.
+3. ⭐ Wire her Style Signature into the finder (board row 11, her *"many of them were shapeless"*) —
+   parked by her; hers to green-light, one thing at a time.
+4. ▶ Read her analytics. `track()` exists and nobody has looked. Still worth doing.
+5. ▶ A shared remembered cache — today's is per-browser. Must live server-only (Netlify Blobs), never
+   through the publishable key.
+6. ▶ Amazon's disclosure "I" vs "we"/"Style Star LLC" — flagged to her, not guessed at.
+7. ▶ `affq.js`'s `EDIT_N` counter needs scoping to `#s-dream` — low priority, real debt.
+8. ▶ Optional, low stakes: find and neutralise the old "Belted Midi Dress" test account's share, if she
+   wants it gone rather than just harmless — needs the actual old token or a Supabase lookup by hand.
+9. ▶ Worth remembering, not an open task: if a save-token drift ever recurs on a different account for a
+   different reason, `?r=`'s pull-and-overwrite behavior would clobber that device's local data the same
+   way `?resync=` was built to avoid for Cath. No general safety net was built for this — it was judged
+   not worth the permanent complexity for an incident now confirmed unique to one dev-testing history.
+🚨 **SERPAPI'S OUTAGE — RE-CHECK BEFORE ASSUMING IT'S OVER:**
+`curl -s https://status.serpapi.com/api/v2/summary.json` — `Google: major_outage` means it isn't. Not
+re-checked this session; re-check before assuming it has resolved.
+
+### ▶ TEST STATE — re-measured 2026-09-12 (seventh session)
+`sharelink` 54/54 · `sharelink-drift` 6/6 · `savetruth` 19/19 · `copy` 50/50 (all re-run after removing
+the temporary `?resync=`/reconnect-control code, confirming the cleanup broke nothing). Not touched or
+re-run this session: `findscsv` 50 · `findspage` 102 · `fitroom` 24 · `promptcap` 10 · `hubs` 49 ·
+`mallverify` 14 · `linkwatch` 27 · `tabtops` 49 · `catmark` 132/3-pre-existing · `wldoortest`
+55/65-pre-existing · `curated` 62-63/65 (3 named pre-existing failures, see the standing section below)
+· `affq` 1 known pre-existing failure.
+
+---
+
 ## ▶▶▶ WHERE WE LEFT OFF — 2026-09-12 (sixth session, end of session). READ THIS FIRST.
 🚨 **THIS BLOCK IS THE CURRENT TRUTH. Everything below it is standing reference — if a line further
 down contradicts this one, THIS ONE WINS.**
