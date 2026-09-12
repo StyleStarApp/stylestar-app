@@ -997,7 +997,12 @@ html.finds-velvet .ss.dream-mirror{background:linear-gradient(#fff,#fff) padding
    than the line above it: this is a legal notice that has to be legible, and the
    first colour tried (#9a9a9a) measured 2.5:1 against the chat background, which
    fails. #6e6e6e matches .shop-disclosure everywhere else and measures ~5:1. */
-.chat-disclosure{font-size:11px;color:#6e6e6e;text-align:center;padding:0;line-height:1.25}
+/* ⚠️ 2026-09-12, HER CATCH: same wrap as Shop your Style and the Wishlist,
+   found by measuring rather than assumed -- this screen's `.inner` (28px
+   padding each side) leaves only ~264px at a 360px phone, and the Amazon
+   sentence needs ~287px unwrapped at 11px. -28px cancels this `.inner`'s own
+   padding, same fix, same reasoning as `#s-shopstyle .ss-disc-top` above. */
+.chat-disclosure{font-size:11px;color:#6e6e6e;text-align:center;padding:0;line-height:1.25;margin-left:-28px;margin-right:-28px}
 /* ⚠️ 2026-09-12, HER ASK: TWO DISCLOSURE SENTENCES RUN TOGETHER READ AS ONE
    REPEATING ITSELF. Amazon's required sentence must stay word-for-word and the
    generic commission line must stay too (this screen can surface both Amazon
@@ -1424,7 +1429,12 @@ html.finds-velvet .ss.dream-mirror{background:linear-gradient(#fff,#fff) padding
 #s-wishlist .wl-lead{font:400 13px/1.55 'Jost',sans-serif;color:#5a554c;background:#f7f6f3;border:1px solid #e4e1d9;padding:11px 14px;margin:-10px 0 0;text-align:center}
 #s-wishlist .wl-lead b{color:#26221c;font-weight:600}
 /* Once per screen and above every link on it, matching every other surface. */
-#s-wishlist .wl-disclosure{font:400 11.5px/1.4 'DM Sans',sans-serif;color:#6e6e6e;text-align:center;margin:12px 0 0}
+/* ⚠️ Same fix and same reasoning as #s-shopstyle .ss-disc-top above -- this
+   screen shares the identical `.inner` wrapper (28px padding), so the Amazon
+   sentence wrapped here too. No max-width on this one, so nothing caps the
+   bleed, but that is harmless: text-align:center just leaves it centred in a
+   slightly wider invisible box. */
+#s-wishlist .wl-disclosure{font:400 11.5px/1.4 'DM Sans',sans-serif;color:#6e6e6e;text-align:center;margin:12px -28px 0}
 #s-wishlist .wl-card{position:relative;background:#FBFAF7;border:1px solid #e7e0cf;padding:4px 12px 6px;margin-top:5px}
 #s-wishlist .wl-row{display:flex;align-items:center;gap:10px;padding:13px 0;border-top:1px solid #efe9dc}
 #s-wishlist .wl-row:first-child{border-top:0}
@@ -1682,7 +1692,20 @@ html.finds-velvet .ss.dream-mirror{background:linear-gradient(#fff,#fff) padding
 /* Uneven ON PURPOSE, her 2026-08-15 rule reapplied: a caption belongs to what
    it describes. Tight above and loose below made it read as a note about the
    search box; 14/4 attaches it to the pieces underneath. */
-#s-shopstyle .ss-disc-top{font-size:11.5px;margin:9px auto 3px}
+/* ⚠️ 2026-09-12, HER CATCH: "purchases" was wrapping alone onto a second line
+   here and on the Wishlist, and she compared it against the Wardrobe list,
+   where the same sentence stays on one line. MEASURED, not guessed: the
+   Amazon sentence needs ~300px unwrapped at this font-size, but this screen's
+   own `.inner` wrapper (28px padding each side, the "mirror" frame's own
+   inset) leaves only ~288px at a 390px phone -- 12px short, which is exactly
+   enough to wrap "purchases" alone. Wardrobe never has this problem because
+   its `.scr` already bleeds -16px into the SAME `.inner` padding for its own
+   reasons (#s-wardrobe,#s-trending above). -28px here fully cancels this
+   `.inner`'s own declared padding (1.75rem), landing flush against its inner
+   edge and safely short of the 11px black frame border -- never touches the
+   frame. `max-width:320px` (inherited from `.shop-disclosure`) still caps the
+   result, so this can never render wider than before at a tablet width. */
+#s-shopstyle .ss-disc-top{font-size:11.5px;margin:9px -28px 3px}
 /* HER CALL 2026-08-22: it steps back while the star is spinning. A disclosure
    belongs NEAR THE LINKS, and while the pieces are still being found there are
    no links on the screen at all, so it was a commission notice sitting alone
