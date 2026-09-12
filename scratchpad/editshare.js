@@ -65,7 +65,11 @@ const links = await page.evaluate(() => {
   });
 });
 const shouldEarn = links.filter(l => l.earns);
-ok('the Edit rendered its links', links.length >= 30, links.length + ' links');
+// ⚠️ NOT a hardcoded floor -- the Edit's item count is hers to change (30 -> 28
+// when she pulled two pieces on 2026-09-11/12, and it will move again). The
+// rule this guards is "the page actually rendered its items", not any
+// particular count -- see the Rule Ledger's "pin the rule, never the string".
+ok('the Edit rendered its links', links.length > 0, links.length + ' links');
 ok('some links are on merchants she is approved for', shouldEarn.length > 0, shouldEarn.length + ' of ' + links.length);
 const unwrapped = shouldEarn.filter(l => l.h.indexOf('click.linksynergy.com') < 0);
 ok('EVERY approved-merchant link is affiliate-wrapped on a COLD /edit landing',

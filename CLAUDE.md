@@ -279,10 +279,10 @@ that makes any future number mean something.**
   the trend authority. Re-sort seasonally; every addition relights the New pill automatically.
 - ✅✅ **MORE STYLE STAR EDIT ITEMS — SHE ADDED THREE ON 2026-09-10 AND THEY ARE LIVE.** Simkhai Devon
   Suede Tote $695 · Simkhai Stella Suede Block Heel Sandal $445 · Zoe Lev Diamond & 14k Gold Bezel
-  Pendant Necklace $825, **all from Olivela, so all three EARN.** ▶ **The Edit is 30 items** (35 → 33
+  Pendant Necklace $825, **all from Olivela, so all three EARN.** ▶ **The Edit is 28 items** (35 → 33
   when two Amazon pieces moved to `/finds` → 30 when she removed the Soncino sandal, the Felina bra and
-  the Good American jeans), ordered
-  her way since 2026-09-10: **the shops that pay her lead, the text cards follow.** ⚠️ **CLAUDE MUST
+  the Good American jeans → 28 when she removed the Lucky Brand espadrille wedge and the Align Pant),
+  ordered her way since 2026-09-10: **the shops that pay her lead, the text cards follow.** ⚠️ **CLAUDE MUST
   NEVER PICK THE PRODUCTS** — the disclosure says every piece is personally selected by the founder.
   **Protect that.** ⭐ **The working pattern that produced three in one sitting: she sends a link, a
   price and her note; Claude verifies the price and stock against the shop's own data, strips the
@@ -341,9 +341,12 @@ applied to it too, the same method as every prior wave: archive verbatim first, 
 is still true.
 
 ### ✅ CURRENT STATE, MEASURED
-- **The Style Star Edit is 30 items.** (35 → 33 when two Amazon pieces moved to `/finds` → 30 when she
-  removed the J. Reneé Soncino sandal, the Felina bra and the Good American jeans. The Soncino is now on
-  `/finds` at $129.95.) ⚠️ **Every older figure in this file quoting 33 or 35 as current is now stale —
+- **The Style Star Edit is 28 items.** (35 → 33 when two Amazon pieces moved to `/finds` → 30 when she
+  removed the J. Reneé Soncino sandal, the Felina bra and the Good American jeans → 28 when she removed
+  the Lucky Brand Mindra Espadrille Wedge and the Align Pant. The Soncino is now on `/finds` at $129.95.)
+  ⚠️ **Both retired pieces stay in the `WEEK_STARS` library, untouched — the Star queue is not a mirror
+  of the Edit, and neither piece was ever in `WEEK_STAR_PHOTO_ORDER` (the rotating whitelist) anyway.**
+  ⚠️ **Every older figure in this file quoting 30, 33 or 35 as current is now stale —
   they are historical measurements, not today's count.**
 - **Amazon Finds is 44 pieces in 8 categories**, her order and her category names, live at
   `stylestar.app/finds`, in the sitemap, indexed by both Google and Bing.
