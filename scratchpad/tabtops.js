@@ -169,7 +169,10 @@ for (const w of [390,360,320]) {
     ok(`${w}px ${tab}: sits down against the list, not floating`, m && m.below <= 4 && m.above >= m.below * 3, m?`above ${m.above} / below ${m.below}`:'missing');
     ok(`${w}px ${tab}: exactly ONE visible copy on screen`, m && m.copies===1, m?String(m.copies):'-');
     ok(`${w}px ${tab}: sits above every link (the FTC placement)`, m && m.beforeLinks);
-    ok(`${w}px ${tab}: the shared pronoun-free wording`, m && m.text==='Some links may earn a commission.', m?m.text:'-');
+    // 🚨 2026-09-12: Amazon's required sentence joined the shared line the day
+    // she was approved (conditional) -- both Wardrobe tabs can lead to an
+    // Amazon-tagged link via the live finder, so both carry it now.
+    ok(`${w}px ${tab}: the shared wording, plus Amazon's required sentence`, m && m.text==='Some links may earn a commission. As an Amazon Associate, I earn from qualifying purchases.', m?m.text:'-');
   }
 }
 await page.setViewportSize({width:390,height:900});

@@ -211,8 +211,15 @@ await page.setViewportSize({ width: 390, height: 844 });
      m.bg === m.cardBg && m.bg !== 'rgba(0, 0, 0, 0)', m.bg + ' vs ' + m.cardBg);
   /* ▶ Her second ask the same day: "those 3 lines appear to be double spaced.
      Can we make them much tighter." Measured 60.5px before, 50px after. Asserted
-     as a CEILING, so tightening further is free and re-inflating it is not. */
-  ok('the three chat footer lines stay under 56px', m.foot < 56, 'foot=' + m.foot.toFixed(1) + 'px');
+     as a CEILING, so tightening further is free and re-inflating it is not.
+     🚨 RAISED 2026-09-12, AND IT IS NOT A RE-INFLATION: Amazon's required
+     sentence joined `.chat-disclosure` the day she was approved (conditional),
+     and it is mandated legal text she cannot shorten or reword. Two sentences
+     wrap to two lines in the chat footer's width, which is a real, unavoidable
+     +14px -- nothing was loosened to get there (font-size, line-height and
+     padding on `.chat-privacy`/`.chat-disclosure` are all untouched). The
+     ceiling moves to cover exactly that, still tight, never a blank check. */
+  ok('the three chat footer lines stay under 70px', m.foot < 70, 'foot=' + m.foot.toFixed(1) + 'px');
   ok('the Private-to-you arrow is bigger than the words beside it',
      m.arrow > m.words, 'arrow=' + m.arrow + ' words=' + m.words);
   /* ⚠️ A TAP TARGET IS THE FLOOR THAT TIGHTENING MUST NOT CROSS. Her audience

@@ -45,6 +45,17 @@ for (const w of [390, 360, 320]) {
   });
   ok(d !== null, 'disclosure renders on Shop your style');
   ok(d.align === 'center', `text-align is centre (${d.align})`);
+  // ⚠️⚠️ KNOWN PRE-EXISTING FAILURE, NOT CAUSED BY THE 2026-09-12 AMAZON WORK --
+  // PROVEN against a clean checkout (`git stash`), same -195/-180/-160px offsets.
+  // `_openShopStyleNow('style')` needs a real product-find search to resolve
+  // before `.shop-disclosure` becomes visible, and this sandbox cannot reach
+  // that endpoint (no network to retail sites, no functions server here) --
+  // so the element stays `display:none`, its Range collapses to (0,0), and the
+  // "centre" comes out pinned at the viewport's left edge every time. This is
+  // the sandbox's own documented limit, not a real layout bug; it would need a
+  // mocked product-find response to fix properly. If this number ever changes
+  // shape (not a clean multiple of the sandbox's own left-edge artifact),
+  // treat it as real.
   ok(Math.abs(d.textOffCentre) <= 1.5, `the TEXT itself is centred (off by ${d.textOffCentre}px)`);
   // ⚠️ DELIBERATE WORDING UPDATE (her call 2026-08-11), not a silenced test. The
   // line lost its pronoun: "Some links may earn us a commission." -> "Some links
@@ -53,8 +64,14 @@ for (const w of [390, 360, 320]) {
   // and naming her sharpened it. Making the links the subject removes her from
   // the sentence while the legal fact survives. The claim under test (one exact
   // shared wording, byte-identical everywhere) is unchanged.
-  ok(d.text === 'Some links may earn a commission.', 'wording is the pronoun-free line');
-  ok(!/\b(us|me|we|I)\b/.test(d.text), 'nobody is named in it');
+  // 🚨🚨 A SECOND SENTENCE JOINED IT 2026-09-12: Amazon's own required wording,
+  // "As an Amazon Associate, I earn from qualifying purchases." -- added the day
+  // she was approved (conditional), because Amazon can now be searched from this
+  // very screen. That sentence is EXEMPT from the pronoun-free rule below: it is
+  // Amazon's mandated legal text, not Style Star's copy, and it may not be
+  // reworded. The pronoun-free claim still holds for the FIRST sentence only.
+  ok(d.text === 'Some links may earn a commission. As an Amazon Associate, I earn from qualifying purchases.', 'wording is the pronoun-free line plus Amazon\'s required sentence');
+  ok(!/\b(us|me|we)\b/.test(d.text) && !/\bI\b/.test(d.text.split('.')[0]), 'nobody is named in Style Star\'s own sentence (Amazon\'s required "I" is exempt)');
 
   // ---- wardrobe category underlines ----
   console.log(`\n--- wardrobe category underlines @ ${w} ---`);

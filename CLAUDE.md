@@ -350,6 +350,9 @@ is still true.
   they are historical measurements, not today's count.**
 - **Amazon Finds is 44 pieces in 8 categories**, her order and her category names, live at
   `stylestar.app/finds`, in the sitemap, indexed by both Google and Bing.
+- ✅✅ **SHE'S APPROVED FOR AMAZON ASSOCIATES (CONDITIONAL) — 2026-09-12. `_AMZ_TAG` is live, every
+  Amazon link in the app earns.** The 180-day clock for 3 qualifying sales is now running. See "AMAZON
+  — WHAT CAN AND CANNOT BE DONE FROM HERE" below for what's wired and what isn't.
 - **Star of the Week is a 15-week queue running to 13 December**, then repeats. See "STAR OF THE WEEK"
   below for the schedule and the rotation trap that nearly shipped a piece seven weeks early.
 - **`/edit` and `/finds` are both submitted to Google and Bing and indexed.** Neither needs resubmitting
@@ -383,8 +386,9 @@ ongoing, not a pending question.
    field at all. When built, put `Try: tops under $100` and `Try: white jeans under $150` back verbatim.
 3. ⭐ Wire her Style Signature into the finder (board row 11, her *"many of them were shapeless"*) —
    parked by her; hers to green-light, one thing at a time.
-4. ▶ Read her analytics. `track()` exists and nobody has looked — it's the thing that answers "should
-   the Amazon 180-day clock start," a small unblocked job that turns a guess into a decision.
+4. ▶ Read her analytics. `track()` exists and nobody has looked. ⚠️ **No longer the gate on the Amazon
+   clock — she applied and was approved, so the clock is already running.** Still worth doing: it's the
+   thing that would tell her whether she's on track for the 3 sales inside 180 days, before day 180.
 5. ▶ A shared remembered cache — today's is per-browser. Must live server-only (Netlify Blobs), never
    through the publishable key.
 
@@ -813,10 +817,25 @@ maintain. 🚨 **HER OWN LINE, ON BOTH PAGES, EACH POINTING AT THE OTHER — NEV
 - ▶ **A pack goes in the name** ("Ponytail Cuff, 4 Pack"); **a brand goes in the store column**
   ("CRZ YOGA · Amazon") — both measured off her own existing page (3-of-4 and 10-of-11 already did it
   that way), not invented conventions.
-- 🔒 **`_AMZ_TAG` is empty today and that's correct, not unfinished** — she isn't an Associate yet. The
-  day she's approved: fill that one constant (every Amazon link in the app starts earning at once) and
-  add Amazon's required sentence, exact wording, the same day: *"As an Amazon Associate I earn from
-  qualifying purchases."* The Finds page is a SEVENTH disclosure location.
+- ✅✅ **SHE IS APPROVED (CONDITIONAL) — 2026-09-12. `_AMZ_TAG='stylestar01-20'`, live everywhere.**
+  Every Amazon link in the app now tags itself at runtime through the one `_affUrl` branch — the Finds
+  page, the Mall, and any Amazon result the live finder surfaces on chat, Shop your Style, Wardrobe
+  Ideas or Complete the Look. ⚠️ **She has 180 days from approval for 3 qualifying sales, and only
+  TAGGED clicks count** — this edit is what actually starts the clock earning.
+  ⚠️ **"CONDITIONAL" MEANS BOUND BY THE OPERATING AGREEMENT** — she flagged this herself; if that
+  status ever changes (revoked, or moves to unconditional), it belongs here, live operational status.
+  ✅ **Amazon's required sentence, her exact wording, is now on every screen an Amazon link can
+  reach** — *"As an Amazon Associate, I earn from qualifying purchases."* (note the comma — this is
+  HER wording, not the placeholder that used to sit in this comment). It rides alongside the existing
+  "Some links may earn a commission." line, never replacing it, on: both Shop your Style `shopdisc`
+  locations (style portrait + photo results) · Complete the Look · the Shop your Style/wishlist screen ·
+  the stylist chat · the Finds page · the Mall · both Wardrobe tabs (checklist + trending) · the
+  Wishlist page. ⚠️ **NOT on the Edit** — it currently carries zero Amazon links (both moved to `/finds`
+  2026-09-11), so adding the sentence there would claim a relationship not in view; add it the day an
+  Amazon piece returns to the Edit. ⚠️ **NOT on the Star of the Week `.wks-disc`** either, for the same
+  reason — no Amazon piece is in `WEEK_STAR_PHOTO_ORDER` today.
+  ▶ **The Finds page is the SEVENTH disclosure location** (the original six plus Finds); with Mall,
+  both Wardrobe tabs and the Wishlist counted too, Amazon's sentence now lives on eleven screens.
 - ▶ **Amazon's trademark rules** (read from their own guidelines): a descriptive heading like "Amazon
   Finds" is fine; their marks may never appear in a domain/subdomain (a second reason the path is
   `/finds`); displaying their LOGO triggers a further attribution requirement — so the page uses only
@@ -2132,6 +2151,12 @@ the strongest argument this file has for her own stated growth edge — *more so
 3. **NORDSTROM CREATORS** (`nordstromcreators.com`, Impact's creator product) — **door 2 for Nordstrom**,
    when her follower count is not the weakest thing she brings.
 4. **AMAZON — SHE ASKED TO APPLY 2026-09-10, AND THE FACTS WERE RE-CHECKED LIVE RATHER THAN RECALLED.**
+   ✅✅ **APPROVED (CONDITIONAL) — 2026-09-12. The 180-day clock for 3 qualifying sales is now RUNNING.**
+   `_AMZ_TAG` is set and every Amazon link in the app tags itself — see "AMAZON — WHAT CAN AND CANNOT BE
+   DONE FROM HERE" in the Standing Reference for the full detail (disclosure locations, what's still
+   NOT wired). ⚠️ **"Conditional" means bound by the Operating Agreement, her own words — watch for
+   that status to change.** *The original entry below is kept for the reasoning that's still true: why
+   the catalogue couldn't come first, and why the Finds page never needed it.*
    ***"I want to go ahead and apply and start using their catalog."***
    🚨🚨 **THE CATALOGUE CANNOT COME FIRST, AND THIS IS THE PART THAT CHANGES HER PLAN: Amazon's Product
    Advertising API (the catalogue) IS GATED BEHIND SALES SHE HAS NOT MADE YET.** ▶ **Access needs the

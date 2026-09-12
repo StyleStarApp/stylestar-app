@@ -50,22 +50,28 @@ ok('the address bar stays /finds', (await page.evaluate(() => location.pathname)
 ok('exactly one affiliate disclosure', (await page.evaluate(() => document.querySelectorAll('#s-finds .dc-disclosure').length)) === 1);
 
 console.log('\n2. 🚨 THE MONEY CHECK — HER LINKS TAG THEMSELVES');
-// With no tag set yet, an Amazon url must come back UNTOUCHED: the app never
-// pretends to earn before she is an Associate. With a tag set, every Amazon
-// link must carry it, and never twice.
+// ✅ SET 2026-09-12: she is approved (conditional) and _AMZ_TAG carries her
+// real tag now. This used to assert the tag came back EMPTY -- that was
+// correct for the pre-approval state and is now the good kind of stale. The
+// mechanism itself (never invent a tag when there isn't one) is still tested
+// by clearing it temporarily below, isolated to this one evaluate() call so
+// production state is never actually mutated on the page.
 const wrap = await page.evaluate(() => {
-  const before = window._affUrl('https://www.amazon.com/dp/B01234567');
-  const wasEmpty = window._AMZ_TAG === '';
+  const real = window._AMZ_TAG;
+  const live = window._affUrl('https://www.amazon.com/dp/B01234567');
+  window._AMZ_TAG = '';
+  const untouched = window._affUrl('https://www.amazon.com/dp/B01234567');
   window._AMZ_TAG = 'stylestar-20';
   const after = window._affUrl('https://www.amazon.com/dp/B01234567');
   const q = window._affUrl('https://www.amazon.com/s?k=white+dress');
   const twice = window._affUrl(after);
   const rak = window._affUrl('https://www.olivela.com/products/x');
-  window._AMZ_TAG = wasEmpty ? '' : window._AMZ_TAG;
-  return { before, after, q, twice, rak, wasEmpty };
+  window._AMZ_TAG = real; // restore her REAL tag, not the empty/test value
+  return { real, live, untouched, after, q, twice, rak };
 });
-ok('the tag is EMPTY today, so nothing claims a commission she has not got', wrap.wasEmpty);
-ok('with no tag an Amazon link is returned untouched', wrap.before === 'https://www.amazon.com/dp/B01234567', wrap.before);
+ok('she is approved: _AMZ_TAG carries her real tag, not empty', !!wrap.real && wrap.real !== '', wrap.real);
+ok('a live Amazon link tags itself automatically with her real tag', wrap.live.indexOf('tag=' + encodeURIComponent(wrap.real)) >= 0, wrap.live);
+ok('the mechanism still never invents a tag when there is none', wrap.untouched === 'https://www.amazon.com/dp/B01234567', wrap.untouched);
 ok('with a tag set an Amazon link carries it', /[?&]tag=stylestar-20/.test(wrap.after), wrap.after);
 ok('a url that already has a query gets & not ?', /\?k=white\+dress&tag=/.test(wrap.q), wrap.q);
 ok('it never double-tags', (wrap.twice.match(/tag=/g) || []).length === 1, wrap.twice);
