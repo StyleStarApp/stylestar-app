@@ -892,20 +892,30 @@ maintain. 🚨 **HER OWN LINE, ON BOTH PAGES, EACH POINTING AT THE OTHER — NEV
   AND IT IS NOT, HORIZONTALLY.** Its bounding box lands at exactly 195px in the 390px frame, matching
   the frame's own centre precisely (confirmed both by the numbers and by rendering the exact wait-state
   markup and looking at it). **No horizontal code change was made.**
-  🚨🚨 **BUT SHE CAME BACK WITH THE REAL COMPLAINT, AND IT WAS VERTICAL: she wanted the star centred
-  in the visible gap between the disclosure's bottom and the "Checking what's actually in stock..."
-  caption below it.** ▶ **MEASURED WHY IT WASN'T: `.ss-find-wait` used `justify-content:center`, which
-  centres the star+caption pair within the WHOLE 338px height reserved for the eventual six-card row —
-  not within the gap she was actually looking at.** Since the star and its own caption sit only 14px
-  apart by deliberate design (their own `gap`), that left **122px of empty space above the star and
-  just 14px below it, an 8-to-1 split** — invisible as a bug in the CSS itself (the two empty halves of
-  the 338px box are symmetric, 122 vs 120) but obvious on her phone, because nothing marks where the
-  reserved box actually ends. ✅ **FIXED: `justify-content:flex-start`** drops the star+caption pair
-  right under the disclosure instead, so the gap above now roughly matches the gap below (measured:
-  3px vs 14px, down from 122px vs 14px) — **verified both numerically and by rendering and looking at
-  it.** The unused remainder of the 338px box simply becomes empty space below the caption, which is
-  exactly what happens today anyway once real cards replace this loading state, so **the "nothing may
-  jump" reserved-height guarantee is untouched — same 338px, just repositioned within it.**
+  🚨🚨 **HER REAL COMPLAINT WAS VERTICAL: she wanted the star centred between the disclosure's bottom
+  and the "Checking what's actually in stock..." caption below it — and it took TWO ROUNDS to get
+  right, because the first one balanced the gap the wrong way.**
+  ▶ **ROUND 1: `justify-content:flex-start`.** `.ss-find-wait` had used `justify-content:center`,
+  which centred the star+caption pair within the WHOLE 338px height reserved for the eventual
+  six-card row, not within the gap she was looking at — since the star and its caption sit only 14px
+  apart by design, that left 122px above the star and 14px below it. `flex-start` pulled the whole
+  pair up snug under the disclosure, which balanced the gaps but did it by moving the CAPTION up from
+  where it had always sat.
+  🚨🚨 **HER CORRECTION, SAME DAY: *"put the bottom phrase back where it was before and bring the star
+  down. Instead of bringing the words up."*** ▶ **SHE WAS RIGHT, AND IT GENERALISES: when two elements
+  are out of balance, the one a woman has already been looking at across every earlier build should
+  anchor — the one that's actually wrong is the one that should move.** ▶ **ROUND 2, MEASURED with the
+  star's own spin animation frozen first (its live CSS transform otherwise makes `getBoundingClientRect`
+  report a rotated, inflated size instead of its true 66px layout box):** under the ORIGINAL
+  `justify-content:center`, the caption sat at 351.5px and the disclosure ended at 149px. Centring the
+  66px star in that span puts it at 217px — 68px below the disclosure and 68px above the caption,
+  both equal. ✅ **BUILT as an explicit `margin-top:65px` on the star itself (not container-height
+  math), paired with the container `gap` widened from 14px to 68px** — so the caption lands back
+  within half a pixel of its original spot (measured: 351 vs 351.5) while the star sits at the true
+  midpoint. **Verified: gap-above and gap-below both measure exactly 68px, horizontal centring
+  unaffected, and looked at directly on a real render.** The unused remainder of the 338px box still
+  becomes empty space below the caption, exactly as before, so the "nothing may jump" reserved-height
+  guarantee is untouched.
 - ▶ **Amazon's trademark rules** (read from their own guidelines): a descriptive heading like "Amazon
   Finds" is fine; their marks may never appear in a domain/subdomain (a second reason the path is
   `/finds`); displaying their LOGO triggers a further attribution requirement — so the page uses only
