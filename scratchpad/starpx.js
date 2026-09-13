@@ -194,7 +194,12 @@ console.log('\nPART 7 — and the Edit shows the SAME pair (a rule applied to on
 
 console.log('\nPART 8 — the photo gate now covers CJ, and still never Amazon (2026-09-13)');
 {
-  const cjStar = find(/Cashmere Boutique/);
+  // ⚠️ Matched on the URL, never the display name -- she is free to rename
+  // the piece (and did, the same day this test was written: "Cashmere
+  // Boutique Pashmina and Silk Wrap" -> "Cashmere & Silk Pashmina"). The
+  // URL/store is the stable fact that identifies WHICH merchant relationship
+  // this is testing, not a string she could reasonably change tomorrow.
+  const cjStar = stars.find(x => /cashmereboutique\.com/.test(x.url || ''));
   ok('the new CJ entry is really in WEEK_STARS', !!cjStar);
   const cjSrc = vm.runInContext('_wkStarPxSrc(' + JSON.stringify(cjStar) + ')', ctx);
   ok('its px now resolves through CJ, not just Rakuten', cjSrc === cjStar.px, cjSrc);

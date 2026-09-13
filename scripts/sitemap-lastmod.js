@@ -39,7 +39,16 @@ const STATE = path.join(ROOT, 'data', 'sitemap-content.json');
 const SURFACES = [
   { path: '/edit',     from: 'id="s-dream"',    to: 'id="s-finds"' },
   { path: '/finds',    from: 'id="s-finds"',    to: 'id="s-shop"' },
-  { path: '/trending', from: 'id="s-trending"', to: 'id="s-wardrobe"' },
+  // ⚠️ 2026-09-13: 'id="s-wardrobe"' was WRONG here -- s-wardrobe actually sits
+  // BEFORE s-trending in index.html (screens were reordered at some point and
+  // this never followed), so indexOf(to, i) never found it after s-trending
+  // and the comment's own stated safeguard failed silently: the slice ran all
+  // the way to end-of-file, meaning every edit anywhere later in the whole
+  // file (all the JS, WEEK_STARS, everything) bumped /trending's lastmod too.
+  // Caught only because two unrelated Star-of-the-Week edits both restamped
+  // /trending with no trending content actually touched. s-wishlist is the
+  // REAL next screen id after s-trending -- verified by grep, not assumed.
+  { path: '/trending', from: 'id="s-trending"', to: 'id="s-wishlist"' },
 ];
 
 const hashOf = ({ from, to }) => {
