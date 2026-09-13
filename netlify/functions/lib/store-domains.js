@@ -649,6 +649,11 @@ export default {
   "tier": "$$$$",
   "sizes": []
  },
+ "Cashmere Boutique": {
+  "host": "cashmereboutique.com",
+  "tier": "",
+  "sizes": []
+ },
  "Sachin & Babi": {
   "host": "sachinandbabi.com",
   "tier": "$$$$",

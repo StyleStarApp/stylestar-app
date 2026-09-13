@@ -4833,6 +4833,27 @@ const STORES={
        parameter that looks interesting. */
   'Kohl\'s':{u:'https://www.kohls.com/search.jsp?submit-search=web-regular&search=',w:1},
   'COUTR':{u:'https://www.coutr.com/search?q=',t:'$$$$',w:1,a:'Luxury Fashion, Universal',s:[],d:[4,6,10,8,8,3,10,8,9,9],c:'designer swimwear, jewelry, bags, sunglasses and shoes, high quality designer pieces'},
+  /* ADDED 2026-09-13 -- her first individual CJ advertiser approval (the CJ
+     publisher account itself went active 2026-09-12). Cashmere specialty
+     retailer, real single-item purchases, none of her three exclusions.
+     ⚠️ NAME AND SEARCH URL ONLY, per her 2026-09-08 rule -- no scores invented.
+     ✅ SEARCH URL VERIFIED FROM HERE: /search?q=sweater returns "61 results
+     found for sweater" with real product names (Shopify-platform search).
+     ⚠️ NOT FULLY VERIFIED: a gibberish term did not return zero -- it fell
+     back to 9 on-sale items instead of an empty result, a known Shopify
+     "always show something" search behavior. Marked unverified because of
+     that, though the real-term half is solid.
+     🚨 IT SELLS MEN'S CASHMERE TOO ("Men's Pure Cashmere Polo Sweater" etc.),
+     so w:1 is set -- her rule since the Banana Republic men's-trousers catch.
+     🚨🚨 THIS STORE IS FINDABLE BUT DOES NOT YET EARN. It is a CJ advertiser,
+     not a Rakuten one -- the app's only link-wrapping today is `_AFF_MID`
+     (Rakuten MIDs) and `_AMZ_TAG` (Amazon). There is no CJ equivalent built,
+     so a woman can be shown this store but the outbound link is a plain
+     search url, untagged. Building CJ link-wrapping is a real, separate
+     piece of work -- do not assume this store earns just because it is in
+     the table, and do not silently add a CJ-style tag without the actual
+     mechanism existing. */
+  'Cashmere Boutique':{w:1,u:'https://www.cashmereboutique.com/search?q='}, // ⚠️ url partially unverified, see comment above
   'Sachin & Babi':{u:'https://www.sachinandbabi.com/search?q=',t:'$$$$',a:'Glamorous Luxe, Classic Sophisticate',s:['plus'],d:[6,5,10,8,5,1,10,8,9,8],c:'evening gowns, mother of the bride, wedding guest, occasion',deep:'evening and occasion dresses'},
   'Alice + Olivia':{u:'https://www.aliceandolivia.com/search?q=',t:'$$$-$$$$',a:'Glamorous Luxe, Modern Glam',s:[],d:[2,9,9,6,10,3,10,10,5,10],c:'statement dresses, occasionwear'},
   // Diane von Furstenberg, added 2026-08-21 after Rakuten approved her.

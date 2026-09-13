@@ -42,7 +42,7 @@ gathers it going forward — that's an open, ongoing thing, not a one-time quest
 | 20 | ~~Her two failed searches: "vacation dress" and "white jeans"~~ ✅ **BUILT AND LIVE 2026-09-10.** *White jeans WORKED* — Google's half was flapping (0 results one minute, 23 the next) and her own shelf carried it. *Vacation dress* found nothing because the word went INTO the search. | — | ✅ done |
 | 21 | ~~Five of the app's own nine suggested prompts were things it could not do~~ ✅ **HER CATCH 2026-09-10 — three occasions now translate, and the two PRICE prompts came off, her ruling.** | — | ✅ done |
 | 22 | 💰 **A PRICE FILTER — THE SEARCH HAS NO PRICE FIELD AT ALL.** A find request carries item · colour · fabric · cut · size · width and nothing else, so *"under $100"* was never filtered, only ignored. ▶ **When it is built, put `Try: tops under $100` and `Try: white jeans under $150` straight back — the only thing wrong with them was that they were promises.** | Claude, hers to green-light | ⏳ **OPEN** |
-| 19 | ⭐⭐⭐ **APPLY TO THE 41 BRANDS THAT PUBLISH CATALOGUES** — Everlane · Boden · Tuckernuck · Universal Standard · Cuyana · Alo Yoga · Summersalt · Good American · Veronica Beard and more. **CJ is FREE and still not done.** | **HERS, and worth more than anything Claude can build** | ⏳ **OPEN** |
+| 19 | ⭐⭐⭐ **APPLY TO THE 41 BRANDS THAT PUBLISH CATALOGUES** — Everlane · Boden · Tuckernuck · Universal Standard · Cuyana · Alo Yoga · Summersalt · Good American · Veronica Beard and more. ✅ **CJ account is active and she's applied broadly (2026-09-13) — Cashmere Boutique approved, Belk/Macy's/TJ Maxx/Marshalls/Talbots/Lands' End PENDING, worth watching.** | **HERS, and worth more than anything Claude can build** | ⏳ **OPEN — watch the pending queue** |
 | 11 | ⏸️ **THE FINDER HAS NEVER BEEN SHOWN HER STYLE PROFILE** — her *"I like fitted clothing and many of them were shapeless"*. She is **8 leaning fitted** on her own Style Signature and the finder gets an item and a cut, nothing else. **PARKED BY HER 2026-09-10: *"Let's park that piece for right now."*** ▶ **Not dropped — it keeps its place on this list and she reopens it.** | Hers | ⏸️ **PARKED, NOT STARTED** |
 | 23 | 🛍️ **IMPROVE THE WISHLIST PAGE — HER ASK, 2026-09-10, ANSWERED 2026-09-12: THE FITTING ROOM.** She confirmed it's for comparison — fit, price, does it work with what she owns, is it worth the money — and greenlit building it the same session. **BUILT AND LIVE: a List View/Fitting Room toggle, same list, no second thing to save into.** Full build story (the reload-survival bug it caught, the three upstream photo gaps it fixed, the 24-check suite) is in `CLAUDE-archive.md`'s 2026-09-12 (second session) entry. ⭐ **A follow-up round the same session, also merged live:** the toggle's tappable-arrow indicator was rebuilt to match Wardrobe's real tabs after her first version came out wrong (arrow beside the label instead of stacked below it, per her catch), and "List" became "List View" so the pairing with "Fitting Room" reads as two views of one list. | — | ✅ done |
 | 24 | 🔗 **THE EDIT AS A SHAREABLE LINK — HER ASK, 2026-09-10: *"I want the Edit to be a shareable link."*** ▶▶ **YES IT NEEDS ITS OWN URL, AND THE MACHINERY IS ALREADY BUILT AND PROVEN EIGHT TIMES.** `_ROUTES` today: `/privacy` `/terms` `/story` `/faq` `/contact` `/trending` `/wardrobe` `/results`, plus `/journal/<slug>` and the token-carrying shared wishlist. **The Edit (`s-dream`) is simply not in it.** ▶ **THE BUILD IS THE DOCUMENTED THREE EDITS:** one `_ROUTES` line · one `[[redirects]]` block in `netlify.toml` (status **200**, a rewrite not a 301) · one line in `_openRoute()`. 🚨🚨 **AND THE TRAP, FOUND BY READING THE CODE BEFORE BUILDING: `_openRoute` MUST CALL `showDream()`, NEVER A BARE `show('s-dream')`.** **`showDream()` is what calls `_wlDecorateEdit()`, and `_wlDecorateEdit()` IS WHAT AFFILIATE-WRAPS EVERY EDIT LINK AT RUNTIME** (`index.html:9963`). ▶ **A direct landing that skipped it would render her whole Edit with RAW product links that earn NOTHING — the exact "one route of four forgot" shape as the `<<FIND>>` marker leak.** ⚠️ **Assert it in a test: land on the path cold and check an `.dc-item-btn` href contains `click.linksynergy.com`.** | Claude | ⏳ **OPEN — she asked for it** |
@@ -104,9 +104,12 @@ that makes any future number mean something.**
 - ▶ **AWIN — 3 applications PENDING:** Jackie Mack Designs · TERI JON · Under Armour US. ⚠️ **NONE of
   them fixes the price problem** — activewear, jewellery and eveningwear respectively (her own
   correction, and the measurement upheld it).
-- ✅ **CJ — ACCOUNT CREATED AND ACTIVE, 2026-09-12.** No individual advertiser programs applied to yet —
-  that's the next step, prioritizing the mid-market DTC names (Everlane, Boden, Tuckernuck, Universal
-  Standard, Cuyana, Alo Yoga, Summersalt, Good American, Veronica Beard) over whatever CJ surfaces first.
+- ✅ **CJ — ACCOUNT ACTIVE (2026-09-12), FIRST ADVERTISER APPROVED (2026-09-13): Cashmere Boutique**,
+  added to `STORES`. ⏳ **A broad set of other applications are PENDING — Belk, Macy's, TJ Maxx,
+  Marshalls, Talbots and Lands' End are the ones worth watching** (real mid-market/department-store
+  names, unlike the rest of the luxury-adjacent queue). 🚨 **CJ link-wrapping does not exist in the app
+  yet** — an approved CJ store is findable but earns nothing until that's built; see "WHAT IS OPEN FOR
+  CLAUDE."
 - ▶ **NORDSTROM CREATORS** (`nordstromcreators.com`) — door 2 for Nordstrom, when her follower count is
   not the weakest thing she brings.
 - ▶ **REAPPLY to Impact, Bloomingdale's and Shopbop** from a stronger position. All three declined for
@@ -378,31 +381,63 @@ actually move the affordability problem this file keeps coming back to; nothing 
 advertiser directory (inside the account, "Advertisers"/Partners tab) is the only reliable way to check;
 don't assume all nine are on CJ specifically.
 
+### ✅ 2026-09-13 — HER FIRST CJ ADVERTISER APPROVAL: CASHMERE BOUTIQUE, ADDED TO THE STORE TABLE
+She applied broadly rather than narrowly to the mid-market DTC list above — screenshots showed a large
+**Pending Applications** queue including **Belk, Macy's, TJ Maxx, Marshalls, Talbots and Lands' End**,
+plus Amanda Uprichard, Ashley Stewart, Brandon Maxwell, Bvlgari, Chadwicks of Boston, Cupshe, D'Aniello
+Boutique, DL1961, Intimissimi, J.Crew, J.Crew Factory, Jared, Kenneth Cole, Lilysilk, Madewell, Missoni,
+Nike, prAna, Pura Cashmere, Rack Room Shoes, Ray-Ban, Revolve, Ross-Simons and more (the list scrolled
+past what was screenshotted, so this is not necessarily the full set). ⭐⭐⭐ **BELK, MACY'S, TJ MAXX,
+MARSHALLS, TALBOTS AND LANDS' END ARE WORTH WATCHING ABOVE ALL THE REST** — department stores and true
+mid-market generalists are exactly what this file has said for months would actually fix the price
+problem, more than any of the luxury-adjacent names on the list.
+✅ **CASHMERE BOUTIQUE APPROVED, and added to `STORES`** (`index.html`, next to Kohl's/COUTR) —
+name + search url only, no invented scores, per her 2026-09-08 rule. Real cashmere specialty retailer,
+in business since 2007, women's + men's (so `w:1` is set). Search url `/search?q=` verified with a real
+term (61 results for "sweater") but **not fully verified** — a gibberish term returned 9 fallback items
+instead of zero, a known Shopify "always show something" behavior, so it's marked unverified in the
+comment. `scripts/build-store-domains.js` re-run, 133 stores, `--check` clean; `storepool` 49/49 and
+`untagged` 16/16 re-run with no regressions.
+🚨🚨 **THE IMPORTANT CATCH: THIS STORE IS FINDABLE BUT DOES NOT EARN, AND NEITHER WILL ANY OTHER CJ
+ADVERTISER, UNTIL CJ LINK-WRAPPING IS BUILT.** The app's only outbound-link tagging today is `_AFF_MID`
+(Rakuten MIDs, feeding `_affUrl`) and `_AMZ_TAG` (Amazon). **There is no CJ equivalent** — CJ uses its
+own deep-link/tracking scheme, unrelated to either. So Cashmere Boutique (and Belk, Macy's, TJ Maxx,
+etc. if any of them approve) can be shown and searched, but every one of those links is currently a
+plain, untagged store search that earns nothing. ⚠️ **This is a genuinely new, unstarted piece of
+engineering, not a one-line fix** — see "WHAT IS OPEN FOR CLAUDE" below. It was not built speculatively
+tonight since nothing yet needs it to earn; it becomes real work the moment a CJ advertiser she actually
+wants to route traffic to gets approved.
+
 ### ▶▶ WHAT IS WAITING ON HER — her own priority order (full detail in the Master To-Do List above)
 1. ⏳ The Oct 1 tax-receipt clock (~3 weeks out) — the only real deadline on her board.
-2. ⭐⭐⭐ **Apply to individual advertiser programs inside CJ**, now that the account itself is active —
-   start with the mid-market DTC names above.
+2. ⭐⭐⭐ **Check back on the CJ Pending Applications queue** — Belk, Macy's, TJ Maxx, Marshalls, Talbots
+   and Lands' End are the ones worth watching for. Report back any more acceptances or declines.
 3. ⭐ More Edit/Finds pieces — she's on a roll and the machinery makes it cheap now.
 4. ▶ Optional: clean up the two `claude-diag-test-...@example.invalid` artifacts in Supabase/MailerLite.
 5. ▶ Optional: ask Supabase support how far back the 401 errors go, if she wants to know whether any
    real woman's save was silently lost during the outage.
 
 ### ▶▶ WHAT IS OPEN FOR CLAUDE
-1. 🚨 "Couldn't load options right now" on Shop your Style — the prompt-cap theory is RULED OUT (see the
+1. 🚨🚨 **CJ LINK-WRAPPING DOES NOT EXIST YET — build it once a CJ advertiser she wants live actually
+   approves.** Today `_affUrl` only knows Rakuten MIDs and the Amazon tag; a CJ-approved store (Cashmere
+   Boutique now, possibly Belk/Macy's/TJ Maxx/Marshalls/Talbots/Lands' End if they come through) shows up
+   findable but earns nothing until this is built. Not started speculatively — real work, worth doing the
+   moment it matters.
+2. 🚨 "Couldn't load options right now" on Shop your Style — the prompt-cap theory is RULED OUT (see the
    archive). Cause still genuinely unknown; needs a fresh live-diagnosis approach, not a repeat of the
    cap measurement.
-2. 💰 A price filter — a find request carries item · colour · fabric · cut · size · width and no price
+3. 💰 A price filter — a find request carries item · colour · fabric · cut · size · width and no price
    field at all. When built, put `Try: tops under $100` and `Try: white jeans under $150` back verbatim.
-3. ⭐ Wire her Style Signature into the finder (board row 11, her *"many of them were shapeless"*) —
+4. ⭐ Wire her Style Signature into the finder (board row 11, her *"many of them were shapeless"*) —
    parked by her; hers to green-light, one thing at a time.
-4. ▶ Read her analytics. `track()` exists and nobody has looked. Still worth doing.
-5. ▶ A shared remembered cache — today's is per-browser. Must live server-only (Netlify Blobs), never
+5. ▶ Read her analytics. `track()` exists and nobody has looked. Still worth doing.
+6. ▶ A shared remembered cache — today's is per-browser. Must live server-only (Netlify Blobs), never
    through the publishable key.
-6. ▶ Amazon's disclosure "I" vs "we"/"Style Star LLC" — flagged to her, not guessed at.
-7. ▶ `affq.js`'s `EDIT_N` counter needs scoping to `#s-dream` — low priority, real debt.
-8. ▶ Optional, low stakes: find and neutralise the old "Belted Midi Dress" test account's share, if she
+7. ▶ Amazon's disclosure "I" vs "we"/"Style Star LLC" — flagged to her, not guessed at.
+8. ▶ `affq.js`'s `EDIT_N` counter needs scoping to `#s-dream` — low priority, real debt.
+9. ▶ Optional, low stakes: find and neutralise the old "Belted Midi Dress" test account's share, if she
    wants it gone rather than just harmless — needs the actual old token or a Supabase lookup by hand.
-9. ▶ Worth remembering, not an open task: if a save-token drift ever recurs on a different account for a
+10. ▶ Worth remembering, not an open task: if a save-token drift ever recurs on a different account for a
    different reason, `?r=`'s pull-and-overwrite behavior would clobber that device's local data the same
    way `?resync=` was built to avoid for Cath. No general safety net was built for this — it was judged
    not worth the permanent complexity for an incident now confirmed unique to one dev-testing history.
@@ -2291,9 +2326,9 @@ the strongest argument this file has for her own stated growth edge — *more so
    honest one. Say it plainly instead of naming a brand that sounds like progress.
    ▶ **THE LESSON FOR THIS FILE: "the only mid-market thing pending" is NOT the same claim as "the thing
    that fixes affordability", and it silently became one.** She caught it; the numbers agreed with her.
-2. ✅ **CJ** — account created and ACTIVE, 2026-09-12. Still to do: apply to individual advertiser
-   programs inside it — prioritize the mid-market DTC names (Everlane, Boden, Tuckernuck, Universal
-   Standard, Cuyana, Alo Yoga, Summersalt, Good American, Veronica Beard) over whatever CJ surfaces first.
+2. ✅ **CJ** — account ACTIVE, first advertiser APPROVED (Cashmere Boutique, 2026-09-13, added to
+   `STORES`). ⏳ Pending: Belk, Macy's, TJ Maxx, Marshalls, Talbots, Lands' End and others — check back.
+   🚨 CJ link-wrapping isn't built yet, so no CJ store earns until it is — see "WHAT IS OPEN FOR CLAUDE."
 3. **NORDSTROM CREATORS** (`nordstromcreators.com`, Impact's creator product) — **door 2 for Nordstrom**,
    when her follower count is not the weakest thing she brings.
 4. **AMAZON — SHE ASKED TO APPLY 2026-09-10, AND THE FACTS WERE RE-CHECKED LIVE RATHER THAN RECALLED.**
