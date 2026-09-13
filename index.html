@@ -4600,11 +4600,17 @@ const STORES={
        Banana Republic results. */
   'Moda Operandi':{u:'https://www.modaoperandi.com/search?q='},   // ✅ url verified
   'Merlette':{u:'https://www.merlette.com/search?q='},            // ⚠️ url unverified
-  'ViX Swimwear':{w:1,u:'https://www.vixpaulahermanny.com/search?q='}, // ✅ url verified
+  // ⚠️ TAGGED 2026-09-13, drafted from Everything But Water/FARM Rio/Vilebrequin, HER
+  // CORRECTION: "2 notches more fitted and 2 notches more casual" than the draft.
+  'ViX Swimwear':{w:1,u:'https://www.vixpaulahermanny.com/search?q=',t:'$$$',a:'Coastal Chic, Glamorous Luxe',s:['plus'],d:[7,7,8,8,9,9,7,9,3,10],c:'Brazilian-inspired swimwear and resortwear'}, // ✅ url verified
   'ASTR the Label':{u:'https://www.astrthelabel.com/search?q='},  // ⚠️ url unverified
-  'Pact':{w:1,u:'https://wearpact.com/search?q='},                // ⚠️ url unverified
+  // ⚠️ TAGGED 2026-09-13, drafted from Everlane/Uniqlo/Universal Standard, HER
+  // CORRECTION: "one notch more casual" than the draft.
+  'Pact':{w:1,u:'https://wearpact.com/search?q=',t:'$$',a:'Modern Minimalist, Elevated Natural',s:['plus'],d:[8,2,8,8,5,9,5,5,10,3],c:'organic cotton everyday basics'},                // ⚠️ url unverified
   'PacSun':{w:1,u:'https://www.pacsun.com/search?q='},            // ⚠️ url unverified
-  'Tommy Hilfiger':{w:1,u:'https://usa.tommy.com/en/search?q='},  // ⚠️ url unverified
+  // ⚠️ TAGGED 2026-09-13, drafted from Lacoste/IZOD/J.Crew, HER CORRECTION:
+  // "one notch more relaxed" than the draft.
+  'Tommy Hilfiger':{w:1,u:'https://usa.tommy.com/en/search?q=',t:'$$',a:'Classic Sport, Preppy Classic',s:['petite','tall'],d:[8,3,8,9,3,8,4,6,8,6],c:'classic American preppy sportswear'},  // ⚠️ url unverified
   'Aeropostale':{w:1,u:'https://www.aeropostale.com/search?q='},  // ⚠️ url unverified
   'FWRD':{w:1,u:'https://www.fwrd.com/search?q='},                // ⚠️ url unverified
   'White House Black Market':{u:'https://www.whitehouseblackmarket.com/store/search?searchTerm=',t:'$$',a:'Professional Power, Modern Glam',s:['petite'],d:[3,7,9,8,6,4,9,9,10,2],c:'sleek workwear, occasion'},
@@ -4887,7 +4893,11 @@ const STORES={
        own submit value and it may be load-bearing; it costs nothing to include
        and this file's lesson is to read the WHOLE url she pasted, not just the
        parameter that looks interesting. */
-  'Kohl\'s':{u:'https://www.kohls.com/search.jsp?submit-search=web-regular&search=',w:1},
+  // ⚠️ TAGGED 2026-09-13, drafted from Target/TJ Maxx/Old Navy, HER
+  // CORRECTION: "one notch more colorful" than the draft. Sizes and
+  // description use her own 2026-09-08 cold-read (the rule ledger's own
+  // worked example) rather than the neighbor-median draft.
+  'Kohl\'s':{u:'https://www.kohls.com/search.jsp?submit-search=web-regular&search=',w:1,t:'$',a:'Casual Everyday',s:['petite','plus'],d:[9,3,5,5,6,10,4,5,8,9],c:'budget-friendly everyday basics and activewear, carries plus and petite'},
   'COUTR':{u:'https://www.coutr.com/search?q=',t:'$$$$',w:1,a:'Luxury Fashion, Universal',s:[],d:[4,6,10,8,8,3,10,8,9,9],c:'designer swimwear, jewelry, bags, sunglasses and shoes, high quality designer pieces'},
   /* ADDED 2026-09-13 -- her first individual CJ advertiser approval (the CJ
      publisher account itself went active 2026-09-12). Cashmere specialty
@@ -4912,7 +4922,10 @@ const STORES={
      destination (a search url, say) rides the same PID/LID with CJ's own
      documented `?url=` override, which is not yet empirically click-tested
      from here -- see the comment above `_affUrl` for what to watch for. */
-  'Cashmere Boutique':{w:1,u:'https://www.cashmereboutique.com/search?q='}, // ⚠️ url partially unverified, see comment above
+  // ⚠️ TAGGED 2026-09-13, drafted from Eileen Fisher/J.Crew/Quince, HER
+  // CORRECTION: "in the middle for colorful" -- colorful moved to 5 from the
+  // draft's 2; neutral (10) untouched, since she named only colorful.
+  'Cashmere Boutique':{w:1,u:'https://www.cashmereboutique.com/search?q=',t:'$$',a:'Elevated Natural, Modern Minimalist',s:['petite','plus','tall'],d:[9,2,9,10,3,8,6,4,10,5],c:'cashmere sweaters, wraps and travel layers'}, // ⚠️ url partially unverified, see comment above
   'Sachin & Babi':{u:'https://www.sachinandbabi.com/search?q=',t:'$$$$',a:'Glamorous Luxe, Classic Sophisticate',s:['plus'],d:[6,5,10,8,5,1,10,8,9,8],c:'evening gowns, mother of the bride, wedding guest, occasion',deep:'evening and occasion dresses'},
   'Alice + Olivia':{u:'https://www.aliceandolivia.com/search?q=',t:'$$$-$$$$',a:'Glamorous Luxe, Modern Glam',s:[],d:[2,9,9,6,10,3,10,10,5,10],c:'statement dresses, occasionwear'},
   // Diane von Furstenberg, added 2026-08-21 after Rakuten approved her.
@@ -4956,7 +4969,9 @@ const STORES={
        there. Aerie is a brand inside AE's site, so its products genuinely live
        on that domain and both keys should point at it. */
   'Aerie':{u:'https://www.ae.com/us/en/search?searchText='},   // ⚠️ url unverified
-  'American Eagle':{u:'https://www.ae.com/us/en/search?searchText=',w:1},   // ⚠️ url unverified
+  // ⚠️ TAGGED 2026-09-13, drafted from Gap/H&M/Old Navy, HER CORRECTION:
+  // "one notch more fitted" than the draft.
+  'American Eagle':{u:'https://www.ae.com/us/en/search?searchText=',w:1,t:'$',a:'Casual Classic',s:['petite','plus','tall'],d:[10,2,5,5,4,10,2,5,7,6],c:'casual denim-forward everyday basics'},   // ⚠️ url unverified
   'ASOS':{u:'https://www.asos.com/us/search/?q=',w:1},   // ⚠️ url unverified
   'Ashley Stewart':{u:'https://www.ashleystewart.com/search?q='},
   'City Chic':{u:'https://www.citychiconline.com/search?q='},   // ⚠️ url unverified
@@ -4964,18 +4979,35 @@ const STORES={
   'Frances Valentine':{u:'https://francesvalentine.com/search?q='},
   'Honeylove':{u:'https://www.honeylove.com/search?q='},   // ⚠️ url unverified
   'Karen Millen':{u:'https://www.karenmillen.com/pages/search-results-page?q='},   // ⚠️ url unverified
-  'L*Space':{u:'https://lspace.com/search?q='},   // ⚠️ url unverified
+  // ⚠️ TAGGED 2026-09-13, drafted from Everything But Water/FARM Rio/Vilebrequin,
+  // HER CORRECTION: "2 notches more fitted and 2 notches more casual" than the draft.
+  'L*Space':{u:'https://lspace.com/search?q=',t:'$$$',a:'Coastal Chic, Glamorous Luxe',s:['plus'],d:[7,7,8,8,7,9,7,9,3,10],c:'LA-designed swimwear and resort separates'},   // ⚠️ url unverified
   'L.L.Bean':{u:'https://www.llbean.com/llb/search/?freeText=',w:1},   // ⚠️ url unverified
-  'Lilly Pulitzer':{u:'https://www.lillypulitzer.com/search?q='},   // ⚠️ url unverified
+  // ⚠️ TAGGED 2026-09-13, drafted from Tuckernuck/J.McLaughlin/Vilebrequin, HER
+  // CORRECTION: "2 notches more colorful" than the draft.
+  'Lilly Pulitzer':{u:'https://www.lillypulitzer.com/search?q=',t:'$$$',a:'Classic Sophisticate, Coastal Chic',s:[],d:[6,5,9,9,5,6,7,6,8,10],c:'colorful prints, resortwear, sundresses'},   // ⚠️ url unverified
   'Long Tall Sally':{u:'https://www.longtallsally.com/search?q='},   // ⚠️ url unverified
   'Lord & Taylor':{u:'https://lordandtaylor.com/search?q=',w:1},
-  'Mestiza New York':{u:'https://mestizanewyork.com/search?q='},   // ⚠️ url unverified
-  'MZ Wallace':{u:'https://www.mzwallace.com/search?type=product&q='},
-  'Ramy Brook':{u:'https://www.ramybrook.com/catalogsearch/result/?q='},   // ⚠️ url unverified
-  'Reiss':{u:'https://www.reiss.com/us/search?q=',w:1},   // ⚠️ url unverified
+  // ⚠️ TAGGED 2026-09-13, drafted from FARM Rio/Free People/Reformation, HER
+  // CORRECTION: "one notch more classic" than the draft.
+  'Mestiza New York':{u:'https://mestizanewyork.com/search?q=',t:'$$$',a:'Playful Chic, Bohemian Chic',s:['petite','plus'],d:[7,7,8,5,9,7,7,7,5,9],c:'bohemian resort dresses and cover-ups'},   // ⚠️ url unverified
+  // ⚠️ TAGGED 2026-09-13, drafted from Cuyana/Gorjana/Coach, HER CORRECTION:
+  // "MZ Wallace is bags only, so neutral on all points, and quiet minimalist
+  // is good for them" -- all four preference pairs set to 5 (a bag has no
+  // "fitted" or "dressy"), archetype renamed to match her own words exactly.
+  'MZ Wallace':{u:'https://www.mzwallace.com/search?type=product&q=',t:'$$$',a:'Quiet Minimalist',s:[],d:[5,3,9,5,5,5,5,5,5,5],c:'quilted nylon totes and crossbody bags'},
+  // ⚠️ TAGGED 2026-09-13, drafted from Alice + Olivia/Reformation/Diane von
+  // Furstenberg, HER CORRECTION: "one notch more trendy" than the draft.
+  'Ramy Brook':{u:'https://www.ramybrook.com/catalogsearch/result/?q=',t:'$$$$',a:'Glamorous Luxe, Modern Glam',s:['petite','plus'],d:[3,9,9,6,10,4,9,10,5,10],c:'going-out and resort dresses'},   // ⚠️ url unverified
+  // ⚠️ TAGGED 2026-09-13, drafted from Theory/Ann Taylor/Aritzia, HER
+  // CORRECTION: "one notch more trendy" than the draft.
+  'Reiss':{u:'https://www.reiss.com/us/search?q=',w:1,t:'$$-$$$',a:'Modern Minimalist, Professional Power',s:['petite','tall'],d:[3,3,9,10,5,4,8,8,10,3],c:'British modern tailoring and workwear'},   // ⚠️ url unverified
   'Rothy\'s':{u:'https://rothys.com/search?q=',w:1},   // ⚠️ url unverified
   'Staud':{u:'https://staud.clothing/search?q='},
-  'Teri Jon':{u:'https://www.terijon.com/search?q='},
+  // ⚠️ TAGGED 2026-09-13, drafted from Sachin & Babi/Diane von Furstenberg/
+  // Neiman Marcus, HER NOTE: "evening gowns" -- description set to match;
+  // no numeric correction given, so the drafted dims stand.
+  'Teri Jon':{u:'https://www.terijon.com/search?q=',t:'$$$$',a:'Glamorous Luxe, Classic Sophisticate',s:['plus'],d:[5,7,10,8,6,3,10,8,9,9],c:'formal eveningwear and gowns'},
 
 };
 // Kept as a plain name→url map because linkStores() and older callers use it.
