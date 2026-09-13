@@ -781,13 +781,38 @@ page (not just failing to earn), that's the signal to get a second real link and
    Collections 8,641 · FARM Rio 1,053 · Fleur du Mal 783 · Diane von Furstenberg 510 · Vilebrequin 182),
    completed clean in ~2.5 minutes, "wrote 52,176 garments" / "wrote 103,124 sizes" on COUTR alone with
    zero errors. **The fix is live on the shop right now, not waiting for tonight.**
-13. ▶ **`fo5` (Special lingerie) HAS A HEAD-NOUN TRAP, FOUND WHILE VERIFYING ITEM 12 AGAINST THE REAL
-   CATALOG, 2026-09-13.** Two of three sampled `fo5` garments were not lingerie: "Coperni Garter Belt
-   Denim Skirt" and "Moncler Mallero reversible teddy down jacket" — "garter" and "teddy" read as head
-   nouns when they are modifiers (a garter-belt-style skirt, a teddy-fabric coat), same shape as the
-   already-fixed "top"/"denim" trap elsewhere in `slot-rules.json`. Pre-existing, not caused by today's
-   `requireName` fix and not touched by it. Needs new exclusion words chosen for `fo5` specifically —
-   hers to weigh in on, not guessed at.
+13. ✅ ~~`fo5` (Special lingerie) HAS A HEAD-NOUN TRAP~~ **FIXED 2026-09-13, SAME SESSION.** Two of three
+   sampled `fo5` garments were not lingerie: "Coperni Garter Belt Denim Skirt" and "Moncler Mallero
+   reversible teddy down jacket" — "garter" and "teddy" read as head nouns when they are modifiers (a
+   garter-belt-style skirt, a teddy-fabric coat), same shape as the already-fixed "top"/"denim" trap
+   elsewhere in `slot-rules.json`. Cath's ruling: *"Yes let's do that."* ▶ **FIXED THE SAME PRECEDENTED
+   WAY: added "skirt", "jacket", "coat" to `fo5`'s own `not` list** — no new mechanism, evidence-based,
+   minimal. ✅ **VERIFIED, NOT ASSUMED:** the garter belt skirt no longer matches `fo5`; the teddy jacket
+   correctly resolves to `ja11` instead; a genuine garter-styled tennis skort (a real design overlap, not
+   a false positive) still matches BOTH `ac12` and `fo5` — proving the fix didn't overreach.
+   `scripts/test_slot_match.py` **1108/1108** (grew from 1105 — three new direct-proof checks for this
+   exact fix). ⚠️ **THIS FIX IS THE FIRST INSTANCE OF A BROADER, SEPARATE PROBLEM CLASS — see item 14.**
+14. 🚨🚨 **THE HEAD-NOUN TRAP IS BIGGER THAN `fo5` — HER RULING, SAME SESSION: *"tackle the entire thing
+   carefully."*** ⚠️ **THIS IS A DIFFERENT BUG SHAPE FROM ITEM 12's sibling-contamination fix, and
+   `requireName` does not touch it.** Sibling-contamination happens when two rows share a `cat` term.
+   This one happens on the NAME-FALLBACK PATH: when a garment's category matches NO row at all (a
+   Marissa Collections item with no category, a merchant breadcrumb this app doesn't recognise), `match()`
+   checks the garment's NAME against **every one of the 100 rows' name lists** with no requirement that
+   the matched word be the garment's actual head noun — so a bare word like "garter", "linen", "belt" or
+   "thong" appearing ANYWHERE in an unrelated product's title can trigger a false match. **FOUND WHILE
+   READING THE SAME COVERAGE REPORT that caught the `fo5` case, from a PARTIAL log (`tail_lines=300`,
+   cut off before the higher-volume rows) — the full log (744 lines) still needs fetching before this
+   audit can be called complete.** ⏳ **IN PROGRESS.** Candidates spotted so far, none fixed yet, all
+   need re-verification against the real catalog before touching `not`: **`bo4` Linen pants** matching
+   linen napkins · **`ac13` Athletic socks** matching a bathrobe/underwear/boxer briefs · **`fo6`
+   Shapewear** matching a makeup pencil · **`fo2` Comfortable underwear** matching slippers (via "thong")
+   · **`bg4` Belt bags** matching jeans · **`ac5`/`ac6`/`ac7`** (workout tank/tee/long-sleeve) matching
+   sweaters/cardigans/robes instead of real workout tops. ▶ **THE FIX TECHNIQUE IS ALREADY ESTABLISHED
+   AND MUST NOT CHANGE: add the SPECIFIC discovered false-positive word to that row's own `not` list —
+   evidence-based, minimal, one row at a time, never a general NLP/grammar mechanism.** Matches her own
+   standing direction: *"I want the AI to be using intelligence and I would like to reduce the amount of
+   rules and breakable things we put in there."* ⚠️ **"Carefully" means the complete log, not the tail of
+   one — do not fix a row from an unverified sample.**
 🚨 **SERPAPI'S OUTAGE — RE-CHECKED 2026-09-13: STILL `major_outage`, STILL "MONITORING", NOT RESOLVED.**
 Open since 2026-09-10; SerpApi reports recovering success rates but has not declared it over. Re-check
 again before assuming it has cleared: `curl -s https://status.serpapi.com/api/v2/summary.json`.

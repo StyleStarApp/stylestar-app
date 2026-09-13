@@ -1384,7 +1384,10 @@
     "not": [
       "swim",
       "bikini",
-      "sports"
+      "sports",
+      "skirt",
+      "jacket",
+      "coat"
     ],
     "requireName": true
   },

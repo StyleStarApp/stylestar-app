@@ -287,6 +287,28 @@ ok("category text containing the row's own word does NOT satisfy requireName by 
    "fo5" not in match(g("Zimmermann Satin Top", "women>lingerie>corsets", "ivory"), rules),
    "a plain top filed under a 'corsets' category must not pass on the category word alone")
 
+# 🚨🚨 THE HEAD-NOUN TRAP, FOUND 2026-09-13 VERIFYING requireName AGAINST THE
+# REAL CATALOG: "garter" and "teddy" are both real fo5 name words AND real
+# English words that modify a totally different garment -- a "garter belt
+# skirt" is a SKIRT styled to look garter-belt-ish, a "teddy down jacket" is a
+# JACKET made of teddy (fleece) fabric. requireName correctly found "garter"/
+# "teddy" in the name and let both through, because requireName only asks
+# "is one of my words present", never "is my word the HEAD NOUN". Fixed the
+# same precedented way this codebase always fixes this shape (the "top"/
+# "denim" modifier trap above): add the specific discovered false-positive
+# head nouns to fo5's own `not` list. ⚠️ Two real garments off the live feed,
+# not invented cases.
+ok("a garter-BELT SKIRT (garter is a modifier, not the garment) does not land on Special lingerie",
+   "fo5" not in match(g("Coperni Garter Belt Denim Skirt", "women>bottoms>skirts", "blue"), rules),
+   "a skirt styled with a garter-belt look is a skirt, not lingerie")
+ok("a TEDDY DOWN JACKET (teddy is the fabric, not the garment) does not land on Special lingerie",
+   "fo5" not in match(g("Moncler Mallero Reversible Teddy Down Jacket", "women>outerwear>jackets", "black"), rules),
+   "a jacket made of teddy (fleece) fabric is a jacket, not lingerie")
+ok("a real garter SKORT still legitimately lands on BOTH Tennis skirts and Special lingerie",
+   set(match(g("Garter Lace Trim Tennis Skort", "", "black"), rules)) >= {"ac12", "fo5"},
+   "a genuine lingerie-styled skort (no recognised category, so it falls to the name rung) is a "
+   "real design overlap, not a false positive -- the fix must not overreach")
+
 
 # ------------------------------------------------- 2026-09-06 REGRESSION SET --
 # 🚨 Cath opened "Tops in your favorite colors" on her own phone and found a
