@@ -10094,6 +10094,24 @@ function _wdrMarkSeen(ids){
     localStorage.setItem('ss_seen',JSON.stringify(s));
   }catch(e){}
 }
+/* ⭐ HER CATCH, 2026-09-13: "this search was for a white top and lots of colors
+   and prints showed up." Root cause: `_wardrobeFindName` hands the finder the
+   ROW'S OWN LABEL verbatim as `item` ("White tops") — nothing ever split the
+   colour word out into `req.colour`, so the honesty system had no colour
+   requirement to VERIFY against. The search word "white" still reached Google
+   (it is part of the item string), but nothing came back CONFIRMED white and
+   nothing was ever REJECTED for being the wrong colour either — every card
+   landed in the same unverified pile a plain "tops" search would.
+   ▶ THE FIVE CHECKLIST ROWS WHOSE OWN NAME IS A COLOUR, none invented — read
+   straight off `wardrobeItems`. A future row added by hand is simply not in
+   this map and falls back to the old, honest-but-unverified behaviour. */
+var _WDR_COLOR_ROWS={
+  to1:{colour:'white',item:'tops'},      // White tops
+  to2:{colour:'black',item:'tops'},      // Black tops
+  bo1:{colour:'blue',item:'jeans'},      // Blue jeans
+  bo2:{colour:'white',item:'jeans'},     // White jeans
+  bo3:{colour:'black',item:'trousers'}   // Black trousers
+};
 async function _wardrobeIdeaGen(id,boxId){
   const box=document.getElementById(boxId||('wx_'+id));
   if(!box)return;
@@ -10224,8 +10242,13 @@ async function _wardrobeIdeaGen(id,boxId){
     _swipeHint(_g,_h);_nudgeScroll(_g);
     /* ▶ NOT AWAITED, exactly as on Shop your Style: her ideas are on screen in
        about a second and the products arrive into space already reserved, then
-       fold into that same row the moment they land. */
-    _ssFindRun({item:name},{wrapId:'wdrFind_'+id,promise:'',pre:null,save:false,quiet:true})
+       fold into that same row the moment they land.
+       ⚠️ `_WDR_COLOR_ROWS[id]` splits a colour-named row ("White tops") into a
+       real `{item,colour}` request so the finder actually VERIFIES colour on
+       the cards it looks up, instead of the colour word riding along inside
+       `item` where nothing ever checks it. Rows with no colour in their own
+       name are unaffected — same `{item:name}` as before. */
+    _ssFindRun(_WDR_COLOR_ROWS[id]||{item:name},{wrapId:'wdrFind_'+id,promise:'',pre:null,save:false,quiet:true})
       .then(function(){_wdrMergeFindRow(id,boxId)});
   }catch(e){
     // The AI failing must never blank a shelf that has real catalog pieces:
@@ -12828,9 +12851,17 @@ function _findBlockHtml(data,req,quiet){
           could come up with."
        ▶ It states the truth and STOPS. ⚠️ DO NOT PARAPHRASE IT INTO SOMETHING
          BLANDER and do not re-add a question to it. The detail belongs on the
-         CARDS, where every requirement carries its own honest tick or note. */
-    wrap_html='<div class="find-head">I couldn\'t find exactly what you asked for. '+
-      'This is the closest I could come up with.</div>'+
+         CARDS, where every requirement carries its own honest tick or note.
+       🚨 GATED BY `quiet` NOW, 2026-09-13 — this branch was the one gap in her
+         "no apology where she asked for nothing" rule: `quiet` was only ever
+         read by the browseCards-only branch below, never here. It went unnoticed
+         because Wardrobe's request never carried enough for the server to build
+         a `doors` response — until a colour-named row (White tops, Blue jeans)
+         started sending its colour, which CAN produce one. Same rule, same
+         reason: she tapped a checklist row and named nothing, so a sentence
+         built around "what you asked for" has nothing true to point at. */
+    wrap_html=(quiet?'':'<div class="find-head">I couldn\'t find exactly what you asked for. '+
+      'This is the closest I could come up with.</div>')+
       doors.slice(0,3).map(function(d){
         /* ▶ A short PLAIN label, never a question. It names what this group KEEPS
            — her "she chooses which requirement to release" is still visible, but
