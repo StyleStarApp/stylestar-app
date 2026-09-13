@@ -289,8 +289,14 @@ that makes any future number mean something.**
   2026-09-13, ALL LIVE.** Simkhai Devon Suede Tote $695 · Simkhai Stella Suede Block Heel Sandal $445 ·
   Zoe Lev Diamond & 14k Gold Bezel Pendant Necklace $825 (all Olivela) · Stella McCartney Falabella Mini
   Embellished Bag $1,595 (Mytheresa), added 2026-09-12 and also seated in Star of the Week rotation the
-  same day · **Cashmere Boutique Pashmina and Silk Wrap $219, added 2026-09-13 — her first EDIT PIECE
-  FROM A CJ-APPROVED STORE (not Rakuten), and also seated in Star of the Week rotation the same day.**
+  same day · **Cashmere & Silk Pashmina $219 (Cashmere Boutique), added 2026-09-13 — her first EDIT
+  PIECE FROM A CJ-APPROVED STORE (not Rakuten), and also seated in Star of the Week rotation the same
+  day. Pink is her favorite colorway, and the closing line of the note is hers verbatim (lightly
+  smoothed into one sentence): "A must have for travel. Adds both style and warmth and goes with
+  everything from jeans to an evening dress."** ⚠️ **RENAMED THE SAME DAY** from "Cashmere Boutique
+  Pashmina and Silk Wrap" to "Cashmere & Silk Pashmina" — applied to all three load-bearing spots (the
+  Edit markup, `WEEK_STARS`, and the exact name string in `WEEK_STAR_PHOTO_ORDER`, which resolves by
+  name and would have silently dropped the item from rotation had the rename missed that third spot).
   ⚠️ **ADDING IT FOUND A REAL, PREVIOUSLY-LATENT BUG: the Star of the Week photo gate (`_wkStarPxSrc`)
   only ever checked `_affMid()`, which is RAKUTEN-ONLY — a CJ-earning piece's photo would have silently
   rendered NOTHING the week it came up, the exact "gate never told" shape this file keeps paying for.**
@@ -1089,7 +1095,7 @@ trusting this — every list edit moves it; this run re-computed with a faithful
 | Nov 8 | Simkhai Devon Suede Tote | Olivela | $695 |
 | Nov 15 | Fleur du Mal Sculpt Molded Sports Bra | Fleur du Mal | $98 |
 | Nov 22 | Stella McCartney Falabella Mini Embellished Bag | Mytheresa | $1,595 |
-| Nov 29 | Cashmere Boutique Pashmina and Silk Wrap | Cashmere Boutique | $219 |
+| Nov 29 | Cashmere & Silk Pashmina | Cashmere Boutique | $219 |
 | Dec 6 | Zoe Lev Diamond & 14k Gold Bezel Pendant Necklace | Olivela | $825 |
 | Dec 13 | Valentino Garavani VLOGO Reversible Belt | Mytheresa | $570 |
 | Dec 20 | Open Heart Necklace | Etsy | ~$45 |
@@ -1153,6 +1159,17 @@ she never needs to resubmit for a content change. **`<lastmod>` in the sitemap i
 is Claude's job** (`scripts/sitemap-lastmod.js --write` after any edit to `/edit`, `/finds` or
 `/trending` — hashes content only, never styling; a first run with no baseline SEEDS, it never stamps,
 to avoid lying to a crawler about an unchanged page).
+🚨 **A REAL BUG IN THIS SCRIPT, FOUND AND FIXED 2026-09-13: `/trending`'s slice boundary was wrong.**
+Its `to` marker was `id="s-wardrobe"`, but `s-wardrobe` actually sits BEFORE `s-trending` in `index.html`
+(screens were reordered at some point and this was never updated) — so `indexOf(to, i)` never found it
+after `s-trending`, and the slice silently ran to END OF THE FILE. **Every edit anywhere later in the
+whole file — all the JS, `WEEK_STARS`, everything — was bumping `/trending`'s `<lastmod>` even though
+nothing on that page changed.** Caught only because two unrelated Star-of-the-Week edits both restamped
+`/trending` with nothing trending-related touched. **Fixed:** the boundary is now the real next screen,
+`id="s-wishlist"`. Confirmed idempotent (a second run reports "nothing moved") and `editshare.js`'s
+"every curated page's sitemap date matches what is actually on it" check passes. ⚠️ **The lesson
+generalises: a slice bounded by a `to` marker is only as safe as that marker actually being AFTER `from`
+in the file — if screens are ever reordered again, re-verify every `SURFACES` boundary in this script.**
 ✅ **Menu entry: one row in the Shop group beneath the Edit, calling `openFinds()`** — never a bare
 `show('s-finds')`, the same affiliate-wrap trap as `/edit`.
 ⚠️ **TWO HARNESS LESSONS FROM BUILDING THIS PAGE, BOTH GENERALISE:** a render that injects CSS overrides
@@ -1303,7 +1320,7 @@ screens' item counts before doing anything else** — the cheapest habit that ca
 🚨🚨 **AS OF 2026-09-13, ALL 19 EARN.** Measured 2026-09-10 at 35 items (17 earning, 18 not), then 33,
 then 30 as she trimmed non-earning pieces by hand, then 18 on 2026-09-12 when she had the last eleven
 non-affiliate, no-photo items deleted outright (see the Master To-Do List's Edit row for the names), then
-19 on 2026-09-13 when the Cashmere Boutique wrap was added — her FIRST Edit piece earning through CJ
+19 on 2026-09-13 when the Cashmere & Silk Pashmina was added — her FIRST Edit piece earning through CJ
 rather than Rakuten (see "THE MALL NOW HAS ALL EIGHT..." for how CJ wrapping works). **Re-measure before
 quoting this if the Edit changes again** — she may add more at any time. What's still true regardless of count:
 **`_wlDecorateEdit()` rewrites every `.dc-item-btn` href to an affiliate link AT RUNTIME**
