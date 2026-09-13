@@ -509,6 +509,87 @@ cannot currently tell the difference between a fully-verified feed/catalog card,
 no real backing, and a partially-verified live-search result — all three sit in the same row with no
 visual distinction. **Her instruction was explicit: keep this open, do not build it now.**
 
+### ✅✅ THE VILEBREQUIN STAR PHOTO — HER ASK, SWAPPED, SAME SESSION
+She sent the black colourway's own photo URL: *"this is the star of the week that we have on the site
+live right now in a different color... this is the black one which looks better."* **Swapped the photo
+AND the name** (`— Off White` → `— Black`, so the caption never contradicts what's shown) **on BOTH
+surfaces the piece appears on** — the live `WEEK_STARS` entry (this week's Star, Sep 13) and its
+identical mirror in the Style Star Edit's `.dc-item` markup — per the standing rule that one photo
+renders the same on every screen. ⚠️ **`WEEK_STAR_PHOTO_ORDER` resolves entries by exact NAME STRING**,
+so the rename there had to move in the same edit or the entry would have silently dropped out of
+rotation on its own live week; verified directly against `_weekStarPhotoPool()`/`_weekStar()` that it
+still resolves. **She then sent the black product page's own url** (`IAACG200-990`), swapped into both
+the Star entry's `url` and the Edit's `.dc-item-btn` href, replacing the guess-free placeholder that had
+briefly pointed at the old off-white listing. Verified: both `index.html` `<script>` blocks parse clean,
+`affq` 42/42, `linkwatch` 27/27.
+
+### ✅✅ THE PRICE FILTER — HER ASK, BUILT AND LIVE, ITEM 1 OF THE "MORE SEARCH SUGGESTIONS" LIST
+She asked for more ideas on improving searches app-wide; offered four ranked options, she picked the
+price filter first: **"Yes let's do 1 and then after talk about these others."** A find request had
+never carried a price field at all — *"under $100"* was silently ignored, matching her 2026-09-10 ruling
+("let's take the price off if we can't honor it") that the two `_ASK_RING` prompts naming a price only
+come back once the filter genuinely exists.
+✅ **WHERE PRICE SITS IN THE DESIGN, AND WHY: A CODE CHECK, NOT A STYLIST JUDGEMENT.** Unlike colour or
+fabric, "is $84 under $100" needs no reading — it belongs beside SIZE/WIDTH/STOCK (factual lookups
+against structured data), never beside COLOUR/FABRIC/CUT (things that need a person's eye). **New
+`verifyPrice(want, priceValue)` in `find-products.js`**, wired into `judge()` exactly like the others.
+⚠️ **TREATED AS STRICT AS COLOUR, DELIBERATELY NOT SOFT LIKE SIZE/WIDTH** — size/width were softened
+because they come from her SAVED PROFILE and a retailer almost never states stock sizes, so UNKNOWN
+swamped nearly every product. A price ceiling only ever exists because SHE TYPED IT, and `priceValue` is
+populated from the retailer's own listed price on nearly every real product — so staying strict costs
+her almost nothing, and softening her own stated number would let a $340 dress pass "under $100" on a
+technicality. **Also joined `widenOptions`'s widenable set** — her own "she chooses which requirement to
+release" design would have been asymmetric leaving price out; released the plain way (deleted, no
+family-softening the way blush softens to pink — there is no "almost under budget" family).
+✅ **WHERE THE CEILING ACTUALLY REACHES, `netlify/functions/product-find.js` — THREE PLACES, NOT ONE:**
+**(1)** `max_price` now rides on the SerpApi search call itself when she named a ceiling, so "tops under
+$100" never even sees a $340 top — cheaper and narrower than fetching everything and discarding it
+after. **(2)** The "dearer half of the market" bonus search (built 2026-09-09 to reach Neiman Marcus/Saks
+-tier stock) is SKIPPED OUTRIGHT when a ceiling is set — its whole purpose is reaching pricier stock,
+which is the opposite of what she asked for, so running it would spend a real call on stock `verifyPrice`
+would only reject a moment later. **(3)** `feedBrowse`'s own Supabase query gets `price=lte.<ceiling>`
+too — a second, separate source of browse cards that never touches SerpApi at all, so it needed its own
+filter or a feed dress over budget would sail straight past it. **The final browse wall carries a fourth,
+safety-net filter** (known-over-budget dropped, an UNKNOWN price kept — same "more to browse" reasoning
+as everywhere else on that row) for anything the first three miss.
+✅ **CLIENT SIDE — THE SAME `<<FIND>>`/`find:{}` MECHANISM EVERY OTHER FIELD USES, NO NEW PLUMBING.**
+`price` joined `_FIND_HER_WORDS` (guarded exactly like colour/fabric/cut — a stylist may READ a number
+she said, never invent one) and `_findParse`'s allowed marker keys, with its own narrower numeric check
+(`\d{1,6}`) since it is the one field that is a NUMBER, never a word. ⚠️ **FOUND AND FIXED WHILE BUILDING
+THE GUARD: `_findKeepHerWords`'s "short joiners, ignore" exemption (words under 3 characters, so "a" or
+"of" don't fail the check) would have silently waved through an invented TWO-DIGIT price ("50") unchecked
+— a 2-digit number is not a joiner, it is a real narrowing value, so `price` is now explicitly excluded
+from that exemption.** `_findAskRule()` (Shop your Style's prompt) and the chat's `<<FIND>>` marker docs
+both teach the model: fill it ONLY with a plain number she actually named, never a guess or a vibe like
+"affordable" or "splurge". `_findLabel` shows the actual ceiling on a confirmed tick ("under $100"),
+matching how colour already shows "blush" rather than the bare word "colour".
+✅ **THE TWO PROMPTS ARE BACK, VERBATIM, PER HER OWN STANDING INSTRUCTION:** `Try: tops under $100` and
+`Try: white jeans under $150` are back in `_ASK_RING`.
+✅ **VERIFIED, NOT ASSUMED, ACROSS FOUR SUITES:** `scratchpad/findprod.js` (+11 checks, PART 11) proves
+`verifyPrice`/`judge`/`widenOptions`'s pure logic directly against captured-fixture-style data — under
+budget confirms, over budget rejects (not merely unconfirmed), a missing price stays UNKNOWN and still
+blocks an exact match, a request with no price at all is byte-identical to before. **New
+`scratchpad/pricefilter.mjs`** (8 checks) is the first test coverage `product-find.js` itself has ever
+had — global `fetch` mocked, no network, no real search spent — and proves the actual server wiring: one
+search call carries `max_price`, the dearer-half bonus search never fires when a ceiling is set, the
+browse wall drops the known-over-budget product while keeping the unknown-price one, and an out-of-range
+price never reaches the outbound call at all. `scratchpad/ssfind.js` gained a new §16 (her sentence
+reaches the server as a real field, an invented one dies the same way an invented colour does, the two
+prompts are back) and lost its now-stale "no prompt promises a price filter" assertion — replaced with
+its opposite, now that the promise is real. 🚨 **A REAL TEST-DESIGN TRAP FOUND AND FIXED WHILE BUILDING
+§16, WORTH KEEPING FOR THE NEXT SESSION THAT ADDS A FIND FIELD:** the shared `ask()` helper opens Shop
+your Style's DEFAULT (no-ask) view first, and an unguarded field like price survives that default call
+completely unchecked (no sentence to check it against) — so a mocked reply that returns the SAME price on
+both the default open and the typed ask produces byte-identical requests, and the SECOND one is a silent
+CLIENT-SIDE CACHE HIT that never reaches the network at all. An empty call log then looks exactly like a
+pass. **Fixed the same way sections 4-5 already do:** give the default-view call an unrelated reply first
+so its cache entry cannot collide with the one actually being measured. `test_slot_match.py` 1088/1088,
+`ssfind` 99/99, `chatfind` 63/63, `findprod` 74/74, `pricefilter` 8/8 all re-confirmed clean this session.
+⚠️ **NOT TOUCHED, AND WORTH SAYING PLAINLY: `sendChat`'s live chat path was NOT re-tested against a real
+model call** (only the marker-parsing and prompt-text side, which is shared code) — the price field
+reaching chat specifically should be watched for on her next live conversation, same as any new `<<FIND>>`
+field would be.
+
 ### ▶▶ WHAT IS OPEN FOR CLAUDE
 1. 🚨🚨 **CJ LINK-WRAPPING DOES NOT EXIST YET — build it once a CJ advertiser she wants live actually
    approves.** Today `_affUrl` only knows Rakuten MIDs and the Amazon tag; a CJ-approved store (Cashmere
@@ -517,8 +598,7 @@ visual distinction. **Her instruction was explicit: keep this open, do not build
    moment it matters.
 2. 🚨 "Couldn't load options right now" on Shop your Style — see the SerpApi lead above; not confirmed,
    needs a fresh live-diagnosis approach on the STYLIST call specifically, not the search.
-3. 💰 A price filter — a find request carries item · colour · fabric · cut · size · width and no price
-   field at all. When built, put `Try: tops under $100` and `Try: white jeans under $150` back verbatim.
+3. ✅ ~~A price filter~~ **BUILT AND LIVE 2026-09-13 — see "THE PRICE FILTER" below.**
 4. ⭐ Wire her Style Signature into the finder (board row 11, her *"many of them were shapeless"*) —
    parked by her; hers to green-light, one thing at a time.
 5. ▶ Read her analytics. `track()` exists and nobody has looked. Still worth doing.
@@ -562,13 +642,17 @@ again before assuming it has cleared: `curl -s https://status.serpapi.com/api/v2
 `test_slot_match.py` **1088/1088** (grew from 1087: +1 new sibling-contamination sweep assertion, plus
 its own per-pair checks against the confirmed-fixed and `_SIBLING_OK`-documented rows — all pass on a
 clean checkout) · `test_rakuten_feed.py` **67/67** (was already passing; +12 checks this session for the
-kids-name fix, PART 7b) · `test_rakuten_ingest.py` **ALL PASS**, unaffected · `ssfind` **97/97** (full
-re-run after the row-merge, hoodie, and `_WDR_FIND_OVERRIDE` rename — confirms the shared finder path is
-untouched) · `wdrmerge.mjs` **9/9** · `fetchretry.mjs` **10/10** · `wdrcolor.mjs` **9/9** (extended this
-session with 2 new scenarios proving `dr3`/`to6` send a real search phrase, no stray colour field) · a
-direct Node parse check confirms both of `index.html`'s `<script>` blocks still parse clean after the
-`_WDR_COLOR_ROWS`→`_WDR_FIND_OVERRIDE` rename. Not touched or re-run since 2026-09-12: `sharelink` 54/54
-· `sharelink-drift` 6/6
+kids-name fix, PART 7b) · `test_rakuten_ingest.py` **ALL PASS**, unaffected · `ssfind` **99/99** (grew
+from 97: +2 for the price filter's §16, on top of the row-merge/hoodie/`_WDR_FIND_OVERRIDE`-rename
+re-runs — confirms the shared finder path is untouched) · `wdrmerge.mjs` **9/9** · `fetchretry.mjs`
+**10/10** · `wdrcolor.mjs` **9/9** (extended this session with 2 new scenarios proving `dr3`/`to6` send a
+real search phrase, no stray colour field) · `findprod.js` **74/74** (grew from 63: +11 for the price
+filter's PART 11) · new **`pricefilter.mjs`** **8/8** (product-find.js's own first-ever test coverage —
+`max_price` passthrough, the dearer-half skip, the browse-wall safety filter, cleanReq's numeric clamp)
+· `affq` **42/42** · `linkwatch` **27/27** (both re-run after the Vilebrequin photo/link swap) · a direct
+Node parse check confirms both of `index.html`'s `<script>` blocks still parse clean after every edit
+this session, including the `_WDR_COLOR_ROWS`→`_WDR_FIND_OVERRIDE` rename. Not touched or re-run since
+2026-09-12: `sharelink` 54/54 · `sharelink-drift` 6/6
 · `savetruth` 19/19 · `copy` 50/50 · `findscsv` 50 · `findspage` 102 · `fitroom` 24 · `promptcap` 10 ·
 `hubs` 49 · `mallverify` 14 · `linkwatch` 27 · `tabtops` 49 · `catmark` 132/3-pre-existing ·
 `wldoortest` 55/65-pre-existing · `curated` 62-63/65 (3 named pre-existing failures, see the standing

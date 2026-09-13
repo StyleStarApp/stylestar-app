@@ -6747,16 +6747,19 @@ function styleNudgeSkip(){try{localStorage.setItem('ss_stylenudge','1')}catch(e)
    ▶ A PRICE FILTER IS A REAL BUILD AND IT IS ON HER BOARD. The moment it exists,
      put these two back exactly as they were — they are good examples, and the
      only thing wrong with them was that they were promises. */
+/* ⭐ THE TWO PRICE PROMPTS ARE BACK, 2026-09-13 — her ruling, 2026-09-10, was
+   "let's take the price off if we can't honor it", with the standing promise
+   to put them back "verbatim" the day a price filter exists. It does now. */
 var _ASK_RING=[
   'Try: wedding guest dress',
-  'Try: tops',
+  'Try: tops under $100',
   'Try: vacation dress',
   'Try: jeans',
   'Try: work trousers',
   'Try: tan sandals',
   'Try: silk blouse',
   'Try: tote bag',
-  'Try: white jeans'
+  'Try: white jeans under $150'
 ];
 // Occasion above category, her call ("let's try both rows and see").
 // ▶▶ TAPPING A CHIP FILLS THE BOX, IT DOES NOT RUN A SEARCH. That is precisely
@@ -6945,8 +6948,10 @@ function _mixRule(){
      direction is to reduce rules and breakable things, and this is a judgement,
      not a promise. */
 function _findAskRule(){
-  return '- find: ONE search for real products, as {"item":"...","colour":"","fabric":"","cut":"","size":"","width":""}. '
+  return '- find: ONE search for real products, as {"item":"...","colour":"","fabric":"","cut":"","size":"","width":"","price":""}. '
     +'`item` is the garment noun on its own ("dress", "white top" is wrong, "top" is right) and is REQUIRED. '
+    +'`price` is the MOST she said she would spend, as a plain number with no dollar sign (she says "under $100" → price:"100"). '
+    +'Fill it ONLY when she named an actual number herself — never guess one, never invent one from a vibe like "affordable" or "splurge", and leave it empty when she named no figure at all. '
     +(_ssAsk
       ? 'Fill colour/fabric/cut ONLY with words she actually used in: "'+_ssAsk+'". '
         +'\u2b50 BUT IF WHAT SHE NAMED IS AN OCCASION RATHER THAN A GARMENT DETAIL (a vacation dress, a wedding guest dress, work trousers), '
@@ -7390,7 +7395,7 @@ async function _shopStyleGen(){
     prompt='You are Catherine, a personal stylist. This woman shared a photo of an outfit she already owns and loves. Suggest 6 specific shoppable pieces that MIRROR her look — more of the SAME kinds of pieces in the same spirit, so she can repeat a look she already knows is hers.\n\n'+basis+'\n'+_seenPicksLine('ss-'+_shopStyleMode)+'\nWHAT MIRRORING MEANS:\n- Every piece must be the same KIND of garment as something she is wearing, in the same silhouette family and the same energy: if she is wearing a floral midi dress, find more floral or printed midi dresses; a cropped cream jacket, more little cropped jackets like it.\n- Weight the mix toward her main piece: at least 3 of the 6 should echo the biggest garment in her look, the rest can echo her other pieces.\n- Vary the colors and prints within her palette so the six are sisters of her look, not six copies of one item.\n- These are SWAPS and REPEATS, never add-ons: NO bags, jewelry, belts or other accessories unless that accessory is itself the heart of her look. Completing the look is a different button; this one multiplies it.\n\nFor each item provide:\n- category: one of "top","bottom","dress","jacket","shoes","bag","jewelry","activewear"\n'+_shopRules()+'\nRULES:\n- NEVER suggest anything on her never-wear list or that she listed as a hard no. Honor her exact words. This rule is absolute.\n- Name each piece plainly and beautifully, leading with the piece itself, print or silhouette + item, like "Floral Flutter-Sleeve Midi Dress" — never vague, never led by a color unless color is genuinely the point of that piece (and then the search carries the same color), never promising a detail its own search does not carry (the name is the search, written beautifully), and never an imaginary exact product the search cannot deliver\n\nRespond with ONLY valid JSON:\n{"items":[{"category":"dress","name":"Item Name","search":"short search term","store":"Store Name"}]}';
   }else{
     maxTok=700;
-    var _mkQuiz=function(_dt){ return 'You are Catherine, a personal stylist. '+_askedForLead()+'\n\n'+basis+'\n'+_seenPicksLine('ss-'+_shopStyleMode)+'\nFor each item provide:\n- category: one of "top","bottom","dress","jacket","shoes","bag","jewelry","activewear"\n'+_shopRules('',_askOccF(),null,_dt)+'\nRULES:\n- Match her style\n- NEVER suggest anything on her never-wear list or that she listed as a hard no. Honor her exact words. This rule is absolute.\n'+_colorPrefRule()+_askedForRule()+_mixRule()+'- Name each piece plainly and beautifully, leading with the piece itself, fabric or silhouette + item, like "Mock-Neck Knit Tank" — never vague ("a nice top"), never led by a color unless color is genuinely the point of that piece (and then the search carries the same color), never promising a detail its own search does not carry (the name is the search, written beautifully), and never an imaginary exact product the search cannot deliver\n'+_honestyRule()+'\nAND ONE MORE FIELD, ALONGSIDE the six:\n'+_findAskRule()+'\nRespond with ONLY valid JSON("note" only when you returned fewer than 6):\n{"note":"","findlead":"","find":{"item":"","colour":"","fabric":"","cut":"","size":"","width":"","chose":""},"items":[{"category":"top","name":"Item Name","search":"short search term","store":"Store Name"}]}'; };
+    var _mkQuiz=function(_dt){ return 'You are Catherine, a personal stylist. '+_askedForLead()+'\n\n'+basis+'\n'+_seenPicksLine('ss-'+_shopStyleMode)+'\nFor each item provide:\n- category: one of "top","bottom","dress","jacket","shoes","bag","jewelry","activewear"\n'+_shopRules('',_askOccF(),null,_dt)+'\nRULES:\n- Match her style\n- NEVER suggest anything on her never-wear list or that she listed as a hard no. Honor her exact words. This rule is absolute.\n'+_colorPrefRule()+_askedForRule()+_mixRule()+'- Name each piece plainly and beautifully, leading with the piece itself, fabric or silhouette + item, like "Mock-Neck Knit Tank" — never vague ("a nice top"), never led by a color unless color is genuinely the point of that piece (and then the search carries the same color), never promising a detail its own search does not carry (the name is the search, written beautifully), and never an imaginary exact product the search cannot deliver\n'+_honestyRule()+'\nAND ONE MORE FIELD, ALONGSIDE the six:\n'+_findAskRule()+'\nRespond with ONLY valid JSON("note" only when you returned fewer than 6):\n{"note":"","findlead":"","find":{"item":"","colour":"","fabric":"","cut":"","size":"","width":"","price":"","chose":""},"items":[{"category":"top","name":"Item Name","search":"short search term","store":"Store Name"}]}'; };
     // Full detail first. Only a genuinely long prompt walks down the ladder.
     var _dts=[null,60,45,30];
     for(var _di=0;_di<_dts.length;_di++){ prompt=_mkQuiz(_dts[_di]); if(prompt.length<=_PROMPT_SAFE) break; }
@@ -12242,7 +12247,11 @@ const _FIND_RE=/<<\s*FIND\s+([^>]*)>>/i;
    what you came up with is fine and the stylist chat already has a good
    personality and words things well." ▶ DO NOT PARAPHRASE IT. */
 const _FIND_DEAD="My search didn't come back just then, so I haven't looked through the shops yet. Ask me again and I'll try.";
-const _FIND_HER_WORDS=['colour','fabric','cut'];
+/* ⭐ `price` JOINED 2026-09-13, same reasoning as colour/fabric/cut: it is a
+   NUMBER she typed, never one the stylist may add on her behalf. Her sentence
+   containing the digits ("under $100") is what makes it hers -- exactly the
+   same word-by-word check the other three already get. */
+const _FIND_HER_WORDS=['colour','fabric','cut','price'];
 function _findHerText(msg){
   return ' '+String(msg||'').toLowerCase().replace(/[^a-z0-9]+/g,' ')+' ';
 }
@@ -12302,7 +12311,12 @@ function _findKeepHerWords(req,msg){
          entirely — it simply stops punishing her for the stylist's adjectives. */
     const words=String(v).split(/\s+/).filter(Boolean);
     const hers=words.filter(function(w){
-      if(w.length<3)return true;                    /* short joiners, ignore */
+      /* ⚠️ THE SHORT-JOINER EXEMPTION MUST NOT COVER PRICE. A two-digit number
+         ("50") is a real, narrowing value, never a joiner like "of" or "a" — so
+         letting it through unchecked would mean an invented "under $50" passes
+         exactly as invisibly as the jewel-tone fault this whole guard exists to
+         stop. Every digit of a price must actually be in her sentence. */
+      if(w.length<3&&k!=='price')return true;        /* short joiners, ignore */
       /* a light stem so "boots" matches "boot" and "fitted" matches "fit" */
       const stem=w.replace(/(ing|ed|es|s)$/,'');
       return hay.indexOf(' '+w+' ')>=0||hay.indexOf(stem)>=0;
@@ -12325,7 +12339,10 @@ function _findParse(text){
     if(i<0)return;
     const k=pair.slice(0,i).trim().toLowerCase();
     const v=pair.slice(i+1).trim();
-    if(['item','colour','color','fabric','cut','size','width'].indexOf(k)<0)return;
+    if(['item','colour','color','fabric','cut','size','width','price'].indexOf(k)<0)return;
+    /* ⭐ price is a NUMBER, never a word, so it gets its own narrower check
+       instead of the free-text pattern every other field uses. */
+    if(k==='price'){if(!/^\d{1,6}$/.test(v))return;req.price=v;return;}
     if(!v||v.length>40||!/^[a-z0-9][a-z0-9 '\-\/.]*$/i.test(v))return;
     req[k==='color'?'colour':k]=v.toLowerCase();
   });
@@ -12602,6 +12619,10 @@ function _findLabel(k,p){
   if(k==='cut')return 'style';
   if(k==='size')return 'size';
   if(k==='width')return 'width';
+  /* ⭐ shows the actual ceiling, same reasoning as colour showing "blush" rather
+     than the bare word "colour" — a tick that just says "price" tells her
+     nothing; "under $100" is the thing she actually asked for. */
+  if(k==='price')return 'under $'+(p.request&&p.request.price?p.request.price:'budget');
   return k;
 }
 
@@ -12630,7 +12651,7 @@ function _findDbg(mc,req,data,failed,ms){
   const d=data||{},m=d.ms||{},row=function(k,v){
     return '<div class="fdbg-r"><span>'+_esc(k)+'</span><b>'+_esc(String(v))+'</b></div>';
   };
-  const asked=['item','colour','fabric','cut','size','width']
+  const asked=['item','colour','fabric','cut','size','width','price']
     .filter(function(k){return req&&req[k]}).map(function(k){return k+'='+req[k]}).join('; ');
   const el=document.createElement('div');
   el.className='find-block fdbg';
@@ -13365,9 +13386,10 @@ FINDING REAL PRODUCTS FOR HER:
 - You can send me out to find REAL products that are actually for sale right now, across all the shops, with real prices and a direct link to the item. To do it, put ONE marker as the very FIRST thing in your reply, then write your answer as normal:
   <<FIND item=dress; colour=blush; fabric=silk; cut=wrap>>
 - Put it FIRST. The search runs while you are still writing, so a marker at the end makes her wait twice as long.
-- Fields, all optional except item: item, colour, fabric, cut, size, width. Use only what SHE actually said or what you know from her saved sizes. Two to four plain words per field.
+- Fields, all optional except item: item, colour, fabric, cut, size, width, price. Use only what SHE actually said or what you know from her saved sizes. Two to four plain words per field.
 - ⚠️ THESE FIELDS HOLD WORDS A SHOP PRINTS ON A PRODUCT, never a description and never a sentence. "Linen Midi Dress" and "Belted Shirt Dress" are what shops call things; "belted wrap with midi length and fitted bodice" is not, and no product on earth is named that.
 - ⚠️ AND NEVER AN OCCASION OR A MOOD: vacation, wedding, work, brunch, date night, effortless, elevated. No garment is NAMED "vacation", so searching for it finds NOTHING AT ALL. If the only thing she named is an occasion, send just the garment and let your written advice carry the rest.
+- price is the MOST she said she would spend, as a plain number with no dollar sign ("under $100" → price=100). Only when she named an actual figure — never a guess, never a vibe like "affordable" or "splurge".
 - NEVER invent a requirement she did not give. If she did not say a colour, leave colour out. An invented requirement makes me reject real products she would have loved.
 - WHEN TO USE IT: only when finding real products is genuinely NEEDED to answer what she is asking. "I have a wedding in Napa in October and nothing to wear" absolutely needs it, even though she never said the word "find" or "dress". "Where can I get a white blazer" needs it.
 - WHEN NOT TO USE IT: a shopping TOPIC coming up is not the same as needing products. "What do you think of navy on me?", "Does this top work for a dinner?", "Should I keep my old boots?" and "Thank you!" all need your advice, not a search. When in doubt, answer as a stylist and leave the marker out.

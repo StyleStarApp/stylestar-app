@@ -982,11 +982,45 @@ ok('...and `chose` is never sent to the server',
    FINDCALLS.every(c => !('chose' in c)), JSON.stringify(FINDCALLS));
 FIND = null;
 
-/* ▶ AND THE SUGGESTIONS THEMSELVES: the app may not teach her to ask for a
-   thing it cannot do. HER RULING: "Let's take the price off if we can't honor
-   it." A find request carries item/colour/fabric/cut/size/width and NO price. */
-ok('no suggested prompt promises a price filter that does not exist',
-   !/Try: [^']*under \$/.test(HTML), (HTML.match(/'Try: [^']*'/g) || []).join(' · '));
+/* ═══ 16 · THE PRICE FILTER, 2026-09-13 ═════════════════════════════════
+   ⭐ ITEM 1 OF "THE FULL LOOK" LIST, BUILT: a find request now carries a real
+   `price` field, verified in code (verifyPrice, alongside size/width/stock —
+   a number needs no reading), and the two suggested prompts that promise it
+   are back verbatim, per her own standing instruction. */
+console.log('\n16. a price ceiling she stated reaches the server, an invented one dies');
+/* 🚨 THE SAME CACHE TRAP SECTIONS 4-5 ALREADY NAME: `ask()` opens the default
+   view FIRST, and price is unguarded there (no sentence to check it against),
+   so an identical mocked reply on both halves makes the typed call a CACHE
+   HIT that never touches the network — an empty call log that looks like a
+   pass. ▶ So the default half gets its OWN unrelated reply first (a different
+   item, no price at all), same shape as section 4's `keepLog` split, before
+   the one actually being measured runs. */
+REPLY = { items: six(), findlead: '', find: { item: 'shoes', colour: '', fabric: '', cut: '' } };
+await ask(pg, '');
+FINDCALLS.length = 0;
+REPLY = { items: six(), findlead: '', find: { item: 'tops', colour: '', fabric: '', cut: '', price: '100' } };
+await stamp(pg);
+await pg.evaluate(t => { document.getElementById('ssAskIn').value = t; ssAskGo(); }, 'tops under $100');
+await fresh_grid(pg);
+await pg.waitForTimeout(1800);
+const priced = FINDCALLS[FINDCALLS.length - 1] || {};
+ok('her stated ceiling reaches the server as a real field',
+   priced.price === '100', JSON.stringify(priced));
+
+FINDCALLS.length = 0;
+REPLY = { items: six(), findlead: '', find: { item: 'tops', colour: '', fabric: '', cut: '', price: '50' } };
+await ask(pg, 'white tops');
+await pg.waitForTimeout(1800);
+const noPrice = FINDCALLS[FINDCALLS.length - 1] || {};
+ok('a price she never said is dropped, same guard as an invented colour',
+   !noPrice.price, JSON.stringify(noPrice));
+
+/* ▶ AND THE SUGGESTIONS THEMSELVES: her own standing instruction, given the day
+   the clause came off — "put them back verbatim" the day a price filter exists.
+   It does now. */
+ok('the two price prompts are back, verbatim',
+   /'Try: tops under \$100'/.test(HTML) && /'Try: white jeans under \$150'/.test(HTML),
+   (HTML.match(/'Try: [^']*'/g) || []).join(' · '));
 
 ok('zero JS errors across every scenario', errs.length === 0, errs.join(' | '));
 await ctx.close();

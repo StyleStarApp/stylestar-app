@@ -293,6 +293,29 @@ export function verifyStock(details) {
 }
 
 // ---------------------------------------------------------------------------
+// ⭐ THE PRICE FILTER, 2026-09-13. HER RULING THAT PUT IT ON HOLD, 2026-09-10:
+// "Let's take the price off if we can't honor it" -- a find request carried no
+// price field at all, so "under $100" was silently ignored, never filtered.
+// ▶ WHY THIS IS A CODE CHECK, NOT A STYLIST JUDGEMENT: unlike colour or fabric,
+//   "is $84 under $100" needs no reading -- it is a plain number comparison
+//   against a plain number, so it belongs with size/width/stock (FACTUAL
+//   lookups), never with colour/fabric/cut (things that need a person's eye).
+// ⚠️ TREATED AS STRICT AS COLOUR, NOT SOFT LIKE SIZE/WIDTH, on purpose: size and
+//   width were softened because they come from her SAVED PROFILE and a retailer
+//   almost never states stock sizes, so UNKNOWN swamped nearly every product. A
+//   price ceiling is different on both counts -- it only ever exists because she
+//   TYPED it, and `priceValue` is populated from the retailer's own listed price
+//   on nearly every real product. So an unknown price staying strict costs her
+//   almost nothing, and treating her own stated number as soft would let a
+//   $340 dress pass a "under $100" ask on a technicality.
+export function verifyPrice(want, priceValue) {
+  const max = Number(want);
+  if (!max || !(max > 0)) return VERDICT.UNKNOWN;
+  if (priceValue == null || typeof priceValue !== 'number' || !(priceValue > 0)) return VERDICT.UNKNOWN;
+  return priceValue <= max ? VERDICT.CONFIRMED : VERDICT.REJECTED;
+}
+
+// ---------------------------------------------------------------------------
 // Judge one candidate against the whole request.
 // `offer` is the best retailer offer for the product (its own title + details).
 export function judge(req, product) {
@@ -304,6 +327,7 @@ export function judge(req, product) {
   if (req.cut)    checks.cut    = verifyCut(req.cut, text);
   if (req.size)   checks.size   = verifySize(req.size, product.sizes, text);
   if (req.width)  checks.width  = verifyWidth(req.width, text);
+  if (req.price)  checks.price  = verifyPrice(req.price, product.priceValue);
   checks.stock = verifyStock(product.details);
 
   const stated = Object.entries(checks).filter(([k]) => k !== 'stock');
@@ -329,7 +353,13 @@ export const COLOUR_PARENT = {
 };
 
 export function widenOptions(req, products, judgeFn = judge) {
-  const stated = ['colour', 'fabric', 'cut', 'size', 'width'].filter(k => req[k]);
+  // ⭐ 'price' JOINS THE WIDENABLE SET, 2026-09-13: her own design already says
+  //   she chooses which requirement to release, one at a time -- a price
+  //   ceiling is a requirement exactly like colour or fabric, so leaving it out
+  //   would have been an asymmetric build. Released the plain way (deleted, no
+  //   family-softening the way blush softens to pink): there is no "almost
+  //   under budget" family to fall back to.
+  const stated = ['colour', 'fabric', 'cut', 'size', 'width', 'price'].filter(k => req[k]);
   const relax = (keys) => {
     const r = {...req};
     for (const k of keys) {

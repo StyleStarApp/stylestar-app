@@ -190,8 +190,11 @@ async function feedBrowse(request) {
   qs.set('select', FEED_COLS);
   qs.set('in_stock', 'is.true');
   qs.set('image_url', 'not.is.null');
-  qs.set('price', 'not.is.null');
   qs.set('limit', '24');
+  /* ⭐ HER CEILING REACHES THE FEED TOO, 2026-09-13 -- this is a SECOND source
+     of browse cards, entirely separate from SerpApi's max_price, so it needs
+     its own filter or a $340 feed dress would sail past "under $100" here. */
+  qs.set('price', request.price ? 'lte.' + request.price : 'not.is.null');
   /* ⚠️ REPEATED `name` FILTERS ARE **AND**ed BY PostgREST, which is exactly the
      rule: every word she said, all of them, in the name. */
   for (const w of words) qs.append('name', 'ilike.*' + w + '*');
@@ -242,6 +245,12 @@ function cleanReq(body) {
     const v = String(body[k] ?? '').trim();
     if (v && CLEAN.test(v)) out[k] = v.toLowerCase();
   }
+  /* ⭐ PRICE, 2026-09-13. A NUMBER, not a string like every other field here --
+     it is compared against `priceValue`, never read as a word a person wrote.
+     ⚠️ Clamped to a sane range (an accidental "1000000" from a stray keystroke
+     must not become a max_price that quietly asks Google for everything). */
+  const p = Math.floor(Number(body.price));
+  if (Number.isFinite(p) && p > 0 && p <= 20000) out.price = p;
   return out.item ? out : null;
 }
 
@@ -542,9 +551,15 @@ export default async (req) => {
        round trip, and 18s is uncomfortably close to where her searches were
        failing outright this morning. */
     const SOFT_SEARCH_MS = 4000;
+    /* ⭐ max_price PASSTHROUGH, 2026-09-13, mirroring min_price below: a ceiling
+       she stated reaches GOOGLE ITSELF, so "tops under $100" never even sees a
+       $340 top -- narrower and cheaper than fetching everything and discarding
+       it after the fact. `judge()`'s verifyPrice stays as the safety net for
+       anything this misses (the feed path never touches SerpApi at all). */
     const pages = await settledBy(queries.map(q =>
       get('https://serpapi.com/search.json?' + new URLSearchParams({
         engine: 'google_shopping', q, gl: 'us', hl: 'en', num: '60', api_key: KEY,
+        ...(request.price ? {max_price: String(request.price)} : {}),
       })).catch(() => null)), SOFT_SEARCH_MS);
     /* ⚠️ WIDTH RAISED FROM 2 TO ALL-AT-ONCE, 2026-09-08, AND THE REASON CHANGED.
        The narrow pool was a guess at a free-plan concurrency limit, made when
@@ -649,7 +664,12 @@ export default async (req) => {
          of the market to the bottom she already had.
        ⚠️ AND IT COSTS A SECOND ROUND-TRIP, because the floor cannot be known
          until the first search answers. Kept on a short leash for that reason. */
-    const priced = [...pool.values()]
+    /* ⚠️ SKIPPED OUTRIGHT WHEN SHE STATED A CEILING, 2026-09-13. This whole
+       search exists to reach the DEARER end of the market -- exactly the
+       opposite of what "under $100" asked for. Running it anyway would spend a
+       real call fetching stock that verifyPrice would only reject a moment
+       later. */
+    const priced = request.price ? [] : [...pool.values()]
       .map(x => x.extracted_price).filter(v => typeof v === 'number' && v > 0)
       .sort((a, b) => a - b);
     if (priced.length >= 5 && queries.length) {
@@ -891,7 +911,13 @@ export default async (req) => {
         image: r.thumbnail || r.image || '',
         name: title, search: title,
       };
-    }).filter(p => p.title && !shownIds.has(p.id));
+    }).filter(p => p.title && !shownIds.has(p.id))
+      /* ⭐ THE SAFETY NET, not the whole fix: max_price above already keeps most
+         over-budget stock out of the pool. This catches whatever slips through
+         (a stale cached page, a listing SerpApi mis-tagged) -- known-over-budget
+         is dropped; an UNKNOWN price is kept, same "more to browse" reasoning
+         as everywhere else on this row. */
+      .filter(p => !request.price || p.priceValue == null || p.priceValue <= request.price);
 
     /* ⭐⭐ HER OWN SHOPS JOIN THE ROW. They lead the browse stretch because the
        page then sorts the whole thing by HER store scores anyway — this order is

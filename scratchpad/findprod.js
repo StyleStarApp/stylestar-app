@@ -12,6 +12,7 @@ import {fileURLToPath} from 'url';
 import {
   VERDICT, buildQueries, matchStore, isResale, judge, widenOptions,
   verifyColour, verifyFabric, verifyCut, verifySize, verifyWidth, verifyStock,
+  verifyPrice,
 } from '../netlify/functions/lib/find-products.js';
 import {buildDomains} from '../scripts/build-store-domains.js';
 
@@ -307,6 +308,44 @@ H('PART 10 — the generated domain file cannot drift from index.html');
      'run: node scripts/build-store-domains.js');
   ok("her wide-width shops survived the trip",
      Object.entries(fresh).filter(([, v]) => v.sizes.includes('wide')).length === 8);
+}
+
+H('PART 11 — the price filter (2026-09-13, item 1 of "the full look" list)');
+{
+  // ▶ FACTUAL, NOT A JUDGEMENT — belongs beside size/width/stock, verified
+  //   against the retailer's own extracted price, never read by a stylist.
+  ok('under budget confirms', verifyPrice(100, 84) === VERDICT.CONFIRMED);
+  ok('at the exact ceiling still confirms', verifyPrice(100, 100) === VERDICT.CONFIRMED);
+  ok('over budget rejects', verifyPrice(100, 150) === VERDICT.REJECTED);
+  ok('a missing price is unknown, never a pass', verifyPrice(100, null) === VERDICT.UNKNOWN);
+  ok('a non-numeric want is unknown, not a crash', verifyPrice('under $100', 50) === VERDICT.UNKNOWN);
+  ok('a zero or negative want is unknown, never treated as "free"',
+     verifyPrice(0, 5) === VERDICT.UNKNOWN && verifyPrice(-10, 5) === VERDICT.UNKNOWN);
+
+  // ▶ STRICT LIKE COLOUR, NOT SOFT LIKE SIZE/WIDTH — it is HER OWN STATED
+  //   NUMBER, so an unknown price must still block an exact match. judge()
+  //   only adds the check when req.price is set, exactly like colour/fabric/cut.
+  const cheap = { title: 'Reformation Linen Top', priceValue: 68, details: ['In stock'] };
+  const dear = { title: 'Reformation Linen Top', priceValue: 340, details: ['In stock'] };
+  const noPrice = { title: 'Reformation Linen Top', priceValue: null, details: ['In stock'] };
+  ok('an in-budget product is an exact match on price alone',
+     judge({ item: 'top', price: 100 }, cheap).exact === true);
+  ok('an over-budget product is rejected, not merely unconfirmed',
+     judge({ item: 'top', price: 100 }, dear).exact === false &&
+     judge({ item: 'top', price: 100 }, dear).rejected.includes('price'));
+  ok('a product with NO price data does not pass "under $100" on a technicality',
+     judge({ item: 'top', price: 100 }, noPrice).exact === false);
+  ok('a request with no price at all is untouched — old requests behave exactly as before',
+     !('price' in judge({ item: 'top' }, dear).checks));
+
+  // ▶ THE WIDENING DESIGN TREATS PRICE LIKE ANY OTHER REQUIREMENT: she chooses
+  //   which one to release. Releasing price means seeing the same piece over
+  //   budget — plainly labelled, never silently swapped in as if it were exact.
+  const products = [dear];
+  const doors = widenOptions({ item: 'top', price: 100 }, products);
+  ok('releasing the price ceiling offers the over-budget piece as a door',
+     doors.length === 1 && doors[0].release === 'price' && doors[0].count === 1,
+     JSON.stringify(doors));
 }
 
 console.log(`\n${pass} passed, ${fail} failed`);
