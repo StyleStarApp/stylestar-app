@@ -7411,7 +7411,7 @@ async function _shopStyleGen(){
       _ssFindData=_shopResume.d||null;   // her photographs, if the row had landed
       _shopResume=null;          // a resume is spent once used; a refresh re-asks
     }else{
-      var r=await fetch("/.netlify/functions/style-ai",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({max_tokens:maxTok,messages:[{role:"user",content:prompt}]})});
+      var r=await _fetchRetry("/.netlify/functions/style-ai",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({max_tokens:maxTok,messages:[{role:"user",content:prompt}]})});
       if(!r.ok)throw 0;
       var d=await r.json();if(!d.content)throw 0;
       parsed=_aiJSON(d.content.map(function(c){return c.text||''}).join(''));
@@ -10151,7 +10151,7 @@ async function _wardrobeIdeaGen(id,boxId){
   const defineRule=_WDR_IDEA_DEFINE[id]?'\n- '+_WDR_IDEA_DEFINE[id]:'';
   const prompt='You are Catherine, a personal stylist. Suggest 4 specific shoppable options for exactly this wardrobe item: "'+name+'".\n\n'+basis+getPrefsForPrompt()+exclLine+colorFallbackLine+curLine+'\n'+_shopRules('compare',null,id)+'\nRULES:\n- All 4 must genuinely be "'+name+'" or a very close match to it\n- Every "search" term must clearly still be a '+name.toLowerCase()+': keep the defining word of the item itself (or a true synonym a store search knows) in EVERY search — for "Professional blouses" a search of just "silk blouse" loses the professional part and lands her on the wrong kind of thing entirely\n- NEVER suggest anything on her never-wear list or that she listed as a hard no. Honor her exact words. This rule is absolute.'+defineRule+'\n'+_colorPrefRule(colorDependent)+'- Name each piece plainly and beautifully, leading with the piece itself, fabric or silhouette + item, like "Suede Moto Jacket" — never vague ("a nice jacket"), never led by a color unless color is genuinely the point of this item (and then the search carries the same color), never promising a detail its own search does not carry (the name is the search, written beautifully), and never an imaginary exact product the search cannot deliver\n\nRespond with ONLY valid JSON:\n{"items":[{"name":"Item Name","search":"short search term","store":"Store Name"}]}';
   try{
-    const r=await fetch("/.netlify/functions/style-ai",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({max_tokens:500,messages:[{role:"user",content:prompt}]})});
+    const r=await _fetchRetry("/.netlify/functions/style-ai",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({max_tokens:500,messages:[{role:"user",content:prompt}]})});
     if(!r.ok)throw 0;
     const d=await r.json();if(!d.content)throw 0;
     const parsed=_aiJSON(d.content.map(function(c){return c.text||''}).join(''));
@@ -10302,7 +10302,7 @@ async function _wdrMoreIdeas(id,boxId){
   const shown=[].slice.call(grid.querySelectorAll('.shop-item-name')).map(function(n){return n.textContent}).join('; ');
   const prompt='You are Catherine, a personal stylist. Suggest 4 MORE specific shoppable options for exactly this wardrobe item: "'+name+'".\n\nShe has already been shown these, so suggest genuinely different pieces, never a near-duplicate: '+shown+'.\n'+getPrefsForPrompt()+'\n'+_shopRules('compare',null,id)+'\nRULES:\n- All 4 must genuinely be "'+name+'" or a very close match to it\n- Every "search" term must keep the defining word of the item itself\n- NEVER suggest anything on her never-wear list or that she listed as a hard no. This rule is absolute.\n- Name each piece plainly and beautifully, leading with the piece itself, never led by a color unless color is the point, never promising a detail its own search does not carry\n\nRespond with ONLY valid JSON:\n{"items":[{"name":"Item Name","search":"short search term","store":"Store Name"}]}';
   try{
-    const r=await fetch("/.netlify/functions/style-ai",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({max_tokens:500,messages:[{role:"user",content:prompt}]})});
+    const r=await _fetchRetry("/.netlify/functions/style-ai",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({max_tokens:500,messages:[{role:"user",content:prompt}]})});
     if(!r.ok)throw 0;
     const d=await r.json();if(!d.content)throw 0;
     const parsed=_aiJSON(d.content.map(function(c){return c.text||''}).join(''));
@@ -12986,6 +12986,32 @@ function _findLSSet(key,data){
     try{localStorage.removeItem(_FIND_LS)}catch(e2){}
   }
 }
+/* ⭐ ONE QUIET RETRY BEFORE SHE EVER SEES A FAILURE — 2026-09-13, her ask, after she
+   named "an apology, then try again, and trying again doesn't fix it" as its own
+   complaint. ▶▶ HER OWN QUESTION BEFORE APPROVING IT: does retrying even help, and
+   what does it cost. THE HONEST ANSWER, put to her: a one-off network blip usually
+   DOES clear on a second try; a real outage (like the SerpApi one found the same
+   session) or the style-ai 32KB prompt-length rejection (`_PROMPT_SAFE` above) will
+   FAIL IDENTICALLY twice, and a retry there only spends a second call for nothing.
+   She chose to build it anyway, on these terms:
+   ▶ EXACTLY ONE RETRY, after a short pause (not instant — a request pinned to a
+     timeout is not helped by asking again with no gap at all).
+   ▶ ONE HELPER, used everywhere a retry applies, so the pause and the one-retry
+     cap can never drift between call sites — this file's oldest lesson.
+   ⚠️ NEVER WRAP THE STYLIST CHAT (`sendChat`) OR PHOTO ANALYSIS WITH THIS. Those
+     were not part of her complaint, and chat's own streaming/retry shape is more
+     involved — do not fold it in without asking her first.
+   ⚠️ A RETRY DURING A REAL OUTAGE STILL COSTS A SECOND CALL AND STILL FAILS. That
+     was said to her plainly and she accepted it — the win is the everyday blip,
+     not the outage, and the cost is bounded at 2x, never a loop. */
+async function _fetchRetry(url,opts){
+  try{
+    var r=await fetch(url,opts);
+    if(r.ok)return r;
+  }catch(e){}
+  try{await new Promise(function(res){setTimeout(res,1500)})}catch(e){}
+  return fetch(url,opts);
+}
 async function _findFetch(req,useCache){
   const key=JSON.stringify(req);
   if(useCache&&_FIND_CACHE.has(key))return{data:_FIND_CACHE.get(key),failed:false,cached:true};
@@ -13003,7 +13029,7 @@ async function _findFetch(req,useCache){
   }
   let data=null,failed=false;
   try{
-    const r=await fetch('/.netlify/functions/product-find',{method:'POST',
+    const r=await _fetchRetry('/.netlify/functions/product-find',{method:'POST',
       headers:{'Content-Type':'application/json'},body:JSON.stringify(req)});
     if(r.ok)data=await r.json(); else failed=true;
   }catch(e){failed=true;}

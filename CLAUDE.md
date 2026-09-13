@@ -407,36 +407,56 @@ open, not closed, with the lead recorded so nobody re-derives it. **Given a genu
 "try again" genuinely was wasting her time this week — her complaint was right on the merits, whatever
 the exact cause turns out to be for row 18.**
 
+### ✅✅ THE AUTO-RETRY — BUILT, SAME SESSION, AFTER SHE ASKED FOR MY ACTUAL OPINION
+She pushed back on being handed the decision cold: *"What is your opinion on this? Does it take a lot
+of time? And what are the chances it would work a second time?"* ▶ **THE HONEST ANSWER GIVEN, AND IT
+SHAPED THE BUILD:** the failures that actually reach her screen skew toward the STUBBORN kind (a real
+outage, a hung request, or — found while reading `_shopStyleGen` — the `_PROMPT_SAFE` 32KB rejection,
+which fails IDENTICALLY on a retry) rather than one-off network blips, because SerpApi and Anthropic's
+own infrastructure already smooth over most ordinary blips before they ever reach us. So a blind retry
+is a weaker bet than it sounds. **RECOMMENDATION GIVEN AND ACCEPTED:** one retry, after a short pause
+(not instant — a timeout is not helped by asking again immediately), bounded so a real outage costs
+exactly one extra call, never a loop.
+✅ **BUILT: ONE SHARED HELPER, `_fetchRetry(url,opts)`, right above `_findFetch`.** Tries once; on a
+thrown error or a non-`ok` response, waits ~1.5s and tries exactly once more; returns whichever response
+came back, so every caller's existing `if(!r.ok)throw 0` logic needed no changes at all.
+⚠️ **WIRED INTO EXACTLY FOUR CALL SITES, NO MORE, ON PURPOSE:** `_findFetch`'s product-find call (covers
+chat, Shop your Style AND Wardrobe's live search in one place), `_shopStyleGen`'s style-ai call, `_ward
+robeIdeaGen`'s style-ai call, and `_wdrMoreIdeas`'s ("+ See more ideas") style-ai call — precisely the
+surfaces her complaint named. **`sendChat` (the stylist conversation) and photo analysis were
+deliberately NOT touched** — not part of her complaint, and chat's own streaming shape is more involved;
+do not fold them in without asking her first.
+✅ **VERIFIED, NOT ASSUMED:** a direct Playwright test of `_fetchRetry` proved all three shapes — a
+500-then-success recovers on the retry (and genuinely waits before retrying, doesn't hammer instantly);
+a persistent failure still returns after exactly ONE retry, never a loop; a thrown network error (not
+just a bad status) is caught and retried too. `wdrmerge.mjs` re-run clean (9/9) and `ssfind` re-run
+clean (97/97) after wiring the fourth call site into `_findFetch`, confirming the shared finder path
+used by chat and Shop your Style still behaves identically.
+⚠️ **WHAT THIS DOES NOT FIX, SAID PLAINLY: a real outage (like the SerpApi one still open) or the
+prompt-length rejection will still fail, now after a ~1.5s pause instead of instantly** — the win is the
+everyday blip self-healing invisibly, never the outage itself. Nothing further to do here unless she
+wants `sendChat` covered too.
+
 ### ▶▶ WHAT IS OPEN FOR CLAUDE
-1. ⭐ **THE BROADER "APOLOGY + TRY AGAIN DOESN'T HELP" COMPLAINT — ONE SURFACE FIXED, TWO STILL OPEN.**
-   `_shopStyleGen`'s catch (Shop your Style's own AI call) and `_wardrobeIdeaGen`'s catch (the AI-ideas
-   half) both still show a manual "Try again" button. ⚠️ **NOT BUILT SPECULATIVELY THIS SESSION — a
-   genuine design tradeoff, hers to weigh, not Claude's to decide alone:** the obvious fix is an
-   automatic single retry before ever showing her a failure, so a transient blip self-heals invisibly —
-   but SerpApi calls cost money per attempt (~2.5¢ a search), and an auto-retry during a REAL outage
-   (like the one just found) doubles spend for nothing, which cuts against her "warn, never block" cost
-   stance in the opposite direction: it would spend silently rather than warn. Put this to her before
-   building: auto-retry once (costs more during a real outage, saves her a tap during a blip), or leave
-   manual but make the message honest about whether retrying is likely to help.
-2. 🚨🚨 **CJ LINK-WRAPPING DOES NOT EXIST YET — build it once a CJ advertiser she wants live actually
+1. 🚨🚨 **CJ LINK-WRAPPING DOES NOT EXIST YET — build it once a CJ advertiser she wants live actually
    approves.** Today `_affUrl` only knows Rakuten MIDs and the Amazon tag; a CJ-approved store (Cashmere
    Boutique now, possibly Belk/Macy's/TJ Maxx/Marshalls/Talbots/Lands' End if they come through) shows up
    findable but earns nothing until this is built. Not started speculatively — real work, worth doing the
    moment it matters.
-3. 🚨 "Couldn't load options right now" on Shop your Style — see the SerpApi lead above; not confirmed,
+2. 🚨 "Couldn't load options right now" on Shop your Style — see the SerpApi lead above; not confirmed,
    needs a fresh live-diagnosis approach on the STYLIST call specifically, not the search.
-4. 💰 A price filter — a find request carries item · colour · fabric · cut · size · width and no price
+3. 💰 A price filter — a find request carries item · colour · fabric · cut · size · width and no price
    field at all. When built, put `Try: tops under $100` and `Try: white jeans under $150` back verbatim.
-5. ⭐ Wire her Style Signature into the finder (board row 11, her *"many of them were shapeless"*) —
+4. ⭐ Wire her Style Signature into the finder (board row 11, her *"many of them were shapeless"*) —
    parked by her; hers to green-light, one thing at a time.
-6. ▶ Read her analytics. `track()` exists and nobody has looked. Still worth doing.
-7. ▶ A shared remembered cache — today's is per-browser. Must live server-only (Netlify Blobs), never
+5. ▶ Read her analytics. `track()` exists and nobody has looked. Still worth doing.
+6. ▶ A shared remembered cache — today's is per-browser. Must live server-only (Netlify Blobs), never
    through the publishable key.
-8. ▶ Amazon's disclosure "I" vs "we"/"Style Star LLC" — flagged to her, not guessed at.
-9. ▶ `affq.js`'s `EDIT_N` counter needs scoping to `#s-dream` — low priority, real debt.
-10. ▶ Optional, low stakes: find and neutralise the old "Belted Midi Dress" test account's share, if she
+7. ▶ Amazon's disclosure "I" vs "we"/"Style Star LLC" — flagged to her, not guessed at.
+8. ▶ `affq.js`'s `EDIT_N` counter needs scoping to `#s-dream` — low priority, real debt.
+9. ▶ Optional, low stakes: find and neutralise the old "Belted Midi Dress" test account's share, if she
    wants it gone rather than just harmless — needs the actual old token or a Supabase lookup by hand.
-11. ▶ Worth remembering, not an open task: if a save-token drift ever recurs on a different account for a
+10. ▶ Worth remembering, not an open task: if a save-token drift ever recurs on a different account for a
    different reason, `?r=`'s pull-and-overwrite behavior would clobber that device's local data the same
    way `?resync=` was built to avoid for Cath. No general safety net was built for this — it was judged
    not worth the permanent complexity for an incident now confirmed unique to one dev-testing history.
