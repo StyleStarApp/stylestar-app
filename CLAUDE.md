@@ -675,8 +675,37 @@ page (not just failing to earn), that's the signal to get a second real link and
    real generated link for that advertiser the same way, read off its aid + redirect domain, done. See
    "THE MALL NOW HAS ALL EIGHT..." above for the full story and the one open caveat (arbitrary-destination
    wrapping via `?url=` is not yet empirically click-tested, only the plain-homepage case is).
-2. 🚨 "Couldn't load options right now" on Shop your Style — see the SerpApi lead above; not confirmed,
-   needs a fresh live-diagnosis approach on the STYLIST call specifically, not the search.
+2. ✅✅ **A REAL DIAGNOSTIC GAP FOUND AND FIXED 2026-09-13 — "COULDN'T LOAD OPTIONS RIGHT NOW" CAN NOW
+   ACTUALLY BE DIAGNOSED, THE NEXT TIME IT HAPPENS.** She said "I am excited about getting the searches
+   working better" and asked which of the three open search items mattered most; this one, because it's
+   the only one where a woman hits a dead end. 🚨🚨 **`netlify/functions/style-ai.js`'s PLAIN (non-chat)
+   path — used by Shop your Style, Wardrobe Ideas, Complete the Look and photo analysis — always
+   returned HTTP 200 to the page NO MATTER WHAT ANTHROPIC ACTUALLY SAID, and logged nothing on a
+   failure.** The streaming/chat path right above it already checked `.ok` and logged the real upstream
+   error; this one never did either. ▶▶ **SO EVERY TIME THIS ERROR HAPPENED, THERE WAS LITERALLY NO
+   TRACE OF WHY ANYWHERE** — not in Netlify's logs, not in the response itself — which is exactly why
+   "cause still unknown" never resolved no matter how many times she reported it.
+   ✅ **FIXED:** the plain path now propagates Anthropic's real status code and logs the real error
+   message, mirroring what the chat path already did correctly. **THIS CHANGES NOTHING ABOUT THE
+   SUCCESS CASE** — every existing client call site (`_shopStyleGen`, `_wardrobeIdeaGen`, `_wdrMoreIdeas`,
+   the photo-analysis handler) ALREADY does `if(!r.ok)throw`, so the client was already anticipating a
+   real failure status; the server was the only thing that never sent one. **The failure still shows her
+   the same "Couldn't load options right now" screen** — this does not fix the underlying Anthropic-side
+   failure (a genuine rate limit or overload is Anthropic's to fix, and the auto-retry built earlier this
+   session already smooths over the everyday blip) — **but the NEXT time it happens, Netlify's function
+   logs will finally say what actually went wrong** instead of staying a permanent mystery.
+   ✅ **VERIFIED, NOT ASSUMED:** new `scratchpad/styleai.mjs` (12/12, the first test coverage
+   `style-ai.js` has ever had — mirrors `pricefilter.mjs`'s pattern for `product-find.js`, which had the
+   same gap): a clean success still returns 200 with nothing logged; a mocked 529 overload now reaches
+   the page as a real 529 with the real error body, and is logged; a 429 rate-limit does the same; an
+   unparseable upstream body degrades to `{}` rather than crashing the function, and is still logged; a
+   direct grep of `index.html` confirms at least 4 call sites already guard on `r.ok` today — proving
+   that check was dead code until this fix, not new client behavior. `node --check` and both `index.html`
+   `<script>` blocks re-parsed clean.
+   ⚠️ **STILL OPEN, AND HONEST ABOUT IT: the underlying CAUSE of any specific past occurrence is still
+   not known** — this fix makes the NEXT one diagnosable, it does not retroactively explain 2026-09-10's.
+   If it recurs, the fix is: open Netlify's function logs for `style-ai`, find the `upstream error` line,
+   and read what Anthropic actually said.
 3. ✅ ~~A price filter~~ **BUILT AND LIVE 2026-09-13 — see "THE PRICE FILTER" below.**
 4. ✅ ~~Wire her Style Signature into the finder~~ **GREENLIT AND CLOSED 2026-09-13 — see board row 11.
    Turned out to already be built (both pickers already use `_storeFit` against her fitted lean); the

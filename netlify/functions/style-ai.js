@@ -357,10 +357,34 @@ export default async (req) => {
       return new Response(JSON.stringify(err), { status: 200, headers });
     }
 
+    // ═══ THE PLAIN (NON-CHAT) TURN ═══════════════════════════════════════
+    // Shop your Style, Wardrobe Ideas, Complete the Look and photo analysis
+    // all land here. 🚨🚨 FOUND 2026-09-13, DIAGNOSING "Couldn't load options
+    // right now" (board row 18): this always returned status 200 REGARDLESS
+    // OF WHAT ANTHROPIC SAID, and logged nothing on a failure -- the stream
+    // path above already did both correctly, and this one silently never did.
+    // ▶▶ So every time a woman hit this error, there was NO trace anywhere of
+    // why: not in Netlify's logs, not in the response she got. The client
+    // already anticipates a real failure status (every call site does
+    // `if(!r.ok)throw`), so nothing here was ever actually EXERCISING that
+    // check -- it just fell through to a generic "no content" throw instead,
+    // with the real upstream error (a rate limit, an overload, a safety
+    // refusal) thrown away unread.
+    // ✅ FIXED: propagate Anthropic's real status and log the real error, the
+    // same way the chat path already does. This does not change the SUCCESS
+    // path at all, and every existing client call site already handles a
+    // non-ok response correctly -- this only makes the failure visible.
     const anthropicRes = await callAnthropic();
-    const data = await anthropicRes.json();
+    const data = await anthropicRes.json().catch((e) => {
+      console.error('style-ai: unparseable response body (status ' + anthropicRes.status + ')', e && e.message);
+      return {};
+    });
+    if (!anthropicRes.ok) {
+      console.error('style-ai: upstream error, returning to page as-is (status ' + anthropicRes.status + ')',
+        (data && data.error && data.error.message) || '(no message)');
+    }
 
-    return new Response(JSON.stringify(data), { status: 200, headers });
+    return new Response(JSON.stringify(data), { status: anthropicRes.status, headers });
   } catch (error) {
     return new Response(JSON.stringify({ error: error.message || 'Failed to process request' }), { status: 500, headers });
   }
