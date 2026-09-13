@@ -382,15 +382,15 @@ advertiser directory (inside the account, "Advertisers"/Partners tab) is the onl
 don't assume all nine are on CJ specifically.
 
 ### ✅ 2026-09-13 — HER FIRST CJ ADVERTISER APPROVAL: CASHMERE BOUTIQUE, ADDED TO THE STORE TABLE
-She applied broadly rather than narrowly to the mid-market DTC list above — screenshots showed a large
-**Pending Applications** queue including **Belk, Macy's, TJ Maxx, Marshalls, Talbots and Lands' End**,
-plus Amanda Uprichard, Ashley Stewart, Brandon Maxwell, Bvlgari, Chadwicks of Boston, Cupshe, D'Aniello
-Boutique, DL1961, Intimissimi, J.Crew, J.Crew Factory, Jared, Kenneth Cole, Lilysilk, Madewell, Missoni,
-Nike, prAna, Pura Cashmere, Rack Room Shoes, Ray-Ban, Revolve, Ross-Simons and more (the list scrolled
-past what was screenshotted, so this is not necessarily the full set). ⭐⭐⭐ **BELK, MACY'S, TJ MAXX,
-MARSHALLS, TALBOTS AND LANDS' END ARE WORTH WATCHING ABOVE ALL THE REST** — department stores and true
-mid-market generalists are exactly what this file has said for months would actually fix the price
-problem, more than any of the luxury-adjacent names on the list.
+She applied broadly rather than narrowly to the mid-market DTC list above. **THE FULL PENDING
+APPLICATIONS QUEUE, CONFIRMED COMPLETE BY HER 2026-09-13** (she checked to the end of the list):
+Amanda Uprichard · Ashley Stewart · Belk · Brandon Maxwell · Bvlgari · Chadwicks of Boston · Cupshe ·
+D'Aniello Boutique · DL1961 · Intimissimi · J.Crew · J.Crew Factory · Jared · Kenneth Cole · Lands' End ·
+Lilysilk · Macy's · Madewell · Marshalls · Missoni · Nike · prAna · Pura Cashmere · Rack Room Shoes ·
+Ray-Ban · Revolve · Ross-Simons · Talbots · TJ Maxx · Trina Turk · Wimbledon Shop — **30 pending in
+total.** ⭐⭐⭐ **BELK, MACY'S, TJ MAXX, MARSHALLS, TALBOTS AND LANDS' END ARE WORTH WATCHING ABOVE ALL
+THE REST** — department stores and true mid-market generalists are exactly what this file has said for
+months would actually fix the price problem, more than any of the other 24 pending or the one approval.
 ✅ **CASHMERE BOUTIQUE APPROVED, and added to `STORES`** (`index.html`, next to Kohl's/COUTR) —
 name + search url only, no invented scores, per her 2026-09-08 rule. Real cashmere specialty retailer,
 in business since 2007, women's + men's (so `w:1` is set). Search url `/search?q=` verified with a real
