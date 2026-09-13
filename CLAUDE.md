@@ -54,6 +54,8 @@ gathers it going forward — that's an open, ongoing thing, not a one-time quest
 | 14 | ~~Affiliate shops should appear "somewhere in there"~~ ✅ **POSITION was already built (`_findSpread`, 2026-09-09). ⚠️ Her ruling was in NEITHER file; it is in the ledger now.** | — | ✅ done |
 | 15 | ~~Her affiliate shops never appear at all~~ ✅✅ **HER CATCH AND HER DECISION, BUILT AND LIVE 2026-09-10 — the finder now searches HER OWN NIGHTLY FEED beside Google. Google will not surface her small luxury shops (0 of 120, then 0 of 33), so this was PRESENCE, not position, and no sort could ever have fixed it.** | — | ✅ done |
 | 26 | ~~Wardrobe List showed her Ideas as 2 stacked rows, and a hoodie reached "Tops"~~ ✅ **HER CATCH 2026-09-13, BUILT AND LIVE SAME SESSION.** Her words: *"I don't want the search to come up with 2 different rows. I like how we set it up in chat where she gets one very long row to scroll through."* `_wdrMergeFindRow` now folds the live finder's cards into the SAME `.shop-grid.hscroll` her compare cards sit in, the moment the search resolves — one physical scroller, tested 9/9. ⭐ **Side effect that fixes her OTHER complaint on this same screen:** a dead search used to print "My search didn't come back..." even in `quiet` mode, because `quiet` was only ever read inside `_findBlockHtml`, never by the `search-failed` branch above it — the merge function deletes the wrap regardless of what it holds, so a dead search on Wardrobe is silent now, same as it should have been. **Separately:** a Coperni zip-up hoodie reached "Tops in your favorite colors" — same shape as the already-documented sweater bug, just never extended to hoodies/sweatshirts. Fixed on both halves: `data/slot-rules.json`'s `not` lists (to1–to5) and `_WDR_IDEA_EXCLUDE`'s to1/to2/to3 (added `to8`), verified against `scripts/test_slot_match.py` (1087/1087) and a direct hoodie-vs-tee check. | — | ✅ done |
+| 27 | ~~A kids item on a women's shelf, and "White tops" came back with lots of colors and prints~~ ✅ **HER SECOND ROUND OF SCREENSHOTS, SAME SESSION, BOTH FIXED AND LIVE.** A "VERSACE KIDS Mini Polo" — fixed with a new `_KIDS_NAME` name-fallback guard in `scripts/rakuten_feed.py`'s `keep_row()`, mirroring the existing `_MENS_NAME` guard (12 new checks, `test_rakuten_feed.py` PART 7b), hand-dispatched the same session rather than waiting for the nightly ingest. The colour leak — `_wardrobeFindName` sent the whole compound label ("White tops") as `item` with the colour word never split into `req.colour`, so nothing was ever verified or rejected on colour — fixed with `_WDR_FIND_OVERRIDE` splitting the five colour-named rows into real `{item,colour}` requests, proven live against a captured network request (`wdrcolor.mjs`, 9/9). | — | ✅ done |
+| 28 | 🚨 **"A FULL LOOK AT THE WARDROBE LIST SEARCHES" — HER ASK, SAME SESSION.** ✅✅ **ITEMS 1-3 BUILT, LIVE:** a permanent test (`scripts/test_slot_match.py`'s sibling-contamination sweep) that catches the WHOLE hoodie-bug shape rather than one instance of it, which found and let her fix two more real leaks (`ac5`/`ac6`/`ac7` workout tanks/tees/long-sleeves with zero separation; `fo5` lingerie terms leaking onto `to6` dressy tops; `fo4` specialty bras leaking onto `fo1`) — plus four more overlaps found and DELIBERATELY left alone, split into genuine design (to3's catch-all, a sundress also being casual, lace underwear also being comfortable) vs. a real measured structural gap in the matcher itself (recorded, not silently patched — see "WHAT IS OPEN FOR CLAUDE"). Two occasion-named rows (`dr3` "Work-appropriate dresses", `to6` "Dressy or going-out tops") now send a real shop search phrase instead of the whole sentence. ⏸️ **ITEM 4 KEPT ON THE LIST, HER OWN CALL:** *"yes please go ahead and build 1-3 and let's keep 4 on our list"* — the three-tier card-quality question (can she tell a verified feed card from an AI guess from a partial live-search result?) is deliberately still open, not built. | Claude built 1-3; item 4 is hers to green-light | ✅ 1-3 done, ⏸️ 4 parked |
 🚨🚨 **THE BOARD IS NO LONGER CLEAR — SHE TESTED THE LIVE APP ON 2026-09-10 AND FOUND THREE THINGS.
 Two are fixed and live; ROWS 11 AND 12 ARE HER OWN WORDS AND NEITHER IS STARTED.** ⚠️ **SHE ASKED FOR
 THEM ONE AT A TIME — *"Ok let's go slow here one at a time"* — so do NOT bundle them, and do not start
@@ -437,6 +439,76 @@ prompt-length rejection will still fail, now after a ~1.5s pause instead of inst
 everyday blip self-healing invisibly, never the outage itself. Nothing further to do here unless she
 wants `sendChat` covered too.
 
+### ✅✅ A KIDS ITEM ON A WOMEN'S SHELF — HER SECOND ROUND OF SCREENSHOTS, FOUND, FIXED, LIVE
+She sent 5 more screenshots of the live "White tops" row and named two things: a **"VERSACE KIDS Mini
+Polo"** on a women's shelf, and separately *"this search was for a white top and lots of colors and
+prints showed up."*
+✅ **THE KIDS ITEM — FIXED, `scripts/rakuten_feed.py`.** `keep_row()` already had a name-based fallback
+guard for men's items (`_MENS_NAME`) for exactly this reason — a category column can be blank or wrong,
+so the name is also checked. **Nobody had ever written the same guard for kids' items.** Added
+`_KIDS_NAME` (`kids?|children|toddlers?|infants?|newborns?|girls|boys`, word-boundary) right beside it,
+wired into `keep_row()` the same way. **12 new checks in `scripts/test_rakuten_feed.py`** (PART 7b),
+covering both the leak (dropped) and adult look-alikes that must NOT be caught by the same regex
+(kept). ⚠️ **A Python-side fix only reaches the live shop on the next nightly ingest** (or a hand
+dispatch) — this was hand-dispatched the same session rather than waiting for the 21:37 UTC schedule.
+✅ **THE COLOUR LEAK — FIXED, `index.html`.** Root cause: `_wardrobeFindName` hands the finder the
+ROW'S OWN LABEL verbatim as `item` ("White tops") — the colour word rides along inside the search text
+but was never split into `req.colour`, so the honesty system had no colour requirement to verify a card
+against, and everything landed in the same unverified pile a bare "tops" search would. **Fixed with a
+small map, `_WDR_FIND_OVERRIDE`** (index.html, right before `_wardrobeIdeaGen`): the five checklist rows
+whose own name IS a colour (`to1` White tops, `to2` Black tops, `bo1` Blue jeans, `bo2` White jeans,
+`bo3` Black trousers) now send `{item, colour}` as two real fields. **Proven live:** `scratchpad/
+wdrcolor.mjs` (built this session) captures the real network request and asserts colour actually splits
+out — and also proves that splitting colour out can produce a `doors` (near-miss) answer Wardrobe never
+used to trigger, and her "no apology where she asked for nothing" rule (`quiet`) now covers that branch
+too, not just the empty-browse one (it hadn't before — caught and fixed before shipping, not after).
+
+### ✅✅ "A FULL LOOK AT THE WARDROBE LIST SEARCHES" — HER ASK, ITEMS 1-3 BUILT, ITEM 4 KEPT ON THE LIST
+She asked for a broad audit — *"we have never gotten it quite right"* — and approved building 1-3 while
+explicitly keeping item 4 as a standing, unbuilt, open thread: **"yes please go ahead and build 1-3 and
+let's keep 4 on our list."**
+✅ **1. A PERMANENT TEST FOR THE WHOLE BUG CLASS, not just the one hoodie caught.** The hoodie bug's real
+shape: two checklist rows share an exact `cat` term, so a garment matching either becomes a candidate
+for BOTH, and unless each row's `not` list has been told the sibling's own distinguishing words exist,
+a garment that genuinely IS the sibling (by its own name) sails onto both shelves. **New sweep in
+`scripts/test_slot_match.py`:** for every pair of rows sharing a `cat` term, build a real example of one
+row (its own name term, its own colour/pattern gate) and assert it does not also land on the sibling —
+unless the pair is named in `_SIBLING_OK` with a reason. **This is what FOUND the two bugs below**, not
+a bug found first and tested after.
+✅ **2. TWO MORE CONFIRMED LEAKS FIXED, same technique as the hoodie fix (cross-add the sibling's own
+words to `not`):** **`ac5`/`ac6`/`ac7`** (Workout tanks/tees/long-sleeve tops) shared `activewear>tops`
+with NO separation at all — a "training tank" matched all three rows; now each row's own compound
+phrases are excluded from both siblings. **`fo5` → `to6`** (Special lingerie leaking onto Dressy or
+going-out tops): a garter, suspender, teddy or babydoll was matching "dressy tops" via their shared
+`corsets` cat term; `to6`'s `not` list now names those four words (bodysuit/corset/bustier were left
+alone — they're legitimately both, and already in `to6`'s own name list). **`fo4` → `fo1`** (a bandeau
+or adhesive bra — a specialty piece — landing on "Perfectly fitting bras"): now excluded the same way.
+⚠️ **FOUR MORE OVERLAPS FOUND AND DELIBERATELY LEFT ALONE, split into two real categories, both named
+in `_SIBLING_OK` with a reason so nobody re-derives the judgment call:** **GENUINE, PERMANENT DESIGN**
+— `to1`/`to2`/`to4` all also matching `to3` (the deliberate every-top catch-all), a sundress (`dr5`)
+also counting as a daytime casual dress (`dr1`), lace/silk underwear (`fo3`) also counting as
+comfortable (`fo2`). **A REAL STRUCTURAL GAP, MEASURED AND NOT SILENTLY PATCHED:** `fo1`→`fo4`,
+`fo2`→`fo3`, `sh3`→`sh14`, and `to6`→`fo5`'s reverse direction — a plain bra/brief/pump/dressy-top's
+own generic words also satisfy a narrower sibling's shared `cat`, and the schema has no way to say
+"require the sibling's own name terms too, even though category already matched" without a change to
+`match()` itself. **That would be a real code change, not a JSON edit, and was deliberately not made
+without her sign-off on the idea** — flagged here as a genuine open item, not invented as a silent fix.
+✅ **3. TWO OCCASION-NAMED ROWS NOW SEND A REAL SEARCH PHRASE, NOT A SENTENCE.** `dr3` ("Work-appropriate
+dresses") and `to6` ("Dressy or going-out tops") were sending their whole checklist LABEL as `item` —
+the same "a search holds words a shop prints, never an occasion or a sentence" rule already enforced on
+the live stylist's own replies (`_findShopWords`), just never applied here. ⚠️ **Deliberately NOT
+extended to `req.cut`/`req.fabric`** — `verifyCut`/`verifyFabric` in `find-products.js` use a CLOSED
+VOCABULARY keyed by the exact string; an unrecognised value would just return `UNKNOWN` for every card,
+which is harmless but adds no real verification and risks a stray "not confirmed" badge with nothing
+behind it. **Fixed the safer way:** `_WDR_FIND_OVERRIDE` (renamed from `_WDR_COLOR_ROWS` now that it
+holds more than colour splits) gained two entries with no colour field at all — `dr3:{item:'work
+dress'}`, `to6:{item:'dressy top'}`. **Verified live:** `wdrcolor.mjs` extended to capture both requests
+and assert the real phrase reaches the network, with no stray colour field.
+⏸️ **4. THE THREE-TIER CARD-QUALITY QUESTION — KEPT ON THE LIST, DELIBERATELY NOT BUILT.** A woman
+cannot currently tell the difference between a fully-verified feed/catalog card, an AI text guess with
+no real backing, and a partially-verified live-search result — all three sit in the same row with no
+visual distinction. **Her instruction was explicit: keep this open, do not build it now.**
+
 ### ▶▶ WHAT IS OPEN FOR CLAUDE
 1. 🚨🚨 **CJ LINK-WRAPPING DOES NOT EXIST YET — build it once a CJ advertiser she wants live actually
    approves.** Today `_affUrl` only knows Rakuten MIDs and the Amazon tag; a CJ-approved store (Cashmere
@@ -460,6 +532,18 @@ wants `sendChat` covered too.
    different reason, `?r=`'s pull-and-overwrite behavior would clobber that device's local data the same
    way `?resync=` was built to avoid for Cath. No general safety net was built for this — it was judged
    not worth the permanent complexity for an incident now confirmed unique to one dev-testing history.
+11. ⏸️ **THE THREE-TIER CARD-QUALITY QUESTION — her own item 4, explicitly kept open, not built.** A
+   woman cannot tell a fully-verified feed/catalog card, an AI text guess with no real backing, and a
+   partially-verified live-search result apart — all render identically in the same row. Needs her eye
+   on what (if anything) should look different, not a silent design call.
+12. ▶ **A REAL SCHEMA GAP IN THE CHECKLIST MATCHER, found and measured 2026-09-13, not silently
+   patched:** four sibling-row pairs (`fo1`↔`fo4`, `fo2`↔`fo3`, `sh3`↔`sh14`, `to6`↔`fo5`'s reverse) let
+   a plain, ordinary garment leak onto a narrower sibling row because `match()` picks candidates by
+   CATEGORY first and never re-checks that a category-matched row's own NAME terms are actually present.
+   Fixing it for real would need a new rule flag (e.g. `requireName`) that `slot_match.py`'s `match()`
+   understands — a real code change, not a JSON edit. Recorded and named in `scripts/test_slot_match.py`
+   (`_SIBLING_OK`, each with a "GAP" reason) so it's measured, not guessed at, and doesn't silently drift
+   back into looking fixed. Worth doing if she wants the last of this bug class closed.
 🚨 **SERPAPI'S OUTAGE — RE-CHECKED 2026-09-13: STILL `major_outage`, STILL "MONITORING", NOT RESOLVED.**
 Open since 2026-09-10; SerpApi reports recovering success rates but has not declared it over. Re-check
 again before assuming it has cleared: `curl -s https://status.serpapi.com/api/v2/summary.json`.
@@ -474,11 +558,17 @@ again before assuming it has cleared: `curl -s https://status.serpapi.com/api/v2
 6. ▶ Optional: ask Supabase support how far back the 401 errors go, if she wants to know whether any
    real woman's save was silently lost during the outage.
 
-### ▶ TEST STATE — re-measured 2026-09-13
-`test_slot_match.py` 1087/1087 (was already passing, re-run after the hoodie fix, no regressions) ·
-`ssfind` 97/97 (full re-run after the row-merge + hoodie changes, confirms the shared finder path is
-untouched) · new `scratchpad/wdrmerge.mjs` 9/9 (the merge and the quiet-dead-search fix, built and
-proven this session). Not touched or re-run since 2026-09-12: `sharelink` 54/54 · `sharelink-drift` 6/6
+### ▶ TEST STATE — re-measured 2026-09-13 (end of session)
+`test_slot_match.py` **1088/1088** (grew from 1087: +1 new sibling-contamination sweep assertion, plus
+its own per-pair checks against the confirmed-fixed and `_SIBLING_OK`-documented rows — all pass on a
+clean checkout) · `test_rakuten_feed.py` **67/67** (was already passing; +12 checks this session for the
+kids-name fix, PART 7b) · `test_rakuten_ingest.py` **ALL PASS**, unaffected · `ssfind` **97/97** (full
+re-run after the row-merge, hoodie, and `_WDR_FIND_OVERRIDE` rename — confirms the shared finder path is
+untouched) · `wdrmerge.mjs` **9/9** · `fetchretry.mjs` **10/10** · `wdrcolor.mjs` **9/9** (extended this
+session with 2 new scenarios proving `dr3`/`to6` send a real search phrase, no stray colour field) · a
+direct Node parse check confirms both of `index.html`'s `<script>` blocks still parse clean after the
+`_WDR_COLOR_ROWS`→`_WDR_FIND_OVERRIDE` rename. Not touched or re-run since 2026-09-12: `sharelink` 54/54
+· `sharelink-drift` 6/6
 · `savetruth` 19/19 · `copy` 50/50 · `findscsv` 50 · `findspage` 102 · `fitroom` 24 · `promptcap` 10 ·
 `hubs` 49 · `mallverify` 14 · `linkwatch` 27 · `tabtops` 49 · `catmark` 132/3-pre-existing ·
 `wldoortest` 55/65-pre-existing · `curated` 62-63/65 (3 named pre-existing failures, see the standing

@@ -9,7 +9,7 @@ turning up as a strange shelf on Cath's phone.
 ⭐ THE CASES BELOW ARE REAL PRODUCT NAMES AND REAL CATEGORY PATHS lifted from the
 seven feeds, not invented ones. An invented fixture tests the fixture.
 """
-import json, os, re, sys
+import itertools, json, os, re, sys
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from slot_match import load_rules, match, norm, RULES_PATH
@@ -178,6 +178,72 @@ ok("pattern gates only a handful of rows", len(patterned) <= 6, f"gates {pattern
 # Nothing should match everything.
 everything = match(g("Silk Dress", "women>clothing>dresses", "Blue"), rules)
 ok("a dress lands on a sane number of rows", len(everything) <= 6, f"{everything}")
+
+
+# --------------------------------------- 2026-09-13 SIBLING CONTAMINATION SWEEP --
+# 🚨 THE SAME SHAPE AS THE HOODIE BUG, MADE PERMANENT. Any two rows that share an
+# exact `cat` term become candidates TOGETHER for any garment carrying it -- the
+# category rung picks candidates before `not`/name ever runs. So a garment that IS
+# one row by its own NAME (a "training tank", a "bandeau bra", a "garter") can sail
+# onto a sibling row too, unless that sibling's `not` list has been told the word
+# exists. Found and fixed this session: ac5/ac6/ac7 (Workout tanks/tees/long-sleeve
+# tops -- no separation at all), fo5->to6 (a garter/teddy/babydoll landing on
+# "Dressy or going-out tops"), fo4->fo1 (a bandeau/adhesive bra landing on
+# "Perfectly fitting bras"). This audit is what found them, and it now runs every
+# time so a THIRD one cannot go unnoticed the way the first two did.
+#
+# For every pair of rows sharing a `cat` term, build a real example of row A (its
+# own name term, its own colour/pattern gate if it has one) and check it does not
+# also land on sibling B -- unless the pair is named below, with a reason:
+#   DESIGN  -- a genuine, permanent overlap she'd want (a sundress really is also
+#              a daytime casual dress; "Tops in your favorite colors" really is
+#              every top, by design).
+#   GAP     -- a real, measured leak that is NOT silently patched, because fixing
+#              it would need match() itself to require row B's own name terms even
+#              though the category already matched -- a code change, not a JSON
+#              edit, and not made without her sign-off. Recorded in CLAUDE.md too.
+_SIBLING_OK = {
+    ("to1", "to3"): "DESIGN — to3 is the deliberate every-top catch-all",
+    ("to2", "to3"): "DESIGN — to3 is the deliberate every-top catch-all",
+    ("to4", "to3"): "DESIGN — to3 is the deliberate every-top catch-all",
+    ("dr1", "dr5"): "DESIGN — a sundress is also a daytime casual dress",
+    ("dr5", "dr1"): "DESIGN — a sundress is also a daytime casual dress",
+    ("fo3", "fo2"): "DESIGN — lace/silk underwear is still comfortable",
+    ("fo5", "to6"): "DESIGN — an evening bodysuit/corset/bustier is a dressy top too",
+    ("fo1", "fo4"): "GAP — a plain bra also satisfies fo4's shared cat; fo4's real "
+                    "identity (strapless) is name-only and match() never re-checks "
+                    "a name requirement once category has picked candidates",
+    ("fo2", "fo3"): "GAP — same shape: a plain brief also lands on 'Beautiful "
+                    "underwear' with no way to require fo3's own words via `not`",
+    ("sh3", "sh14"): "GAP — a plain pump also lands on 'Kitten heels' the same way",
+    ("to6", "fo5"): "GAP — to6's own fabric words (satin/silk/lace/sequin/"
+                     "embellished/halter) also satisfy fo5's shared cat",
+}
+_by_cat = {}
+for _slot, _r in raw.items():
+    for _c in _r.get("cat", []):
+        _by_cat.setdefault(_c.strip().lower(), []).append(_slot)
+_checked_pairs = 0
+for _c, _slots in _by_cat.items():
+    _uniq = sorted(set(_slots))
+    if len(_uniq) < 2:
+        continue
+    for _a, _b in itertools.permutations(_uniq, 2):
+        _ra, _rb = raw[_a], raw[_b]
+        if not _ra.get("name"):
+            continue
+        _cat = next((c for c in _ra.get("cat", []) if c.strip().lower() ==
+                     next(t for t in _rb.get("cat", []) if t.strip().lower() == _c)), _ra["cat"][0])
+        _color = _ra["color"][0] if _ra.get("color") else ""
+        _pattern = _ra["pattern"][0] if _ra.get("pattern") else ""
+        for _nt in _ra["name"]:
+            _checked_pairs += 1
+            _result = match(g(_nt, _cat, _color, _pattern), rules)
+            if _b in _result and (_a, _b) not in _SIBLING_OK:
+                ok(f"{_a}'s own '{_nt}' does not also land on sibling {_b}", False,
+                   f"got {_result} — either fix it or add ('{_a}','{_b}') to _SIBLING_OK with a reason")
+ok("the sibling-contamination sweep actually ran", _checked_pairs > 50,
+   f"only checked {_checked_pairs} — the cat-grouping logic broke silently")
 
 
 # ------------------------------------------------- 2026-09-06 REGRESSION SET --

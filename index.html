@@ -10103,14 +10103,28 @@ function _wdrMarkSeen(ids){
    nothing was ever REJECTED for being the wrong colour either — every card
    landed in the same unverified pile a plain "tops" search would.
    ▶ THE FIVE CHECKLIST ROWS WHOSE OWN NAME IS A COLOUR, none invented — read
-   straight off `wardrobeItems`. A future row added by hand is simply not in
-   this map and falls back to the old, honest-but-unverified behaviour. */
-var _WDR_COLOR_ROWS={
+   straight off `wardrobeItems`.
+   🚨 EXTENDED THE SAME SESSION to two rows whose own label is an OCCASION, not
+   a colour — "Work-appropriate dresses" and "Dressy or going-out tops" — after
+   her "full look at the wardrobe list searches" ask. Sending that whole label
+   as `item` breaks her own standing rule (the search holds words a shop
+   prints, never an occasion or a sentence — the same rule `_findShopWords`
+   already enforces on the live stylist's replies). ⚠️ NOT extended to
+   req.cut/req.fabric here: `verifyCut`/`verifyFabric` in find-products.js use
+   a CLOSED VOCABULARY keyed by the exact string, so an unrecognised value
+   would just return UNKNOWN for every card — harmless, but no real
+   verification benefit, and risks a stray "not confirmed" badge with nothing
+   behind it. The real lever for these two rows is the search PHRASE, not an
+   unverifiable claim. A future row added by hand is simply not in this map
+   and falls back to the old, honest-but-unverified verbatim-label behaviour. */
+var _WDR_FIND_OVERRIDE={
   to1:{colour:'white',item:'tops'},      // White tops
   to2:{colour:'black',item:'tops'},      // Black tops
   bo1:{colour:'blue',item:'jeans'},      // Blue jeans
   bo2:{colour:'white',item:'jeans'},     // White jeans
-  bo3:{colour:'black',item:'trousers'}   // Black trousers
+  bo3:{colour:'black',item:'trousers'},  // Black trousers
+  dr3:{item:'work dress'},               // Work-appropriate dresses
+  to6:{item:'dressy top'}                // Dressy or going-out tops
 };
 async function _wardrobeIdeaGen(id,boxId){
   const box=document.getElementById(boxId||('wx_'+id));
@@ -10243,12 +10257,14 @@ async function _wardrobeIdeaGen(id,boxId){
     /* ▶ NOT AWAITED, exactly as on Shop your Style: her ideas are on screen in
        about a second and the products arrive into space already reserved, then
        fold into that same row the moment they land.
-       ⚠️ `_WDR_COLOR_ROWS[id]` splits a colour-named row ("White tops") into a
-       real `{item,colour}` request so the finder actually VERIFIES colour on
+       ⚠️ `_WDR_FIND_OVERRIDE[id]` splits a colour-named row ("White tops") into
+       a real `{item,colour}` request so the finder actually VERIFIES colour on
        the cards it looks up, instead of the colour word riding along inside
-       `item` where nothing ever checks it. Rows with no colour in their own
-       name are unaffected — same `{item:name}` as before. */
-    _ssFindRun(_WDR_COLOR_ROWS[id]||{item:name},{wrapId:'wdrFind_'+id,promise:'',pre:null,save:false,quiet:true})
+       `item` where nothing ever checks it — and for an occasion-named row
+       ("Work-appropriate dresses") swaps the whole label for a real search
+       phrase a shop would print ("work dress"). Rows with no override are
+       unaffected — same `{item:name}` as before. */
+    _ssFindRun(_WDR_FIND_OVERRIDE[id]||{item:name},{wrapId:'wdrFind_'+id,promise:'',pre:null,save:false,quiet:true})
       .then(function(){_wdrMergeFindRow(id,boxId)});
   }catch(e){
     // The AI failing must never blank a shelf that has real catalog pieces:

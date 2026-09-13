@@ -8,13 +8,19 @@
 //   requirement to check a single card against. Every result landed in the
 //   same unverified pile a bare "tops" search would.
 //
-// This pins two things:
-//   1. `_WDR_COLOR_ROWS` actually reaches the network call: "White tops" sends
-//      {item:'tops', colour:'white'}, never the compound string.
+// This pins:
+//   1. `_WDR_FIND_OVERRIDE` actually reaches the network call: "White tops"
+//      sends {item:'tops', colour:'white'}, never the compound string.
 //   2. Splitting colour out can now produce a `doors` (near-miss/widen) answer
 //      from the server — a shape Wardrobe's bare "{item:name}" request never
 //      used to trigger — and her own "no apology where she asked for nothing"
 //      rule (quiet) now covers THAT branch too, not just the empty-browse one.
+//   3. 2026-09-13, SAME SESSION, "the full look" audit item 3: the two rows
+//      whose own label is an OCCASION, not a colour — "Work-appropriate
+//      dresses" (dr3) and "Dressy or going-out tops" (to6) — send a real shop
+//      search phrase ("work dress" / "dressy top") instead of the whole
+//      sentence, matching her own standing rule that a search holds words a
+//      shop prints, never an occasion or a sentence.
 //
 // Run: node scratchpad/wdrcolor.mjs
 import fs from 'fs'; import path from 'path'; import http from 'http';
@@ -79,6 +85,28 @@ const state = await pg.evaluate(() => {
 ok('no "I couldn\'t find exactly..." line reached the screen', state.hasApology === false, JSON.stringify(state));
 ok('the find-block wrap is gone either way (nothing stray left behind)', state.findWrapGone);
 ok('her compare card (from the AI ideas) is still there', state.hasCompareCard);
+
+console.log('\n3. "Work-appropriate dresses" (dr3) sends a real shop phrase, no colour');
+await pg.unroute(u => u.pathname.includes('product-find'));
+capturedReq = null;
+await pg.route(u => u.pathname.includes('product-find'), (r, req) => {
+  try { capturedReq = JSON.parse(req.postData() || '{}'); } catch (e) {}
+  return r.fulfill({ status: 200, contentType: 'application/json',
+    body: JSON.stringify({ exact: [], doors: [], browse: [] }) });
+});
+await pg.evaluate(() => { try { wardrobeSeeIdeas('dr3') } catch (e) {} });
+await pg.waitForTimeout(2500);
+ok('item is a real search phrase, not the whole checklist label',
+   capturedReq && capturedReq.item === 'work dress', JSON.stringify(capturedReq));
+ok('no stray colour field', capturedReq && !capturedReq.colour, JSON.stringify(capturedReq));
+
+console.log('\n4. "Dressy or going-out tops" (to6) sends a real shop phrase too');
+capturedReq = null;
+await pg.evaluate(() => { try { wardrobeSeeIdeas('to6') } catch (e) {} });
+await pg.waitForTimeout(2500);
+ok('item is a real search phrase, not the whole checklist label',
+   capturedReq && capturedReq.item === 'dressy top', JSON.stringify(capturedReq));
+ok('no stray colour field', capturedReq && !capturedReq.colour, JSON.stringify(capturedReq));
 
 console.log(`\n${pass} passed, ${failn} failed`);
 await ctx.close();

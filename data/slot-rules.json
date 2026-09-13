@@ -66,7 +66,46 @@
     "to1/to2/to3/to4/to5's not lists even though this file already has its own",
     "to8 'Sweatshirts' row -- the same garment family, just never excluded from",
     "its siblings. Added. The AI half needed the same fix: to8 is now in",
-    "_WDR_IDEA_EXCLUDE's to1/to2/to3 entries in index.html, beside ja5/ja1."
+    "_WDR_IDEA_EXCLUDE's to1/to2/to3 entries in index.html, beside ja5/ja1.",
+    "",
+    "🚨🚨 2026-09-13 (same session), THE SAME BUG SHAPE SWEPT ACROSS THE WHOLE",
+    "FILE: every pair of rows sharing an exact `cat` term was checked -- does one",
+    "row's OWN distinguishing name term (a real garment that IS that row) also",
+    "sail onto the sibling, because the CATEGORY rung picks candidates first and",
+    "a shared cat makes both rows candidates regardless of name? Two more",
+    "confirmed, real leaks, fixed the same way as the hoodie fix (cross-add the",
+    "sibling's own specific words to `not`):",
+    "  - ac5/ac6/ac7 (Workout tanks/tees/long-sleeve tops) share cat",
+    "    'activewear>tops' with NO name-based separation at all -- a 'training",
+    "    tank' matched ac6 and ac7 too, a 'workout tee' matched ac5 and ac7 too.",
+    "    Now each row's own compound name phrases are excluded from both siblings.",
+    "  - fo5 (Special lingerie) leaked onto to6 (Dressy or going-out tops) via",
+    "    their shared 'corsets' cat term: a garter, suspender, teddy or babydoll",
+    "    -- none of them a top by any definition -- matched to6 too, because",
+    "    to6's `not` list had never been told those words exist. Added.",
+    "  - fo4 (Strapless bras) leaked onto fo1 (Perfectly fitting bras) the same",
+    "    way: a bandeau bra or adhesive bra is a specialty piece, not an ordinary",
+    "    everyday bra, so both compound phrases are now excluded from fo1.",
+    "",
+    "⚠️ FOUR MORE OVERLAPS WERE FOUND AND DELIBERATELY LEFT ALONE, for two",
+    "different reasons -- both are recorded in scripts/test_slot_match.py so a",
+    "future session does not have to re-derive the judgment call:",
+    "  GENUINE, PERMANENT DESIGN (not bugs): to3 catching everything already in",
+    "  to1/to2/to4 (it is the deliberate 'every top' catch-all); a sundress",
+    "  (dr5) also counting as a daytime casual dress (dr1); lace/silk underwear",
+    "  (fo3) also counting as comfortable (fo2) -- these are her checklist being",
+    "  a possibility map, not a bug.",
+    "  A REAL STRUCTURAL GAP, NOT SILENTLY PATCHED: the reverse directions of",
+    "  fo1->fo4, fo2->fo3 and sh3->sh14, plus to6->fo5's reverse -- an ordinary",
+    "  bra/brief/pump/dressy-top's own generic words ALSO satisfy a narrower",
+    "  sibling's shared cat, and that sibling's real identity is its NAME, which",
+    "  the matcher never re-checks once category has already picked candidates.",
+    "  There is no `not`-list fix for this without excluding words the narrower",
+    "  row also needs for its own real matches -- it would need match() itself",
+    "  to support a 'require one of my own name terms even though cat matched'",
+    "  flag, which is a real code change, not a JSON edit, and was not made",
+    "  without her sign-off on the idea. Flagged in CLAUDE.md as a genuine open",
+    "  item; not invented as a silent fix."
   ],
   "to3": {
     "n": "Tops in your favorite colors",
@@ -308,7 +347,11 @@
       "pajama",
       "robe",
       "sheet",
-      "pillow"
+      "pillow",
+      "garter",
+      "suspender",
+      "teddy",
+      "babydoll"
     ]
   },
   "to8": {
@@ -1000,7 +1043,18 @@
     ],
     "not": [
       "swim",
-      "dress"
+      "dress",
+      "training top",
+      "running top",
+      "performance tee",
+      "technical tee",
+      "workout tee",
+      "sport tee",
+      "long-sleeve training",
+      "running long",
+      "performance long",
+      "technical long",
+      "base layer"
     ]
   },
   "ac6": {
@@ -1018,7 +1072,17 @@
     ],
     "not": [
       "swim",
-      "dress"
+      "dress",
+      "training tank",
+      "sport tank",
+      "running tank",
+      "workout tank",
+      "performance tank",
+      "long-sleeve training",
+      "running long",
+      "performance long",
+      "technical long",
+      "base layer"
     ]
   },
   "ac7": {
@@ -1035,7 +1099,18 @@
     ],
     "not": [
       "swim",
-      "dress"
+      "dress",
+      "training tank",
+      "sport tank",
+      "running tank",
+      "workout tank",
+      "performance tank",
+      "training top",
+      "running top",
+      "performance tee",
+      "technical tee",
+      "workout tee",
+      "sport tee"
     ]
   },
   "ac8": {
@@ -1203,7 +1278,9 @@
       "bikini",
       "swim",
       "bralette top",
-      "dress"
+      "dress",
+      "bandeau bra",
+      "adhesive bra"
     ]
   },
   "fo4": {
