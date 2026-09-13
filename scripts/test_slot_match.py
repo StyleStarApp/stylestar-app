@@ -69,11 +69,15 @@ for slot, r in raw.items():
                and all(isinstance(t, str) and t.strip() for t in r[key]))
     for key in r:
         ok(f"{slot} has no unknown key '{key}'",
-           key in ("n", "cat", "name", "not", "color", "pattern", "requireName"),
+           key in ("n", "cat", "name", "not", "color", "pattern", "requireName", "requireAny"),
            "a misspelled key is silently ignored by the matcher")
     if r.get("requireName"):
         ok(f"{slot} has requireName but no name list to require",
            bool(r.get("name")), "requireName with nothing to check is a no-op that looks like a rule")
+    if "requireAny" in r:
+        ok(f"{slot}.requireAny is a non-empty list of non-empty strings",
+           isinstance(r["requireAny"], list) and bool(r["requireAny"])
+           and all(isinstance(t, str) and t.strip() for t in r["requireAny"]))
 
 # ------------------------------------------------------- the catch-all trap ----
 # 🚨 THE BUG THIS EXISTS TO STOP, found by the coverage report on 2026-09-05 and
@@ -474,6 +478,34 @@ ok("a linen GILET (vest) does not land on Linen pants",
    "bo4" not in match(g("Tagliatore Linen Gilet with Buttons", "women>vests"), rules))
 ok("...but real linen pants still do, unaffected",
    "bo4" in match(g("Vince Linen Wide-Leg Pants", "women>pants>linen"), rules))
+
+# --------------------------------------------- requireAny CLOSES THE bo4 GAP --
+# 🚨🚨 A FIFTH re-run found bo4 STILL leaking after 17 `not`-list words: a Tagliatore
+# linen VEST, a Maxmara linen VEST, and Saint Laurent linen SHOES -- the row was down to
+# 4 real matches and every sample was still wrong. "linen" is a bare fabric word that
+# legitimately belongs on nearly any garment TYPE, and `not` can only ever say "not X" for
+# an X someone has already caught by hand -- it can never say "must ALSO look like a
+# bottom", which is the actual promise this row makes. BUILT: requireAny, a new opt-in flag
+# (same shape as requireName, but checking a SEPARATE word list, never the row's own `name`
+# field) -- a garment must contain at least one of a set of real bottoms words (pant,
+# trouser, wide-leg, crop, flare, palazzo, culotte...) to qualify. Checked against hay_name
+# only, same scope and same reason as requireName.
+ok("a linen VEST does not land on Linen pants even with no not-list word for 'vest'",
+   "bo4" not in match(g("Tagliatore 0205 V-Neck Linen Vest with Contrast Buttons", "women>vests"), rules),
+   "requireAny: this row's own trigger word (linen) says nothing about garment type, so a "
+   "vest that says nothing bottoms-shaped must not qualify just because it says linen")
+ok("linen SHOES do not land on Linen pants either",
+   "bo4" not in match(g("Saint Laurent Linen Lace-Up Fashion Shoes", "women>shoes"), rules))
+for _name in (
+    "Vince Linen Wide-Leg Pants",
+    "Brunello Cucinelli Linen and Cotton Wide-Leg Pants",
+    "Vince Linen Trouser",
+    "Frame Cropped Linen Pant",
+):
+    ok(f"...but a real bottoms word still qualifies: {_name!r}",
+       "bo4" in match(g(_name, "women>pants>linen"), rules))
+ok("requireAny is schema-validated the same way as requireName (non-empty list of strings)",
+   isinstance(load_rules()["bo4"].get("requireAny"), tuple) and len(load_rules()["bo4"]["requireAny"]) > 0)
 
 
 # ------------------------------------------------- 2026-09-06 REGRESSION SET --

@@ -132,6 +132,24 @@ def load_rules(path=RULES_PATH):
         # on to6, a sundress also landing on daytime casual) are untouched.
         if r.get("requireName"):
             rule["requireName"] = True
+        # 🚨🚨 requireAny (2026-09-13, SAME SESSION AS requireName, A DIFFERENT SCHEMA GAP).
+        # requireName asks "is this row's OWN identity actually present" -- it has no answer
+        # for a row like bo4 Linen pants, whose only identifying word ("linen") is a bare
+        # FABRIC that genuinely belongs on nearly every garment type Mytheresa/COUTR sell:
+        # after four rounds of `not`-list patches (17 words: tablecloth, napkin, playsuit,
+        # cardigan, bathrobe, gilet...) the row was STILL matching a vest and a pair of shoes,
+        # because `not` can only ever say "not X" for a X someone has already caught -- it
+        # cannot say "must ALSO look like a bottom", which is the actual promise this row
+        # makes. ▶ requireAny demands the garment's NAME contain at least one word from a
+        # SEPARATE list (never the row's own `name` field, which stays the fabric/candidacy
+        # trigger) -- checked against hay_name only, the same narrow scope as requireName's
+        # own check, for the same reason: a merchant's category can carry the word a
+        # bare-fabric title never repeats, so this only ever narrows what a NAME-FALLBACK
+        # candidate can additionally require, never demands it be in the category too.
+        # ⚠️ OPT-IN, PER ROW, DEFAULT ABSENT, and orthogonal to requireName -- a row could
+        # need either, both, or neither.
+        if r.get("requireAny"):
+            rule["requireAny"] = tuple(dict.fromkeys(norm(t) for t in r["requireAny"]))
         out[slot] = rule
     return out
 
@@ -219,6 +237,12 @@ def match(rec, rules):
         # goes emptier than it should, that is the reason to revisit this,
         # not a reason to guess a fix now for a case with no measurement.
         if r.get("requireName") and not _has(hay_name, r.get("name", ())):
+            continue
+        # ---- requireAny: this row's own candidacy word (bo4's "linen") is a bare
+        # fabric that says nothing about GARMENT TYPE -- see the readme in
+        # load_rules. Checked against hay_name only, same scope and same reason
+        # as requireName above.
+        if r.get("requireAny") and not _has(hay_name, r["requireAny"]):
             continue
         # ---- colour: loose on purpose. 663 distinct values, 15% blank,
         # inconsistent capitals, and at FARM Rio the field is a PRINT NAME

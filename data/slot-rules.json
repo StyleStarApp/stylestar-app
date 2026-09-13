@@ -518,6 +518,18 @@
       "cardigan",
       "bathrobe",
       "gilet"
+    ],
+    "requireAny": [
+      "pant",
+      "trouser",
+      "wide-leg",
+      "wide leg",
+      "straight-leg",
+      "straight leg",
+      "crop",
+      "flare",
+      "palazzo",
+      "culotte"
     ]
   },
   "bo9": {

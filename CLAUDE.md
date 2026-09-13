@@ -896,8 +896,30 @@ page (not just failing to earn), that's the signal to get a second real link and
    `not` list has no AND-logic across independent words, only substring exclusion — a real structural
    change, not a JSON edit, and flagged here rather than guessed at or built without her sign-off on the
    idea, the same discipline `requireName` itself followed when it was introduced (item 12).
-   ▶ **IF A FUTURE SESSION RE-RUNS THIS COVERAGE CHECK AND `bo4` HAS LEAKED AGAIN, THAT IS THE SIGNAL TO
-   BUILD THE STRUCTURAL FIX, NOT ADD AN 18TH WORD.**
+   ✅✅ **AND IT DID LEAK AGAIN, SAME SESSION — SO THE STRUCTURAL FIX WAS BUILT, NOT AN 18TH WORD.** A
+   fifth re-run (same session, right after the fourth batch shipped) found `bo4` down to just **4 real
+   matches, and ALL THREE SAMPLES STILL WRONG**: a Tagliatore linen VEST, a Maxmara linen VEST, and
+   Saint Laurent linen SHOES. That is unambiguous: continuing to add `not`-list words was never going to
+   converge, because "linen" alone says nothing about garment TYPE and `not` can only ever exclude a
+   specific X someone has already caught by hand.
+   ✅ **BUILT: `requireAny`, a new opt-in schema flag in `scripts/slot_match.py`, THE SAME SHAPE AS
+   `requireName` BUT ANSWERING A DIFFERENT QUESTION.** `requireName` asks "is this row's OWN identity
+   actually present" (fo3/fo4/fo5/sh14/bg4); `requireAny` asks "does the garment ALSO look like the
+   right TYPE of thing", checked against a SEPARATE word list, never the row's own `name`/candidacy
+   field. `bo4` now carries `"requireAny": ["pant","trouser","wide-leg","wide leg","straight-leg",
+   "straight leg","crop","flare","palazzo","culotte"]` — a linen garment must say one of THESE words too,
+   not just "linen", checked against `hay_name` only (same narrow scope as `requireName`, same reason: a
+   merchant's own subcategory can carry a word a bare-fabric title never repeats).
+   ✅ **VERIFIED, NOT ASSUMED:** the Tagliatore vest, the Maxmara vest and the Saint Laurent shoes all
+   confirmed excluded directly; four realistic bottoms names (Wide-Leg Pants, Wide-Leg Pants again from a
+   different brand, a bare "Trouser", a "Cropped...Pant") all confirmed still qualify.
+   `scripts/test_slot_match.py` **1183/1183** (grew from 1174 — 9 new checks: the schema validation for
+   the new key, the two real false positives excluded, four real matches unaffected, and a direct load
+   check that `requireAny` parses into a tuple). `test_rakuten_feed.py` **67/67** and
+   `test_rakuten_ingest.py` **ALL PASS**, unaffected — `requireAny` is `bo4`-only, opt-in, default absent.
+   ▶ **`requireAny` IS NOW AVAILABLE FOR ANY FUTURE ROW THAT HAS THE SAME SHAPE OF PROBLEM** (a bare,
+   generic candidacy word that says nothing about garment type) — the next one found does not need its
+   own new mechanism, just its own word list.
    ▶ **DELIBERATELY NOT TOUCHED, FLAGGED RATHER THAN GUESSED AT — see item 15.**
 15. ▶ **THREE THINGS THE HEAD-NOUN AUDIT FOUND BUT DID NOT FIX, ON PURPOSE — genuinely too ambiguous,
    too rare, or the wrong file to patch blindly.**
