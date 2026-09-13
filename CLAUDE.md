@@ -1137,6 +1137,16 @@ maintain. 🚨 **HER OWN LINE, ON BOTH PAGES, EACH POINTING AT THE OTHER — NEV
 ***"Mixing high and low is how I dress my clients — here's the other half."***
 
 ### 🛒 AMAZON — WHAT CAN AND CANNOT BE DONE FROM HERE
+- ✅ **TAX INTERVIEW FULLY COMPLETE, BOTH COUNTRIES — 2026-09-13.** Cath's Associates dashboard flagged
+  "Canada Current Tax Status: Incomplete" alongside the already-complete US one. **This is normal, not a
+  mistake or a sign she's done anything wrong** — Amazon Associates runs one account across both the
+  amazon.com and amazon.ca marketplaces, so it asks every US Associate to also certify non-resident status
+  for Canada, in case a Canadian shopper ever buys through her link on amazon.ca. She completed it as a
+  non-resident: no permanent establishment in Canada, not an intermediary, is the beneficial owner, no SIN,
+  not claiming a treaty-reduced withholding rate, not GST/HST registered. **Both countries now show
+  Status: Complete** — US at 0.0% withholding (correct for a US person), Canada at 25.0% (the standard
+  non-resident default; it only matters if Canadian-sourced income ever actually occurs, which isn't
+  expected). ⚠️ **Nothing further to do here — do not re-flag this as an open item.**
 - ⚠️ **Amazon product pages are bot-walled — price and stock can never be verified from this session.**
   Always say so plainly on an Amazon piece; her figure is the only source (same bucket as lululemon and
   Target). The Saturday watchdog files an Amazon piece as NEEDS HER EYE, never BROKEN, by design.
