@@ -76,6 +76,22 @@ def _money(v):
 _MENS_NAME = re.compile(r"\b(?:men|homme|male|gentlemen)(?:'?s)?\b", re.I)
 # Her side of the same coin: a name that says women outranks one that says men.
 _WOMENS_NAME = re.compile(r"\b(?:women|femme|female|ladies|lady)(?:'?s)?\b", re.I)
+# 🚨 THE SAME LEAK AS ABOVE, FOUND 2026-09-13: "Versace Kids Mini Polo with Classic
+# Collar and Logo Design" reached her "White tops" checklist row via COUTR, which
+# is exactly the shape PART 7's own docstring warned about ("Vilebrequin carries
+# Kids rows... Style Star is for adult women") -- the age_group COLUMN check above
+# only catches it when the merchant actually labels the row; COUTR's row either
+# left it blank or labelled something this check didn't recognise, while the NAME
+# said Kids plainly. Nothing had ever read the name for age, only for gender.
+# ▶ "boys"/"girls" are PLURAL-ONLY, deliberately: a singular "boy"/"girl" is a
+#   common ADULT womenswear word ("Girl Boss Tee", "It's a Boy" maternity print),
+#   and matching it would be the exact "menswear-inspired blazer" false-positive
+#   this file already paid for once, in the sibling gender guard.
+# ⚠️ "baby" IS DELIBERATELY LEFT OUT of this name guard for the same reason --
+#   "Baby Doll Dress" and "Baby Blue" are ordinary adult fashion terms. The
+#   age_group COLUMN still catches a genuinely labelled baby/infant row; only the
+#   NAME-based backstop skips that word.
+_KIDS_NAME = re.compile(r"\b(?:kids?|children|toddlers?|infants?|newborns?|girls|boys)(?:'?s)?\b", re.I)
 
 
 def keep_row(gender, age_group, availability, name=""):
@@ -120,10 +136,12 @@ def keep_row(gender, age_group, availability, name=""):
     a = _clean(age_group).lower()
     if a in ("kids", "kid", "child", "children", "toddler", "infant", "baby", "newborn"):
         return False, "kids"
-    # The name guard. Only consulted when the gender column did not already answer.
+    # The name guard. Only consulted when the gender/age columns did not already answer.
     n = _clean(name)
     if n and _MENS_NAME.search(n) and not _WOMENS_NAME.search(n):
         return False, "menswear-name"
+    if n and _KIDS_NAME.search(n):
+        return False, "kids-name"
     av = _clean(availability).lower()
     if av and av not in ("in-stock", "in stock", "instock", "available"):
         return False, "out-of-stock"

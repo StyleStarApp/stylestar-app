@@ -158,6 +158,37 @@ _k, _w = keep_row("", "Adult", "in-stock", "")
 ok("an empty name changes nothing", _k is True)
 
 print()
+print("PART 7b — THE SAME LEAK, A YEAR LATER, FOR AGE INSTEAD OF GENDER (2026-09-13).")
+# Cath caught "VERSACE KIDS Mini Polo with Classic Collar and Logo Design" on her own
+# "White tops" checklist row, via COUTR. Same shape exactly: the age_group COLUMN check
+# only catches what the merchant actually labels, and this row's age said Kids in the
+# NAME while the column didn't say so plainly enough to be caught. Nothing had ever
+# read the name for age, only the column.
+_KIDS_LEAK = [
+    ("Versace Kids Mini Polo with Classic Collar and Logo Design", "her actual card"),
+    ("Kid's Cotton Pajama Set", "apostrophe form"),
+    ("Girls Ruffle Dress", "plural, no apostrophe"),
+    ("Boys' Denim Jacket", "plural possessive"),
+    ("Children's Rain Boots", "children's"),
+    ("Toddler Fleece Jacket", "toddler"),
+    ("Infant Onesie", "infant"),
+]
+for _n, _note in _KIDS_LEAK:
+    _k, _w = keep_row("", "Adult", "in-stock", _n)
+    ok(f"kids name dropped ({_note})", _k is False and _w == "kids-name", f"got {_k}/{_w}")
+
+_KIDS_KEEP = [
+    ("Cotton Boy Shorts", "women's underwear, singular 'boy'"),
+    ("The Boyfriend Jean", "a WOMENSWEAR descriptor"),
+    ("Girl Boss Graphic Tee", "adult novelty print, singular 'girl'"),
+    ("Baby Doll Dress", "'baby' is an adult fashion term, deliberately not matched"),
+    ("Baby Blue Cashmere Cardigan", "'baby' as a colour word"),
+]
+for _n, _note in _KIDS_KEEP:
+    _k, _w = keep_row("", "Adult", "in-stock", _n)
+    ok(f"KEPT: {_note}", _k is True, f"dropped as {_w}: {_n}")
+
+print()
 print("PART 6 — the build set")
 ok("Etsy is NOT in the first build (5GB outlier)", "54027" not in BUILD_MIDS)
 # ⚠️ THIS USED TO ASSERT `len(BUILD_MIDS) == 7`, WHICH MEANT EVERY NEW APPROVAL
