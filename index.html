@@ -4845,14 +4845,15 @@ const STORES={
      that, though the real-term half is solid.
      🚨 IT SELLS MEN'S CASHMERE TOO ("Men's Pure Cashmere Polo Sweater" etc.),
      so w:1 is set -- her rule since the Banana Republic men's-trousers catch.
-     🚨🚨 THIS STORE IS FINDABLE BUT DOES NOT YET EARN. It is a CJ advertiser,
-     not a Rakuten one -- the app's only link-wrapping today is `_AFF_MID`
-     (Rakuten MIDs) and `_AMZ_TAG` (Amazon). There is no CJ equivalent built,
-     so a woman can be shown this store but the outbound link is a plain
-     search url, untagged. Building CJ link-wrapping is a real, separate
-     piece of work -- do not assume this store earns just because it is in
-     the table, and do not silently add a CJ-style tag without the actual
-     mechanism existing. */
+     🚨🚨 THIS STORE IS FINDABLE BUT STILL DOES NOT EARN, EVEN THOUGH THE CJ
+     WRAPPING MECHANISM NOW EXISTS (`_CJ_PID`/`_CJ_AID`/`_cjAid`, beside
+     `_AFF_MID` above `_affUrl`, built 2026-09-13). It is SCAFFOLDED, not
+     LIVE: `_CJ_PID` is deliberately empty and `_CJ_AID` holds no entry for
+     cashmereboutique.com, because both need a real value read off HER OWN
+     CJ dashboard link for this store, and guessing either would produce a
+     link that looks real and tracks nothing. The moment she pastes one real
+     CJ link for Cashmere Boutique, this store starts earning with no other
+     change needed. */
   'Cashmere Boutique':{w:1,u:'https://www.cashmereboutique.com/search?q='}, // ⚠️ url partially unverified, see comment above
   'Sachin & Babi':{u:'https://www.sachinandbabi.com/search?q=',t:'$$$$',a:'Glamorous Luxe, Classic Sophisticate',s:['plus'],d:[6,5,10,8,5,1,10,8,9,8],c:'evening gowns, mother of the bride, wedding guest, occasion',deep:'evening and occasion dresses'},
   'Alice + Olivia':{u:'https://www.aliceandolivia.com/search?q=',t:'$$$-$$$$',a:'Glamorous Luxe, Modern Glam',s:[],d:[2,9,9,6,10,3,10,10,5,10],c:'statement dresses, occasionwear'},
@@ -5086,10 +5087,47 @@ function _affMid(u){
   }catch(e){}
   return '';
 }
+// ▶ CJ AFFILIATE (Commission Junction), scaffolded 2026-09-13. Her CJ account
+// went active 2026-09-12 and her first advertiser, Cashmere Boutique,
+// approved 2026-09-13 -- but CJ does NOT run through Rakuten's
+// click.linksynergy.com, and its own deep-link format needs TWO
+// account-specific values that exist only in HER OWN CJ dashboard, neither
+// of which has ever been given here: her PUBLISHER WEBSITE ID (one number
+// for the whole account, the equivalent of _AFF_ID above) and, PER
+// ADVERTISER, an ADVERTISER ID plus the specific CJ redirect domain that
+// advertiser's own link uses (CJ has several interchangeable redirect
+// domains -- anrdoezrs.net, dpbolvw.net, tkqlhce.com, jdoqocy.com,
+// kqzyfj.com, qksrv.net -- and which one a given advertiser's link comes
+// back on is not guessable; it is simply whatever CJ's own "Get A Link" /
+// Deep Link Generator tool hands back for THAT advertiser).
+// 🚨 NEITHER VALUE IS FILLED IN, ON PURPOSE. Guessing either would risk a
+// link that looks real, tracks nothing, and pays her nothing -- worse than
+// today's honestly-plain link, which at least is not pretending. The fix is
+// the same address-bar method already used for every unverifiable store
+// search url in this file: get ONE real link for an approved CJ advertiser
+// (Cashmere Boutique today) from her CJ dashboard's own link-generator tool
+// and paste it in here; the PID/AID/domain are read straight off it.
+// ⚠️ UNTIL THEN THIS WHOLE MECHANISM IS INERT and every CJ-approved store's
+// link renders PLAIN, exactly as it does today -- _cjAid always returns
+// null with an empty _CJ_PID, so _affUrl and _mallEarns both fall through
+// unchanged. The moment real values land here, every CJ store's link starts
+// earning with no other plumbing change, the same way _AMZ_TAG worked.
+var _CJ_PID='';
+var _CJ_AID={
+  // 'cashmereboutique.com':{domain:'???.net',aid:'????????'} -- fill in from
+  // her own real CJ link for Cashmere Boutique; do not invent either value.
+};
+function _cjAid(u){
+  try{
+    var host=new URL(u).hostname.toLowerCase().replace(/^www\./,'');
+    for(var d in _CJ_AID){if(host===d||host.slice(-(d.length+1))==='.'+d)return _CJ_AID[d];}
+  }catch(e){}
+  return null;
+}
 function _affUrl(u){
   u=String(u||'');
   if(!/^https?:\/\//i.test(u))return u;
-  if(u.indexOf('click.linksynergy.com')>=0)return u;
+  if(u.indexOf('click.linksynergy.com')>=0||u.indexOf('/click-')>=0)return u;
   // Amazon first, because it is tagged rather than wrapped. With no tag set the
   // url comes back untouched, so nothing pretends to earn before she is
   // approved. Never double-tags.
@@ -5100,8 +5138,10 @@ function _affUrl(u){
     return u+(u.indexOf('?')>=0?'&':'?')+'tag='+encodeURIComponent(_AMZ_TAG);
   }
   var mid=_affMid(u);
-  if(!mid)return u;
-  return 'https://click.linksynergy.com/deeplink?id='+_AFF_ID+'&mid='+mid+'&murl='+encodeURIComponent(u);
+  if(mid)return 'https://click.linksynergy.com/deeplink?id='+_AFF_ID+'&mid='+mid+'&murl='+encodeURIComponent(u);
+  var cj=_CJ_PID?_cjAid(u):null;
+  if(cj)return 'https://www.'+cj.domain+'/click-'+_CJ_PID+'-'+cj.aid+'?url='+encodeURIComponent(u);
+  return u;
 }
 function getStoreUrl(store,item,search){
   var raw=String(search||item||'').trim();
@@ -8700,11 +8740,12 @@ const mallStores=[
        Filed here rather than Value & Basics: real prices run $130-$700, which
        is elevated-basics territory, not budget. ⚠️ THE BLURB IS A CLAUDE
        DRAFT, like FARM Rio's and Olivela's above -- her own words if she'd
-       rather. 🚨 IT WILL NOT EARN YET: `_affUrl` only wraps Rakuten MIDs and
-       the Amazon tag, and CJ has neither built here, so `_mallEarns` sorts
-       this card after any earning store in the category, correctly, and the
-       link renders raw. See CLAUDE.md's "WHAT IS OPEN FOR CLAUDE" for the
-       CJ link-wrapping task this is waiting on. */
+       rather. 🚨 STILL DOES NOT EARN, EVEN THOUGH THE CJ MECHANISM NOW EXISTS
+       (`_CJ_PID`/`_CJ_AID` beside `_AFF_MID`, built 2026-09-13) -- it is
+       scaffolded but empty, waiting on one real CJ link from her own
+       dashboard for this store, see the fuller note on the STORES entry
+       above. Until then `_mallEarns` correctly sorts this card after any
+       earning store in the category, and the link renders raw. */
     {n:'Cashmere Boutique',d:'Soft, quality cashmere sweaters and layers',u:'https://www.cashmereboutique.com'}
   ]},
   {cat:'Elevated & Designer',stores:[
@@ -8754,7 +8795,31 @@ const mallStores=[
        ⚠️ Now also LIVE in STORES (see the entry there) with the corrected
        breadth-not-lean dimensions, so the stylist can suggest it as well as
        the Mall pointing to it. */
-    {n:'Mytheresa',d:'Every style of designer fashion, bags, shoes and jewelry, pricey and polished',u:'https://www.mytheresa.com'}
+    {n:'Mytheresa',d:'Every style of designer fashion, bags, shoes and jewelry, pricey and polished',u:'https://www.mytheresa.com'},
+    /* COUTR, her eighth Rakuten advertiser (mid 54152), approved 2026-09-08
+       and already live in STORES/the Star queue -- this is only the MALL
+       CARD catching up, found missing 2026-09-13 alongside Vilebrequin and
+       Fleur du Mal while adding all her approved stores here at her own
+       request. Filed here, the cleanest fit of the three: her own STORES
+       c: line is "designer swimwear, jewelry, bags, sunglasses and shoes,
+       high quality designer pieces" -- a full-range luxury multi-brand
+       marketplace, exactly the shelf NET-A-PORTER, Olivela, Marissa
+       Collections and Mytheresa are already on.
+       ⚠️ The blurb is a CLAUDE DRAFT condensed from her own c: line, like
+       the others on this shelf -- hers to reword. */
+    {n:'COUTR',d:'Designer swimwear, jewelry, bags and shoes',u:'https://www.coutr.com'},
+    /* Fleur du Mal, her seventh Rakuten advertiser (mid 50739), approved
+       2026-08-26 and already live in STORES -- this is only the MALL CARD
+       catching up, same batch as Vilebrequin and COUTR above. Filed here
+       for lack of a better shelf: the Mall has no lingerie/sleepwear
+       category, and her own STORES c: line -- "sexy lingerie, nightgowns,
+       slips, robes, sleepwear, a small amount of activewear" -- is $$$-$$$$
+       and archetype "Glamorous Luxe, Romantic Feminine", which sits closer
+       to this luxury shelf than to Value & Basics or Activewear & Swim.
+       ⚠️ The blurb is a CLAUDE DRAFT condensed from her own c: line, like
+       the others on this shelf -- hers to reword, and she may want a
+       different category entirely once she sees it rendered. */
+    {n:'Fleur du Mal',d:'Sexy lingerie, nightgowns and sleepwear',u:'https://fleurdumal.com'}
   ]},
   {cat:'Value & Basics',stores:[
     {n:'Amazon',d:'Everything, fast, great for basics',u:'https://www.amazon.com/fashion'},
@@ -8769,7 +8834,20 @@ const mallStores=[
     {n:'Athleta',d:'Versatile activewear, inclusive sizing',u:'https://athleta.gap.com'},
     {n:'Alo Yoga',d:'Elevated athleisure with an edge',u:'https://www.aloyoga.com'},
     {n:'Vuori',d:'Soft, performance everyday wear',u:'https://vuoriclothing.com'},
-    {n:'Everything But Water',d:'Swimsuits and coverups for every body',u:'https://www.everythingbutwater.com'}
+    {n:'Everything But Water',d:'Swimsuits and coverups for every body',u:'https://www.everythingbutwater.com'},
+    /* Vilebrequin, her third Rakuten advertiser (mid 43322), approved
+       2026-08-xx and already live in STORES/the Star queue/the Edit -- this
+       is only the MALL CARD catching up, found missing 2026-09-13 while
+       adding all her approved stores here at her own request ("I feel we
+       need to do what we can to start earning"). Filed here, not with the
+       luxury multi-brand houses: her own STORES c: line is "swimwear,
+       resortwear, beach cover-ups, vacation dresses" -- topically it is a
+       swim specialist, the same shelf as Everything But Water, just a
+       pricier one ($$$$ vs that store's inclusive-for-every-body pitch).
+       ⚠️ The blurb is a CLAUDE DRAFT condensed from her own c: line, like
+       FARM Rio's, DVF's, Olivela's, Marissa Collections' and Mytheresa's
+       above -- hers to reword. */
+    {n:'Vilebrequin',d:'Luxury swimwear and vacation-ready resortwear',u:'https://www.vilebrequin.com'}
   ]},
   {cat:'Shoes, Bags & Jewelry',stores:[
     {n:'Zappos',d:'Shoes in every size and width, easy returns',u:'https://www.zappos.com'},
@@ -8798,14 +8876,18 @@ const mallStores=[
   ]}
 ];
 // A store "earns" here in the exact sense _affUrl wraps its link -- an
-// approved Rakuten advertiser (in _AFF_MID) or Amazon once _AMZ_TAG is set.
-// Never a hand-kept list: it reads the same live facts _affUrl itself uses,
-// so a new approval reorders the Mall on its own, with nothing to update here.
+// approved Rakuten advertiser (in _AFF_MID), Amazon once _AMZ_TAG is set, or
+// a CJ advertiser once _CJ_PID/_CJ_AID are filled in (see the CJ scaffold
+// above _affUrl -- inert today, so Cashmere Boutique still sorts as
+// not-earning until that lands). Never a hand-kept list: it reads the same
+// live facts _affUrl itself uses, so a new approval reorders the Mall on
+// its own, with nothing to update here.
 function _mallEarns(u){
   var h='';
   try{h=new URL(u).hostname.toLowerCase().replace(/^www\./,'');}catch(e){return false;}
   if(h==='amazon.com'||h.slice(-11)==='.amazon.com')return !!_AMZ_TAG;
-  return !!_affMid(u);
+  if(_affMid(u))return true;
+  return !!(_CJ_PID&&_cjAid(u));
 }
 function renderMall(){
   const c=document.getElementById('mallContent');

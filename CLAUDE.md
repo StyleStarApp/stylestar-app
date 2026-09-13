@@ -590,12 +590,63 @@ model call** (only the marker-parsing and prompt-text side, which is shared code
 reaching chat specifically should be watched for on her next live conversation, same as any new `<<FIND>>`
 field would be.
 
+### ✅✅ THE MALL NOW HAS ALL EIGHT OF HER RAKUTEN-APPROVED STORES; CJ WRAPPING IS SCAFFOLDED, NOT LIVE
+She asked a clarifying question first — *"do the stores we're approved for show up in our searches now?
+Or only if Google happens to find them? Are we taking advantage of having the affiliates that we do
+have right now?"* — answered by reading the code, not guessing: the 8-store Rakuten feed IS deliberately
+queried on every live search regardless of Google (`feedBrowse`); Etsy has a Rakuten MID but is excluded
+from feed ingestion so it only appears opportunistically; CJ-approved Cashmere Boutique is findable
+exactly like any of her 132 stores but earns nothing because no CJ wrapping exists; Amazon earns when
+found but nothing deliberately searches its catalogue (that catalogue is itself gated behind her first 3
+sales). She then said: *"Yes and also let's add all our approved stores into the mall. I feel we need to
+do what we can to start earning."*
+✅ **THE MALL GAP — FOUND AND FIXED.** Three of her eight approved Rakuten advertisers were missing from
+the Mall entirely: **Vilebrequin** (mid 43322, live in STORES/the Star/the Edit since 2026-08-xx),
+**Fleur du Mal** (mid 50739, live since 2026-08-26) and **COUTR** (mid 54152, live since 2026-09-08) had
+never had a Mall card, so a woman browsing the Mall could never reach them even though their links would
+have earned the moment she clicked. All three are now cards, placed by reading her own `STORES` `c:`
+description rather than inventing a blurb: **Vilebrequin** joined Activewear & Swim (her own c: line is
+"swimwear, resortwear, beach cover-ups, vacation dresses" — the same shelf as Everything But Water, just
+pricier). **COUTR** joined Elevated & Designer (her own c: line — "designer swimwear, jewelry, bags,
+sunglasses and shoes" — the same full-range luxury-multibrand shelf as NET-A-PORTER/Olivela/Marissa/
+Mytheresa). **Fleur du Mal** joined Elevated & Designer too, for lack of any lingerie/sleepwear category
+in the Mall — flagged in its own comment as the weakest-fit placement of the three, hers to move.
+⚠️ **ALL THREE BLURBS ARE CLAUDE DRAFTS condensed from her own STORES `c:` line, same convention as every
+other non-hers blurb in the Mall (FARM Rio, Olivela, Marissa, Mytheresa) — hers to reword.**
+✅ **VERIFIED, NOT ASSUMED:** a Playwright check (mirroring `affwrap.js`'s own harness) loaded the real
+rendered Mall and confirmed all three new cards render, wrap through `_affUrl` with their correct
+Rakuten mid, and now sort as "earning" ahead of non-earning cards in their category — 14/14. The
+existing `affwrap.js` suite (35/35, its own sweep already asserts zero bare links to any approved store
+anywhere) and a direct Node parse of both `index.html` `<script>` blocks were re-run clean.
+🚨🚨 **CJ LINK-WRAPPING IS NOW SCAFFOLDED, DELIBERATELY LEFT INERT — READ BEFORE FILLING IT IN.** Built
+`_CJ_PID` (one account-wide id, the CJ equivalent of `_AFF_ID`) and `_CJ_AID` (a per-advertiser map, the
+CJ equivalent of `_AFF_MID`, holding `{domain, aid}` because — unlike Rakuten's single fixed
+`click.linksynergy.com` — CJ uses several interchangeable redirect domains and which one a given
+advertiser's link uses is not guessable), plus `_cjAid()` and a wired branch in `_affUrl()` and
+`_mallEarns()`. **BOTH VALUES ARE DELIBERATELY EMPTY.** Neither her CJ Publisher Website ID nor Cashmere
+Boutique's CJ Advertiser ID/redirect domain has ever been given to this app, and guessing either would
+produce a link that LOOKS wrapped and tracks nothing — worse than today's honest plain link, which at
+least isn't pretending. ✅ **VERIFIED INERT ON PURPOSE:** the same Playwright check confirms
+`_CJ_PID===''`, `_CJ_AID` has zero entries, and a Cashmere Boutique link still renders byte-for-byte
+plain (`_mallEarns` correctly still sorts it as not-earning).
+▶ **WHAT ACTUALLY FINISHES IT, THE SAME ADDRESS-BAR METHOD ALREADY USED FOR EVERY UNVERIFIABLE STORE URL
+IN THIS FILE:** get ONE real CJ affiliate link for Cashmere Boutique from her own CJ dashboard's link
+generator ("Get A Link" / Deep Link Generator, under the Cashmere Boutique advertiser) and paste it here
+— the PID, the advertiser id and the correct redirect domain are all read straight off that one real
+url, the same way Sézane's/Kohl's/Lacoste's search urls were solved. **The moment real values land in
+`_CJ_PID`/`_CJ_AID`, Cashmere Boutique (and any future CJ approval) starts earning with no other
+plumbing change — same mechanism shape as `_AMZ_TAG` before her Amazon approval.**
+
 ### ▶▶ WHAT IS OPEN FOR CLAUDE
-1. 🚨🚨 **CJ LINK-WRAPPING DOES NOT EXIST YET — build it once a CJ advertiser she wants live actually
-   approves.** Today `_affUrl` only knows Rakuten MIDs and the Amazon tag; a CJ-approved store (Cashmere
-   Boutique now, possibly Belk/Macy's/TJ Maxx/Marshalls/Talbots/Lands' End if they come through) shows up
-   findable but earns nothing until this is built. Not started speculatively — real work, worth doing the
-   moment it matters.
+1. 🚨🚨 **CJ LINK-WRAPPING IS SCAFFOLDED (2026-09-13) BUT NOT LIVE — IT NEEDS ONE REAL LINK FROM HER.**
+   `_CJ_PID`/`_CJ_AID`/`_cjAid()` exist beside `_AFF_MID`, wired into `_affUrl()` and `_mallEarns()`, but
+   both values are deliberately empty (guessing a CJ Publisher ID or an advertiser's redirect domain
+   would produce a link that looks real and earns nothing). **THE ONE REMAINING STEP IS HERS:** get one
+   real CJ affiliate link for Cashmere Boutique from her own CJ dashboard's Deep Link Generator / "Get A
+   Link" tool and paste it here — the PID, advertiser id and redirect domain are read straight off it,
+   same address-bar method as every unverifiable store search url. The moment that lands, Cashmere
+   Boutique (and Belk/Macy's/TJ Maxx/Marshalls/Talbots/Lands' End if they come through) earns with no
+   other plumbing change. See "THE MALL NOW HAS ALL EIGHT..." above for the full build.
 2. 🚨 "Couldn't load options right now" on Shop your Style — see the SerpApi lead above; not confirmed,
    needs a fresh live-diagnosis approach on the STYLIST call specifically, not the search.
 3. ✅ ~~A price filter~~ **BUILT AND LIVE 2026-09-13 — see "THE PRICE FILTER" below.**
@@ -632,6 +683,11 @@ again before assuming it has cleared: `curl -s https://status.serpapi.com/api/v2
 1. ⏳ The Oct 1 tax-receipt clock (~3 weeks out) — the only real deadline on her board.
 2. ⭐⭐⭐ **Check back on the CJ Pending Applications queue** — Belk, Macy's, TJ Maxx, Marshalls, Talbots
    and Lands' End are the ones worth watching for. Report back any more acceptances or declines.
+2b. 💰 **GET ONE REAL CJ LINK FOR CASHMERE BOUTIQUE — THIS IS WHAT TURNS ON CJ EARNING.** Log into her CJ
+   dashboard, find the Cashmere Boutique advertiser, use its "Get A Link" / Deep Link Generator, and paste
+   the resulting url here. That one link contains her Publisher ID and the advertiser's own id/redirect
+   domain — nothing else is needed, and it starts earning immediately. See "THE MALL NOW HAS ALL EIGHT..."
+   above.
 3. ⭐ More Edit/Finds pieces — she's on a roll and the machinery makes it cheap now.
 4. ⭐ **Decide the auto-retry question above** (open row 1) whenever she wants to.
 5. ▶ Optional: clean up the two `claude-diag-test-...@example.invalid` artifacts in Supabase/MailerLite.
@@ -653,6 +709,16 @@ filter's PART 11) · new **`pricefilter.mjs`** **8/8** (product-find.js's own fi
 Node parse check confirms both of `index.html`'s `<script>` blocks still parse clean after every edit
 this session, including the `_WDR_COLOR_ROWS`→`_WDR_FIND_OVERRIDE` rename. Not touched or re-run since
 2026-09-12: `sharelink` 54/54 · `sharelink-drift` 6/6
+▶ **SECOND PASS, SAME DAY — THE MALL + CJ SCAFFOLD:** `affwrap.js` (the dedicated Rakuten-wrapping/Mall
+sweep suite) **35/35**, re-run clean after adding Vilebrequin/Fleur du Mal/COUTR to the Mall and the CJ
+scaffold — its own sweep already asserts zero bare links to any approved store anywhere, so this is real
+coverage of the new cards, not an assumption. A purpose-built 14-check Playwright probe confirmed the
+three new Mall cards render and wrap via Rakuten with their correct mid, `_CJ_PID`/`_CJ_AID` are
+confirmed empty (the scaffold is inert on purpose), and Cashmere Boutique's link still renders plain. A
+direct Node parse of both `<script>` blocks re-confirmed clean. ⚠️ **`affq.js` was NOT successfully
+re-run this pass** — it hung on a real external network call (Google Fonts / a live merchant domain)
+that this sandbox's proxy cannot complete, a documented pre-existing sandbox limitation, not something
+this session's edit caused; re-run it fresh next session rather than trusting this note indefinitely.
 · `savetruth` 19/19 · `copy` 50/50 · `findscsv` 50 · `findspage` 102 · `fitroom` 24 · `promptcap` 10 ·
 `hubs` 49 · `mallverify` 14 · `linkwatch` 27 · `tabtops` 49 · `catmark` 132/3-pre-existing ·
 `wldoortest` 55/65-pre-existing · `curated` 62-63/65 (3 named pre-existing failures, see the standing
