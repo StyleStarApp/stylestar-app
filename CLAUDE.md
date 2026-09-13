@@ -881,6 +881,23 @@ page (not just failing to earn), that's the signal to get a second real link and
    picked up again: extend `rakuten-slots.py`'s printed samples to also show `cat_path(rec)` alongside
    the name** (a small, safe, read-only reporting change) so the actual colliding category text is
    visible instead of guessed at.
+   🚨 **A FOURTH RE-RUN FOUND `bo4` LINEN PANTS STILL LEAKING — THREE MORE ROUNDS DEEP ON ONE ROW, AND
+   WORTH FLAGGING AS ITS OWN PATTERN, NOT JUST ANOTHER INSTANCE.** A linen CARDIGAN, a linen BATHROBE
+   and a linen GILET (vest) all matched via the bare word "linen" — fixed the same way ("cardigan",
+   "bathrobe", "gilet" added to `not`), verified, tested (`scripts/test_slot_match.py` **1174/1174**).
+   ⚠️ **BUT THIS ROW HAS NOW NEEDED 17 EXCLUSION WORDS ACROSS FOUR ROUNDS** (tablecloth, napkin, hat,
+   romper, playsuit, placemat, jumpsuit, cardigan, bathrobe, gilet, plus the original jean/skirt/short/
+   shirt/dress/jacket/top) **— genuinely more than any other row this audit touched, because "linen" is
+   a single bare fabric word that legitimately appears on nearly every garment TYPE, not just pants.**
+   A fifth re-run was NOT done tonight — three consecutive rounds of new leaks on the same row is the
+   signal to stop whack-a-moling it and consider a structural fix instead, which the current `not`-list
+   mechanism cannot express: `bo4` would ideally require the name to ALSO contain a bottoms word (pant/
+   trouser/wide-leg/straight-leg), not merely lack the growing list of things it isn't. `match()`'s
+   `not` list has no AND-logic across independent words, only substring exclusion — a real structural
+   change, not a JSON edit, and flagged here rather than guessed at or built without her sign-off on the
+   idea, the same discipline `requireName` itself followed when it was introduced (item 12).
+   ▶ **IF A FUTURE SESSION RE-RUNS THIS COVERAGE CHECK AND `bo4` HAS LEAKED AGAIN, THAT IS THE SIGNAL TO
+   BUILD THE STRUCTURAL FIX, NOT ADD AN 18TH WORD.**
    ▶ **DELIBERATELY NOT TOUCHED, FLAGGED RATHER THAN GUESSED AT — see item 15.**
 15. ▶ **THREE THINGS THE HEAD-NOUN AUDIT FOUND BUT DID NOT FIX, ON PURPOSE — genuinely too ambiguous,
    too rare, or the wrong file to patch blindly.**

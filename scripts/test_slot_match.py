@@ -461,6 +461,19 @@ for _slot in ("ac5", "ac6", "ac7"):
        _slot not in match(g("Adidas by Stella McCartney Gathered Hooded Track Jacket", "women>activewear>tops"), rules))
 ok("...but a real workout tee still lands on Workout tees, unaffected",
    "ac6" in match(g("Varley Casper T-Shirt", "women>activewear>tops"), rules))
+# 🚨 A FOURTH RE-RUN FOUND `bo4` STILL LEAKING -- "linen" alone is such a broad, common fabric
+# word that it keeps surfacing new non-pants garments each time the loudest leak is silenced.
+# Genuinely the same shape as every fix above (a real garment off the live feed, fixed the
+# same evidence-based way) -- but three rounds deep on ONE row is itself worth a note: see
+# CLAUDE.md's own flag that bo4 may deserve a structural rethink if a fifth round finds more.
+ok("a linen CARDIGAN does not land on Linen pants",
+   "bo4" not in match(g("Linen Silk Paillette Cropped Cardigan", ""), rules))
+ok("a linen BATHROBE does not land on Linen pants",
+   "bo4" not in match(g("Versace Home Medusa Gala Cotton and Linen Terry Bathrobe", "home>bath"), rules))
+ok("a linen GILET (vest) does not land on Linen pants",
+   "bo4" not in match(g("Tagliatore Linen Gilet with Buttons", "women>vests"), rules))
+ok("...but real linen pants still do, unaffected",
+   "bo4" in match(g("Vince Linen Wide-Leg Pants", "women>pants>linen"), rules))
 
 
 # ------------------------------------------------- 2026-09-06 REGRESSION SET --
