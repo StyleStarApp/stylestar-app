@@ -792,27 +792,83 @@ page (not just failing to earn), that's the signal to get a second real link and
    a false positive) still matches BOTH `ac12` and `fo5` — proving the fix didn't overreach.
    `scripts/test_slot_match.py` **1108/1108** (grew from 1105 — three new direct-proof checks for this
    exact fix). ⚠️ **THIS FIX IS THE FIRST INSTANCE OF A BROADER, SEPARATE PROBLEM CLASS — see item 14.**
-14. 🚨🚨 **THE HEAD-NOUN TRAP IS BIGGER THAN `fo5` — HER RULING, SAME SESSION: *"tackle the entire thing
-   carefully."*** ⚠️ **THIS IS A DIFFERENT BUG SHAPE FROM ITEM 12's sibling-contamination fix, and
-   `requireName` does not touch it.** Sibling-contamination happens when two rows share a `cat` term.
-   This one happens on the NAME-FALLBACK PATH: when a garment's category matches NO row at all (a
-   Marissa Collections item with no category, a merchant breadcrumb this app doesn't recognise), `match()`
-   checks the garment's NAME against **every one of the 100 rows' name lists** with no requirement that
-   the matched word be the garment's actual head noun — so a bare word like "garter", "linen", "belt" or
-   "thong" appearing ANYWHERE in an unrelated product's title can trigger a false match. **FOUND WHILE
-   READING THE SAME COVERAGE REPORT that caught the `fo5` case, from a PARTIAL log (`tail_lines=300`,
-   cut off before the higher-volume rows) — the full log (744 lines) still needs fetching before this
-   audit can be called complete.** ⏳ **IN PROGRESS.** Candidates spotted so far, none fixed yet, all
-   need re-verification against the real catalog before touching `not`: **`bo4` Linen pants** matching
-   linen napkins · **`ac13` Athletic socks** matching a bathrobe/underwear/boxer briefs · **`fo6`
-   Shapewear** matching a makeup pencil · **`fo2` Comfortable underwear** matching slippers (via "thong")
-   · **`bg4` Belt bags** matching jeans · **`ac5`/`ac6`/`ac7`** (workout tank/tee/long-sleeve) matching
-   sweaters/cardigans/robes instead of real workout tops. ▶ **THE FIX TECHNIQUE IS ALREADY ESTABLISHED
-   AND MUST NOT CHANGE: add the SPECIFIC discovered false-positive word to that row's own `not` list —
-   evidence-based, minimal, one row at a time, never a general NLP/grammar mechanism.** Matches her own
-   standing direction: *"I want the AI to be using intelligence and I would like to reduce the amount of
-   rules and breakable things we put in there."* ⚠️ **"Carefully" means the complete log, not the tail of
-   one — do not fix a row from an unverified sample.**
+14. ✅✅ **THE HEAD-NOUN TRAP IS BIGGER THAN `fo5` — FOUND, AUDITED AND FIXED, SAME SESSION, PER HER
+   RULING: *"tackle the entire thing carefully."*** ⚠️ **A DIFFERENT BUG SHAPE FROM ITEM 12's
+   sibling-contamination fix.** Sibling-contamination happens when two rows share a `cat` term. This one
+   happens on the NAME-FALLBACK PATH: when a garment's category matches NO row at all, `match()` checks
+   the garment's NAME against **every one of the 100 rows' name lists** with no requirement that the
+   matched word be the garment's actual head noun — so a bare word like "garter", "linen", "belt", "coat"
+   or "shaping" appearing ANYWHERE in an unrelated product's title can trigger a false match.
+   ✅ **"CAREFULLY" MEANT THE COMPLETE LOG, NOT THE TAIL OF ONE — fetched the full 744-line coverage
+   report (all 100 rows) rather than trusting the earlier `tail_lines=300` partial capture**, and read
+   every row's three samples by hand looking for this exact shape.
+   ✅ **18 REAL FALSE POSITIVES FOUND AND FIXED, ALL THE SAME PRECEDENTED TECHNIQUE (add the SPECIFIC
+   discovered word to that row's own `not` list — evidence-based, minimal, one row at a time, never a
+   general NLP/grammar mechanism), EACH VERIFIED TWICE (the false positive is gone AND a genuine real
+   match for that row still works):**
+   **`bo4` Linen pants** ← a linen tablecloth (added "tablecloth") · **`bg11` Wallets** ← a leather
+   handbag (added "handbag") · **`bo6` Shorts** ← a sports bra (added "bra") · **`to6` Dressy tops** ← a
+   lace skirt (added "skirt") · **`bg1` Tote bags** ← a sweatshirt (added "sweatshirt") · **`ex3`
+   Scarves** ← a scarf-shaped bag KEYRING/charm (added "keyring", "keychain") · **`ex6` Hair
+   accessories** ← a wool THROW blanket (added "throw", scoped to this row only — "throw-on cardigan" is
+   real fashion language elsewhere) · **`ac13` Athletic socks** ← a sports bra AND a bustier top (added
+   "bra", "bustier") · **`fo1` Perfectly fitting bras** ← a bustier top (added "bustier" — a bustier is
+   its own garment, already correctly claimed by `fo5`/`to6`) · **`sl3` Robes** ← a GUERLAIN PERFUME
+   whose own product line is French for "dress" ("La Petite Robe Absolue" — added "parfum", "fragrance",
+   "cologne", "perfume", "eau de") · **`bg9` Laptop bags** ← a duffel bag (added "duffel") · **`bg4` Belt
+   bags** ← a plain belt, the accessory (added `requireName: true` — its own name list is already
+   precise multi-word phrases: belt bag/fanny pack/waist bag/bum bag, the same shape as fo3/fo4/fo5/sh14)
+   · **`fo6` Shapewear** ← a Lancôme brow-SHAPING pencil (added "pencil", "brow", "cosmetic" — "shaping"
+   is genuinely both fo6's own word and cosmetics jargon) · **`ja4` Wool coats** ← a literal Moncler DOG
+   coat, a pet product (added "dog") · **`fo2` Comfortable underwear** ← rubber "thong" SLIPPERS (added
+   "slipper" to the shared `FOOTWEAR` family exclusion, not just fo2 — the existing family already
+   listed sneaker/loafer/pump/sandal/espadrille/stiletto/flip flop and had simply never been told
+   slipper is footwear too; scoped so `sh16` Slippers itself, which doesn't inherit FOOTWEAR, still
+   finds real slippers) · **`ac5`/`ac6`/`ac7`** (Workout tanks/tees/long-sleeve tops) ← a zip-up
+   sweatshirt and a fleece hoodie (added "sweatshirt", "hoodie" to all three).
+   ⚠️ **`ac5`/`ac6`/`ac7` GOT THE SMALLER, SAFER FIX ON PURPOSE — `requireName` WAS CONSIDERED AND
+   REJECTED HERE.** All three share one `cat` term with genuinely no differentiating name match in
+   practice (a real "Varley Casper T-Shirt" matches all three today on category alone, never on any of
+   their own compound marketing phrases like "workout tee") — `requireName` would empty all three shelves
+   nearly to nothing, an untested, far riskier change than the fo3/fo4/fo5/sh14 case it was built for.
+   Excluding sweatshirt/hoodie closes the clearest leak with no shelf-emptying risk on the many genuine
+   T-shirts/polos/vests that don't say the marketing phrase either.
+   ✅ **VERIFIED, NOT ASSUMED, THREE WAYS:** every fix confirmed the false positive is gone AND a real
+   match for that row still passes, by direct testing against the exact discovered garment names.
+   `scripts/test_slot_match.py` **1149/1149** (grew from 1108 — 18 new direct-proof pairs, one per fix,
+   following the established pattern). `test_rakuten_feed.py` **67/67** and `test_rakuten_ingest.py`
+   **ALL PASS**, unaffected. `data/slot-rules.json` re-validated as parseable JSON.
+   ▶ **DELIBERATELY NOT TOUCHED, FLAGGED RATHER THAN GUESSED AT — see item 15.**
+15. ▶ **THREE THINGS THE HEAD-NOUN AUDIT FOUND BUT DID NOT FIX, ON PURPOSE — genuinely too ambiguous,
+   too rare, or the wrong file to patch blindly.**
+   **(a) `dr1` Daytime casual dresses ← one linen "SIR Iris asymmetric linen maxi skirt".** Only 1 in
+   10,186 matched items. The fix would be excluding "skirt", but a real dress can genuinely say "skirt"
+   in its own name (a "tiered skirt maxi dress", a two-piece top-and-skirt set) — excluding it risks
+   trading one rare false positive for a rarer false NEGATIVE on a real dress, which the sibling-
+   contamination lesson (item 12) explicitly warns against ("shelves must not go empty"). Needs a look
+   at more real samples before touching it, not a guess off one.
+   **(b) A HANDFUL OF ADJACENT-SILHOUETTE OVERLAPS, LEFT ALONE AS STYLIST JUDGMENT, NOT LEAKS:** mules
+   landing on Dressy pumps/High heel sandals/Slides · a parka on Raincoats · ski pants on Black trousers
+   · a straight pant on Joggers · a resort espadrille-style flat on Espadrilles · beach shorts on Swim
+   coverups. None of these are a bag-on-a-dress-row shape of wrong — they're all genuinely adjacent
+   garments a stylist could defensibly group together, the same "design overlap, not a gap" distinction
+   `_SIBLING_OK` already draws elsewhere in this file. Not touched.
+   **(c) 🚨🚨 A SEPARATE, DIFFERENT-MECHANISM FINDING, NOT PATCHED HERE: KIDS-BRAND-LINE ITEMS ARE
+   SLIPPING PAST THE INGEST-TIME KIDS GUARD, NOT THE CHECKLIST MATCHER.** A Balmain "Youth Tracksuit and
+   Reversible Cap Set" (`ac11` Matching athletic sets), a Stone Island "Junior" hooded zip-up sweatshirt
+   (`ac8` Athletic jackets) and a Billieblush "Mini Pajama Set with Hat" (`sl1` Pajamas) are real kids'
+   items that should never have reached the products table at all — that exclusion happens at INGEST
+   TIME, in `scripts/rakuten_feed.py`'s `_KIDS_NAME` regex (`kids?|children|toddlers?|infants?|newborns?
+   |girls|boys`), the exact mechanism item 27 (2026-09-13, this file's Master To-Do List) already fixed
+   once for "VERSACE KIDS Mini Polo." **"Youth" and "Junior" are both missing from that regex.**
+   ⚠️ **NOT FIXED HERE, DELIBERATELY: "Junior" is a real ambiguity, not a clean word to exclude blindly.**
+   US department stores run a genuine "Juniors" apparel department/sizing for teens/young women (distinct
+   from a literal kids' line), so a blanket regex addition risks excluding legitimate young-women's
+   fashion, not just Stone Island's actual children's collection. "Youth" carries much less of that
+   department-store ambiguity and is a safer candidate — but this touches the "womenswear only" PROMISE-
+   class rule (never a judgement one), so it deserves its own dedicated look with real catalog samples
+   rather than a same-breath patch alongside 18 unrelated `not`-list edits. Hers to weigh in on, or
+   Claude's to investigate properly next time this file is open, not guessed at now.
 🚨 **SERPAPI'S OUTAGE — RE-CHECKED 2026-09-13: STILL `major_outage`, STILL "MONITORING", NOT RESOLVED.**
 Open since 2026-09-10; SerpApi reports recovering success rates but has not declared it over. Re-check
 again before assuming it has cleared: `curl -s https://status.serpapi.com/api/v2/summary.json`.

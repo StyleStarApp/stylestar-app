@@ -310,6 +310,113 @@ ok("a real garter SKORT still legitimately lands on BOTH Tennis skirts and Speci
    "real design overlap, not a false positive -- the fix must not overreach")
 
 
+# --------------------------- 2026-09-13, SAME SESSION: "TACKLE THE ENTIRE THING CAREFULLY" --
+# 🚨🚨 Cath's own ruling after the fo5 fix: not a one-off patch, a full pass. Fetched the
+# COMPLETE coverage log (744 lines, all 100 rows, not the earlier truncated tail) and read
+# every row's three samples looking for the SAME shape of bug: a real garment landing on a
+# row because a bare word in its name or category happens to collide with the row's own
+# name term, with nothing checking whether that word is the garment's actual head noun.
+# ⚠️ EVERY FIX BELOW IS THE SAME PRECEDENTED TECHNIQUE AS fo5's: add the SPECIFIC discovered
+# false-positive word to that row's own `not` list (or, for bg4, requireName -- its own name
+# list already holds nothing but precise multi-word phrases, the same shape as fo3/fo4/sh14).
+# ▶ DELIBERATELY NOT TOUCHED, flagged instead of guessed at: dr1 (one linen "maxi skirt"
+# landed on Daytime casual dresses via category, but "skirt" is too common a word inside a
+# genuine dress's own name -- e.g. a real "tiered skirt maxi dress" -- to exclude safely off
+# one sample); ac2/ja6/bo3/sh3/sh4/sh6/sh12/ac10 (mules-vs-pumps, parka-vs-raincoat, ski
+# pants-vs-trousers -- stylist judgment calls about adjacent silhouettes, not leaks); and a
+# SEPARATE, DIFFERENT-MECHANISM finding -- kids-brand-LINE items (a Balmain "Youth"
+# tracksuit, a Stone Island "Junior" hoodie, a Billieblush pajama set) slipping past
+# rakuten_feed.py's _KIDS_NAME guard at ingest time, never reaching slot_match.py at all --
+# is recorded in CLAUDE.md as its own open item, not patched here alongside these.
+ok("a linen TABLECLOTH does not land on Linen pants",
+   "bo4" not in match(g("Once Milano Linen Tablecloth", "home>tableware>linens"), rules))
+ok("...but real linen pants still do",
+   "bo4" in match(g("Vince Linen Wide-Leg Pants", "women>pants>linen"), rules))
+ok("a leather HANDBAG does not land on Wallets",
+   "bg11" not in match(g("Burberry Reversible Leather Shopping Handbag", "women>bags>shopping totes"), rules))
+ok("...but a real wallet still does",
+   "bg11" in match(g("Loewe Leather Wallet", "women>wallets"), rules))
+ok("a sports BRA does not land on Shorts",
+   "bo6" not in match(g("Norba Strappy Sports Bra", "women>activewear>shorts"), rules))
+ok("...but real shorts still do",
+   "bo6" in match(g("Agolde Parker Long Denim Shorts", "women>shorts"), rules))
+ok("a lace SKIRT does not land on Dressy or going-out tops",
+   "to6" not in match(g("Lace Tucked Column Skirt", "women>skirts"), rules))
+ok("...but a real dressy silk top still does",
+   "to6" in match(g("Roland Mouret Draped Wool And Silk Top", "women>tops>evening"), rules))
+ok("a SWEATSHIRT does not land on Tote bags",
+   "bg1" not in match(g("Dsquared Unisex Mini Relax Sweatshirt", "women>bags>tote"), rules))
+ok("...but a real tote bag still does",
+   "bg1" in match(g("Chloe Stripy Large Logo Canvas Tote Bag", "women>bags>tote bags"), rules))
+ok("a scarf-shaped bag KEYRING does not land on Scarves/Pashminas",
+   "ex3" not in match(g("Burberry Women's Mini Fox Scarf Charm Keyring", "women>accessories>keyrings"), rules))
+ok("...but a real scarf still does",
+   "ex3" in match(g("Hermes Silk Scarf", "women>scarves"), rules))
+ok("a wool THROW blanket does not land on Hair accessories",
+   "ex6" not in match(g("Etro Alocasia Fringed Wool Throw", "women>home>throws"), rules))
+ok("...but a real hair clip still does",
+   "ex6" in match(g("Gucci Metal Hair Clips Set", "women>hair accessories"), rules))
+ok("a sports BRA does not land on Athletic socks",
+   "ac13" not in match(g("Nike Light-Support Longline Sports Bra", "women>socks"), rules))
+ok("a BUSTIER top does not land on Athletic socks either",
+   "ac13" not in match(g("Rick Owens Wool Bustier Top", "women>socks"), rules))
+ok("...but real athletic socks still do",
+   "ac13" in match(g("Nike Ankle Socks 3-Pack", "women>activewear>socks"), rules))
+ok("a BUSTIER top does not land on Perfectly fitting bras",
+   "fo1" not in match(g("Fleur du Mal Bouquet Lace Bustier Top", "women>lingerie>bras"), rules))
+ok("...but a real bra still does",
+   "fo1" in match(g("Wolford Fatal Bra", "women>lingerie>bras"), rules))
+ok("a PERFUME whose own product line is French for 'dress' (Guerlain's La Petite Robe) "
+   "does not land on Robes",
+   "sl3" not in match(g("Guerlain Eau de Parfum Spray La Petite Robe Absolue", "beauty>fragrance"), rules))
+ok("...but a real silk robe still does",
+   "sl3" in match(g("Penninsule Silk Robe", "women>robes"), rules))
+ok("a DUFFEL bag does not land on Laptop bags",
+   "bg9" not in match(g("Bottega Veneta Getaway Large Intrecciato Duffel Bag", "women>bags>laptop bags"), rules))
+ok("...but a real laptop briefcase still does",
+   "bg9" in match(g("Tumi Leather Laptop Briefcase", "women>bags>laptop bags"), rules))
+ok("a plain BELT (the accessory, not a belt bag) does not land on Belt bags",
+   "bg4" not in match(g("Balenciaga Slim Women's Mini Belt", "women>accessories>belt bags"), rules),
+   "requireName: bg4's own name list is precise multi-word phrases (belt bag/fanny pack/waist "
+   "bag/bum bag), so a plain belt filed under a shared 'belt bags' category must not qualify")
+ok("...but a real belt bag still does",
+   "bg4" in match(g("Saint Laurent Classic Monogram Leather Belt Bag", "women>bags>belt bags"), rules))
+ok("a MAKEUP pencil does not land on Shapewear",
+   "fo6" not in match(g("Lancome Mini Brow Shaping Powdery Pencil", "beauty>makeup"), rules),
+   "'shaping' is one of fo6's own name words and is also cosmetics jargon (brow shaping) -- "
+   "the same head-noun trap as fo5's garter/teddy")
+ok("...but real shapewear still does",
+   "fo6" in match(g("Skims Sculpting Bodysuit Shaper", "women>shapewear"), rules))
+ok("a DOG coat does not land on Wool coats",
+   "ja4" not in match(g("Moncler Poldo Dog Couture Dog Coat", "women>coats>wool"), rules))
+ok("...but a real wool coat still does",
+   "ja4" in match(g("Max Mara 101801 Wool Coat", "women>coats>wool"), rules))
+# 🚨 "thong" is genuinely two different garments -- underwear (fo2's own word) and a
+# footwear STYLE (thong sandals, thong slippers) -- and only the FOOTWEAR family exclusion
+# (applied to fo/to/bo/dr/ja/ac/sl/bg/ex, deliberately never to sh, which needs "slipper" to
+# find its own Slippers row) had never carried "slipper" alongside sandal/espadrille/etc.
+ok("a rubber THONG SLIPPER does not land on Comfortable underwear",
+   "fo2" not in match(g("Ferragamo Women's Rubber Thong Slippers", "women>underpants"), rules))
+ok("...but a real thong still does",
+   "fo2" in match(g("Fleur du Mal Luxe Cheeky Thong", "women>underpants"), rules))
+ok("...and thong SANDALS still correctly land on Flip flops, unaffected",
+   "sh11" in match(g("Ash Thong Sandals with Studded Trim", "women>shoes>sandals"), rules))
+# ac5/ac6/ac7 all share one cat term (activewear>tops) with no differentiating name match in
+# practice (a real 'Varley Casper T-Shirt' matches all three on category alone, not on any of
+# their own compound marketing phrases) -- requireName would empty all three nearly to
+# nothing, untested and far riskier than the fo3/fo4/fo5/sh14 case it worked for. Fixed the
+# smaller, safer way instead: a sweatshirt/hoodie is unambiguously never a tank, tee or
+# long-sleeve top, so excluding those two words is a real leak closed with no shelf-emptying
+# risk on the many genuine T-shirts/polos/vests that don't say the marketing phrase either.
+for _slot in ("ac5", "ac6", "ac7"):
+    ok(f"a zip-up SWEATSHIRT does not land on {_slot}",
+       _slot not in match(g("Adidas by Stella McCartney Logo Zip-Up Sweatshirt", "women>activewear>tops"), rules))
+    ok(f"a fleece HOODIE does not land on {_slot}",
+       _slot not in match(g("The Upside Kalo Delphi Cotton Fleece Hoodie", "women>activewear>tops"), rules))
+ok("...but a real workout tee still lands on Workout tees",
+   "ac6" in match(g("Varley Casper T-Shirt", "women>activewear>tops"), rules))
+
+
 # ------------------------------------------------- 2026-09-06 REGRESSION SET --
 # 🚨 Cath opened "Tops in your favorite colors" on her own phone and found a
 # THONG, a GARTER BELT and a Balenciaga HANDBAG on it. Every case below is a

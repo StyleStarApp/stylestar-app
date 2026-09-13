@@ -351,7 +351,8 @@
       "garter",
       "suspender",
       "teddy",
-      "babydoll"
+      "babydoll",
+      "skirt"
     ]
   },
   "to8": {
@@ -506,7 +507,8 @@
       "shirt",
       "dress",
       "jacket",
-      "top"
+      "top",
+      "tablecloth"
     ]
   },
   "bo9": {
@@ -588,7 +590,8 @@
       "skirt",
       "sandal",
       "bag",
-      "hair"
+      "hair",
+      "bra"
     ]
   },
   "dr1": {
@@ -899,7 +902,8 @@
       "down",
       "dress",
       "jacket",
-      "raincoat"
+      "raincoat",
+      "dog"
     ]
   },
   "ja11": {
@@ -1054,7 +1058,9 @@
       "running long",
       "performance long",
       "technical long",
-      "base layer"
+      "base layer",
+      "sweatshirt",
+      "hoodie"
     ]
   },
   "ac6": {
@@ -1082,7 +1088,9 @@
       "running long",
       "performance long",
       "technical long",
-      "base layer"
+      "base layer",
+      "sweatshirt",
+      "hoodie"
     ]
   },
   "ac7": {
@@ -1110,7 +1118,9 @@
       "performance tee",
       "technical tee",
       "workout tee",
-      "sport tee"
+      "sport tee",
+      "sweatshirt",
+      "hoodie"
     ]
   },
   "ac8": {
@@ -1144,7 +1154,9 @@
     "not": [
       "dress",
       "boot",
-      "tight"
+      "tight",
+      "bra",
+      "bustier"
     ]
   },
   "ac9": {
@@ -1260,7 +1272,12 @@
     ],
     "not": [
       "dress ",
-      "towel"
+      "towel",
+      "parfum",
+      "fragrance",
+      "cologne",
+      "perfume",
+      "eau de"
     ]
   },
   "fo1": {
@@ -1280,7 +1297,8 @@
       "bralette top",
       "dress",
       "bandeau bra",
-      "adhesive bra"
+      "adhesive bra",
+      "bustier"
     ]
   },
   "fo4": {
@@ -1362,7 +1380,10 @@
       "tight",
       "sock",
       "stocking",
-      "hosiery"
+      "hosiery",
+      "pencil",
+      "brow",
+      "cosmetic"
     ]
   },
   "fo5": {
@@ -1735,7 +1756,8 @@
     "not": [
       "clutch",
       "crossbody",
-      "cosmetic"
+      "cosmetic",
+      "sweatshirt"
     ]
   },
   "bg9": {
@@ -1752,7 +1774,8 @@
     ],
     "not": [
       "clutch",
-      "cosmetic"
+      "cosmetic",
+      "duffel"
     ]
   },
   "bg4": {
@@ -1771,7 +1794,8 @@
     "not": [
       "tote",
       "clutch"
-    ]
+    ],
+    "requireName": true
   },
   "bg2": {
     "n": "Evening bags",
@@ -1822,7 +1846,8 @@
     ],
     "not": [
       "bag",
-      "tote"
+      "tote",
+      "handbag"
     ]
   },
   "bg12": {
@@ -2097,7 +2122,9 @@
     ],
     "not": [
       "ring",
-      "bag"
+      "bag",
+      "keyring",
+      "keychain"
     ]
   },
   "ex6": {
@@ -2116,7 +2143,8 @@
       "hair pin"
     ],
     "not": [
-      "bag"
+      "bag",
+      "throw"
     ]
   },
   "_family_not": {
@@ -2145,7 +2173,8 @@
       "sandal",
       "espadrille",
       "stiletto",
-      "flip flop"
+      "flip flop",
+      "slipper"
     ],
     "JEWELRY": [
       "necklace",
