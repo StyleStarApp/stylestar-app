@@ -4845,15 +4845,17 @@ const STORES={
      that, though the real-term half is solid.
      🚨 IT SELLS MEN'S CASHMERE TOO ("Men's Pure Cashmere Polo Sweater" etc.),
      so w:1 is set -- her rule since the Banana Republic men's-trousers catch.
-     🚨🚨 THIS STORE IS FINDABLE BUT STILL DOES NOT EARN, EVEN THOUGH THE CJ
-     WRAPPING MECHANISM NOW EXISTS (`_CJ_PID`/`_CJ_AID`/`_cjAid`, beside
-     `_AFF_MID` above `_affUrl`, built 2026-09-13). It is SCAFFOLDED, not
-     LIVE: `_CJ_PID` is deliberately empty and `_CJ_AID` holds no entry for
-     cashmereboutique.com, because both need a real value read off HER OWN
-     CJ dashboard link for this store, and guessing either would produce a
-     link that looks real and tracks nothing. The moment she pastes one real
-     CJ link for Cashmere Boutique, this store starts earning with no other
-     change needed. */
+     ✅✅ THIS STORE NOW EARNS -- WIRED LIVE 2026-09-13, SAME SESSION, once she
+     pasted a real generated link off her own CJ dashboard (Links & Products
+     > Cashmere Boutique > "Softest Cashmere on the Planet" banner, HTML
+     tab). `_CJ_PID='101881879'` (her real Publisher/Website ID) and
+     `_CJ_AID['cashmereboutique.com']={domain:'jdoqocy.com',aid:'13093529'}`,
+     beside `_AFF_MID` above `_affUrl` -- see the fuller comment there.
+     ⚠️ The Mall's own homepage link for this store is the one destination
+     verified byte-for-byte against her real link; wrapping a different
+     destination (a search url, say) rides the same PID/LID with CJ's own
+     documented `?url=` override, which is not yet empirically click-tested
+     from here -- see the comment above `_affUrl` for what to watch for. */
   'Cashmere Boutique':{w:1,u:'https://www.cashmereboutique.com/search?q='}, // ⚠️ url partially unverified, see comment above
   'Sachin & Babi':{u:'https://www.sachinandbabi.com/search?q=',t:'$$$$',a:'Glamorous Luxe, Classic Sophisticate',s:['plus'],d:[6,5,10,8,5,1,10,8,9,8],c:'evening gowns, mother of the bride, wedding guest, occasion',deep:'evening and occasion dresses'},
   'Alice + Olivia':{u:'https://www.aliceandolivia.com/search?q=',t:'$$$-$$$$',a:'Glamorous Luxe, Modern Glam',s:[],d:[2,9,9,6,10,3,10,10,5,10],c:'statement dresses, occasionwear'},
@@ -5087,35 +5089,35 @@ function _affMid(u){
   }catch(e){}
   return '';
 }
-// ▶ CJ AFFILIATE (Commission Junction), scaffolded 2026-09-13. Her CJ account
-// went active 2026-09-12 and her first advertiser, Cashmere Boutique,
-// approved 2026-09-13 -- but CJ does NOT run through Rakuten's
-// click.linksynergy.com, and its own deep-link format needs TWO
-// account-specific values that exist only in HER OWN CJ dashboard, neither
-// of which has ever been given here: her PUBLISHER WEBSITE ID (one number
-// for the whole account, the equivalent of _AFF_ID above) and, PER
-// ADVERTISER, an ADVERTISER ID plus the specific CJ redirect domain that
-// advertiser's own link uses (CJ has several interchangeable redirect
-// domains -- anrdoezrs.net, dpbolvw.net, tkqlhce.com, jdoqocy.com,
-// kqzyfj.com, qksrv.net -- and which one a given advertiser's link comes
-// back on is not guessable; it is simply whatever CJ's own "Get A Link" /
-// Deep Link Generator tool hands back for THAT advertiser).
-// 🚨 NEITHER VALUE IS FILLED IN, ON PURPOSE. Guessing either would risk a
-// link that looks real, tracks nothing, and pays her nothing -- worse than
-// today's honestly-plain link, which at least is not pretending. The fix is
-// the same address-bar method already used for every unverifiable store
-// search url in this file: get ONE real link for an approved CJ advertiser
-// (Cashmere Boutique today) from her CJ dashboard's own link-generator tool
-// and paste it in here; the PID/AID/domain are read straight off it.
-// ⚠️ UNTIL THEN THIS WHOLE MECHANISM IS INERT and every CJ-approved store's
-// link renders PLAIN, exactly as it does today -- _cjAid always returns
-// null with an empty _CJ_PID, so _affUrl and _mallEarns both fall through
-// unchanged. The moment real values land here, every CJ store's link starts
-// earning with no other plumbing change, the same way _AMZ_TAG worked.
-var _CJ_PID='';
+// ▶ CJ AFFILIATE (Commission Junction), WIRED 2026-09-13 -- she pasted a real
+// generated link from her own CJ dashboard (Links & Products > Cashmere
+// Boutique > "Softest Cashmere on the Planet" banner, HTML tab):
+//   <a href="https://www.jdoqocy.com/click-101881879-13093529" target="_top">
+// _CJ_PID (101881879) is her account-wide Publisher/Website ID -- CONFIRMED
+// TWICE OVER, not guessed: it is both the PID slot of this real click url AND
+// the number the link generator's own "Website:" dropdown showed
+// ("Style Star - 101881879"). ⚠️ Two OTHER numbers appeared on her
+// Advertisers page first (7757199 the /member/ path segment, 8070276 a
+// publisherId query param on a different listing view) and NEITHER is this
+// -- a lesson in itself: an id visible in a URL is not necessarily the id a
+// deep link actually uses. Read it off a real generated LINK, not a listing
+// page.
+// jdoqocy.com and 13093529 are the redirect domain and CJ's own Link ID for
+// this one banner. ⚠️ THE ARBITRARY-DESTINATION CASE IS NOT EMPIRICALLY
+// CONFIRMED FROM HERE: `_affUrl` appends `?url=<destination>` the same way
+// Rakuten's `&murl=` works, which is CJ's own documented general mechanism
+// for a deep-linking-enabled link (their own "Deep Link Generator" tool
+// exists for exactly this) -- but nobody has click-tested that override on
+// THIS specific banner LID against a live browser. The Mall's own Cashmere
+// Boutique card links to the plain store homepage, which is the exact
+// destination this banner was already generated for, so THAT case needs no
+// override at all and is the one use verified byte-for-byte against her
+// screenshot. If a future CJ store's link ever visibly lands on the wrong
+// page (not just failing to earn), that is the `?url=` override not being
+// honoured for that link type -- worth a second real link then, not a guess.
+var _CJ_PID='101881879';
 var _CJ_AID={
-  // 'cashmereboutique.com':{domain:'???.net',aid:'????????'} -- fill in from
-  // her own real CJ link for Cashmere Boutique; do not invent either value.
+  'cashmereboutique.com':{domain:'jdoqocy.com',aid:'13093529'}
 };
 function _cjAid(u){
   try{
@@ -8740,12 +8742,11 @@ const mallStores=[
        Filed here rather than Value & Basics: real prices run $130-$700, which
        is elevated-basics territory, not budget. ⚠️ THE BLURB IS A CLAUDE
        DRAFT, like FARM Rio's and Olivela's above -- her own words if she'd
-       rather. 🚨 STILL DOES NOT EARN, EVEN THOUGH THE CJ MECHANISM NOW EXISTS
-       (`_CJ_PID`/`_CJ_AID` beside `_AFF_MID`, built 2026-09-13) -- it is
-       scaffolded but empty, waiting on one real CJ link from her own
-       dashboard for this store, see the fuller note on the STORES entry
-       above. Until then `_mallEarns` correctly sorts this card after any
-       earning store in the category, and the link renders raw. */
+       rather. ✅✅ NOW EARNS -- SAME SESSION, once she pasted her real CJ
+       link (`_CJ_PID`/`_CJ_AID`, beside `_AFF_MID`, see the fuller comment
+       above `_affUrl` and on this STORES entry). `_mallEarns` now sorts this
+       card ahead of every non-earning store in the category, same as any
+       Rakuten-approved store. */
     {n:'Cashmere Boutique',d:'Soft, quality cashmere sweaters and layers',u:'https://www.cashmereboutique.com'}
   ]},
   {cat:'Elevated & Designer',stores:[
