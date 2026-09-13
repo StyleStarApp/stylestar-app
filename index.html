@@ -4468,12 +4468,19 @@ const STORES={
   'Bloomingdales':{w:1,cfp:true,cfpBase:'https://www.bloomingdales.com/shop/featured/',u:'https://www.bloomingdales.com/shop/search?keyword=',t:'$$$',a:'Modern Luxe',s:['petite','plus'],d:[6,7,9,8,8,6,9,8,9,8],deep:1,c:'designer, denim, shoes, jewelry'},
   'Saks':{w:1,u:'https://www.saksfifthavenue.com/search?q=',t:'$$$$',a:'Glamorous Luxe',s:['petite','plus'],d:[3,9,10,8,9,3,10,9,10,9],deep:1,c:'designer, bags, occasion, fine jewelry'},
   'Neiman Marcus':{w:1,u:'https://www.neimanmarcus.com/search.jsp?q=',t:'$$$$',a:'Glamorous Luxe',s:[],d:[3,9,10,9,8,3,10,9,10,9],deep:1,c:'designer, evening, shoes, fine jewelry'},
-  'Bergdorf Goodman':{w:1,u:'https://www.bergdorfgoodman.com/search.jsp?q=',t:'$$$$',a:'Luxury Fashion',s:[],d:[2,9,10,10,9,2,10,10,10,9],c:'couture, designer, fine jewelry'},
+  // ⚠️ RELAXED/FITTED CORRECTED 2026-09-13, HER OWN CATCH: was 2 relaxed/10 fitted
+  // (as extreme as a store gets). Her words: "Bergdorf Goodman is more neutral,
+  // carries both fitted and relaxed (department store)." She gave no exact
+  // numbers for this one -- 6/6 is Claude's interpretation of "neutral, carries
+  // both," flagged to her rather than assumed. Everything else untouched.
+  'Bergdorf Goodman':{w:1,u:'https://www.bergdorfgoodman.com/search.jsp?q=',t:'$$$$',a:'Luxury Fashion',s:[],d:[6,9,10,10,9,2,10,6,10,9],c:'couture, designer, fine jewelry'},
   'NET-A-PORTER':{u:'https://www.net-a-porter.com/en-us/shop/search?q=',t:'$$$$',a:'Luxury Fashion, Quiet Luxury',s:[],d:[4,9,10,9,9,3,10,8,10,9],deep:1,c:'luxury designer clothing, handbags, shoes'},
   // searchSuggestion=false stops Shopbop redirecting the term into a suggestion,
   // the way Revolve does. Ordered first so the term still appends at the end.
   'Shopbop':{u:'https://www.shopbop.com/products?searchSuggestion=false&query=',t:'$$$',a:'Modern Chic, Trendsetter',s:[],d:[5,7,8,6,9,6,8,8,8,8],deep:1,c:'contemporary designers, denim, shoes'},
-  'Nordstrom Rack':{w:1,u:'https://www.nordstromrack.com/search?query=',t:'$-$$',a:'Universal',s:['petite','plus','wide'],d:[8,5,7,7,6,8,6,7,9,8],deep:1,c:'designer deals, shoes, denim, jewelry'},
+  // ⚠️ FITTED CORRECTED 2026-09-13, HER OWN CATCH: "Nordstrom rack one notch
+  // more fitted." Was fitted 7, now 8 (relaxed stays 8, unchanged).
+  'Nordstrom Rack':{w:1,u:'https://www.nordstromrack.com/search?query=',t:'$-$$',a:'Universal',s:['petite','plus','wide'],d:[8,5,7,7,6,8,6,8,9,8],deep:1,c:'designer deals, shoes, denim, jewelry'},
   'TJ Maxx':{w:1,u:'https://m.tjmaxx.tjx.com/m/shop/?initSubmit=search&Ntt=',t:'$',a:'Treasure Hunter',s:['plus'],d:[8,5,5,5,6,9,5,6,8,8],deep:1,c:'value finds, handbags, shoes'},
   // Contemporary and mainstream
   'J.Crew':{w:1,u:'https://www.jcrew.com/search?term=',t:'$$',a:'Classic Sophisticate, Playful Classic',s:['petite','tall'],d:[5,3,9,10,3,7,8,8,9,6],deep:1,c:'timeless classics, workwear, denim, dresses'},
@@ -4514,8 +4521,13 @@ const STORES={
   // mechanism as Amazon's i=fashion-womens, just a different job. No other
   // store in the table needs this; Etsy is the only marketplace-of-
   // independent-sellers in it.
-  'Etsy':{gp:'&instant_download=false',u:'https://www.etsy.com/search?q=',t:'$-$$$$',a:'Universal',s:[],d:[8,4,5,3,7,8,4,4,7,8],c:'handmade goods, vintage finds, personalized jewelry and gifts, independent makers, home decor, art'},
-  'Anthropologie':{u:'https://www.anthropologie.com/search?q=',t:'$$-$$$',a:'Romantic Feminine, Bohemian Chic',s:['petite','plus'],d:[8,6,8,6,8,7,7,5,6,9],deep:1,c:'dresses, occasion, unique pieces'},
+  // ⚠️ RELAXED/FITTED CORRECTED 2026-09-13, HER OWN CATCH: "Etsy - equal
+  // balance." Was 8 relaxed/4 fitted, now 5/5 -- a handmade marketplace
+  // genuinely carries both, no lean either way.
+  'Etsy':{gp:'&instant_download=false',u:'https://www.etsy.com/search?q=',t:'$-$$$$',a:'Universal',s:[],d:[5,4,5,3,7,8,4,5,7,8],c:'handmade goods, vintage finds, personalized jewelry and gifts, independent makers, home decor, art'},
+  // ⚠️ FITTED CORRECTED 2026-09-13, HER OWN CATCH: "Anthropologie 2 notches
+  // more fitted." Was fitted 5, now 7 (relaxed stays 8, unchanged).
+  'Anthropologie':{u:'https://www.anthropologie.com/search?q=',t:'$$-$$$',a:'Romantic Feminine, Bohemian Chic',s:['petite','plus'],d:[8,6,8,6,8,7,7,7,6,9],deep:1,c:'dresses, occasion, unique pieces'},
   'Express':{w:1,u:'https://www.express.com/exp/search?q=',t:'$$',a:'Modern Glam, Professional Power',s:['petite'],d:[3,8,7,4,8,5,8,10,8,7],c:'going-out looks, workwear, denim'},
   // The old /r/search?query= silently landed on Revolve's homepage (Cath caught
   // it live; Revolve blocks automated checks so it could not be tested here).
@@ -4523,7 +4535,9 @@ const STORES={
   // comes first only so the search term can still be appended at the end.
   'Revolve':{u:'https://www.revolve.com/r/Search.jsp?d=Womens&search=',t:'$$$',a:'Glamorous Luxe, Trendsetter',s:[],d:[2,10,8,2,10,4,10,10,7,9],deep:1,c:'occasion dresses, vacation, designer contemporary'},
   'Abercrombie':{gp:'&facet=gender%3A%28%22Women%27s%22%29&filtered=true',u:'https://www.abercrombie.com/shop/us/search?searchTerm=',t:'$$',a:'Casual Trendy, Elevated Casual',s:['petite','tall'],d:[6,6,7,5,8,9,4,8,8,6],c:'denim, dresses, everyday fashion'},
-  'H&M':{w:1,u:'https://www2.hm.com/en_us/search-results.html?q=',t:'$',a:'Trendsetter, Casual Everyday',s:['plus'],d:[7,5,5,3,9,8,4,6,6,8],deep:1,c:'affordable trends, basics'},
+  // ⚠️ FITTED CORRECTED 2026-09-13, HER OWN CATCH: "H&M one notch more fitted."
+  // Was fitted 6, now 7 (relaxed stays 7, unchanged).
+  'H&M':{w:1,u:'https://www2.hm.com/en_us/search-results.html?q=',t:'$',a:'Trendsetter, Casual Everyday',s:['plus'],d:[7,5,5,3,9,8,4,7,6,8],deep:1,c:'affordable trends, basics'},
   'Banana Republic':{gp:'&department=136',u:'https://bananarepublic.gap.com/browse/search.do?searchText=',t:'$$',a:'Classic Sophisticate, Modern Minimalist',s:['petite','tall'],d:[4,4,9,9,4,5,9,8,10,4],c:'workwear, elevated basics, tailoring'},
   'Banana Republic Factory':{gp:'&department=136',u:'https://bananarepublicfactory.gapfactory.com/browse/search.do?searchText=',t:'$-$$',a:'Classic Sophisticate',s:['petite','tall'],d:[5,3,7,8,3,7,6,7,9,4],c:'affordable workwear, tailoring, basics'},
   'Everlane':{w:1,u:'https://www.everlane.com/search?q=',t:'$$',a:'Modern Minimalist, Elevated Natural',s:[],d:[9,2,9,9,4,8,5,4,10,2],c:'elevated basics, denim, outerwear'},
@@ -4533,7 +4547,9 @@ const STORES={
   'Old Navy':{gp:'&department=136',u:'https://oldnavy.gap.com/browse/search.do?searchText=',t:'$',a:'Casual Everyday',s:['petite','plus','tall'],d:[10,2,4,5,4,10,1,3,7,6],c:'budget basics, activewear, family essentials'},
   "Lands' End":{w:1,u:'https://www.landsend.com/search?q=',t:'$$',a:'Classic Casual',s:['petite','plus','tall'],d:[10,1,6,8,1,10,2,3,9,5],deep:'swimwear',c:'swimwear, outerwear, basics, uniforms'},
   'Boden':{w:1,u:'https://us.boden.com/search?q=',t:'$$',a:'Playful Classic',s:['petite','tall'],d:[6,3,8,9,5,6,7,6,6,9],c:'colorful dresses, prints'},
-  'FARM Rio':{u:'https://farmrio.com/search?q=',t:'$$$',a:'Playful Chic, Bohemian Chic',s:[],d:[7,7,8,3,10,7,7,5,2,10],c:'colorful dresses, vacation wear, statement prints'},
+  // ⚠️ FITTED CORRECTED 2026-09-13, HER OWN CATCH: "farm Rio ... 2 notches
+  // more fitted." Was fitted 5, now 7 (relaxed stays 7, unchanged).
+  'FARM Rio':{u:'https://farmrio.com/search?q=',t:'$$$',a:'Playful Chic, Bohemian Chic',s:[],d:[7,7,8,3,10,7,7,7,2,10],c:'colorful dresses, vacation wear, statement prints'},
   'Tommy Bahama':{w:1,u:'https://www.tommybahama.com/search?text=',t:'$$$',a:'Coastal Chic, Elevated Natural',s:[],d:[10,2,8,7,2,10,3,3,7,8],c:'resortwear, vacation clothing, linen'},
   'J.McLaughlin':{w:1,u:'https://www.jmclaughlin.com/search?q=',t:'$$$',a:'Coastal Classic, Resort Chic',s:[],d:[6,3,9,10,2,6,7,6,8,7],c:'resortwear, polished casual, prints'},
   'IZOD':{w:1,u:'https://www.izod.com/search?q=',t:'$$',a:'Casual Classic',s:[],d:[8,2,6,8,2,9,3,5,8,5],c:'polos, golfwear, casual basics'},
@@ -4596,16 +4612,26 @@ const STORES={
   // Elevated natural / quiet luxury: where a stylist sends this woman first
   'Frank & Eileen':{u:'https://frankandeileen.com/search?q=',t:'$$$',a:'Elevated Natural, Coastal Chic',s:[],d:[10,2,9,9,2,10,3,2,10,2],c:'button-downs, relaxed luxury, travel'},
   'Faherty':{w:1,u:'https://fahertybrand.com/search?q=',t:'$$$',a:'Coastal Chic, Elevated Natural',s:[],d:[10,2,8,7,3,10,3,3,8,6],c:'resortwear, knitwear, beach lifestyle'},
-  'Cuyana':{u:'https://www.cuyana.com/search?q=',t:'$$$',a:'Quiet Luxury, Modern Minimalist',s:[],d:[8,2,10,10,2,6,7,4,10,1],c:'leather handbags, timeless accessories'},
+  // ⚠️ RELAXED/FITTED CORRECTED 2026-09-13, HER OWN CATCH: "cuyana- equal
+  // balance." Was 8 relaxed/4 fitted, now 5/5.
+  'Cuyana':{u:'https://www.cuyana.com/search?q=',t:'$$$',a:'Quiet Luxury, Modern Minimalist',s:[],d:[5,2,10,10,2,6,7,5,10,1],c:'leather handbags, timeless accessories'},
   'Eileen Fisher':{u:'https://www.eileenfisher.com/search?q=',t:'$$$',a:'Elevated Natural, Modern Minimalist',s:['petite','plus'],d:[10,1,9,10,1,8,6,2,10,2],c:'sustainable luxury, linen, relaxed tailoring'},
   // Minimal / tailored
-  'Theory':{w:1,u:'https://www.theory.com/search/?lang=default&q=',t:'$$$',a:'Modern Minimalist, Professional Power',s:[],d:[2,3,10,10,4,3,10,9,10,2],c:'tailoring, workwear, luxury basics'},
+  // ⚠️ FITTED CORRECTED 2026-09-13, HER OWN CATCH: "theory and MM la fleur one
+  // notch less fitted." Was fitted 9, now 8 (relaxed stays 2, unchanged).
+  'Theory':{w:1,u:'https://www.theory.com/search/?lang=default&q=',t:'$$$',a:'Modern Minimalist, Professional Power',s:[],d:[2,3,10,10,4,3,10,8,10,2],c:'tailoring, workwear, luxury basics'},
   'Vince':{w:1,u:'https://www.vince.com/search?q=',t:'$$$',a:'Quiet Luxury, Modern Minimalist',s:[],d:[7,2,10,10,4,6,8,7,10,2],c:'luxury basics, knitwear, outerwear'},
-  'M.M.LaFleur':{u:'https://mmlafleur.com/search?q=',t:'$$$',a:'Professional Power, Modern Minimalist',s:['plus'],d:[2,3,10,10,3,3,10,9,10,2],c:'executive workwear, tailoring'},
+  // ⚠️ FITTED CORRECTED 2026-09-13, HER OWN CATCH: "theory and MM la fleur one
+  // notch less fitted." Was fitted 9, now 8 (relaxed stays 2, unchanged).
+  'M.M.LaFleur':{u:'https://mmlafleur.com/search?q=',t:'$$$',a:'Professional Power, Modern Minimalist',s:['plus'],d:[2,3,10,10,3,3,10,8,10,2],c:'executive workwear, tailoring'},
   // Romantic / boho
   'Sézane':{u:'https://www.sezane.com/us-en/search?s=',t:'$$$',a:'Parisian Chic, Romantic Feminine',s:[],d:[6,5,9,9,7,6,7,7,8,7],c:'knitwear, blouses, timeless french style'},
-  'LoveShackFancy':{u:'https://loveshackfancy.com/search?q=',t:'$$$$',a:'Romantic Feminine, Playful Chic',s:[],d:[7,8,9,6,9,5,9,6,4,10],c:'feminine dresses, occasion, florals'},
-  'Free People':{u:'https://www.freepeople.com/search?q=',t:'$$-$$$',a:'Bohemian Chic, Romantic Feminine',s:['petite'],d:[10,6,6,4,8,10,3,3,5,9],deep:1,c:'boho fashion, sweaters, dresses'},
+  // ⚠️ FITTED CORRECTED 2026-09-13, HER OWN CATCH: "love shack fancy 2 more
+  // notches fitted." Was fitted 6, now 8 (relaxed stays 7, unchanged).
+  'LoveShackFancy':{u:'https://loveshackfancy.com/search?q=',t:'$$$$',a:'Romantic Feminine, Playful Chic',s:[],d:[7,8,9,6,9,5,9,8,4,10],c:'feminine dresses, occasion, florals'},
+  // ⚠️ FITTED CORRECTED 2026-09-13, HER OWN CATCH: "free people 3 notches more
+  // fitted." Was fitted 3, now 6 (relaxed stays 10, unchanged).
+  'Free People':{u:'https://www.freepeople.com/search?q=',t:'$$-$$$',a:'Bohemian Chic, Romantic Feminine',s:['petite'],d:[10,6,6,4,8,10,3,6,5,9],deep:1,c:'boho fashion, sweaters, dresses'},
   "Altar'd State":{u:'https://www.altardstate.com/search?q=',t:'$$',a:'Romantic Feminine, Bohemian Chic',s:[],d:[7,5,6,6,7,8,5,6,6,8],c:'dresses, casual feminine fashion'},
   'Reformation':{u:'https://www.thereformation.com/search?q=',t:'$$$',a:'Romantic Feminine, Modern Chic',s:['petite','plus'],d:[3,9,9,6,9,5,9,10,7,8],c:'dresses, sustainable fashion, occasion'},
   // Edgy
@@ -4620,7 +4646,9 @@ const STORES={
   'Gorjana':{u:'https://gorjana.com/search?q=',t:'$$',a:'Elevated Natural, Coastal Chic',s:[],d:[5,3,8,7,6,8,4,5,9,4],c:'everyday jewelry, layering pieces'},
   'Mejuri':{u:'https://mejuri.com/search?query=',t:'$$$',a:'Quiet Luxury, Modern Minimalist',s:[],d:[5,2,10,9,5,7,5,5,10,2],c:'fine jewelry, everyday essentials'},
   // Active, swim, foundations, shoes
-  'Vuori':{w:1,u:'https://vuoriclothing.com/search?q=',t:'$$$',a:'Elevated Natural, Coastal Chic',s:[],d:[8,3,8,6,6,10,2,5,9,4],c:'premium athleisure, casual basics'},
+  // ⚠️ FITTED CORRECTED 2026-09-13, HER OWN CATCH: "vuori- 1 notch more
+  // fitted." Was fitted 5, now 6 (relaxed stays 8, unchanged).
+  'Vuori':{w:1,u:'https://vuoriclothing.com/search?q=',t:'$$$',a:'Elevated Natural, Coastal Chic',s:[],d:[8,3,8,6,6,10,2,6,9,4],c:'premium athleisure, casual basics'},
   'Summersalt':{u:'https://www.summersalt.com/search?q=',t:'$$',a:'Modern Minimalist, Coastal Chic',s:['plus'],d:[4,7,8,6,7,8,5,9,7,8],c:'swimwear, resortwear, travel'},
   'Soma':{u:'https://www.soma.com/store/search?searchTerm=',t:'$$',a:'Relaxed Feminine',s:['plus'],d:[5,5,8,7,4,9,3,7,8,5],c:'bras, lingerie, sleepwear'},
   'Naturalizer':{u:'https://www.naturalizer.com/search#q=',t:'$$',a:'Classic Sophisticate, Comfort Chic',s:['wide','narrow'],d:[6,2,8,9,2,7,6,5,8,5],c:'comfortable dress shoes, work shoes'},
@@ -4899,7 +4927,9 @@ const STORES={
   // 0 for "sneakers" and 0 for a nonsense word. It narrows honestly and
   // admits what it does not carry, so it is deep in its lane and nowhere else.
   'Diane von Furstenberg':{u:'https://www.dvf.com/search?q=',t:'$$$$',a:'Modern Glam, Romantic Feminine',s:[],d:[5,7,9,7,6,4,9,8,4,10],deep:'dresses',c:'wrap dresses, printed dresses, occasion, wedding guest'},
-  'Veronica Beard':{u:'https://www.veronicabeard.com/search?q=',t:'$$$$',a:'Professional Power, Classic Sophisticate',s:[],d:[3,8,10,9,8,4,10,10,9,7],c:'blazers, premium denim, elevated separates'},
+  // ⚠️ FITTED CORRECTED 2026-09-13, HER OWN CATCH: "Veronica Beard one notch
+  // less fitted." Was fitted 10, now 9 (relaxed stays 3, unchanged).
+  'Veronica Beard':{u:'https://www.veronicabeard.com/search?q=',t:'$$$$',a:'Professional Power, Classic Sophisticate',s:[],d:[3,8,10,9,8,4,10,9,9,7],c:'blazers, premium denim, elevated separates'},
   'Tory Burch':{u:'https://www.toryburch.com/en-us/search/?q=',t:'$$$',a:'Classic Sophisticate, Coastal Chic',s:[],d:[5,5,9,9,6,6,8,6,8,8],c:'handbags, shoes, workwear, resort'},
   'Gucci':{w:1,u:'https://www.gucci.com/us/en/search?searchString=',t:'$$$$',a:'Glamorous Luxe, Luxury Fashion',s:[],d:[3,10,10,8,10,4,10,9,8,10],c:'designer handbags, shoes, belts, accessories'},
   'Tiffany & Co.':{u:'https://www.tiffany.com/search/?q=',t:'$$$$',a:'Luxury Fashion, Classic Sophisticate',s:[],d:[5,6,10,10,4,2,10,5,9,6],c:'fine jewelry, luxury gifts'},

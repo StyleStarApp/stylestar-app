@@ -770,6 +770,25 @@ growth in earlier sessions unrelated to this change). A direct `_storeFit()` com
 real profile (fitted lean 0.70) confirmed the fix's actual effect: Talbots 13.25 → 11.75, correctly
 below the fitted cluster (Express/Revolve/Alice + Olivia, 23-26) and beside Gap (10.70), above J.Jill
 (6.20) — verified, not just asserted the number changed.
+▶ **FIFTH PASS, SAME DAY — A 13-STORE BATCH, FROM HER SCANNING THE PUBLISHED FIT SPECTRUM ARTIFACT.**
+Once she couldn't recall the whole table from memory, a "Fit Spectrum" artifact was built and published
+(all 100 scored stores sorted relaxed↔fitted, sortable/filterable) so she could scan visually instead —
+she then sent 13 corrections in one message, all in relative "notch" language, each applied as a
+**fitted-only edit unless she said otherwise** (her wording never touched `relaxed` except on the two
+"equal balance" calls): **Nordstrom Rack** fitted 7→8 · **Anthropologie** fitted 5→7 · **H&M** fitted
+6→7 · **FARM Rio** fitted 5→7 · **Theory** fitted 9→8 · **M.M.LaFleur** fitted 9→8 · **LoveShackFancy**
+fitted 6→8 · **Free People** fitted 3→6 · **Vuori** fitted 5→6 · **Veronica Beard** fitted 10→9 ·
+**Etsy** 8 relaxed/4 fitted → **5/5, equal balance, her words** · **Cuyana** 8 relaxed/4 fitted →
+**5/5, equal balance, her words**. ⚠️ **BERGDORF GOODMAN IS THE ONE EXCEPTION, FLAGGED TO HER RATHER
+THAN ASSUMED:** she described it only qualitatively — *"more neutral carries both fitted and relaxed
+(department store)"* — with no exact numbers, so Claude chose **6 relaxed/6 fitted** (was 2/10, as
+extreme as the table gets) as a literal "neutral" reading and said so plainly rather than treating it
+as her own number. **Everything else about all 13 entries (price, archetype, sizes, url) is
+untouched — only `d[_DIM_REL]`/`d[_DIM_FIT]`.** ✅ **VERIFIED, NOT ASSUMED:** a direct re-extraction of
+the real `STORES` object from `index.html` confirmed all 13 relaxed/fitted pairs now read exactly as
+listed above; `storepool.js` re-run clean, **49/49**; both `<script>` blocks re-parsed clean. **The Fit
+Spectrum artifact's embedded data is now stale for these 13 rows and needs republishing with the
+corrected numbers** the next time she opens it, so she isn't reviewing numbers that already changed.
 
 ### 🎯 STANDING RULE FOR CLAUDE — NEVER ASK HER TO MAKE A GIT DECISION
 Her words: *"Why are you asking me about putting something on main? I don't even know what that means.
