@@ -812,14 +812,17 @@ neutral/colorful) set to 5, archetype renamed to **"Quiet Minimalist"** verbatim
 drafted · **Pact** casual 8→9 · **Ramy Brook** trendy 9→10 · **Reiss** trendy 4→5 · **Teri Jon** — her
 words *"evening gowns"* — no numeric change, description set to *"formal eveningwear and gowns"* · **Tommy
 Hilfiger** relaxed 7→8 · **ViX Swimwear** fitted 7→9, trendy 7→9, casual 7→9.
-⚠️ **20 STORES REMAIN UNSCORED — Gap Factory, Moda Operandi, Merlette, ASTR the Label, PacSun,
-Aeropostale, FWRD, Aerie, ASOS, Ashley Stewart, City Chic, Club Monaco, Frances Valentine, Honeylove,
-Karen Millen, L.L.Bean, Long Tall Sally, Lord & Taylor, Rothy's, Staud** — the artifact was republished
-with just these 20, the 13 done ones named in a note at the top so she can see what's already closed
-out. **113 stores now carry her real tags, up from 100 at session start.**
-✅ **VERIFIED, NOT ASSUMED:** a direct re-extraction of `STORES` confirmed all 13 corrected entries match
-her words exactly (dimension arrays, tier, sizes); `storepool.js` re-run clean, **49/49**; both
-`<script>` blocks re-parsed clean.
+✅✅ **AND THE REMAINING 20 WENT IN THE SAME SESSION — SHE REVIEWED THE ARTIFACT AND SAID "THOSE ARE ALL
+GOOD AS IS."** Gap Factory, Moda Operandi, Merlette, ASTR the Label, PacSun, Aeropostale, FWRD, Aerie,
+ASOS, Ashley Stewart, City Chic, Club Monaco, Frances Valentine, Honeylove, Karen Millen, L.L.Bean, Long
+Tall Sally, Lord & Taylor, Rothy's and Staud all went into `STORES` exactly as drafted from their named
+neighbors — tier, archetype, sizes, ten dimension scores, description, no changes.
+🚨🚨 **EVERY STORE IN THE TABLE NOW CARRIES HER FULL TAGS — 133 OF 133, ZERO UNSCORED.** This is the
+first time that has ever been true. Every shop is now not just findable but genuinely recommendable:
+the stylist can describe it and it competes properly in the fit ordering, not sorted to the bottom.
+✅ **VERIFIED, NOT ASSUMED:** a direct re-extraction of `STORES` confirmed all 33 entries (13 corrected +
+20 as-drafted) carry real dimension arrays and a count of 133 scored / 0 unscored; `storepool.js` re-run
+clean, **49/49**; both `<script>` blocks re-parsed clean.
 
 ### 🎯 STANDING RULE FOR CLAUDE — NEVER ASK HER TO MAKE A GIT DECISION
 Her words: *"Why are you asking me about putting something on main? I don't even know what that means.
@@ -853,7 +856,7 @@ mode this file was cut back from twice before, now fixed the same way both times
 TRUE RIGHT NOW?*** Everything in the second category is rewritten below. **The blow-by-blow of how each
 was found and built is in the archive; read it for how something came to be.**
 
-### 🏬🏬 HER STORE ROSTER — **132 SHOPS**, HER LIST
+### 🏬🏬 HER STORE ROSTER — **133 SHOPS**, HER LIST
 🚨🚨 **THE LIST IS CLOSED. HER WORDS, 2026-09-08:** ***"the list i gave you is complete for now. I don't
 want to add any more. Of course if we get more affilates approved, we will add them, but for now I don't
 want to add any more stores."*** ▶▶ **SO DO NOT ASK HER FOR STORE NAMES, and do not re-propose the
@@ -867,14 +870,15 @@ evidence, she does not do homework.** **Measured gain: 243 → 273 usable produc
 searches, 47% → 53%.**
 ▶ **She also ruled ETSY back IN** (*"They are great for jewelry especially"*) and flagged **Saks OFF
 5th as closed down**. **Kohl's and Zara are both IN and Zara carries her full scores.**
-▶ **`docs/current-stores.txt` holds the live list.** **132 in `STORES`, 20 unscored (down from 32,
-2026-09-13 — see "A 13-STORE BATCH..." above), generated allowlist in sync.**
-⚠️ **AN UNSCORED SHOP IS FINDABLE, NOT RECOMMENDABLE** — it sits at the end of the store ranking and
-the stylist will not describe it. **BUT UNSCORED IS A GAP TO CLOSE, NOT A DESIGN DECISION** — she caught
-this herself 2026-09-13: the earlier framing here ("that's all she owes") was about not overloading her
-with ~200 brand-new stores at once, never a reason to leave the ones already on her list half-tagged.
-**A shop needs a NAME and a SEARCH URL to be found. THAT IS ALL SHE
-OWES.**
+🚨🚨 **133 IN `STORES`, ZERO UNSCORED — CLOSED 2026-09-13.** She caught that "unscored is fine" was the
+wrong framing for stores already on her list; the median-of-neighbors draft tool did the work, she
+corrected 13 and approved the other 20 as drafted (full story in "WHERE WE LEFT OFF" and the ledger's
+own entry above). **`docs/current-stores.txt` holds the live list; generated allowlist in sync.**
+⚠️ **AN UNSCORED SHOP WAS FINDABLE, NOT RECOMMENDABLE** — it sat at the end of the store ranking and the
+stylist wouldn't describe it. **That gap no longer exists.** ▶ **The old rule still holds for any FUTURE
+store an affiliate approval brings: a shop needs a NAME and a SEARCH URL to be found, and THAT IS ALL SHE
+OWES TO START** — but do not let it become an excuse to leave a new one half-tagged indefinitely; close
+the gap the same way, with a drafted review she corrects, once there's more than one or two to batch.
 ⚠️ **MANY SEARCH URLS ARE UNVERIFIED** (bot-walled, or results render client-side so a real term and
 gibberish come back identical) and are marked `// ⚠️ url unverified`. **This does NOT affect whether
 her products are found — the finder matches by DOMAIN.** It only shapes an outbound "find this at X"
