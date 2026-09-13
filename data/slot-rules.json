@@ -511,7 +511,10 @@
       "tablecloth",
       "napkin",
       "hat",
-      "romper"
+      "romper",
+      "playsuit",
+      "placemat",
+      "jumpsuit"
     ]
   },
   "bo9": {
@@ -1064,7 +1067,9 @@
       "base layer",
       "sweatshirt",
       "hoodie",
-      "sweater"
+      "hooded",
+      "sweater",
+      "track jacket"
     ]
   },
   "ac6": {
@@ -1095,7 +1100,9 @@
       "base layer",
       "sweatshirt",
       "hoodie",
-      "sweater"
+      "hooded",
+      "sweater",
+      "track jacket"
     ]
   },
   "ac7": {
@@ -1126,7 +1133,9 @@
       "sport tee",
       "sweatshirt",
       "hoodie",
-      "sweater"
+      "hooded",
+      "sweater",
+      "track jacket"
     ]
   },
   "ac8": {

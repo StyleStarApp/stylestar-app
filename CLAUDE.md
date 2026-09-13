@@ -849,12 +849,38 @@ page (not just failing to earn), that's the signal to get a second real link and
    ⚠️ **THE LESSON, WORTH KEEPING FOR THE NEXT TIME THIS FILE RE-VERIFIES A FIX: A COVERAGE REPORT ONLY
    EVER SHOWS 3 SAMPLES PER ROW, SO "THE SAMPLE LOOKS CLEAN NOW" IS NOT THE SAME CLAIM AS "THE ROW IS
    CLEAN."** Fixing the loudest leak can just promote the next-loudest one into view. A single re-run
-   after a batch of fixes is what caught this; a third re-run found nothing new (see below) — re-running
-   once after a batch is the right amount of paranoia here, not zero and not indefinitely.
-   `scripts/test_slot_match.py` **1163/1163** (grew from 1108 — 24 new direct-proof pairs across two
+   after a batch of fixes is what caught this — and it was right to keep going: a THIRD re-run, after
+   the second batch shipped, found three more of the exact same shape, not nothing: `bo4` Linen pants ←
+   a linen PLACEMAT, a linen JUMPSUIT and a linen PLAYSUIT (added "placemat", "jumpsuit", "playsuit" —
+   "romper" from the earlier batch already caught a differently-categorised playsuit sample via its
+   category text, but a real playsuit could reach this row through its NAME alone too, so both are
+   covered now) · **`ac5`/`ac6`/`ac7`** ← a Stella McCartney "Gathered Hooded Track Jacket" (added
+   "hooded", "track jacket" to all three — "hoodie" alone doesn't catch "hooded", the adjective form).
+   ⚠️ **THE REVERSE-ENGINEERED REASON THIS KEEPS HAPPENING, WORTH KEEPING FOR NEXT TIME:**
+   `scripts/rakuten-slots.py` uses a RESERVOIR SAMPLE WITH A FIXED SEED (`random.Random(7)`) — so the
+   three printed samples are stable ACROSS RUNS ONLY WHILE A ROW'S TOTAL COUNT STAYS THE SAME. Fixing a
+   leak changes that row's count, which reshuffles which items the same fixed seed happens to keep,
+   surfacing a genuinely different set of samples — not randomness, but not nothing either. **A FOURTH
+   RE-RUN, AFTER THIS THIRD BATCH, CAME BACK CLEAN ON EVERY PREVIOUSLY-TOUCHED ROW EXCEPT TWO GENUINE
+   MYSTERIES, DELIBERATELY NOT GUESS-PATCHED — see the note right after this one.**
+   `scripts/test_slot_match.py` **1170/1170** (grew from 1108 — 31 new direct-proof pairs across three
    verification passes, one per fix, following the established pattern). `test_rakuten_feed.py` **67/67**
    and `test_rakuten_ingest.py` **ALL PASS**, unaffected. `data/slot-rules.json` re-validated as
    parseable JSON.
+   🚨 **TWO GENUINE MYSTERIES SURFACED BY THE SAME RE-RUNS, DELIBERATELY LEFT UNFIXED: THE REPORT ONLY ​
+   EVER PRINTS A GARMENT'S NAME, NOT ITS CATEGORY, SO THE MECHANISM COULD NOT BE CONFIRMED FROM HERE.**
+   **(1)** `sl3` Robes ← "Helmut Lang Women's Seamed Straight-Leg **Wardrobe** Jeans" — real jeans, and
+   "wardrobe" does NOT word-boundary-match sl3's own "robe" (confirmed directly: `norm()` tokenises it as
+   one unsplit word, " wardrobe ", which does not contain " robe " as a padded substring) — so this
+   almost certainly matched on the garment's CATEGORY text, which the report never shows. **(2)** `ex6`
+   Hair accessories ← a SIMKHAI midi dress and a Bananhot crochet scarf — same shape, no word in either
+   name explains a match against hair clip/headband/barrette/scrunchie/hair comb/claw clip/hair pin.
+   ⚠️ **NOT GUESS-PATCHED, ON PURPOSE — this is exactly the discipline the rest of this audit followed.**
+   Excluding a word without knowing WHY it matched risks fixing the wrong mechanism, or missing it
+   entirely if it's actually the item's category, not its name. **THE CONCRETE NEXT STEP, if this is
+   picked up again: extend `rakuten-slots.py`'s printed samples to also show `cat_path(rec)` alongside
+   the name** (a small, safe, read-only reporting change) so the actual colliding category text is
+   visible instead of guessed at.
    ▶ **DELIBERATELY NOT TOUCHED, FLAGGED RATHER THAN GUESSED AT — see item 15.**
 15. ▶ **THREE THINGS THE HEAD-NOUN AUDIT FOUND BUT DID NOT FIX, ON PURPOSE — genuinely too ambiguous,
    too rare, or the wrong file to patch blindly.**

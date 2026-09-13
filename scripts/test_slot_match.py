@@ -445,6 +445,22 @@ ok("a party PLACE CARD HOLDER does not land on Wallets",
    "'card holder' is bg11's own phrase, but a place-card holder is tableware, not a wallet")
 ok("...but a real wallet still does",
    "bg11" in match(g("Givenchy Leather Zip-Fastening Wallet", "women>wallets"), rules))
+# 🚨 A THIRD RE-VERIFICATION PASS, SAME SESSION, FOUND THREE MORE OF THE SAME SHAPE -- the
+# reservoir sampler in rakuten-slots.py picks a stable-but-different set once a row's total
+# COUNT changes, so each round of fixes can surface a new set of samples underneath the old
+# ones. This is the one this file's own note says "the right amount of paranoia" -- keep
+# re-running after a batch, but a clean run is what actually stops the loop, not a fixed count.
+ok("a linen PLACEMAT does not land on Linen pants",
+   "bo4" not in match(g("Once Milano Set of 2 Linen Placemats", "home>tableware"), rules))
+ok("a linen JUMPSUIT does not land on Linen pants",
+   "bo4" not in match(g("Marant Etoile Nessime Cotton and Linen Jumpsuit", "women>jumpsuits"), rules))
+ok("a linen PLAYSUIT does not land on Linen pants",
+   "bo4" not in match(g("Zimmermann Linen Playsuit", "women>playsuits"), rules))
+for _slot in ("ac5", "ac6", "ac7"):
+    ok(f"a HOODED TRACK JACKET does not land on {_slot}",
+       _slot not in match(g("Adidas by Stella McCartney Gathered Hooded Track Jacket", "women>activewear>tops"), rules))
+ok("...but a real workout tee still lands on Workout tees, unaffected",
+   "ac6" in match(g("Varley Casper T-Shirt", "women>activewear>tops"), rules))
 
 
 # ------------------------------------------------- 2026-09-06 REGRESSION SET --
