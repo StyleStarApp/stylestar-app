@@ -57,14 +57,24 @@ function literal(decl, open, close) {
 // ⚠️ URL must be in the sandbox: _affMid does `new URL(u)`, and without the
 // global it throws into its own try/catch, returns '' and _wkStarPxTag renders
 // NOTHING -- which looks exactly like a broken fix instead of a broken harness.
+// ⚠️ 2026-09-13: _wkStarPxSrc was pulled out of _wkStarPxTag some time before
+// today and this harness never picked up the split -- it kept passing only
+// because it never actually exercised the photo-licensing gate at all, just
+// the crop logic below it. _pxLicensed/_CJ_PID/_cjAid are added now because
+// _wkStarPxSrc calls them (the CJ-photo widening, same session).
 const ctx = {console, URL};
 vm.createContext(ctx);
 vm.runInContext(
   grab('_esc') + '\n' +
   'var _AFF_MID=' + literal('var _AFF_MID=', '{', '}') + ';\n' +
   grab('_affMid') + '\n' +
+  'var _CJ_AID=' + literal('var _CJ_AID=', '{', '}') + ';\n' +
+  src.match(/var _CJ_PID='[^']*';/)[0] + '\n' +
+  grab('_cjAid') + '\n' +
+  grab('_pxLicensed') + '\n' +
   grab('_wlSafeUrl') + '\n' +
   'var _OWN_PX_RE=' + /^stars\/[a-z0-9][a-z0-9._-]*\.(jpe?g|png|webp)$/i.toString() + ';\n' +
+  grab('_wkStarPxSrc') + '\n' +
   grab('_wkStarPxTag') + '\n' +
   'var WEEK_STARS=' + literal('var WEEK_STARS=[', '[', ']') + ';\n', ctx);
 
@@ -180,6 +190,20 @@ console.log('\nPART 7 — and the Edit shows the SAME pair (a rule applied to on
   ok('each half is a half-height cover box anchored to the bottom',
      /\.is-stack>img[^}]*height:50%/.test(css) &&
      /\.is-stack>img[^}]*object-position:center bottom/.test(css));
+}
+
+console.log('\nPART 8 — the photo gate now covers CJ, and still never Amazon (2026-09-13)');
+{
+  const cjStar = find(/Cashmere Boutique/);
+  ok('the new CJ entry is really in WEEK_STARS', !!cjStar);
+  const cjSrc = vm.runInContext('_wkStarPxSrc(' + JSON.stringify(cjStar) + ')', ctx);
+  ok('its px now resolves through CJ, not just Rakuten', cjSrc === cjStar.px, cjSrc);
+  const fakeAmazon = {n: 'test', url: 'https://www.amazon.com/dp/B000TEST1', px: 'https://m.media-amazon.com/images/I/test.jpg'};
+  const amzSrc = vm.runInContext('_wkStarPxSrc(' + JSON.stringify(fakeAmazon) + ')', ctx);
+  ok('an Amazon url still renders NO photo, never widened by mistake', amzSrc === '', amzSrc);
+  const fakeUnapproved = {n: 'test2', url: 'https://www.zara.com/us/en/test-p12345.html', px: 'https://static.zara.net/test.jpg'};
+  const zaraSrc = vm.runInContext('_wkStarPxSrc(' + JSON.stringify(fakeUnapproved) + ')', ctx);
+  ok('an unapproved store still renders NO photo', zaraSrc === '', zaraSrc);
 }
 
 console.log('\n' + (failn ? '✗ ' + failn + ' FAILED, ' : '✓ ') + pass + ' checks passed');

@@ -1806,6 +1806,24 @@
       <a class="dc-item-btn" href="https://www.mytheresa.com/us/en/women/stella-mccartney-falabella-mini-embellished-crossbody-bag-white-p01174765" target="_blank" rel="sponsored noopener"><svg class="dc-bag" viewBox="0 0 24 24" fill="none" stroke="#0FA6B6" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5.8 8.5 h12.4 l-0.8 10.6 a1.2 1.2 0 0 1 -1.2 1.1 H7.8 a1.2 1.2 0 0 1 -1.2 -1.1 Z"/><path d="M8.3 8.5 C8.3 4.2 15.7 4.2 15.7 8.5"/><path d="M12 11.9 L12.5 13.3 L14 13.35 L12.85 14.25 L13.25 15.65 L12 14.8 L10.75 15.65 L11.15 14.25 L10 13.35 L11.5 13.3 Z" fill="#0FA6B6" stroke="none"/></svg>Shop this item <span class="dc-arr">&rarr;</span></a>
     </div>
 
+    <!-- ⭐ ADDED 2026-09-13, HER PICK -- first CJ-earning Edit item. Photo is
+         1000x1333 (near-exact 3:4), so the shared top-anchored crop shows the
+         whole wrap with no pxPos/pxFit override needed -- verified by looking
+         at the actual downloaded file, not assumed from the src url. Price
+         $219 is the shop's own REGULAR price (was showing a 50% sale at
+         $109 the day this was added -- her rule is list regular, never sale).
+         Href is the bare product page; _wlDecorateEdit()/_affUrl() wrap it
+         through CJ (cashmereboutique.com is in _CJ_AID) at runtime, same as
+         every other Edit link. Note is a CLAUDE DRAFT, hers to reword. -->
+    <div class="dc-item">
+      <img class="dc-item-px" src="https://cashmereboutique.com/cdn/shop/files/Single_Product_Image_7_8ca9aace-c7a4-408f-8d95-938b61a39554.png?v=1785194744&amp;width=1000" alt="Cashmere Boutique pashmina and silk wrap in pink" loading="lazy" decoding="async" onerror="this.remove()">
+      <span class="dc-item-star">&#11088;</span>
+      <div class="dc-item-name">Cashmere Boutique Pashmina and Silk Wrap</div>
+      <div class="dc-item-meta"><span class="dc-store">Cashmere Boutique</span><span class="dc-price">$219</span></div>
+      <div class="dc-item-note">A luxurious 70% cashmere, 30% silk blend in a generous 28 by 80 inch size with tasseled ends. It comes in 24 colors, so there truly is one for everyone. This is the wrap I would throw over anything from jeans to a little black dress.</div>
+      <a class="dc-item-btn" href="https://cashmereboutique.com/products/pashmina-and-silk-wrap" target="_blank" rel="sponsored noopener"><svg class="dc-bag" viewBox="0 0 24 24" fill="none" stroke="#0FA6B6" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5.8 8.5 h12.4 l-0.8 10.6 a1.2 1.2 0 0 1 -1.2 1.1 H7.8 a1.2 1.2 0 0 1 -1.2 -1.1 Z"/><path d="M8.3 8.5 C8.3 4.2 15.7 4.2 15.7 8.5"/><path d="M12 11.9 L12.5 13.3 L14 13.35 L12.85 14.25 L13.25 15.65 L12 14.8 L10.75 15.65 L11.15 14.25 L10 13.35 L11.5 13.3 Z" fill="#0FA6B6" stroke="none"/></svg>Shop this item <span class="dc-arr">&rarr;</span></a>
+    </div>
+
     <!-- ⚠️ EVERY EDIT ITEM NOW EARNS AND CARRIES A PHOTO -- the eleven
          non-earning, no-photo text cards that used to sit below this line
          (MZ Wallace, Gucci sunglasses, Express trousers, the Sexy Little Robe,
@@ -14112,7 +14130,15 @@ var WEEK_STARS=[  {n:'Tommy Hilfiger Claihre Kitten Heel Slide Sandal',store:'No
   // ⭐ ADDED 2026-09-12, HER PICK, same photo and story as the Edit entry above.
   {n:'Stella McCartney Falabella Mini Embellished Bag',store:'Mytheresa',url:'https://www.mytheresa.com/us/en/women/stella-mccartney-falabella-mini-embellished-crossbody-bag-white-p01174765',price:'$1,595',
    note:'I love that this bag is wearing a necklace! Stella McCartney bags are especially popular with animal lovers, since the materials are always 100% vegan. This one is delightful!',
-   px:'https://www.mytheresa.com/image/1094/1238/100/38/P01174765.jpg'}
+   px:'https://www.mytheresa.com/image/1094/1238/100/38/P01174765.jpg'},
+  // ⭐ ADDED 2026-09-13, HER PICK -- first CJ-approved Edit/Star item, see the
+  // _pxLicensed() widening above. Price/fabric/size verified against the
+  // shop's own page: $219 regular ($109 was a 50% sale, her rule says list
+  // regular, never sale). Note is a CLAUDE DRAFT, hers to reword -- she gave
+  // no note of her own this time.
+  {n:'Cashmere Boutique Pashmina and Silk Wrap',store:'Cashmere Boutique',url:'https://cashmereboutique.com/products/pashmina-and-silk-wrap',price:'$219',
+   note:'A luxurious 70% cashmere, 30% silk blend in a generous 28 by 80 inch size with tasseled ends. It comes in 24 colors, so there truly is one for everyone. This is the wrap I would throw over anything from jeans to a little black dress.',
+   px:'https://cashmereboutique.com/cdn/shop/files/Single_Product_Image_7_8ca9aace-c7a4-408f-8d95-938b61a39554.png?v=1785194744&width=1000'}
 ];
 /* PHOTOS-ONLY ROTATION, her call 2026-08-26: seeing the Athleta linen pant
    (no photo) live, she said "I want the star of this week to still be the
@@ -14167,15 +14193,17 @@ var WEEK_STAR_PHOTO_ORDER=[
      so keep the dates updated and lay out from them, never from the order alone.
      ⚠️ CHANGING THE LENGTH RE-MAPS EVERY WEEK, because the length IS the modulus.
      This list went 16 → 15 when she retired the FARM Rio dress, then 15 → 16
-     again 2026-09-12 when the Stella McCartney bag was appended at the END —
-     every date from Nov 22 onward moved one week later, and Sep 6 through
-     Nov 15 stayed exactly where they were. Recomputed with _weekStar(), not
-     assumed. Never edit a line here without re-running the schedule. */
+     when the Stella McCartney bag was appended 2026-09-12, then 16 → 17
+     2026-09-13 when Cashmere Boutique's wrap was appended at the END too —
+     every date through Nov 22 stayed exactly where it was, and only the tail
+     of the cycle (Nov 29 onward) moved one week later. Recomputed with
+     _weekStar(), not assumed. Never edit a line here without re-running the
+     schedule. */
   // ── indices 0-3: reached LAST, after the wrap ──────────────────────────────
-  'Zoe Lev Diamond & 14k Gold Bezel Pendant Necklace',            // Nov 29 — was Nov 22
-  'Valentino Garavani VLOGO Signature Reversible Leather Belt',   // Dec 6  — was Nov 29
-  'Open Heart Necklace',                                          // Dec 13 — was Dec 6
-  'Valentino Square Oversized Sunglasses',                        // Dec 20 — was Dec 13
+  'Zoe Lev Diamond & 14k Gold Bezel Pendant Necklace',            // Dec 6  — was Nov 29
+  'Valentino Garavani VLOGO Signature Reversible Leather Belt',   // Dec 13 — was Dec 6
+  'Open Heart Necklace',                                          // Dec 20 — was Dec 13
+  'Valentino Square Oversized Sunglasses',                        // Dec 27 — was Dec 20
   // ── index 4 is TODAY ───────────────────────────────────────────────────────
   'Saint Laurent SL M136 Sunglasses',                             // Sep 6  — LIVE NOW
   'Vilebrequin Long Mesh Cover-Up Dress — Black',                 // Sep 13 — renamed from "— Off White" 2026-09-13, her photo swap
@@ -14200,7 +14228,16 @@ var WEEK_STAR_PHOTO_ORDER=[
   // already scheduled through Nov 15 stays exactly where it was, and only the
   // tail of the cycle (the wrap-around weeks) moves. Verified week by week
   // with _weekStar(), not assumed.
-  'Stella McCartney Falabella Mini Embellished Bag'               // Nov 22
+  'Stella McCartney Falabella Mini Embellished Bag',              // Nov 22
+  // ⭐ ADDED 2026-09-13, HER PICK. Appended at the END, same reasoning as
+  // every prior addition: every date through Nov 22 stays exactly where it
+  // was, only the tail (Nov 29 onward) shifts one week later. Verified
+  // week-by-week with a direct re-implementation of _weekStarIndex before
+  // committing, not assumed -- Nov 29 through 2027-09-26 checked by hand,
+  // confirmed every date past Nov 22 moves by exactly one week and nothing
+  // moves before it. Requires the _pxLicensed() widening above (CJ, not just
+  // Rakuten) or this item's photo would silently not render the week it's up.
+  'Cashmere Boutique Pashmina and Silk Wrap'                      // Nov 29
 ];
 function _weekStarPhotoPool(){
   // WHITELIST, not a sort hint: only a name she has actually put here can
@@ -14238,10 +14275,16 @@ function _weekStar(now){var i=_weekStarIndex(now);return i<0?null:WEEK_STARS[i];
 // inlines it. A product photo is the RETAILER'S copyrighted work, and what
 // licenses it is an AFFILIATE APPROVAL with that retailer, never the fact that
 // we link to the piece and never the fact that the image is fetchable. So the
-// photo is gated on _affMid(), the very function that decides whether the link
-// EARNS. One source of truth: if the link cannot earn, the photo is not ours to
-// show, and a Star given a px: url for an unapproved store silently shows no
-// photo rather than a liability. ▶ GREP _AFF_MID BEFORE ADDING A px: URL.
+// photo is gated on _pxLicensed(), which checks EITHER Rakuten (_affMid) OR
+// CJ (_CJ_PID+_cjAid) — widened 2026-09-13 for Cashmere Boutique, the first
+// CJ-approved Star photo; it was _affMid() alone before that, which silently
+// blocked any CJ-earning piece's photo with no error, the exact failure mode
+// this comment already warned about. ⚠️ DELIBERATELY NEVER AMAZON — her rule
+// is NO AMAZON PRODUCT PHOTOS, EVER, so this must never become _mallEarns().
+// One source of truth: if the link cannot earn (by a licensed mechanism), the
+// photo is not ours to show, and a Star given a px: url for an unapproved
+// store silently shows no photo rather than a liability.
+// ▶ GREP _pxLicensed BEFORE ADDING A px: URL — never _AFF_MID alone again.
 // ⚠️ Adding a third Star surface? Call this. Do not re-derive the condition.
 /* 📸 HER OWN PHOTOGRAPHS — the shape of a valid `ownPx`, 2026-08-24.
    Deliberately a STRICT relative path under stars/, never a URL: an arbitrary
@@ -14285,10 +14328,18 @@ var _OWN_PX_RE=/^stars\/[a-z0-9][a-z0-9._-]*\.(jpe?g|png|webp)$/i;
 // licensed photo, not a second copy of the gate) can ask for it too. Two
 // copies of a licensing check is how a photo ends up shown somewhere it was
 // never cleared for -- the same lesson as every other rule in this file.
+// ▶ PHOTO LICENSING NOW COVERS CJ TOO, added 2026-09-13 for Cashmere
+// Boutique's Pashmina and Silk Wrap -- the first CJ-approved piece ever
+// given a `px:`. _affMid alone only ever recognised RAKUTEN, so a CJ-earning
+// link's photo would have silently rendered nothing the week it came up --
+// the exact "gate never told" shape this file keeps paying for. Deliberately
+// NOT the same as _mallEarns: that one says yes for Amazon too, and her rule
+// is NO AMAZON PRODUCT PHOTOS, EVER -- so this names Rakuten + CJ only.
+function _pxLicensed(u){return !!(_affMid(u)||(_CJ_PID&&_cjAid(u)));}
 function _wkStarPxSrc(S){
   if(!S)return '';
   if(S.ownPx&&_OWN_PX_RE.test(S.ownPx))return S.ownPx;
-  if(S.px&&_affMid(S.url)&&_wlSafeUrl(S.px))return S.px;
+  if(S.px&&_pxLicensed(S.url)&&_wlSafeUrl(S.px))return S.px;
   return '';
 }
 function _wkStarPxTag(S,cls){

@@ -285,11 +285,26 @@ that makes any future number mean something.**
 ### 📝 CONTENT — only she can do these
 - ▶ **MORE "WHAT'S TRENDING" ITEMS.** Claude drafts in her voice, **she approves/cuts/rewrites** — she is
   the trend authority. Re-sort seasonally; every addition relights the New pill automatically.
-- ✅✅ **MORE STYLE STAR EDIT ITEMS — SHE ADDED THREE ON 2026-09-10, AND A FOURTH ON 2026-09-12, ALL LIVE.**
-  Simkhai Devon Suede Tote $695 · Simkhai Stella Suede Block Heel Sandal $445 · Zoe Lev Diamond & 14k
-  Gold Bezel Pendant Necklace $825 (all Olivela) · **Stella McCartney Falabella Mini Embellished Bag
-  $1,595 (Mytheresa), added 2026-09-12 and also seated in Star of the Week rotation the same day.**
-  ▶ **The Edit is 18 items** (35 → 33 when two Amazon pieces moved to `/finds` → 30 when she removed the
+- ✅✅ **MORE STYLE STAR EDIT ITEMS — SHE ADDED THREE ON 2026-09-10, A FOURTH ON 2026-09-12, A FIFTH ON
+  2026-09-13, ALL LIVE.** Simkhai Devon Suede Tote $695 · Simkhai Stella Suede Block Heel Sandal $445 ·
+  Zoe Lev Diamond & 14k Gold Bezel Pendant Necklace $825 (all Olivela) · Stella McCartney Falabella Mini
+  Embellished Bag $1,595 (Mytheresa), added 2026-09-12 and also seated in Star of the Week rotation the
+  same day · **Cashmere Boutique Pashmina and Silk Wrap $219, added 2026-09-13 — her first EDIT PIECE
+  FROM A CJ-APPROVED STORE (not Rakuten), and also seated in Star of the Week rotation the same day.**
+  ⚠️ **ADDING IT FOUND A REAL, PREVIOUSLY-LATENT BUG: the Star of the Week photo gate (`_wkStarPxSrc`)
+  only ever checked `_affMid()`, which is RAKUTEN-ONLY — a CJ-earning piece's photo would have silently
+  rendered NOTHING the week it came up, the exact "gate never told" shape this file keeps paying for.**
+  **FIXED:** a new `_pxLicensed(u)` helper covers Rakuten OR CJ (deliberately never Amazon, per her
+  standing "no Amazon product photos, ever" rule — this must never become `_mallEarns()`, which says yes
+  for Amazon). Both governing comment blocks above `_wkStarPxSrc` were rewritten so a future session
+  greps `_pxLicensed`, not `_AFF_MID` alone. **VERIFIED, NOT ASSUMED:** `scratchpad/starpx.js`'s harness
+  had gone stale (it never picked up `_wkStarPxSrc` being pulled out of `_wkStarPxTag` in an earlier
+  session, so it silently tested nothing about the licensing gate at all) — fixed the harness and added
+  4 new checks proving the CJ item's photo now resolves, an Amazon url still resolves to no photo, and
+  an unapproved store still resolves to no photo. **32/32 clean.** `affwrap` 35/35 and `linkwatch` 27/27
+  re-run clean; both `index.html` `<script>` blocks parse; `s-dream` now carries 19 `.dc-item`s, `s-finds`
+  still 53, totals add up (72) with no cross-screen leak.
+  ▶ **The Edit is 19 items** (35 → 33 when two Amazon pieces moved to `/finds` → 30 when she removed the
   Soncino sandal, the Felina bra and the Good American jeans → 28 when she removed the Lucky Brand
   espadrille wedge and the Align Pant → 18 on 2026-09-12, when she had eleven non-earning, no-photo
   items deleted outright — her own explicit call, *"yes just delete all of them"* — after the Stella
@@ -732,6 +747,16 @@ session rather than trusting this note indefinitely.
 `hubs` 49 · `mallverify` 14 · `linkwatch` 27 · `tabtops` 49 · `catmark` 132/3-pre-existing ·
 `wldoortest` 55/65-pre-existing · `curated` 62-63/65 (3 named pre-existing failures, see the standing
 section below) · `affq` 1 known pre-existing failure.
+▶ **THIRD PASS, SAME DAY — THE CASHMERE BOUTIQUE EDIT/STAR ITEM AND THE PHOTO-GATE FIX:**
+`scratchpad/starpx.js` **32/32** (grew from 28: its harness had gone stale — never updated to grab
+`_wkStarPxSrc` after that function was split out of `_wkStarPxTag` in an earlier session, so it had
+been silently testing nothing about the photo-licensing gate at all; fixed the harness, then added 4
+new checks proving the CJ item's photo resolves, an Amazon url still resolves to no photo, and an
+unapproved store still resolves to no photo). `affwrap` 35/35 and `linkwatch` 27/27 re-run clean again.
+A direct Node parse re-confirmed both `<script>` blocks clean; `s-dream` now carries 19 `.dc-item`s,
+`s-finds` still 53, and the two add up to the file's total (72) with no cross-screen leak. ⚠️ `affq.js`
+was tried again and hangs on the same pre-existing sandbox network limitation noted above — still not
+this session's doing, re-run it fresh from a real deploy check when next possible.
 
 ### 🎯 STANDING RULE FOR CLAUDE — NEVER ASK HER TO MAKE A GIT DECISION
 Her words: *"Why are you asking me about putting something on main? I don't even know what that means.
@@ -1047,9 +1072,9 @@ earlier entries weeks later (caught only by computing the whole schedule before 
 ⚠️⚠️ **NEVER EDIT THIS LIST WITHOUT RE-RUNNING THE SCHEDULE, WEEK BY WEEK.** The anchor (`2026-08-09`) is
 load-bearing; reorder the list instead of moving it. ⭐ **Use the instrument, not hand math:** call the
 app's own `_weekStar(date)` in Playwright for each Sunday.
-▶ **THE LIVE SCHEDULE AS OF 2026-09-12 — 16 weeks, then repeats from 27 Dec** (re-measure rather than
-trusting this — every list edit moves it; this run re-computed with the live `_weekStar()` logic, not
-by hand):
+▶ **THE LIVE SCHEDULE AS OF 2026-09-13 — 17 weeks, then repeats from 3 Jan** (re-measure rather than
+trusting this — every list edit moves it; this run re-computed with a faithful re-implementation of
+`_weekStarIndex`, not by hand):
 | Sun | Piece | Store | Price |
 |---|---|---|---|
 | Sep 6 | Saint Laurent SL M136 Sunglasses | COUTR | $363 |
@@ -1064,14 +1089,22 @@ by hand):
 | Nov 8 | Simkhai Devon Suede Tote | Olivela | $695 |
 | Nov 15 | Fleur du Mal Sculpt Molded Sports Bra | Fleur du Mal | $98 |
 | Nov 22 | Stella McCartney Falabella Mini Embellished Bag | Mytheresa | $1,595 |
-| Nov 29 | Zoe Lev Diamond & 14k Gold Bezel Pendant Necklace | Olivela | $825 |
-| Dec 6 | Valentino Garavani VLOGO Reversible Belt | Mytheresa | $570 |
-| Dec 13 | Open Heart Necklace | Etsy | ~$45 |
-| Dec 20 | Valentino Square Oversized Sunglasses | Marissa Collections | $465 |
+| Nov 29 | Cashmere Boutique Pashmina and Silk Wrap | Cashmere Boutique | $219 |
+| Dec 6 | Zoe Lev Diamond & 14k Gold Bezel Pendant Necklace | Olivela | $825 |
+| Dec 13 | Valentino Garavani VLOGO Reversible Belt | Mytheresa | $570 |
+| Dec 20 | Open Heart Necklace | Etsy | ~$45 |
+| Dec 27 | Valentino Square Oversized Sunglasses | Marissa Collections | $465 |
 🚨 **ADDING THE STELLA MCCARTNEY BAG 2026-09-12 PROVED THE TRAP AGAIN:** appending it at the END of
 `WEEK_STAR_PHOTO_ORDER` (16th name) left every date through Nov 15 untouched and pushed Nov 22 onward
 one week later — exactly the mechanism this section warns about, verified week-by-week with `_weekStar()`
 before committing, not assumed.
+🚨 **THE SAME TRAP PROVED ITSELF AGAIN 2026-09-13 WITH THE CASHMERE BOUTIQUE WRAP:** appending it (17th
+name) left every date through Nov 22 untouched and pushed Dec 6 onward one week later. ⚠️ **AND THIS ONE
+ALSO NEEDED A CODE FIX FIRST, NOT JUST A LIST EDIT** — see `_pxLicensed()` in "MORE STYLE STAR EDIT
+ITEMS" above: the photo gate only ever recognised Rakuten, so a CJ-approved piece's photo would have
+rendered nothing the week it came up, silently, with no error. Fixed before this entry was added, not
+after — verified with a genuine re-implementation of `_weekStarIndex`, checked Nov 29 through 2027-09-26,
+not assumed.
 ▶ **Retired-not-deleted, both deliberate:** the sold-out Serpui bag and the FARM Rio maxi (a TIMING call
 about one dress, not a rule about FARM Rio) — both keep their `WEEK_STARS` entries because each carries
 a `pxPos` crop `starpx` uses as a worked example. ⚠️ **The Star queue is NOT a mirror of the Edit** — a
@@ -1267,11 +1300,12 @@ that's the first occurrence in the file. Slice the screen first (`index('id="s-f
 screens' item counts before doing anything else** — the cheapest habit that catches this every time.
 
 ### 💰 WHICH EDIT PIECES EARN
-🚨🚨 **AS OF 2026-09-12, ALL 18 EARN.** Measured 2026-09-10 at 35 items (17 earning, 18 not), then 33,
-then 30 as she trimmed non-earning pieces by hand — and on 2026-09-12 she had the last eleven
-non-affiliate, no-photo items deleted outright (see the Master To-Do List's Edit row for the names),
-leaving an 18-item page with no dead weight. **Re-measure before quoting this if the Edit changes
-again** — she may add more at any time. What's still true regardless of count:
+🚨🚨 **AS OF 2026-09-13, ALL 19 EARN.** Measured 2026-09-10 at 35 items (17 earning, 18 not), then 33,
+then 30 as she trimmed non-earning pieces by hand, then 18 on 2026-09-12 when she had the last eleven
+non-affiliate, no-photo items deleted outright (see the Master To-Do List's Edit row for the names), then
+19 on 2026-09-13 when the Cashmere Boutique wrap was added — her FIRST Edit piece earning through CJ
+rather than Rakuten (see "THE MALL NOW HAS ALL EIGHT..." for how CJ wrapping works). **Re-measure before
+quoting this if the Edit changes again** — she may add more at any time. What's still true regardless of count:
 **`_wlDecorateEdit()` rewrites every `.dc-item-btn` href to an affiliate link AT RUNTIME**
 (`index.html:9963`) — the raw hrefs sitting in markup are the SOURCE, not the live link, so a `grep` for
 `_affUrl` in the Edit's markup finding zero proves nothing is broken. ⚠️ **Never hard-code affiliate URLs
