@@ -407,6 +407,45 @@ plain, untagged store search that earns nothing. ⚠️ **This is a genuinely ne
 engineering, not a one-line fix** — see "WHAT IS OPEN FOR CLAUDE" below. It was not built speculatively
 tonight since nothing yet needs it to earn; it becomes real work the moment a CJ advertiser she actually
 wants to route traffic to gets approved.
+✅ **ALSO ADDED TO THE MALL, same session, her catch — she noticed it wasn't there.** `STORES` (the
+searchable index) and `mallStores` (the Mall's own hand-curated showcase) are two separate lists, same
+relationship as the Edit — being in one doesn't put a store in the other. Filed under **Contemporary &
+Everyday** (its $130–$700 range is elevated-basics, not true "Value & Basics"), blurb *"Soft, quality
+cashmere sweaters and layers"* — a Claude draft, hers to reword, same convention as FARM Rio/Olivela/
+Marissa/Mytheresa's blurbs when she added those. `_mallEarns` will correctly sort it after any earning
+card in its category until CJ link-wrapping exists. Verified: both inline script blocks still parse,
+and the `mallStores` array literal evaluates cleanly with the new entry in place (31 stores, 5 groups).
+
+### 🚨🚨 A REAL EARNING BUG FOUND AND FIXED, SAME SESSION: THE FINDER'S VERIFIED CARDS NEVER EARNED
+Fixing a pre-existing, unrelated test-count drift (`affq.js`'s hardcoded `TEMPLATES` tripwire, 14→15,
+the same kind of drift documented earlier for the discoStar duplicate) led straight to this: **`_findCard`
+— the ONE card renderer behind chat, Shop your Style and the Wardrobe's real-product finder — rendered
+`p.url` RAW, never passed through `_affUrl`.**
+▶ **WHO THIS ACTUALLY COST:** a browse card's url comes from `getStoreUrl(...)`, which already wraps
+through `_affUrl` internally — fine. A feed card's url is pre-wrapped at ingestion by `rakuten_feed.py`
+(its own comment says so) — also fine. **But an EXACT/VERIFIED card — the one this whole file calls the
+most trustworthy, "a real address, not a tick" — gets its url from `best.link`, a live SerpApi look-up
+straight off the retailer's own page (`product-find.js`), never wrapped by anything, anywhere.** So every
+time the finder found a genuinely verified match at one of her Rakuten-approved shops (Mytheresa, FARM
+Rio, DVF, Vilebrequin, Olivela, Marissa Collections, Fleur du Mal, COUTR) and a woman tapped "Shop it,"
+the click earned nothing — silently, on the app's flagship, most-tested shopping surface.
+✅ **FIXED: `_findCard` now renders `href="'+_esc(_affUrl(p.url))+'"`.** Safe by construction — `_affUrl`
+never double-wraps (checks for an existing `click.linksynergy.com` or Amazon `tag=` first), so this is a
+no-op on the two card types that were already correct and a real fix on the one that wasn't.
+⚠️ **ONE TEST WAS PINNED TO THE OLD, BUGGY BEHAVIOR** — `ssfind.js`'s "a piece from HER OWN SHELF reaches
+the row" asserted the RAW farmrio.com string was still present unwrapped, which broke the moment the real
+bug got fixed (FARM Rio is a genuine Rakuten shop, so its card now correctly wraps to a
+`click.linksynergy.com` deeplink). Fixed by decoding the href before checking, plus a new assertion that
+the wrap and her real mid (44912) are actually present — the same "test the rule, not the string" lesson
+this file has paid for before.
+✅ **RE-VERIFIED CLEAN AFTER THE FIX:** `findprod` 63/63 · `chatfind` 63/63 · `ssfind` 97/97 (was 95/1
+failed before the test fix, for the reason above) · the static `affq` anchor-count check now matches
+(86 anchors = 71 Edit links + 15 templates).
+🚨 **THIS IS LIVE OPERATIONAL STATUS AND SHOULD NOT ARCHIVE UNTIL SHE HAS SEEN IT.** It means every
+verified "Shop it" tap on chat, Shop your Style, or the Wardrobe search — going back to whenever this
+card was built (2026-09-06/09) — that landed on one of her eight Rakuten shops was earning nothing until
+tonight. There is no way from here to measure how much that cost; her Rakuten dashboard is the only
+instrument that could ever tell her, and only for clicks going forward now that the fix is live.
 
 ### ▶▶ WHAT IS WAITING ON HER — her own priority order (full detail in the Master To-Do List above)
 1. ⏳ The Oct 1 tax-receipt clock (~3 weeks out) — the only real deadline on her board.

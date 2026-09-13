@@ -703,7 +703,20 @@ const fd = await pg.evaluate(() => {
   return { n: cards.length, farmHref: href(farm), nordHref: href(nord),
            ticks: document.querySelectorAll('#ssFindWrap .find-card .fc-yes').length };
 });
-ok('a piece from HER OWN SHELF reaches the row', /farmrio\.com\/p\/belted-midi/.test(fd.farmHref),
+/* 🚨 FOUND 2026-09-13: `_findCard` used to render `p.url` RAW, so an exact/feed
+   card landing on one of her Rakuten-approved shops never earned a thing — the
+   one class of card this file calls the most trustworthy ("a real address, not
+   a tick") was silently the one link `_affUrl` never touched. Fixed by wrapping
+   `p.url` through `_affUrl` in `_findCard` itself (safe: `_affUrl` never
+   double-wraps). ▶ THIS ASSERTION WAS PINNED TO THE UNWRAPPED STRING, so fixing
+   the real bug broke it on GOOD NEWS — FARM Rio is her real Rakuten shop, so the
+   href is now a genuine `click.linksynergy.com` deeplink with the product page
+   inside `murl=`. Decoding it is the fix, not reverting the wrap. */
+ok('a piece from HER OWN SHELF reaches the row',
+   /farmrio\.com\/p\/belted-midi/.test(decodeURIComponent(fd.farmHref)),
+   fd.farmHref.slice(0, 90));
+ok('...and it earns: the link is wrapped through her real Rakuten mid',
+   /click\.linksynergy\.com/.test(fd.farmHref) && /mid=44912/.test(fd.farmHref),
    fd.farmHref.slice(0, 90));
 /* 🚨 THE ANTI-VACUOUS HALF: a Google card in the SAME row must still land on a
    shop search, or this check would pass on a build that gave every card a

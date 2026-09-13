@@ -72,6 +72,17 @@ const anchors = allOutbound.filter(a => !/instagram\.com/.test(a));
 //   rel="sponsored noopener" — verified before bumping, not assumed. So the
 //   census did exactly its job: it noticed a new way out of the app, and the
 //   number was simply never updated to acknowledge it.
+// 14 → 15, FOUND 2026-09-13 AND ALSO PRE-EXISTING (measured against the commit
+// this session started from — 86 anchors, 71 Edit links, already 15 before
+// tonight's Mall/store work touched anything, so this was not caused by either).
+// ▶ THE 15TH IS `.fc-go`, built by `_findCard` — the ONE card renderer behind
+//   chat, Shop your Style and the Wardrobe's real-product finder, live since
+//   2026-09-06/09. It had gone unnoticed because it was already
+//   `rel="sponsored noopener"`-correct, which is all this count checks; what it
+//   was actually missing was `_affUrl` on its href, a real earning gap fixed
+//   the same session this count was caught (see the comment beside
+//   `_findCard`'s return, in `index.html`). ⚠️ The exact count-to-history
+//   mapping for templates 1-13 was not re-derived here; only the new one was.
 // ⚠️⚠️ THIS NUMBER STAYS HARDCODED ON PURPOSE, AND IT IS THE ONE EXCEPTION TO
 //   the 2026-09-08 rule that a count of her things is not an invariant. Those
 //   counts (stores, merchants, scoped stores) moved every time she was APPROVED
@@ -81,7 +92,7 @@ const anchors = allOutbound.filter(a => !/instagram\.com/.test(a));
 //   for a woman to leave. ▶ SO: when this goes red, FIND the new anchor, CHECK
 //   it is sponsored + wrapped, then bump the number with a line saying which
 //   template it was. Never derive it away.
-const TEMPLATES = 14;
+const TEMPLATES = 15;
 const EDIT_N = (HTML.match(/<a class="dc-item-btn"/g) || []).length;
 ok('found the full set of outbound PRODUCT anchors (every Edit link + ' + TEMPLATES + ' templates)',
    anchors.length === EDIT_N + TEMPLATES, 'got ' + anchors.length + ' with ' + EDIT_N + ' Edit links');

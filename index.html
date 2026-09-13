@@ -8690,7 +8690,17 @@ const mallStores=[
        cards that can earn - which is why the _affUrl wrap above had to land in
        the same change. ⚠️ The blurbs are CLAUDE DRAFTS condensed from her own
        c: lines; every other blurb in this list is hers. */
-    {n:'FARM Rio',d:'Bold colorful prints, quality fabric, great for vacation',u:'https://www.farmrio.com'}
+    {n:'FARM Rio',d:'Bold colorful prints, quality fabric, great for vacation',u:'https://www.farmrio.com'},
+    /* Cashmere Boutique, her first CJ advertiser approval, added 2026-09-13.
+       Filed here rather than Value & Basics: real prices run $130-$700, which
+       is elevated-basics territory, not budget. ⚠️ THE BLURB IS A CLAUDE
+       DRAFT, like FARM Rio's and Olivela's above -- her own words if she'd
+       rather. 🚨 IT WILL NOT EARN YET: `_affUrl` only wraps Rakuten MIDs and
+       the Amazon tag, and CJ has neither built here, so `_mallEarns` sorts
+       this card after any earning store in the category, correctly, and the
+       link renders raw. See CLAUDE.md's "WHAT IS OPEN FOR CLAUDE" for the
+       CJ link-wrapping task this is waiting on. */
+    {n:'Cashmere Boutique',d:'Soft, quality cashmere sweaters and layers',u:'https://www.cashmereboutique.com'}
   ]},
   {cat:'Elevated & Designer',stores:[
     {n:'Saks Fifth Avenue',d:'Luxury and designer labels',u:'https://www.saksfifthavenue.com'},
@@ -12377,8 +12387,24 @@ function _findCard(p,opts){
        / `.shop-card-act` everywhere else in the app, which is the point — this
        is the fourth surface to carry the heart, not a new kind of card. */
   const heart=_wlSaveBtn(saveItem);
+  /* 🚨🚨 FOUND 2026-09-13, WHILE UNRELATED WORK TOUCHED A NEIGHBOURING TEST:
+     THIS HREF WAS THE RAW, UNWRAPPED URL. Every other outbound link in the app
+     goes through `_affUrl` before it renders (the Mall's own history is the
+     documented example of exactly this class of bug). This one didn't.
+     ▶ WHO THIS ACTUALLY COST: a browse card's url is `getStoreUrl(...)`,
+       already `_affUrl`-wrapped, and a feed card's url already carries her
+       Rakuten id at ingestion (`rakuten_feed.py`'s C_URL comment says so).
+       But an EXACT/VERIFIED card's url is `best.link` straight from SerpApi's
+       live look-up (`product-find.js`) — a real product page at one of her
+       shops, never wrapped by anything, anywhere. So the one card type this
+       whole file calls the most trustworthy ("a real address, not a tick")
+       was the one silently earning nothing when it landed on an approved shop.
+     ✅ `_affUrl` IS SAFE TO CALL UNCONDITIONALLY HERE: it never double-wraps
+       (checks for `click.linksynergy.com` and an existing Amazon `tag=` before
+       doing anything), so this is a no-op on the two card types that were
+       already correct and a real fix on the one that wasn't. */
   return '<div class="find-card">'+
-    '<a class="fc-go" href="'+_esc(p.url)+'" target="_blank" rel="sponsored noopener">'+
+    '<a class="fc-go" href="'+_esc(_affUrl(p.url))+'" target="_blank" rel="sponsored noopener">'+
     img+'<div class="fc-body"><div class="fc-name">'+_esc(shown)+'</div>'+
     '<div class="fc-meta">'+_esc(p.store)+(p.price?' &middot; '+_esc(p.price):'')+'</div>'+
     (bits.length?'<div class="fc-checks">'+bits.join('')+'</div>':'')+'</div></a>'+
