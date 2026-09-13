@@ -935,22 +935,31 @@ page (not just failing to earn), that's the signal to get a second real link and
    coverups. None of these are a bag-on-a-dress-row shape of wrong — they're all genuinely adjacent
    garments a stylist could defensibly group together, the same "design overlap, not a gap" distinction
    `_SIBLING_OK` already draws elsewhere in this file. Not touched.
-   **(c) 🚨🚨 A SEPARATE, DIFFERENT-MECHANISM FINDING, NOT PATCHED HERE: KIDS-BRAND-LINE ITEMS ARE
-   SLIPPING PAST THE INGEST-TIME KIDS GUARD, NOT THE CHECKLIST MATCHER.** A Balmain "Youth Tracksuit and
-   Reversible Cap Set" (`ac11` Matching athletic sets), a Stone Island "Junior" hooded zip-up sweatshirt
-   (`ac8` Athletic jackets) and a Billieblush "Mini Pajama Set with Hat" (`sl1` Pajamas) are real kids'
-   items that should never have reached the products table at all — that exclusion happens at INGEST
-   TIME, in `scripts/rakuten_feed.py`'s `_KIDS_NAME` regex (`kids?|children|toddlers?|infants?|newborns?
-   |girls|boys`), the exact mechanism item 27 (2026-09-13, this file's Master To-Do List) already fixed
-   once for "VERSACE KIDS Mini Polo." **"Youth" and "Junior" are both missing from that regex.**
-   ⚠️ **NOT FIXED HERE, DELIBERATELY: "Junior" is a real ambiguity, not a clean word to exclude blindly.**
-   US department stores run a genuine "Juniors" apparel department/sizing for teens/young women (distinct
-   from a literal kids' line), so a blanket regex addition risks excluding legitimate young-women's
-   fashion, not just Stone Island's actual children's collection. "Youth" carries much less of that
-   department-store ambiguity and is a safer candidate — but this touches the "womenswear only" PROMISE-
-   class rule (never a judgement one), so it deserves its own dedicated look with real catalog samples
-   rather than a same-breath patch alongside 18 unrelated `not`-list edits. Hers to weigh in on, or
-   Claude's to investigate properly next time this file is open, not guessed at now.
+   **(c) ✅ THE KIDS-BRAND-LINE GAP — FIXED, HER OWN RULING GOT ASKED FOR AND CAME BACK EXACT.** A Balmain
+   "Youth Tracksuit and Reversible Cap Set" (`ac11` Matching athletic sets) and a Stone Island "Junior"
+   hooded zip-up sweatshirt (`ac8` Athletic jackets) were real kids' items slipping past the INGEST-TIME
+   kids guard, `scripts/rakuten_feed.py`'s `_KIDS_NAME` regex — the exact mechanism item 27 (this file's
+   Master To-Do List) already fixed once for "VERSACE KIDS Mini Polo." ▶ **ASKED DIRECTLY WHICH WAY TO
+   RESOLVE THE JUNIOR AMBIGUITY, AND HER ANSWER DREW THE EXACT LINE THIS FILE HAD FLAGGED AS NEEDING HER
+   EYE: *"junior we should keep in. lots of adult women wear junior sizing. i just don't want any
+   childrens or kids things."*** ✅ **BUILT EXACTLY THAT: `_KIDS_NAME` now also drops "youth"** (a
+   Balmain "Youth Tracksuit," a "Youth Medium Hooded Sweatshirt" — retail "youth sizing" has no
+   adult-fashion sense) **but "junior" was deliberately left OUT of the regex, untouched** — a real
+   women's Juniors-department item (Macy's Juniors, junior plus) is not a kids' item and must keep
+   reaching her shelves. ⚠️ **THIS MEANS THE STONE ISLAND "JUNIOR" HOODED SWEATSHIRT SAMPLE IS STILL NOT
+   CAUGHT, ON PURPOSE** — per her own ruling, "junior" alone is not a safe word to exclude blindly, and
+   no other reliable, generic signal distinguishes Stone Island's specific children's sub-line from real
+   Juniors-department fashion. That one specific brand-line leak is an accepted cost of the correct
+   general rule, not something to chase with a narrower brand-specific patch without more evidence.
+   ✅ **VERIFIED, NOT ASSUMED:** `scripts/test_rakuten_feed.py` **72/72** (grew from 67 — new PART 7c: the
+   two real "youth" leaks now drop, two real Juniors-department names still keep, and "youthful" — the
+   adjective, not the sizing word — is untouched, word-boundary anchored the same way as the rest of the
+   regex). `test_rakuten_ingest.py` **ALL PASS** and `scripts/test_slot_match.py` **1183/1183**,
+   unaffected — this is a Python-side ingest-time fix, not a `slot-rules.json` change.
+   ⚠️ **A PYTHON-SIDE FIX ONLY REACHES THE LIVE SHOP ON THE NEXT NIGHTLY INGEST (or a hand dispatch)** —
+   same caveat as the original "VERSACE KIDS" fix. Not yet hand-dispatched this round; the nightly
+   `rakuten-ingest.yml` run (21:37 UTC) will pick it up, or dispatch it by hand sooner if she wants it
+   live today.
 🚨 **SERPAPI'S OUTAGE — RE-CHECKED 2026-09-13: STILL `major_outage`, STILL "MONITORING", NOT RESOLVED.**
 Open since 2026-09-10; SerpApi reports recovering success rates but has not declared it over. Re-check
 again before assuming it has cleared: `curl -s https://status.serpapi.com/api/v2/summary.json`.

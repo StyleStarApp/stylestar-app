@@ -189,6 +189,32 @@ for _n, _note in _KIDS_KEEP:
     ok(f"KEPT: {_note}", _k is True, f"dropped as {_w}: {_n}")
 
 print()
+print("PART 7c — 'YOUTH' ADDED, 'JUNIOR' DELIBERATELY LEFT OUT (2026-09-13, HER OWN RULING).")
+# Asked directly whether to close the youth/junior gap flagged in CLAUDE.md item 15c, she
+# drew the exact line herself: "junior we should keep in. lots of adult women wear junior
+# sizing. i just don't want any childrens or kids things." So: "youth" (a real Balmain
+# "Youth Tracksuit and Reversible Cap Set" was on her own Matching athletic sets shelf,
+# and "youth sizing" has no adult-fashion meaning) is now dropped; "junior" (a real
+# department-store women's sizing category, e.g. Macy's Juniors) stays kept, deliberately.
+_YOUTH_LEAK = [
+    ("Balmain Youth Tracksuit and Reversible Cap Set", "her actual card"),
+    ("Youth Medium Hooded Sweatshirt", "sizing word"),
+]
+for _n, _note in _YOUTH_LEAK:
+    _k, _w = keep_row("", "Adult", "in-stock", _n)
+    ok(f"youth name dropped ({_note})", _k is False and _w == "kids-name", f"got {_k}/{_w}")
+
+_JUNIOR_KEEP = [
+    ("Junior's Ribbed Bodycon Dress", "a real women's Juniors-department sizing item"),
+    ("Junior Plus Skater Skirt", "Juniors Plus, still adult women's sizing"),
+]
+for _n, _note in _JUNIOR_KEEP:
+    _k, _w = keep_row("", "Adult", "in-stock", _n)
+    ok(f"KEPT: {_note}", _k is True, f"dropped as {_w}: {_n}")
+ok("'youthful' (an adjective, not the sizing word) is not caught",
+   keep_row("", "Adult", "in-stock", "Youthful Glow Wrap Dress")[0] is True)
+
+print()
 print("PART 6 — the build set")
 ok("Etsy is NOT in the first build (5GB outlier)", "54027" not in BUILD_MIDS)
 # ⚠️ THIS USED TO ASSERT `len(BUILD_MIDS) == 7`, WHICH MEANT EVERY NEW APPROVAL

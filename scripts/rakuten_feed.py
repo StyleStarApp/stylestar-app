@@ -91,7 +91,18 @@ _WOMENS_NAME = re.compile(r"\b(?:women|femme|female|ladies|lady)(?:'?s)?\b", re.
 #   "Baby Doll Dress" and "Baby Blue" are ordinary adult fashion terms. The
 #   age_group COLUMN still catches a genuinely labelled baby/infant row; only the
 #   NAME-based backstop skips that word.
-_KIDS_NAME = re.compile(r"\b(?:kids?|children|toddlers?|infants?|newborns?|girls|boys)(?:'?s)?\b", re.I)
+# 🚨 "YOUTH" ADDED 2026-09-13, "JUNIOR" DELIBERATELY LEFT OUT -- HER OWN RULING,
+# ASKED DIRECTLY: *"junior we should keep in. lots of adult women wear junior
+# sizing. i just don't want any childrens or kids things."* The two words read
+# alike but are NOT the same thing in retail: "Junior" is a real US department-
+# store SIZING/department for young WOMEN (Macy's Juniors, a genuine adult fit
+# category) -- excluding it would drop real womenswear. "Youth" is the standard
+# sizing/marketing word for CHILDREN'S sizing (Youth Small/Medium, a Balmain
+# "Youth Tracksuit and Reversible Cap Set" found on her own "Matching athletic
+# sets" shelf) -- there is no adult-fashion sense of "youth sizing" the way
+# there is for "junior sizing". Word-boundary anchored the same way as the rest
+# of this regex, so "youthful" is untouched.
+_KIDS_NAME = re.compile(r"\b(?:kids?|children|toddlers?|infants?|newborns?|girls|boys|youth)(?:'?s)?\b", re.I)
 
 
 def keep_row(gender, age_group, availability, name=""):
