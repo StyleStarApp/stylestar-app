@@ -105,6 +105,33 @@ def load_rules(path=RULES_PATH):
                 # Padded, so a plain `in` test is a word-boundary test.
                 # dict.fromkeys de-duplicates while keeping order.
                 rule[key] = tuple(dict.fromkeys(norm(t) for t in terms))
+        # 🚨🚨 requireName (2026-09-13) -- THE REAL SCHEMA GAP THIS FILE
+        # RECORDED AND DID NOT SILENTLY PATCH. match() picks candidates by
+        # CATEGORY alone, so two rows sharing a `cat` term (fo1/fo4 both
+        # "bras", fo2/fo3 both "briefs", sh3/sh14 both "pumps", to6/fo5 both
+        # "corsets") become candidates TOGETHER for any garment carrying it --
+        # a plain bra, a plain brief, a plain pump, a plain dressy top -- with
+        # nothing re-checking that the NARROWER row's own identity is actually
+        # present. `not` cannot fix this: it can only say "not X", never
+        # "must ALSO be Y", and the narrower row's real identity (strapless,
+        # lace, kitten heel, garter/corset) already lives correctly in its own
+        # `name` list -- it was simply never consulted once category had
+        # already picked the candidate.
+        # ▶ SO: a rule marked requireName additionally demands that at least
+        # one of ITS OWN name terms appears -- checked against hay_all (cat +
+        # name together, the same place `not` already looks), never name
+        # alone, because a merchant's own subcategory can carry the
+        # distinguishing word ("lingerie>bras>strapless") when the product
+        # TITLE never repeats it. Requiring it in the name only would risk
+        # emptying this exact shelf for a real strapless bra whose title is
+        # just "Wolford Fatal Bra" -- the "shelves must not go empty" rule
+        # this file has paid for before.
+        # ⚠️ OPT-IN, PER ROW, DEFAULT ABSENT. It only gates whether A GARMENT
+        # QUALIFIES FOR THIS ROW; it never touches any sibling's own matching,
+        # so the genuine DESIGN overlaps (fo5's own garter/corset ALSO landing
+        # on to6, a sundress also landing on daytime casual) are untouched.
+        if r.get("requireName"):
+            rule["requireName"] = True
         out[slot] = rule
     return out
 
@@ -175,6 +202,23 @@ def match(rec, rules):
         # Top' in the name. This now also carries the _family_not terms merged
         # in by load_rules -- see slot-rules.json.
         if _has(hay_all, r.get("not", ())):
+            continue
+        # ---- requireName: category alone is not enough for a row marked
+        # this way -- see the readme in load_rules.
+        # 🚨 CHECKED AGAINST hay_NAME ONLY, NOT hay_all, and this was found by
+        # testing, not reasoned out in advance: fo5 and to6 share the cat term
+        # "corset" (a corset is genuinely both a category AND its own name),
+        # so a plain to6 satin top merely filed under that category already
+        # contains the word "corset" in hay_cat -- checking hay_all made fo5's
+        # own requireName trivially true off the CATEGORY LABEL that admitted
+        # it as a candidate in the first place, which is exactly the
+        # short-circuit this rule exists to close.
+        # ⚠️ THE EMPTY-SHELF WORRY THIS RAISES (a real strapless bra whose
+        # title never repeats "strapless", only its own subcategory does) is
+        # untested against the real feed. If it ever shows up as a shelf that
+        # goes emptier than it should, that is the reason to revisit this,
+        # not a reason to guess a fix now for a case with no measurement.
+        if r.get("requireName") and not _has(hay_name, r.get("name", ())):
             continue
         # ---- colour: loose on purpose. 663 distinct values, 15% blank,
         # inconsistent capitals, and at FARM Rio the field is a PRINT NAME

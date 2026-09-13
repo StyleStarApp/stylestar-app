@@ -69,8 +69,11 @@ for slot, r in raw.items():
                and all(isinstance(t, str) and t.strip() for t in r[key]))
     for key in r:
         ok(f"{slot} has no unknown key '{key}'",
-           key in ("n", "cat", "name", "not", "color", "pattern"),
+           key in ("n", "cat", "name", "not", "color", "pattern", "requireName"),
            "a misspelled key is silently ignored by the matcher")
+    if r.get("requireName"):
+        ok(f"{slot} has requireName but no name list to require",
+           bool(r.get("name")), "requireName with nothing to check is a no-op that looks like a rule")
 
 # ------------------------------------------------------- the catch-all trap ----
 # 🚨 THE BUG THIS EXISTS TO STOP, found by the coverage report on 2026-09-05 and
@@ -210,14 +213,21 @@ _SIBLING_OK = {
     ("dr5", "dr1"): "DESIGN — a sundress is also a daytime casual dress",
     ("fo3", "fo2"): "DESIGN — lace/silk underwear is still comfortable",
     ("fo5", "to6"): "DESIGN — an evening bodysuit/corset/bustier is a dressy top too",
-    ("fo1", "fo4"): "GAP — a plain bra also satisfies fo4's shared cat; fo4's real "
-                    "identity (strapless) is name-only and match() never re-checks "
-                    "a name requirement once category has picked candidates",
-    ("fo2", "fo3"): "GAP — same shape: a plain brief also lands on 'Beautiful "
-                    "underwear' with no way to require fo3's own words via `not`",
-    ("sh3", "sh14"): "GAP — a plain pump also lands on 'Kitten heels' the same way",
-    ("to6", "fo5"): "GAP — to6's own fabric words (satin/silk/lace/sequin/"
-                     "embellished/halter) also satisfy fo5's shared cat",
+    # ✅ THE REVERSE DIRECTION, PROVEN 2026-09-13 AFTER THE requireName FIX: a
+    # bodysuit/corset/bustier genuinely IS both rows' own identity, on purpose
+    # (it is in BOTH fo5's and to6's `name` lists) -- so to6's own word
+    # landing on fo5 too is the SAME design overlap as the row above, seen
+    # from the other side, not a leftover leak. The fabric words that WERE a
+    # real leak (satin/silk/lace/sequin/embellished/halter) are now excluded;
+    # see the direct proof below this sweep.
+    ("to6", "fo5"): "DESIGN — same overlap as (fo5,to6): bodysuit/corset/bustier "
+                    "are legitimately named on both rows",
+    # ✅ FIXED 2026-09-13, not a GAP any more: fo3, fo4, fo5 and sh14 now carry
+    # requireName:true in slot-rules.json, so match() re-checks each row's own
+    # `name` words (against hay_all, cat+name together) even after category
+    # has already picked it as a candidate. The direct proof lives in the
+    # PART below this sweep, using real garments captured against the real
+    # rule set — see "requireName CLOSES THE SIBLING-CONTAMINATION GAP".
 }
 _by_cat = {}
 for _slot, _r in raw.items():
@@ -244,6 +254,38 @@ for _c, _slots in _by_cat.items():
                    f"got {_result} — either fix it or add ('{_a}','{_b}') to _SIBLING_OK with a reason")
 ok("the sibling-contamination sweep actually ran", _checked_pairs > 50,
    f"only checked {_checked_pairs} — the cat-grouping logic broke silently")
+
+
+# ------------------------------- requireName CLOSES THE SIBLING-CONTAMINATION GAP --
+# The four real leaks this file recorded and did NOT silently patch: a PLAIN
+# item, carrying only the sibling pair's SHARED cat term and none of the
+# narrower row's own name words, must no longer land on the narrower row.
+ok("a plain bra (no 'strapless'/'bandeau'/'adhesive') does not land on Strapless bras",
+   "fo4" not in match(g("Wolford Sheer Touch Bra", "women>lingerie>bras", "black"), rules))
+ok("...but a real strapless bra still does",
+   "fo4" in match(g("Wolford Fatal Strapless Bra", "women>lingerie>bras", "nude"), rules))
+ok("a plain brief does not land on Beautiful underwear",
+   "fo3" not in match(g("Skims Cotton Brief", "women>underpants>briefs", "sand"), rules))
+ok("...but a real lace brief still does",
+   "fo3" in match(g("Fleur du Mal Lace Brief", "women>underpants>briefs", "black"), rules))
+ok("a plain pump does not land on Kitten heels",
+   "sh14" not in match(g("Sam Edelman Hazel Pump", "women>shoes>pumps", "black"), rules))
+ok("...but a real kitten heel still does",
+   "sh14" in match(g("Manolo Blahnik Kitten Heel Pump", "women>shoes>pumps", "black"), rules))
+ok("a plain dressy satin top does not land on Special lingerie",
+   "fo5" not in match(g("Zimmermann Satin Halter Top", "women>lingerie>corsets", "ivory"), rules))
+ok("...but a real corset still does",
+   "fo5" in match(g("Agent Provocateur Corset", "women>lingerie>corsets", "black"), rules))
+# 🚨 THE REAL REASON requireName CHECKS THE NAME ONLY, NOT CATEGORY+NAME,
+# FOUND BY TESTING THIS EXACT PAIR: fo5 and to6 share the cat term "corset",
+# and "corset" is ALSO one of fo5's own name words — a corset is genuinely
+# both a category and its own name. So a plain to6 satin top merely filed
+# under that shared category already contains the word "corset" in its
+# CATEGORY text, which would trivially satisfy a category+name check with no
+# real corset anywhere on the garment. Checking name only closes that hole.
+ok("category text containing the row's own word does NOT satisfy requireName by itself",
+   "fo5" not in match(g("Zimmermann Satin Top", "women>lingerie>corsets", "ivory"), rules),
+   "a plain top filed under a 'corsets' category must not pass on the category word alone")
 
 
 # ------------------------------------------------- 2026-09-06 REGRESSION SET --

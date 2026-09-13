@@ -725,14 +725,46 @@ page (not just failing to earn), that's the signal to get a second real link and
    woman cannot tell a fully-verified feed/catalog card, an AI text guess with no real backing, and a
    partially-verified live-search result apart — all render identically in the same row. Needs her eye
    on what (if anything) should look different, not a silent design call.
-12. ▶ **A REAL SCHEMA GAP IN THE CHECKLIST MATCHER, found and measured 2026-09-13, not silently
-   patched:** four sibling-row pairs (`fo1`↔`fo4`, `fo2`↔`fo3`, `sh3`↔`sh14`, `to6`↔`fo5`'s reverse) let
-   a plain, ordinary garment leak onto a narrower sibling row because `match()` picks candidates by
-   CATEGORY first and never re-checks that a category-matched row's own NAME terms are actually present.
-   Fixing it for real would need a new rule flag (e.g. `requireName`) that `slot_match.py`'s `match()`
-   understands — a real code change, not a JSON edit. Recorded and named in `scripts/test_slot_match.py`
-   (`_SIBLING_OK`, each with a "GAP" reason) so it's measured, not guessed at, and doesn't silently drift
-   back into looking fixed. Worth doing if she wants the last of this bug class closed.
+12. ✅✅ **THE SCHEMA GAP IS CLOSED — BUILT 2026-09-13, SAME SESSION SHE ASKED "WHICH IS MOST
+   IMPORTANT."** The gap: four sibling-row pairs (`fo1`↔`fo4`, `fo2`↔`fo3`, `sh3`↔`sh14`, `to6`↔`fo5`'s
+   reverse) let a plain, ordinary garment leak onto a narrower sibling row because `match()` picked
+   candidates by CATEGORY alone and never re-checked that a category-matched row's own NAME terms were
+   actually present. **BUILT: `requireName`, a new opt-in flag `slot_match.py`'s `match()` understands.**
+   A row marked this way additionally demands one of its own `name` words appear before it qualifies —
+   set on `fo3`, `fo4`, `fo5` and `sh14` in `data/slot-rules.json`, the four narrower siblings whose
+   `name` lists already held the right distinguishing words (strapless/bandeau/adhesive, lace/silk/
+   embroidered, garter/suspender/bodysuit/corset/bustier/teddy/babydoll, kitten heel) — they were simply
+   never consulted once category had already picked the candidate.
+   🚨🚨 **FOUND BY TESTING, NOT REASONED OUT IN ADVANCE: `requireName` MUST CHECK THE NAME ONLY, NEVER
+   CATEGORY+NAME TOGETHER.** The first version checked both (the same place `not` already looks), on the
+   theory that a merchant's own subcategory can carry a distinguishing word the product title never
+   repeats. **It broke on the very case it was built for:** `fo5` and `to6` share the cat term "corset",
+   and "corset" is ALSO one of `fo5`'s own name words — a corset is genuinely both a category label and
+   its own identity. So a plain `to6` satin top merely filed under a "corsets" category already contained
+   the word "corset" in its CATEGORY text, trivially satisfying `fo5`'s own check with no real corset
+   anywhere on the garment. **Checked against the name only, this closes cleanly**, and the fabric-word
+   leak (satin/silk/lace/sequin/embellished/halter) that motivated the whole fix is gone. ⚠️ **The
+   category+name empty-shelf worry that led to the first version is UNTESTED against the real feed** —
+   flagged in the code as the reason to revisit if a shelf ever comes back emptier than it should, not
+   guessed at now with no measurement behind it.
+   ⚠️ **ONE GENUINE THREE-WORD OVERLAP REMAINS, AND IT IS DESIGN, NOT A LEAK:** bodysuit/corset/bustier
+   are legitimately named on BOTH `fo5` and `to6` — an evening bodysuit really is both special lingerie
+   and a dressy top, on purpose, in both directions. Recorded in `_SIBLING_OK` as DESIGN, not re-opened
+   as a gap.
+   ▶ **THE AI HALF WAS CHECKED, NOT ASSUMED CLEAN: `_WDR_IDEA_EXCLUDE` has no entries for fo1/fo2/sh3/
+   to6 at all, and that is not the same bug.** The feed's category-matching is coarse by nature (it works
+   off breadcrumbs, not meaning); the AI path is told the exact row label directly ("all 4 must genuinely
+   be 'Strapless bras'"), which a model reads far more precisely than a shared category string. No live
+   evidence was found of the AI naming a plain bra for "Strapless bras" the way the feed did — flagged
+   here rather than silently expanded into, since fixing an unmeasured problem is guessing, not building.
+   ✅ **VERIFIED, NOT ASSUMED:** `scripts/test_slot_match.py` **1105/1105** (grew from 1088 — the sweep's
+   four GAP entries are gone from `_SIBLING_OK`, replaced by nine direct proofs: a plain bra/brief/pump/
+   satin-top no longer lands on the narrow sibling, a real strapless bra/lace brief/kitten heel/corset
+   still does, and the category+name trap that broke the first version is pinned so it cannot silently
+   come back). `test_rakuten_feed.py` **67/67** and `test_rakuten_ingest.py` **ALL PASS**, unaffected.
+   `data/slot-rules.json` re-validated as parseable JSON, still 100 rules.
+   ⚠️ **A RULES CHANGE DOES NOT REACH THE SHOP UNTIL THE NEXT NIGHTLY INGEST** (21:37 UTC) **OR A HAND
+   DISPATCH** — see whether one was run this session in "WHERE WE LEFT OFF".
 🚨 **SERPAPI'S OUTAGE — RE-CHECKED 2026-09-13: STILL `major_outage`, STILL "MONITORING", NOT RESOLVED.**
 Open since 2026-09-10; SerpApi reports recovering success rates but has not declared it over. Re-check
 again before assuming it has cleared: `curl -s https://status.serpapi.com/api/v2/summary.json`.
