@@ -956,10 +956,11 @@ page (not just failing to earn), that's the signal to get a second real link and
    adjective, not the sizing word — is untouched, word-boundary anchored the same way as the rest of the
    regex). `test_rakuten_ingest.py` **ALL PASS** and `scripts/test_slot_match.py` **1183/1183**,
    unaffected — this is a Python-side ingest-time fix, not a `slot-rules.json` change.
-   ⚠️ **A PYTHON-SIDE FIX ONLY REACHES THE LIVE SHOP ON THE NEXT NIGHTLY INGEST (or a hand dispatch)** —
-   same caveat as the original "VERSACE KIDS" fix. Not yet hand-dispatched this round; the nightly
-   `rakuten-ingest.yml` run (21:37 UTC) will pick it up, or dispatch it by hand sooner if she wants it
-   live today.
+   ✅ **HAND-DISPATCHED THE SAME SESSION, LIVE NOW — not waiting for tonight's 21:37 UTC run**, same
+   pattern as every other fix this session. `rakuten-ingest.yml` re-ran clean: **129,374 pieces** written
+   (down from 129,399 before this fix — COUTR alone dropped from 52,176 to 52,151 garments, 25 fewer,
+   consistent with the newly-excluded "youth" items), `dropped 26,295 kids` in the run summary, zero
+   errors. **The fix is live on the shop right now.**
 🚨 **SERPAPI'S OUTAGE — RE-CHECKED 2026-09-13: STILL `major_outage`, STILL "MONITORING", NOT RESOLVED.**
 Open since 2026-09-10; SerpApi reports recovering success rates but has not declared it over. Re-check
 again before assuming it has cleared: `curl -s https://status.serpapi.com/api/v2/summary.json`.
