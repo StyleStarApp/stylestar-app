@@ -415,6 +415,36 @@ for _slot in ("ac5", "ac6", "ac7"):
        _slot not in match(g("The Upside Kalo Delphi Cotton Fleece Hoodie", "women>activewear>tops"), rules))
 ok("...but a real workout tee still lands on Workout tees",
    "ac6" in match(g("Varley Casper T-Shirt", "women>activewear>tops"), rules))
+# 🚨 RE-VERIFIED AGAINST THE REAL CATALOG AFTER THE FIRST 18-FIX BATCH SHIPPED, NOT ASSUMED
+# CLEAN -- re-running the coverage report caught SIX MORE of the exact same shape, each one
+# only visible once the earlier false positive stopped hiding it in the top-3 sample.
+ok("a linen CUSHION does not land on Hair accessories",
+   "ex6" not in match(g("Jonathan Adler Monterey Triangles Linen Cushion", "women>hair accessories"), rules))
+ok("a cotton terry TOWEL does not land on Hair accessories either",
+   "ex6" not in match(g("Gucci GG Cotton Terry Towel", "women>hair accessories"), rules))
+ok("...but a real headband still does",
+   "ex6" in match(g("Loca Headband", "women>hair accessories"), rules))
+for _slot in ("ac5", "ac6", "ac7"):
+    ok(f"a half-zip SWEATER does not land on {_slot}",
+       _slot not in match(g("Varley Ritchie Half-Zip Sweater", "women>activewear>tops"), rules))
+ok("a linen NAPKIN does not land on Linen pants",
+   "bo4" not in match(g("Cabana Set of 2 Embroidered Linen Napkins", "home>tableware"), rules))
+ok("a linen HAT does not land on Linen pants",
+   "bo4" not in match(g("J.W. Anderson Cap Pletin Linen Logo Embroidered Hat", "women>accessories>hats"), rules))
+ok("a linen ROMPER does not land on Linen pants",
+   "bo4" not in match(g("Velvet Clare Linen Romper", "women>rompers"), rules))
+ok("...but real linen pants still do",
+   "bo4" in match(g("Vince Linen Wide-Leg Pants", "women>pants>linen"), rules))
+ok("a wrap COAT that merely has kimono-style sleeves does not land on Robes",
+   "sl3" not in match(g("Max Mara Oversized Wool Cashmere Beaver Wrap Coat with Roll-Up Kimono Sleeves", "women>coats"), rules),
+   "'kimono' is sl3's own word, but a coat described with kimono sleeves is a coat, not a robe")
+ok("...but a real silk robe still does",
+   "sl3" in match(g("Versace Printed Silk-Blend Robe", "women>robes"), rules))
+ok("a party PLACE CARD HOLDER does not land on Wallets",
+   "bg11" not in match(g("Jonathan Adler Mr and Mrs Muse Set of 4 Place Card Holders", "home>party"), rules),
+   "'card holder' is bg11's own phrase, but a place-card holder is tableware, not a wallet")
+ok("...but a real wallet still does",
+   "bg11" in match(g("Givenchy Leather Zip-Fastening Wallet", "women>wallets"), rules))
 
 
 # ------------------------------------------------- 2026-09-06 REGRESSION SET --

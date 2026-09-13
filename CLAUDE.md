@@ -835,9 +835,26 @@ page (not just failing to earn), that's the signal to get a second real link and
    T-shirts/polos/vests that don't say the marketing phrase either.
    ✅ **VERIFIED, NOT ASSUMED, THREE WAYS:** every fix confirmed the false positive is gone AND a real
    match for that row still passes, by direct testing against the exact discovered garment names.
-   `scripts/test_slot_match.py` **1149/1149** (grew from 1108 — 18 new direct-proof pairs, one per fix,
-   following the established pattern). `test_rakuten_feed.py` **67/67** and `test_rakuten_ingest.py`
-   **ALL PASS**, unaffected. `data/slot-rules.json` re-validated as parseable JSON.
+   🚨🚨 **AND THE FIRST BATCH WAS RE-VERIFIED AGAINST THE REAL CATALOG, NOT ASSUMED CLEAN — THIS IS WHAT
+   FOUND SIX MORE.** Hand-dispatching `rakuten-slots.yml` again after the first 18 shipped changed which
+   THREE samples the report happened to print for each row — and six MORE of the exact same false-
+   positive shape had been sitting just below the old top-3, invisible until the first leak stopped
+   hiding them: `ex6` Hair accessories ← a linen CUSHION and a terry TOWEL (added "cushion", "towel") ·
+   `ac5`/`ac6`/`ac7` ← a half-zip SWEATER (added "sweater" to all three — "polo" was considered and
+   deliberately left alone, since a performance polo is a genuinely plausible workout top, unlike a
+   sweater) · `bo4` Linen pants ← linen NAPKINS, a linen HAT, and a linen ROMPER (added "napkin", "hat",
+   "romper") · `sl3` Robes ← a wool wrap COAT merely described with "kimono sleeves" (added "coat" —
+   "kimono" is sl3's own word, but a coat is a coat) · `bg11` Wallets ← party PLACE CARD HOLDERS (added
+   "place card" — "card holder" is bg11's own phrase, but a place-card holder is tableware).
+   ⚠️ **THE LESSON, WORTH KEEPING FOR THE NEXT TIME THIS FILE RE-VERIFIES A FIX: A COVERAGE REPORT ONLY
+   EVER SHOWS 3 SAMPLES PER ROW, SO "THE SAMPLE LOOKS CLEAN NOW" IS NOT THE SAME CLAIM AS "THE ROW IS
+   CLEAN."** Fixing the loudest leak can just promote the next-loudest one into view. A single re-run
+   after a batch of fixes is what caught this; a third re-run found nothing new (see below) — re-running
+   once after a batch is the right amount of paranoia here, not zero and not indefinitely.
+   `scripts/test_slot_match.py` **1163/1163** (grew from 1108 — 24 new direct-proof pairs across two
+   verification passes, one per fix, following the established pattern). `test_rakuten_feed.py` **67/67**
+   and `test_rakuten_ingest.py` **ALL PASS**, unaffected. `data/slot-rules.json` re-validated as
+   parseable JSON.
    ▶ **DELIBERATELY NOT TOUCHED, FLAGGED RATHER THAN GUESSED AT — see item 15.**
 15. ▶ **THREE THINGS THE HEAD-NOUN AUDIT FOUND BUT DID NOT FIX, ON PURPOSE — genuinely too ambiguous,
    too rare, or the wrong file to patch blindly.**

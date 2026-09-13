@@ -508,7 +508,10 @@
       "dress",
       "jacket",
       "top",
-      "tablecloth"
+      "tablecloth",
+      "napkin",
+      "hat",
+      "romper"
     ]
   },
   "bo9": {
@@ -1060,7 +1063,8 @@
       "technical long",
       "base layer",
       "sweatshirt",
-      "hoodie"
+      "hoodie",
+      "sweater"
     ]
   },
   "ac6": {
@@ -1090,7 +1094,8 @@
       "technical long",
       "base layer",
       "sweatshirt",
-      "hoodie"
+      "hoodie",
+      "sweater"
     ]
   },
   "ac7": {
@@ -1120,7 +1125,8 @@
       "workout tee",
       "sport tee",
       "sweatshirt",
-      "hoodie"
+      "hoodie",
+      "sweater"
     ]
   },
   "ac8": {
@@ -1277,7 +1283,8 @@
       "fragrance",
       "cologne",
       "perfume",
-      "eau de"
+      "eau de",
+      "coat"
     ]
   },
   "fo1": {
@@ -1847,7 +1854,8 @@
     "not": [
       "bag",
       "tote",
-      "handbag"
+      "handbag",
+      "place card"
     ]
   },
   "bg12": {
@@ -2144,7 +2152,9 @@
     ],
     "not": [
       "bag",
-      "throw"
+      "throw",
+      "cushion",
+      "towel"
     ]
   },
   "_family_not": {
