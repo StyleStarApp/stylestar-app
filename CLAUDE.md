@@ -763,8 +763,31 @@ page (not just failing to earn), that's the signal to get a second real link and
    still does, and the category+name trap that broke the first version is pinned so it cannot silently
    come back). `test_rakuten_feed.py` **67/67** and `test_rakuten_ingest.py` **ALL PASS**, unaffected.
    `data/slot-rules.json` re-validated as parseable JSON, still 100 rules.
-   ⚠️ **A RULES CHANGE DOES NOT REACH THE SHOP UNTIL THE NEXT NIGHTLY INGEST** (21:37 UTC) **OR A HAND
-   DISPATCH** — see whether one was run this session in "WHERE WE LEFT OFF".
+   ✅ **HAND-DISPATCHED THE SAME SESSION, LIVE NOW — not waiting for tonight's 21:37 UTC run.** Ran
+   `rakuten-slots.yml` (read-only coverage) first, per its own instruction to check a rules change
+   against the real catalog before it reaches a shelf: `fo4` Strapless bras now holds 3 genuine
+   strapless/bandeau Fleur du Mal bras, `fo3` Beautiful underwear 11 genuine lace pieces, `sh14` Kitten
+   heels 15 genuine kitten heels — exactly the leak this fix closes, confirmed against real product
+   names, not just synthetic tests. Every one of the 100 rows still matched at least one garment.
+   ⚠️ **ONE SEPARATE, PRE-EXISTING FINDING FROM THAT SAME COVERAGE RUN, NOT CAUSED BY THIS FIX AND NOT
+   FIXED YET:** two of `fo5`'s three sample garments were NOT lingerie — "Coperni Garter Belt Denim
+   Skirt" and "Moncler Mallero reversible teddy down jacket." Same shape as the already-documented
+   "top"/"denim" head-noun trap: "garter" and "teddy" are being read as head nouns when they are actually
+   MODIFIERS here (a garter-belt-style skirt, a teddy-fabric coat), and `fo5`'s own word list was never
+   given the same fix. This predates today's change and `requireName` does not touch it either way —
+   flagged for her, not silently patched, since it needs new exclusion words chosen for `fo5` specifically.
+   ✅ **THEN RAN THE REAL INGEST — `rakuten-ingest.yml`, live now, not simulated.** 129,400 pieces
+   written across all 7 feed stores (Mytheresa 61,975 · COUTR 52,176 · Olivela 4,080 · Marissa
+   Collections 8,641 · FARM Rio 1,053 · Fleur du Mal 783 · Diane von Furstenberg 510 · Vilebrequin 182),
+   completed clean in ~2.5 minutes, "wrote 52,176 garments" / "wrote 103,124 sizes" on COUTR alone with
+   zero errors. **The fix is live on the shop right now, not waiting for tonight.**
+13. ▶ **`fo5` (Special lingerie) HAS A HEAD-NOUN TRAP, FOUND WHILE VERIFYING ITEM 12 AGAINST THE REAL
+   CATALOG, 2026-09-13.** Two of three sampled `fo5` garments were not lingerie: "Coperni Garter Belt
+   Denim Skirt" and "Moncler Mallero reversible teddy down jacket" — "garter" and "teddy" read as head
+   nouns when they are modifiers (a garter-belt-style skirt, a teddy-fabric coat), same shape as the
+   already-fixed "top"/"denim" trap elsewhere in `slot-rules.json`. Pre-existing, not caused by today's
+   `requireName` fix and not touched by it. Needs new exclusion words chosen for `fo5` specifically —
+   hers to weigh in on, not guessed at.
 🚨 **SERPAPI'S OUTAGE — RE-CHECKED 2026-09-13: STILL `major_outage`, STILL "MONITORING", NOT RESOLVED.**
 Open since 2026-09-10; SerpApi reports recovering success rates but has not declared it over. Re-check
 again before assuming it has cleared: `curl -s https://status.serpapi.com/api/v2/summary.json`.
