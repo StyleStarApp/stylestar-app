@@ -4627,7 +4627,13 @@ const STORES={
   // Classic and easy-to-wear
   'Ann Taylor':{u:'https://www.anntaylor.com/search?q=',t:'$$',a:'Professional Power, Classic Sophisticate',s:['petite','tall'],d:[3,3,9,10,2,4,8,8,10,3],c:'workwear, dresses, blazers'},
   'LOFT':{u:'https://www.loft.com/search?q=',t:'$$',a:'Casual Classic',s:['petite','plus','tall'],d:[8,3,7,8,3,8,5,5,8,5],c:'relaxed workwear, denim'},
-  'Talbots':{u:'https://www.talbots.com/search?q=',t:'$$',a:'Classic Sophisticate',s:['petite','plus'],d:[6,2,9,10,1,6,7,6,9,5],deep:1,c:'timeless workwear, knits'},
+  // ⚠️ RELAXED/FITTED CORRECTED 2026-09-13, HER OWN CATCH: 6/6 read as neutral,
+  // but she named Talbots (alongside J.Jill and Gap) as one of the easiest
+  // examples of a store that runs LOOSER, more relaxed than fitted -- a real
+  // stylist observation the table had never captured. Her words: "correct
+  // Talbots to 8 relaxed, 3 fitted." Everything else about the entry (price,
+  // archetype, sizes, url) is untouched -- only d[_DIM_REL] and d[_DIM_FIT].
+  'Talbots':{u:'https://www.talbots.com/search?q=',t:'$$',a:'Classic Sophisticate',s:['petite','plus'],d:[8,2,9,10,1,6,7,3,9,5],deep:1,c:'timeless workwear, knits'},
   'J.Jill':{u:'https://www.jjill.com/SearchDisplay?searchTerm=',t:'$$',a:'Elevated Natural',s:['petite','plus','tall'],d:[10,1,8,8,1,10,2,2,10,3],c:'linen, relaxed essentials'},
   "Chico's":{u:'https://www.chicos.com/store/search?searchTerm=',t:'$$',a:'Relaxed Classic',s:['petite'],d:[9,2,7,8,2,9,3,3,6,8],c:'travel pieces, easy separates'},
   // Size-inclusive specialists
