@@ -9484,9 +9484,14 @@ var _WDR_IDEA_EXCLUDE={
   // ⚠️ Note these are CROSS-CATEGORY ids: Sweaters and Cardigans live under
   // Jackets & Layers, which is exactly why they were missed when the map only
   // ever listed sibling rows inside Tops.
-  to1:['to4','to7','to5','to6','ja5','ja1'], // White tops
-  to2:['to4','to7','to5','to6','ja5','ja1'], // Black tops
-  to3:['to4','to7','to5','to6','ja5','ja1'], // Tops in your favorite colors
+  // 🚨 to8 Sweatshirts ADDED 2026-09-13 -- her catch, a Coperni zip-up hoodie
+  // reached "Tops in your favorite colors" on the live Wardrobe list. Same
+  // shape as the ja5/ja1 gap above: Sweatshirts lives under Jackets & Layers,
+  // not under Tops, so the sibling map never named it. See slot-rules.json's
+  // readme for the feed-side half of this same fix.
+  to1:['to4','to7','to5','to6','ja5','ja1','to8'], // White tops
+  to2:['to4','to7','to5','to6','ja5','ja1','to8'], // Black tops
+  to3:['to4','to7','to5','to6','ja5','ja1','to8'], // Tops in your favorite colors
   // Work-appropriate dresses: her catch, "strapless gowns or too short" --
   // Cocktail dresses and Formal gowns are the strapless-gown bleed; Sundresses
   // the too-short/too-casual bleed. Daytime casual dresses deliberately NOT
@@ -9568,7 +9573,7 @@ function _wdrQuizInvite(){
 // "that is more of a dressy or going out top so let's put it there instead."
 // So it is banned here AND named as belonging on to6 -- a piece she rules out
 // of one row is not rejected, it is filed where a stylist would put it.
-var _BASIC_TOP='A top like this should just be a top. NEVER suggest a bodysuit, a turtleneck or mock neck, a tank top or camisole, a collared or button-front blouse, satin or any other dressy shiny fabric, or anything going-out, sequined or sheer. Every option must be a simple everyday top with a crew, scoop or small V neckline and short, three-quarter or long sleeves. This rule is absolute, the same weight as her never-wear list.';
+var _BASIC_TOP='A top like this should just be a top. NEVER suggest a bodysuit, a turtleneck or mock neck, a tank top or camisole, a collared or button-front blouse, a hoodie or sweatshirt, satin or any other dressy shiny fabric, or anything going-out, sequined or sheer. Every option must be a simple everyday top with a crew, scoop or small V neckline and short, three-quarter or long sleeves. This rule is absolute, the same weight as her never-wear list.';
 var _WDR_IDEA_DEFINE={
   to1:_BASIC_TOP,   // White tops
   to2:_BASIC_TOP,   // Black tops — her 2026-08-15 catch
@@ -10179,19 +10184,38 @@ async function _wardrobeIdeaGen(id,boxId){
        blouse" was limited to whatever they happened to stock and went thin when
        they did not. ▶▶ THAT WAS HER OWN 2026-09-02 SCOPE DECISION — test the
        feeds on ONE surface first — and it was never brought back to her.
-       ⚠️ IT SITS BELOW HER FOUR COMPARE CARDS, NOT ABOVE THEM, AND THAT IS THE
-         OPPOSITE OF SHOP YOUR STYLE ON PURPOSE. There the six were AI-named text
-         with no photographs, so real products rightly led. HERE the shelf above
-         is already real: her curated pieces and the four-different-stores rule
-         she designed for choosing between alternatives. ▶ Breadth is added
-         underneath it, never on top of it. One line to flip if she disagrees.
+       🚨🚨 REVERSED 2026-09-13, HER CATCH ON HER OWN PHONE: "I don't want the
+       search to come up with 2 different rows. I like how we set it up in chat
+       where she gets one very long row to scroll through. I don't know why we
+       ended up making 2 rows on wardrobe list." The original build put the
+       finder BELOW the compare cards as its own boxed section — a deliberate
+       choice at the time (below, never above, because the shelf above was
+       already real), and exactly the "2 rows" she is now naming.
+       ▶▶ SO: the finder still runs exactly as before and writes into this same
+       waiting div, but the moment it resolves, `_wdrMergeFindRow` below moves
+       its cards into the SAME `.shop-grid.hscroll` her compare cards already
+       sit in, and removes this div. One physical scroller, one swipe: her
+       curated + AI picks lead, real search results continue in the same row,
+       with nothing telling them apart but the cards themselves.
        💰 ONE SEARCH PER ROW SHE TAPS, ~2.5¢, and `_findFetch`'s cache makes a
          second tap on the same row free for the visit. Nothing fires on load,
          so opening the checklist still costs nothing.
        ⚠️ `save:false` — the Wardrobe has no resume of its own, and saving here
          would overwrite her Shop your Style row with a shelf of blouses.
        ⚠️ `promise:''` — no stylist sentence on this surface, so nothing is
-         claimed and `_ssPromise` is never read across screens. */
+         claimed and `_ssPromise` is never read across screens.
+       ⚠️ `quiet:true` — HER RULING. She tapped a checklist row and named nothing,
+         so there is no exact match to fall short of and no apology to make.
+         🚨 AND MERGING NOW COVERS A DEAD SEARCH TOO, WHICH `quiet` DID NOT
+         BEFORE: `quiet` was only ever read inside `_findBlockHtml`, never by
+         the `search-failed` branch in `_ssFindPaint` that runs before it — so a
+         dead search (a live SerpApi outage, say) printed "My search didn't come
+         back..." even in quiet mode, over a shelf that already has real cards
+         on it. `_wdrMergeFindRow` deletes this div regardless of what it holds
+         when there is nothing to merge, so a dead search here now reads exactly
+         like Ideas' own AI failure always has: silent, because her real cards
+         are already on screen and an apology over them would be noise — never
+         a "try again" that just re-hits the same outage and wastes her time. */
     html+='<div id="wdrFind_'+_esc(id)+'" class="find-block ss-find">'
       +'<div class="ss-find-wait">'+_starSpin('ss-find-star')
       +'<span class="ss-find-wait-t">'+_esc(_FIND_STEPS[0])+'</span></div></div>';
@@ -10199,10 +10223,10 @@ async function _wardrobeIdeaGen(id,boxId){
     const _g=box.querySelector('.shop-grid.hscroll'),_h=box.querySelector('.wdr-swipe-hint');
     _swipeHint(_g,_h);_nudgeScroll(_g);
     /* ▶ NOT AWAITED, exactly as on Shop your Style: her ideas are on screen in
-       about a second and the products arrive into space already reserved. */
-    /* ⚠️ `quiet:true` — HER RULING. She tapped a checklist row and named nothing,
-       so there is no exact match to fall short of and no apology to make. */
-    _ssFindRun({item:name},{wrapId:'wdrFind_'+id,promise:'',pre:null,save:false,quiet:true});
+       about a second and the products arrive into space already reserved, then
+       fold into that same row the moment they land. */
+    _ssFindRun({item:name},{wrapId:'wdrFind_'+id,promise:'',pre:null,save:false,quiet:true})
+      .then(function(){_wdrMergeFindRow(id,boxId)});
   }catch(e){
     // The AI failing must never blank a shelf that has real catalog pieces:
     // render them alone, with See more as the retry door.
@@ -10219,6 +10243,40 @@ async function _wardrobeIdeaGen(id,boxId){
       box.innerHTML='<div class="wdr-expand-lbl">Couldn\'t load ideas right now. <a onclick="'+again+'">Try again</a></div>';
     }
   }
+}
+/* ⭐⭐ FOLDS THE FINDER'S CARDS INTO HER ONE ROW — 2026-09-13, the fix for "2
+   different rows" above. Runs once, right after `_ssFindRun` resolves.
+   ⚠️ `_findBlockHtml` (the ONE builder every surface shares) is NOT forked or
+   touched here — it still returns its own head line, disclosure and cards
+   exactly as it does for chat and Shop your Style. This function only moves
+   the `.find-card` elements it produced out of their own wrap and into the
+   compare carousel's grid, then discards the wrap and whatever head/hint text
+   it carried. A second copy of the builder is how the <<FIND>> marker leaked
+   and how the two-row regression happened in the first place — this reuses it
+   unchanged and only rearranges the DOM around its output.
+   ⚠️ LOOKS UP THE WRAP BY ID, NOT BY THE `box` PASSED IN. A slow-loading id can
+   lose a race against her tapping a different row in the same shared teaser
+   box; if the wrap for THIS id is gone or was never written, there is nothing
+   of this id's left to merge and the function is a no-op — never a stale
+   grid getting another id's cards. */
+function _wdrMergeFindRow(id,boxId){
+  try{
+    const findWrap=document.getElementById('wdrFind_'+id);
+    if(!findWrap)return;   // nothing found, or she's since moved on — _ssFindPaint already removed it
+    const box=document.getElementById(boxId||('wx_'+id));
+    const grid=box&&box.querySelector('.shop-grid.hscroll');
+    const cards=findWrap.querySelectorAll('.find-card');
+    if(grid&&cards.length){
+      cards.forEach(function(c){grid.appendChild(c)});
+      _wlSyncButtons();
+      _swipeHint(grid,box.querySelector('.wdr-swipe-hint'));
+    }
+    /* ⚠️ REMOVED UNCONDITIONALLY, even when there was nothing to merge — a dead
+       search or an empty pool leaves only head/hint chrome behind, and quiet
+       mode means none of it is hers to see. Her real compare cards above stay
+       exactly as they were, which is the whole point. */
+    findWrap.remove();
+  }catch(e){}
 }
 // The endless door: appends more AI ideas into the SAME carousel. Buffered
 // leftovers from the first call go in instantly; after that each tap asks the

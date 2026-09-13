@@ -22367,3 +22367,167 @@ harmless — the sandbox cannot reach the real product-find endpoint) · `tabtop
 `findscsv` 50 unaffected from the prior session, not re-run this session. `curated` still reports the
 3 pre-existing, PROVEN failures — see "THREE KNOWN PRE-EXISTING FAILURES" further down; not a
 regression, do not chase it.
+
+---
+
+## ARCHIVED 2026-09-13 (ninth session, start) — the 2026-09-12 eighth-session entry, verbatim
+
+## ▶▶▶ WHERE WE LEFT OFF — 2026-09-12 (eighth session, end of session). READ THIS FIRST.
+🚨 **THIS BLOCK IS THE CURRENT TRUTH. Everything below it is standing reference — if a line further
+down contradicts this one, THIS ONE WINS.**
+📁 **The seventh-session 2026-09-12 entry (the confirmed sharelink-drift fix, the `?resync=`/reconnect
+cleanup) moved to `CLAUDE-archive.md` in this commit, VERBATIM**, under its own heading. Nothing was
+deleted.
+⚠️ **No app code changed this session.** This was Cath working live through the actual CJ Affiliate
+publisher signup in her own browser, screen by screen, with Claude walking her through each field.
+
+### ✅✅ CJ AFFILIATE — DONE. ACCOUNT CREATED AND ACTIVE, HER #2 MONEY-PATH ITEM FOR WEEKS.
+**"CJ is free and still not done" is retired — it is done and the account is live.** Cath completed
+the full publisher signup tonight: Users (created her Superuser login, caught and fixed a stray
+duplicate "Operator" user with a broken name field along the way — the fix was logging in as the
+actual Superuser, since only that role can manage account settings), Network Profile (business
+description filed), tax info (a W-9 filed under her **personal SSN**, which is correct — a
+single-member LLC that hasn't elected corporate tax treatment is a disregarded entity for tax
+purposes, so the name+TIN on a W-9 is the individual, not the LLC's EIN; the money still lands in the
+LLC's own bank account, which is what actually keeps the books separated), Account Information
+(caught and fixed: the Organization Name field said "Style Star, LLC" — the actual filed legal name is
+**Style Star by Catherine, LLC**, doc L26000395689 — corrected to match), Payment Settings (business
+bank account added, Truist, account holder name "Style Star by Catherine, LLC"; CJ will place a
+verification phone call on their own timeline before the account can actually be paid — nothing to do
+but wait for that call), and a Promotional Property (**"Style Star"**, Website type, primary
+promotional model **Product Comparison, Reviews, or Discovery** with **Content/Blog/Media** as
+secondary, tagged). ✅ **CJ's own onboarding screen confirmed: "Your Account Has Been Activated... you
+may now begin applying to join advertiser programs."**
+▶ **NOT DONE YET, AND IT'S THE ACTUAL NEXT STEP: she has not applied to any individual advertiser
+program inside CJ yet.** Account-level approval and per-advertiser approval are separate — being
+active on the network just means she can now browse the Partners tab and apply one program at a time,
+the same way AWIN and Rakuten work. ⭐⭐⭐ **PRIORITY ORDER FOR WHICH ADVERTISERS TO APPLY TO FIRST: the
+mid-market DTC brands from the "41 shops publish their full catalogue" measurement — Everlane · Boden ·
+Tuckernuck · Universal Standard · Cuyana · Alo Yoga · Summersalt · Good American · Veronica Beard —
+ahead of any luxury name CJ's own directory might surface first.** Those are the ones that could
+actually move the affordability problem this file keeps coming back to; nothing else on the board does.
+⚠️ **Not verified from here which specific network each of those brands is actually on** — CJ's own
+advertiser directory (inside the account, "Advertisers"/Partners tab) is the only reliable way to check;
+don't assume all nine are on CJ specifically.
+
+### ✅ 2026-09-13 — HER FIRST CJ ADVERTISER APPROVAL: CASHMERE BOUTIQUE, ADDED TO THE STORE TABLE
+She applied broadly rather than narrowly to the mid-market DTC list above. **THE FULL PENDING
+APPLICATIONS QUEUE, CONFIRMED COMPLETE BY HER 2026-09-13** (she checked to the end of the list):
+Amanda Uprichard · Ashley Stewart · Belk · Brandon Maxwell · Bvlgari · Chadwicks of Boston · Cupshe ·
+D'Aniello Boutique · DL1961 · Intimissimi · J.Crew · J.Crew Factory · Jared · Kenneth Cole · Lands' End ·
+Lilysilk · Macy's · Madewell · Marshalls · Missoni · Nike · prAna · Pura Cashmere · Rack Room Shoes ·
+Ray-Ban · Revolve · Ross-Simons · Talbots · TJ Maxx · Trina Turk · Wimbledon Shop — **30 pending in
+total.** ⭐⭐⭐ **BELK, MACY'S, TJ MAXX, MARSHALLS, TALBOTS AND LANDS' END ARE WORTH WATCHING ABOVE ALL
+THE REST** — department stores and true mid-market generalists are exactly what this file has said for
+months would actually fix the price problem, more than any of the other 24 pending or the one approval.
+✅ **CASHMERE BOUTIQUE APPROVED, and added to `STORES`** (`index.html`, next to Kohl's/COUTR) —
+name + search url only, no invented scores, per her 2026-09-08 rule. Real cashmere specialty retailer,
+in business since 2007, women's + men's (so `w:1` is set). Search url `/search?q=` verified with a real
+term (61 results for "sweater") but **not fully verified** — a gibberish term returned 9 fallback items
+instead of zero, a known Shopify "always show something" behavior, so it's marked unverified in the
+comment. `scripts/build-store-domains.js` re-run, 133 stores, `--check` clean; `storepool` 49/49 and
+`untagged` 16/16 re-run with no regressions.
+🚨🚨 **THE IMPORTANT CATCH: THIS STORE IS FINDABLE BUT DOES NOT EARN, AND NEITHER WILL ANY OTHER CJ
+ADVERTISER, UNTIL CJ LINK-WRAPPING IS BUILT.** The app's only outbound-link tagging today is `_AFF_MID`
+(Rakuten MIDs, feeding `_affUrl`) and `_AMZ_TAG` (Amazon). **There is no CJ equivalent** — CJ uses its
+own deep-link/tracking scheme, unrelated to either. So Cashmere Boutique (and Belk, Macy's, TJ Maxx,
+etc. if any of them approve) can be shown and searched, but every one of those links is currently a
+plain, untagged store search that earns nothing. ⚠️ **This is a genuinely new, unstarted piece of
+engineering, not a one-line fix** — see "WHAT IS OPEN FOR CLAUDE" below. It was not built speculatively
+tonight since nothing yet needs it to earn; it becomes real work the moment a CJ advertiser she actually
+wants to route traffic to gets approved.
+✅ **ALSO ADDED TO THE MALL, same session, her catch — she noticed it wasn't there.** `STORES` (the
+searchable index) and `mallStores` (the Mall's own hand-curated showcase) are two separate lists, same
+relationship as the Edit — being in one doesn't put a store in the other. Filed under **Contemporary &
+Everyday** (its $130–$700 range is elevated-basics, not true "Value & Basics"), blurb *"Soft, quality
+cashmere sweaters and layers"* — a Claude draft, hers to reword, same convention as FARM Rio/Olivela/
+Marissa/Mytheresa's blurbs when she added those. `_mallEarns` will correctly sort it after any earning
+card in its category until CJ link-wrapping exists. Verified: both inline script blocks still parse,
+and the `mallStores` array literal evaluates cleanly with the new entry in place (31 stores, 5 groups).
+
+### 🚨🚨 A REAL EARNING BUG FOUND AND FIXED, SAME SESSION: THE FINDER'S VERIFIED CARDS NEVER EARNED
+Fixing a pre-existing, unrelated test-count drift (`affq.js`'s hardcoded `TEMPLATES` tripwire, 14→15,
+the same kind of drift documented earlier for the discoStar duplicate) led straight to this: **`_findCard`
+— the ONE card renderer behind chat, Shop your Style and the Wardrobe's real-product finder — rendered
+`p.url` RAW, never passed through `_affUrl`.**
+▶ **WHO THIS ACTUALLY COST:** a browse card's url comes from `getStoreUrl(...)`, which already wraps
+through `_affUrl` internally — fine. A feed card's url is pre-wrapped at ingestion by `rakuten_feed.py`
+(its own comment says so) — also fine. **But an EXACT/VERIFIED card — the one this whole file calls the
+most trustworthy, "a real address, not a tick" — gets its url from `best.link`, a live SerpApi look-up
+straight off the retailer's own page (`product-find.js`), never wrapped by anything, anywhere.** So every
+time the finder found a genuinely verified match at one of her Rakuten-approved shops (Mytheresa, FARM
+Rio, DVF, Vilebrequin, Olivela, Marissa Collections, Fleur du Mal, COUTR) and a woman tapped "Shop it,"
+the click earned nothing — silently, on the app's flagship, most-tested shopping surface.
+✅ **FIXED: `_findCard` now renders `href="'+_esc(_affUrl(p.url))+'"`.** Safe by construction — `_affUrl`
+never double-wraps (checks for an existing `click.linksynergy.com` or Amazon `tag=` first), so this is a
+no-op on the two card types that were already correct and a real fix on the one that wasn't.
+⚠️ **ONE TEST WAS PINNED TO THE OLD, BUGGY BEHAVIOR** — `ssfind.js`'s "a piece from HER OWN SHELF reaches
+the row" asserted the RAW farmrio.com string was still present unwrapped, which broke the moment the real
+bug got fixed (FARM Rio is a genuine Rakuten shop, so its card now correctly wraps to a
+`click.linksynergy.com` deeplink). Fixed by decoding the href before checking, plus a new assertion that
+the wrap and her real mid (44912) are actually present — the same "test the rule, not the string" lesson
+this file has paid for before.
+✅ **RE-VERIFIED CLEAN AFTER THE FIX:** `findprod` 63/63 · `chatfind` 63/63 · `ssfind` 97/97 (was 95/1
+failed before the test fix, for the reason above) · the static `affq` anchor-count check now matches
+(86 anchors = 71 Edit links + 15 templates).
+🚨 **THIS IS LIVE OPERATIONAL STATUS AND SHOULD NOT ARCHIVE UNTIL SHE HAS SEEN IT.** It means every
+verified "Shop it" tap on chat, Shop your Style, or the Wardrobe search — going back to whenever this
+card was built (2026-09-06/09) — that landed on one of her eight Rakuten shops was earning nothing until
+tonight. There is no way from here to measure how much that cost; her Rakuten dashboard is the only
+instrument that could ever tell her, and only for clicks going forward now that the fix is live.
+
+### ▶▶ WHAT IS WAITING ON HER — her own priority order (full detail in the Master To-Do List above)
+1. ⏳ The Oct 1 tax-receipt clock (~3 weeks out) — the only real deadline on her board.
+2. ⭐⭐⭐ **Check back on the CJ Pending Applications queue** — Belk, Macy's, TJ Maxx, Marshalls, Talbots
+   and Lands' End are the ones worth watching for. Report back any more acceptances or declines.
+3. ⭐ More Edit/Finds pieces — she's on a roll and the machinery makes it cheap now.
+4. ▶ Optional: clean up the two `claude-diag-test-...@example.invalid` artifacts in Supabase/MailerLite.
+5. ▶ Optional: ask Supabase support how far back the 401 errors go, if she wants to know whether any
+   real woman's save was silently lost during the outage.
+
+### ▶▶ WHAT IS OPEN FOR CLAUDE
+1. 🚨🚨 **CJ LINK-WRAPPING DOES NOT EXIST YET — build it once a CJ advertiser she wants live actually
+   approves.** Today `_affUrl` only knows Rakuten MIDs and the Amazon tag; a CJ-approved store (Cashmere
+   Boutique now, possibly Belk/Macy's/TJ Maxx/Marshalls/Talbots/Lands' End if they come through) shows up
+   findable but earns nothing until this is built. Not started speculatively — real work, worth doing the
+   moment it matters.
+2. 🚨 "Couldn't load options right now" on Shop your Style — the prompt-cap theory is RULED OUT (see the
+   archive). Cause still genuinely unknown; needs a fresh live-diagnosis approach, not a repeat of the
+   cap measurement.
+3. 💰 A price filter — a find request carries item · colour · fabric · cut · size · width and no price
+   field at all. When built, put `Try: tops under $100` and `Try: white jeans under $150` back verbatim.
+4. ⭐ Wire her Style Signature into the finder (board row 11, her *"many of them were shapeless"*) —
+   parked by her; hers to green-light, one thing at a time.
+5. ▶ Read her analytics. `track()` exists and nobody has looked. Still worth doing.
+6. ▶ A shared remembered cache — today's is per-browser. Must live server-only (Netlify Blobs), never
+   through the publishable key.
+7. ▶ Amazon's disclosure "I" vs "we"/"Style Star LLC" — flagged to her, not guessed at.
+8. ▶ `affq.js`'s `EDIT_N` counter needs scoping to `#s-dream` — low priority, real debt.
+9. ▶ Optional, low stakes: find and neutralise the old "Belted Midi Dress" test account's share, if she
+   wants it gone rather than just harmless — needs the actual old token or a Supabase lookup by hand.
+10. ▶ Worth remembering, not an open task: if a save-token drift ever recurs on a different account for a
+   different reason, `?r=`'s pull-and-overwrite behavior would clobber that device's local data the same
+   way `?resync=` was built to avoid for Cath. No general safety net was built for this — it was judged
+   not worth the permanent complexity for an incident now confirmed unique to one dev-testing history.
+🚨 **SERPAPI'S OUTAGE — RE-CHECK BEFORE ASSUMING IT'S OVER:**
+`curl -s https://status.serpapi.com/api/v2/summary.json` — `Google: major_outage` means it isn't. Not
+re-checked this session; re-check before assuming it has resolved.
+
+### ▶ TEST STATE — unchanged this session (no code touched)
+Last measured 2026-09-12 (seventh session): `sharelink` 54/54 · `sharelink-drift` 6/6 · `savetruth`
+19/19 · `copy` 50/50. Not touched or re-run since: `findscsv` 50 · `findspage` 102 · `fitroom` 24 ·
+`promptcap` 10 · `hubs` 49 · `mallverify` 14 · `linkwatch` 27 · `tabtops` 49 · `catmark`
+132/3-pre-existing · `wldoortest` 55/65-pre-existing · `curated` 62-63/65 (3 named pre-existing
+failures, see the standing section below) · `affq` 1 known pre-existing failure.
+
+### 🎯 STANDING RULE FOR CLAUDE — NEVER ASK HER TO MAKE A GIT DECISION
+Her words: *"Why are you asking me about putting something on main? I don't even know what that means.
+I count on you to decide what needs to be saved or archived or put on main or the branch and all of
+that. I need you to keep track of everything and be honest with me."* ▶ **Branch, commit, archive,
+merge to `main` — all of it is Claude's to decide and do, then report in one plain line** ("saved and
+live"). **The only thing that still goes to her is a PRODUCT decision** — what the app should do, what
+a woman sees, what her words mean. ⚠️ **The second half of her sentence is load-bearing too: "keep
+track of everything and be honest with me."** Deciding for her is not permission to be vague about what
+was decided — say what was saved and where, in one line. *(See also "THE ARCHIVING RULE" below, which
+this generalises — Claude's process, never hers to referee.)*
+

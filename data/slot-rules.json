@@ -56,7 +56,17 @@
     "",
     "▶ AFTER ANY CHANGE HERE: run the 'Rakuten checklist coverage' workflow, which",
     "  prints every row's garment count and three real sample names. An empty row is",
-    "  a broken rule; a wrong row is only visible in the samples."
+    "  a broken rule; a wrong row is only visible in the samples.",
+    "",
+    "🚨 2026-09-13, HER CATCH ON THE LIVE WARDROBE LIST: a Coperni zip-up hoodie",
+    "reached 'Tops in your favorite colors'. Same shape as the 2026-09-06 sweater",
+    "bug this file already documents -- filed by the retailer under a broad",
+    "'Tops' department cat, so the cat rung matched even though the name carried",
+    "none of to3's name terms. 'hoodie'/'hooded'/'sweatshirt' were missing from",
+    "to1/to2/to3/to4/to5's not lists even though this file already has its own",
+    "to8 'Sweatshirts' row -- the same garment family, just never excluded from",
+    "its siblings. Added. The AI half needed the same fix: to8 is now in",
+    "_WDR_IDEA_EXCLUDE's to1/to2/to3 entries in index.html, beside ja5/ja1."
   ],
   "to3": {
     "n": "Tops in your favorite colors",
@@ -90,7 +100,10 @@
       "sweater",
       "knitwear",
       "pullover",
-      "jumper"
+      "jumper",
+      "hoodie",
+      "hooded",
+      "sweatshirt"
     ]
   },
   "to1": {
@@ -133,7 +146,10 @@
       "sweater",
       "knitwear",
       "pullover",
-      "jumper"
+      "jumper",
+      "hoodie",
+      "hooded",
+      "sweatshirt"
     ]
   },
   "to2": {
@@ -172,7 +188,10 @@
       "sweater",
       "knitwear",
       "pullover",
-      "jumper"
+      "jumper",
+      "hoodie",
+      "hooded",
+      "sweatshirt"
     ]
   },
   "to4": {
@@ -207,7 +226,10 @@
       "dress",
       "jacket",
       "coat",
-      "blazer"
+      "blazer",
+      "hoodie",
+      "hooded",
+      "sweatshirt"
     ]
   },
   "to7": {
@@ -255,7 +277,9 @@
       "dress",
       "swim",
       "bikini",
-      "sweatshirt"
+      "sweatshirt",
+      "hoodie",
+      "hooded"
     ]
   },
   "to6": {

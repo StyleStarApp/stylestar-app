@@ -38,7 +38,7 @@ gathers it going forward — that's an open, ongoing thing, not a one-time quest
 | 10 | ~~The stylist says "belted" and searches "dress"~~ ✅ **HER RULING, BUILT AND LIVE 2026-09-10: *"I want the stylist to deliver exactly what she is promising."*** | — | ✅ done |
 | 16 | ~~The Wardrobe list saw only her 9 affiliate shops~~ ✅✅ **HER DECISION, BUILT AND LIVE 2026-09-10 — ALL THREE SHOPPING SURFACES NOW SEARCH HER SHOPS PLUS ALL 132.** She chose the layout by LOOKING at both rendered at phone size, and ruled the apologising line off. | — | ✅ done |
 | 17 | ~~Every search was a cold 4-12s search, even a repeat~~ ✅ **LIVE 2026-09-10 — the app remembers what it has already paid for. ⚠️ IN HER BROWSER, NOT THE DATABASE; the shared version was written and THROWN AWAY on security grounds. See the ledger.** | — | ✅ done |
-| 18 | 🚨 **"COULDN'T LOAD OPTIONS RIGHT NOW"** — she photographed it on Shop your Style. **The stylist call failing, NOT the search. Cause still unknown.** | Claude | ⏳ **OPEN — the last known live fault** |
+| 18 | 🚨 **"COULDN'T LOAD OPTIONS RIGHT NOW"** — she photographed it on Shop your Style. **The stylist call failing, NOT the search. Cause still unknown.** ⭐ **A REAL LEAD, 2026-09-13 — NOT CONFIRMED, DON'T CLOSE THE ROW ON IT:** SerpApi's own status page shows a Google-engine outage that ran 2026-09-10 through at least 2026-09-11 (their own words: "we currently experience service outage across all of our APIs"), still marked `major_outage` and "monitoring" (not resolved) as of 2026-09-13, though they report success rates recovering. **This explains the SYMPTOM'S TIMING, not necessarily every occurrence of it** — the row is about the STYLIST call (style-ai), not the product search, so this may be a coincidence rather than the cause; needs the live-diagnosis this row has always needed, not assumed closed. | Claude | ⏳ **OPEN — the last known live fault, now with a real lead to chase** |
 | 20 | ~~Her two failed searches: "vacation dress" and "white jeans"~~ ✅ **BUILT AND LIVE 2026-09-10.** *White jeans WORKED* — Google's half was flapping (0 results one minute, 23 the next) and her own shelf carried it. *Vacation dress* found nothing because the word went INTO the search. | — | ✅ done |
 | 21 | ~~Five of the app's own nine suggested prompts were things it could not do~~ ✅ **HER CATCH 2026-09-10 — three occasions now translate, and the two PRICE prompts came off, her ruling.** | — | ✅ done |
 | 22 | 💰 **A PRICE FILTER — THE SEARCH HAS NO PRICE FIELD AT ALL.** A find request carries item · colour · fabric · cut · size · width and nothing else, so *"under $100"* was never filtered, only ignored. ▶ **When it is built, put `Try: tops under $100` and `Try: white jeans under $150` straight back — the only thing wrong with them was that they were promises.** | Claude, hers to green-light | ⏳ **OPEN** |
@@ -53,6 +53,7 @@ gathers it going forward — that's an open, ongoing thing, not a one-time quest
 | 13 | ~~The app promises before it knows it can deliver~~ ✅ **HER DECISION, BUILT AND LIVE 2026-09-10 — the stylist's sentence is HELD until there are cards to keep it with. Retires a FAMILY of faults, not one.** | — | ✅ done |
 | 14 | ~~Affiliate shops should appear "somewhere in there"~~ ✅ **POSITION was already built (`_findSpread`, 2026-09-09). ⚠️ Her ruling was in NEITHER file; it is in the ledger now.** | — | ✅ done |
 | 15 | ~~Her affiliate shops never appear at all~~ ✅✅ **HER CATCH AND HER DECISION, BUILT AND LIVE 2026-09-10 — the finder now searches HER OWN NIGHTLY FEED beside Google. Google will not surface her small luxury shops (0 of 120, then 0 of 33), so this was PRESENCE, not position, and no sort could ever have fixed it.** | — | ✅ done |
+| 26 | ~~Wardrobe List showed her Ideas as 2 stacked rows, and a hoodie reached "Tops"~~ ✅ **HER CATCH 2026-09-13, BUILT AND LIVE SAME SESSION.** Her words: *"I don't want the search to come up with 2 different rows. I like how we set it up in chat where she gets one very long row to scroll through."* `_wdrMergeFindRow` now folds the live finder's cards into the SAME `.shop-grid.hscroll` her compare cards sit in, the moment the search resolves — one physical scroller, tested 9/9. ⭐ **Side effect that fixes her OTHER complaint on this same screen:** a dead search used to print "My search didn't come back..." even in `quiet` mode, because `quiet` was only ever read inside `_findBlockHtml`, never by the `search-failed` branch above it — the merge function deletes the wrap regardless of what it holds, so a dead search on Wardrobe is silent now, same as it should have been. **Separately:** a Coperni zip-up hoodie reached "Tops in your favorite colors" — same shape as the already-documented sweater bug, just never extended to hoodies/sweatshirts. Fixed on both halves: `data/slot-rules.json`'s `not` lists (to1–to5) and `_WDR_IDEA_EXCLUDE`'s to1/to2/to3 (added `to8`), verified against `scripts/test_slot_match.py` (1087/1087) and a direct hoodie-vs-tee check. | — | ✅ done |
 🚨🚨 **THE BOARD IS NO LONGER CLEAR — SHE TESTED THE LIVE APP ON 2026-09-10 AND FOUND THREE THINGS.
 Two are fixed and live; ROWS 11 AND 12 ARE HER OWN WORDS AND NEITHER IS STARTED.** ⚠️ **SHE ASKED FOR
 THEM ONE AT A TIME — *"Ok let's go slow here one at a time"* — so do NOT bundle them, and do not start
@@ -343,153 +344,136 @@ that makes any future number mean something.**
 
 ---
 
-## ▶▶▶ WHERE WE LEFT OFF — 2026-09-12 (eighth session, end of session). READ THIS FIRST.
+## ▶▶▶ WHERE WE LEFT OFF — 2026-09-13 (ninth session). READ THIS FIRST.
 🚨 **THIS BLOCK IS THE CURRENT TRUTH. Everything below it is standing reference — if a line further
 down contradicts this one, THIS ONE WINS.**
-📁 **The seventh-session 2026-09-12 entry (the confirmed sharelink-drift fix, the `?resync=`/reconnect
-cleanup) moved to `CLAUDE-archive.md` in this commit, VERBATIM**, under its own heading. Nothing was
-deleted.
-⚠️ **No app code changed this session.** This was Cath working live through the actual CJ Affiliate
-publisher signup in her own browser, screen by screen, with Claude walking her through each field.
+📁 **The eighth-session 2026-09-12 entry (CJ account activation, the Cashmere Boutique approval, the
+`_findCard` earning-bug fix) moved to `CLAUDE-archive.md` in this commit, VERBATIM**, under its own
+heading. Nothing was deleted. The live-operational facts inside it (CJ is active, Cashmere Boutique is
+approved and added, the earning bug is fixed) are carried forward into "AFFILIATE STATUS" and "WHICH
+EDIT PIECES EARN" further down, which never archive.
 
-### ✅✅ CJ AFFILIATE — DONE. ACCOUNT CREATED AND ACTIVE, HER #2 MONEY-PATH ITEM FOR WEEKS.
-**"CJ is free and still not done" is retired — it is done and the account is live.** Cath completed
-the full publisher signup tonight: Users (created her Superuser login, caught and fixed a stray
-duplicate "Operator" user with a broken name field along the way — the fix was logging in as the
-actual Superuser, since only that role can manage account settings), Network Profile (business
-description filed), tax info (a W-9 filed under her **personal SSN**, which is correct — a
-single-member LLC that hasn't elected corporate tax treatment is a disregarded entity for tax
-purposes, so the name+TIN on a W-9 is the individual, not the LLC's EIN; the money still lands in the
-LLC's own bank account, which is what actually keeps the books separated), Account Information
-(caught and fixed: the Organization Name field said "Style Star, LLC" — the actual filed legal name is
-**Style Star by Catherine, LLC**, doc L26000395689 — corrected to match), Payment Settings (business
-bank account added, Truist, account holder name "Style Star by Catherine, LLC"; CJ will place a
-verification phone call on their own timeline before the account can actually be paid — nothing to do
-but wait for that call), and a Promotional Property (**"Style Star"**, Website type, primary
-promotional model **Product Comparison, Reviews, or Discovery** with **Content/Blog/Media** as
-secondary, tagged). ✅ **CJ's own onboarding screen confirmed: "Your Account Has Been Activated... you
-may now begin applying to join advertiser programs."**
-▶ **NOT DONE YET, AND IT'S THE ACTUAL NEXT STEP: she has not applied to any individual advertiser
-program inside CJ yet.** Account-level approval and per-advertiser approval are separate — being
-active on the network just means she can now browse the Partners tab and apply one program at a time,
-the same way AWIN and Rakuten work. ⭐⭐⭐ **PRIORITY ORDER FOR WHICH ADVERTISERS TO APPLY TO FIRST: the
-mid-market DTC brands from the "41 shops publish their full catalogue" measurement — Everlane · Boden ·
-Tuckernuck · Universal Standard · Cuyana · Alo Yoga · Summersalt · Good American · Veronica Beard —
-ahead of any luxury name CJ's own directory might surface first.** Those are the ones that could
-actually move the affordability problem this file keeps coming back to; nothing else on the board does.
-⚠️ **Not verified from here which specific network each of those brands is actually on** — CJ's own
-advertiser directory (inside the account, "Advertisers"/Partners tab) is the only reliable way to check;
-don't assume all nine are on CJ specifically.
+### ✅✅ THE WARDROBE LIST'S "2 DIFFERENT ROWS" — HER CATCH, FOUND, FIXED, TESTED THIS SESSION
+She opened with four things at once, all on Shop your Style / Wardrobe List: *"I don't want the search
+to come up with 2 different rows. I like how we set it up in chat where she gets one very long row to
+scroll through. I don't know why we ended up making 2 rows on wardrobe list. Also the searches are not
+landing well. And I don't like how the app has many places where there is an apology for search going
+badly and then it says try again... on tops search it was showing me a hoodie... and I noticed
+yesterday on wardrobe list shopping when a farm Rio item came up it did not show photo."*
+✅ **1. THE TWO ROWS — FIXED AND LIVE.** Confirmed in the code: the Wardrobe's "Ideas" carousel (her
+curated + AI picks, `.shop-grid.hscroll`) and the live product finder (`_ssFindRun`) were rendering as
+two separate stacked blocks — a deliberate 2026-09-10 design at the time (finder below the compare
+cards, its own box), and exactly what she is now naming. **`_wdrMergeFindRow` (`index.html`, right
+after `_wardrobeIdeaGen`) folds the finder's `.find-card` elements into the SAME grid the compare cards
+already sit in, the moment the search resolves, and deletes the now-empty wrap.** `_findBlockHtml` (the
+ONE builder every surface shares) was NOT touched or forked — this only rearranges the DOM around its
+existing output, the same "never a second copy" discipline this file keeps citing.
+✅ **2. THE APOLOGY THAT OUTLASTS "TRY AGAIN" — FIXED ON WARDROBE AS A SIDE EFFECT.** `quiet:true` (her
+own 2026-09-10 ruling — she named nothing, so no apology) was only ever read inside `_findBlockHtml`,
+never by the `search-failed` branch in `_ssFindPaint` that runs BEFORE it — so a dead search still
+printed *"My search didn't come back just then... Ask me again and I'll try"* even in quiet mode, right
+over a shelf that already has real cards on it. `_wdrMergeFindRow` deletes the wrap regardless of what
+it holds, so a dead search on Wardrobe is silent now, same as the AI-ideas failure has always been.
+⚠️ **THIS IS ONE SURFACE OF A BIGGER COMPLAINT SHE NAMED, NOT THE WHOLE THING — see "WHAT IS OPEN FOR
+CLAUDE" below.** `_shopStyleGen`'s own catch ("Couldn't load options right now. Try again") and
+`_wardrobeIdeaGen`'s own AI-ideas catch ("Couldn't load ideas right now. Try again") still show a
+manual retry that, during a real outage, would just fail again. Not touched this session — see why.
+✅ **3. THE HOODIE UNDER "TOPS" — FIXED, BOTH HALVES, VERIFIED.** Same shape as the already-documented
+sweater bug: a Coperni zip-up hoodie, filed by its retailer under a broad "Tops" department category,
+matched to1/to2/to3 on the `cat` rung even though its NAME carried none of those rows' name terms —
+and this app already has its own `to8` "Sweatshirts" row, it was just never excluded from its siblings.
+Fixed on the feed half (`data/slot-rules.json`'s `not` lists, to1 through to5) and the AI half
+(`_WDR_IDEA_EXCLUDE`'s to1/to2/to3 now include `to8`, beside the existing ja5/ja1; `_BASIC_TOP` also
+names "a hoodie or sweatshirt" directly). **Verified, not assumed:** `scripts/test_slot_match.py`
+1087/1087, plus a direct check that the same Coperni hoodie no longer matches Tops (filed under
+Sweatshirts, it correctly still matches `to8`) while a real tee still matches Tops.
+▶ **4. THE MISSING FARM RIO PHOTO — INVESTIGATED, NOT A CODE BUG.** `product-search.js`'s own Supabase
+query filters `image_url=not.is.null`, so every FEED-matched card (`_curatedCard`) is guaranteed a real
+photo — that half cannot be the cause. `_findCard` (the live-search half of the row) shows `p.image`
+whenever SerpApi returned one, with no gate tied to affiliate status at all — being one of her paying
+shops was never a promise of a photo, only of a real address. So the photo-less FARM Rio card almost
+certainly came from the LIVE SEARCH side of the row, where Google's own thumbnail for that specific
+listing was simply missing — the same category of limitation as bot-walled retailer pages elsewhere in
+this file, not something the app is hiding on purpose. Nothing to fix here without a data source that
+can guarantee photos on every live result, which does not exist.
+⭐ **A REAL LEAD ON A SEPARATE OPEN ROW, WHILE CHECKING ALL THIS:** SerpApi's own status page
+(`status.serpapi.com`) shows their Google engine in `major_outage`, an incident open since 2026-09-10
+("we currently experience service outage across all of our APIs"), still marked "monitoring" (not
+resolved) as of today though they report recovering success rates — the one confirmed remaining defect
+is `uule`/location params outside the US, which does not touch Style Star. This is a plausible
+explanation for board row 18, "Couldn't load options right now" — NOT confirmed, because that row is
+about the stylist call, not the product search, and this outage is specifically the search engine. Left
+open, not closed, with the lead recorded so nobody re-derives it. **Given a genuine live outage exists,
+"try again" genuinely was wasting her time this week — her complaint was right on the merits, whatever
+the exact cause turns out to be for row 18.**
 
-### ✅ 2026-09-13 — HER FIRST CJ ADVERTISER APPROVAL: CASHMERE BOUTIQUE, ADDED TO THE STORE TABLE
-She applied broadly rather than narrowly to the mid-market DTC list above. **THE FULL PENDING
-APPLICATIONS QUEUE, CONFIRMED COMPLETE BY HER 2026-09-13** (she checked to the end of the list):
-Amanda Uprichard · Ashley Stewart · Belk · Brandon Maxwell · Bvlgari · Chadwicks of Boston · Cupshe ·
-D'Aniello Boutique · DL1961 · Intimissimi · J.Crew · J.Crew Factory · Jared · Kenneth Cole · Lands' End ·
-Lilysilk · Macy's · Madewell · Marshalls · Missoni · Nike · prAna · Pura Cashmere · Rack Room Shoes ·
-Ray-Ban · Revolve · Ross-Simons · Talbots · TJ Maxx · Trina Turk · Wimbledon Shop — **30 pending in
-total.** ⭐⭐⭐ **BELK, MACY'S, TJ MAXX, MARSHALLS, TALBOTS AND LANDS' END ARE WORTH WATCHING ABOVE ALL
-THE REST** — department stores and true mid-market generalists are exactly what this file has said for
-months would actually fix the price problem, more than any of the other 24 pending or the one approval.
-✅ **CASHMERE BOUTIQUE APPROVED, and added to `STORES`** (`index.html`, next to Kohl's/COUTR) —
-name + search url only, no invented scores, per her 2026-09-08 rule. Real cashmere specialty retailer,
-in business since 2007, women's + men's (so `w:1` is set). Search url `/search?q=` verified with a real
-term (61 results for "sweater") but **not fully verified** — a gibberish term returned 9 fallback items
-instead of zero, a known Shopify "always show something" behavior, so it's marked unverified in the
-comment. `scripts/build-store-domains.js` re-run, 133 stores, `--check` clean; `storepool` 49/49 and
-`untagged` 16/16 re-run with no regressions.
-🚨🚨 **THE IMPORTANT CATCH: THIS STORE IS FINDABLE BUT DOES NOT EARN, AND NEITHER WILL ANY OTHER CJ
-ADVERTISER, UNTIL CJ LINK-WRAPPING IS BUILT.** The app's only outbound-link tagging today is `_AFF_MID`
-(Rakuten MIDs, feeding `_affUrl`) and `_AMZ_TAG` (Amazon). **There is no CJ equivalent** — CJ uses its
-own deep-link/tracking scheme, unrelated to either. So Cashmere Boutique (and Belk, Macy's, TJ Maxx,
-etc. if any of them approve) can be shown and searched, but every one of those links is currently a
-plain, untagged store search that earns nothing. ⚠️ **This is a genuinely new, unstarted piece of
-engineering, not a one-line fix** — see "WHAT IS OPEN FOR CLAUDE" below. It was not built speculatively
-tonight since nothing yet needs it to earn; it becomes real work the moment a CJ advertiser she actually
-wants to route traffic to gets approved.
-✅ **ALSO ADDED TO THE MALL, same session, her catch — she noticed it wasn't there.** `STORES` (the
-searchable index) and `mallStores` (the Mall's own hand-curated showcase) are two separate lists, same
-relationship as the Edit — being in one doesn't put a store in the other. Filed under **Contemporary &
-Everyday** (its $130–$700 range is elevated-basics, not true "Value & Basics"), blurb *"Soft, quality
-cashmere sweaters and layers"* — a Claude draft, hers to reword, same convention as FARM Rio/Olivela/
-Marissa/Mytheresa's blurbs when she added those. `_mallEarns` will correctly sort it after any earning
-card in its category until CJ link-wrapping exists. Verified: both inline script blocks still parse,
-and the `mallStores` array literal evaluates cleanly with the new entry in place (31 stores, 5 groups).
-
-### 🚨🚨 A REAL EARNING BUG FOUND AND FIXED, SAME SESSION: THE FINDER'S VERIFIED CARDS NEVER EARNED
-Fixing a pre-existing, unrelated test-count drift (`affq.js`'s hardcoded `TEMPLATES` tripwire, 14→15,
-the same kind of drift documented earlier for the discoStar duplicate) led straight to this: **`_findCard`
-— the ONE card renderer behind chat, Shop your Style and the Wardrobe's real-product finder — rendered
-`p.url` RAW, never passed through `_affUrl`.**
-▶ **WHO THIS ACTUALLY COST:** a browse card's url comes from `getStoreUrl(...)`, which already wraps
-through `_affUrl` internally — fine. A feed card's url is pre-wrapped at ingestion by `rakuten_feed.py`
-(its own comment says so) — also fine. **But an EXACT/VERIFIED card — the one this whole file calls the
-most trustworthy, "a real address, not a tick" — gets its url from `best.link`, a live SerpApi look-up
-straight off the retailer's own page (`product-find.js`), never wrapped by anything, anywhere.** So every
-time the finder found a genuinely verified match at one of her Rakuten-approved shops (Mytheresa, FARM
-Rio, DVF, Vilebrequin, Olivela, Marissa Collections, Fleur du Mal, COUTR) and a woman tapped "Shop it,"
-the click earned nothing — silently, on the app's flagship, most-tested shopping surface.
-✅ **FIXED: `_findCard` now renders `href="'+_esc(_affUrl(p.url))+'"`.** Safe by construction — `_affUrl`
-never double-wraps (checks for an existing `click.linksynergy.com` or Amazon `tag=` first), so this is a
-no-op on the two card types that were already correct and a real fix on the one that wasn't.
-⚠️ **ONE TEST WAS PINNED TO THE OLD, BUGGY BEHAVIOR** — `ssfind.js`'s "a piece from HER OWN SHELF reaches
-the row" asserted the RAW farmrio.com string was still present unwrapped, which broke the moment the real
-bug got fixed (FARM Rio is a genuine Rakuten shop, so its card now correctly wraps to a
-`click.linksynergy.com` deeplink). Fixed by decoding the href before checking, plus a new assertion that
-the wrap and her real mid (44912) are actually present — the same "test the rule, not the string" lesson
-this file has paid for before.
-✅ **RE-VERIFIED CLEAN AFTER THE FIX:** `findprod` 63/63 · `chatfind` 63/63 · `ssfind` 97/97 (was 95/1
-failed before the test fix, for the reason above) · the static `affq` anchor-count check now matches
-(86 anchors = 71 Edit links + 15 templates).
-🚨 **THIS IS LIVE OPERATIONAL STATUS AND SHOULD NOT ARCHIVE UNTIL SHE HAS SEEN IT.** It means every
-verified "Shop it" tap on chat, Shop your Style, or the Wardrobe search — going back to whenever this
-card was built (2026-09-06/09) — that landed on one of her eight Rakuten shops was earning nothing until
-tonight. There is no way from here to measure how much that cost; her Rakuten dashboard is the only
-instrument that could ever tell her, and only for clicks going forward now that the fix is live.
+### ▶▶ WHAT IS OPEN FOR CLAUDE
+1. ⭐ **THE BROADER "APOLOGY + TRY AGAIN DOESN'T HELP" COMPLAINT — ONE SURFACE FIXED, TWO STILL OPEN.**
+   `_shopStyleGen`'s catch (Shop your Style's own AI call) and `_wardrobeIdeaGen`'s catch (the AI-ideas
+   half) both still show a manual "Try again" button. ⚠️ **NOT BUILT SPECULATIVELY THIS SESSION — a
+   genuine design tradeoff, hers to weigh, not Claude's to decide alone:** the obvious fix is an
+   automatic single retry before ever showing her a failure, so a transient blip self-heals invisibly —
+   but SerpApi calls cost money per attempt (~2.5¢ a search), and an auto-retry during a REAL outage
+   (like the one just found) doubles spend for nothing, which cuts against her "warn, never block" cost
+   stance in the opposite direction: it would spend silently rather than warn. Put this to her before
+   building: auto-retry once (costs more during a real outage, saves her a tap during a blip), or leave
+   manual but make the message honest about whether retrying is likely to help.
+2. 🚨🚨 **CJ LINK-WRAPPING DOES NOT EXIST YET — build it once a CJ advertiser she wants live actually
+   approves.** Today `_affUrl` only knows Rakuten MIDs and the Amazon tag; a CJ-approved store (Cashmere
+   Boutique now, possibly Belk/Macy's/TJ Maxx/Marshalls/Talbots/Lands' End if they come through) shows up
+   findable but earns nothing until this is built. Not started speculatively — real work, worth doing the
+   moment it matters.
+3. 🚨 "Couldn't load options right now" on Shop your Style — see the SerpApi lead above; not confirmed,
+   needs a fresh live-diagnosis approach on the STYLIST call specifically, not the search.
+4. 💰 A price filter — a find request carries item · colour · fabric · cut · size · width and no price
+   field at all. When built, put `Try: tops under $100` and `Try: white jeans under $150` back verbatim.
+5. ⭐ Wire her Style Signature into the finder (board row 11, her *"many of them were shapeless"*) —
+   parked by her; hers to green-light, one thing at a time.
+6. ▶ Read her analytics. `track()` exists and nobody has looked. Still worth doing.
+7. ▶ A shared remembered cache — today's is per-browser. Must live server-only (Netlify Blobs), never
+   through the publishable key.
+8. ▶ Amazon's disclosure "I" vs "we"/"Style Star LLC" — flagged to her, not guessed at.
+9. ▶ `affq.js`'s `EDIT_N` counter needs scoping to `#s-dream` — low priority, real debt.
+10. ▶ Optional, low stakes: find and neutralise the old "Belted Midi Dress" test account's share, if she
+   wants it gone rather than just harmless — needs the actual old token or a Supabase lookup by hand.
+11. ▶ Worth remembering, not an open task: if a save-token drift ever recurs on a different account for a
+   different reason, `?r=`'s pull-and-overwrite behavior would clobber that device's local data the same
+   way `?resync=` was built to avoid for Cath. No general safety net was built for this — it was judged
+   not worth the permanent complexity for an incident now confirmed unique to one dev-testing history.
+🚨 **SERPAPI'S OUTAGE — RE-CHECKED 2026-09-13: STILL `major_outage`, STILL "MONITORING", NOT RESOLVED.**
+Open since 2026-09-10; SerpApi reports recovering success rates but has not declared it over. Re-check
+again before assuming it has cleared: `curl -s https://status.serpapi.com/api/v2/summary.json`.
 
 ### ▶▶ WHAT IS WAITING ON HER — her own priority order (full detail in the Master To-Do List above)
 1. ⏳ The Oct 1 tax-receipt clock (~3 weeks out) — the only real deadline on her board.
 2. ⭐⭐⭐ **Check back on the CJ Pending Applications queue** — Belk, Macy's, TJ Maxx, Marshalls, Talbots
    and Lands' End are the ones worth watching for. Report back any more acceptances or declines.
 3. ⭐ More Edit/Finds pieces — she's on a roll and the machinery makes it cheap now.
-4. ▶ Optional: clean up the two `claude-diag-test-...@example.invalid` artifacts in Supabase/MailerLite.
-5. ▶ Optional: ask Supabase support how far back the 401 errors go, if she wants to know whether any
+4. ⭐ **Decide the auto-retry question above** (open row 1) whenever she wants to.
+5. ▶ Optional: clean up the two `claude-diag-test-...@example.invalid` artifacts in Supabase/MailerLite.
+6. ▶ Optional: ask Supabase support how far back the 401 errors go, if she wants to know whether any
    real woman's save was silently lost during the outage.
 
-### ▶▶ WHAT IS OPEN FOR CLAUDE
-1. 🚨🚨 **CJ LINK-WRAPPING DOES NOT EXIST YET — build it once a CJ advertiser she wants live actually
-   approves.** Today `_affUrl` only knows Rakuten MIDs and the Amazon tag; a CJ-approved store (Cashmere
-   Boutique now, possibly Belk/Macy's/TJ Maxx/Marshalls/Talbots/Lands' End if they come through) shows up
-   findable but earns nothing until this is built. Not started speculatively — real work, worth doing the
-   moment it matters.
-2. 🚨 "Couldn't load options right now" on Shop your Style — the prompt-cap theory is RULED OUT (see the
-   archive). Cause still genuinely unknown; needs a fresh live-diagnosis approach, not a repeat of the
-   cap measurement.
-3. 💰 A price filter — a find request carries item · colour · fabric · cut · size · width and no price
-   field at all. When built, put `Try: tops under $100` and `Try: white jeans under $150` back verbatim.
-4. ⭐ Wire her Style Signature into the finder (board row 11, her *"many of them were shapeless"*) —
-   parked by her; hers to green-light, one thing at a time.
-5. ▶ Read her analytics. `track()` exists and nobody has looked. Still worth doing.
-6. ▶ A shared remembered cache — today's is per-browser. Must live server-only (Netlify Blobs), never
-   through the publishable key.
-7. ▶ Amazon's disclosure "I" vs "we"/"Style Star LLC" — flagged to her, not guessed at.
-8. ▶ `affq.js`'s `EDIT_N` counter needs scoping to `#s-dream` — low priority, real debt.
-9. ▶ Optional, low stakes: find and neutralise the old "Belted Midi Dress" test account's share, if she
-   wants it gone rather than just harmless — needs the actual old token or a Supabase lookup by hand.
-10. ▶ Worth remembering, not an open task: if a save-token drift ever recurs on a different account for a
-   different reason, `?r=`'s pull-and-overwrite behavior would clobber that device's local data the same
-   way `?resync=` was built to avoid for Cath. No general safety net was built for this — it was judged
-   not worth the permanent complexity for an incident now confirmed unique to one dev-testing history.
-🚨 **SERPAPI'S OUTAGE — RE-CHECK BEFORE ASSUMING IT'S OVER:**
-`curl -s https://status.serpapi.com/api/v2/summary.json` — `Google: major_outage` means it isn't. Not
-re-checked this session; re-check before assuming it has resolved.
+### ▶ TEST STATE — re-measured 2026-09-13
+`test_slot_match.py` 1087/1087 (was already passing, re-run after the hoodie fix, no regressions) ·
+`ssfind` 97/97 (full re-run after the row-merge + hoodie changes, confirms the shared finder path is
+untouched) · new `scratchpad/wdrmerge.mjs` 9/9 (the merge and the quiet-dead-search fix, built and
+proven this session). Not touched or re-run since 2026-09-12: `sharelink` 54/54 · `sharelink-drift` 6/6
+· `savetruth` 19/19 · `copy` 50/50 · `findscsv` 50 · `findspage` 102 · `fitroom` 24 · `promptcap` 10 ·
+`hubs` 49 · `mallverify` 14 · `linkwatch` 27 · `tabtops` 49 · `catmark` 132/3-pre-existing ·
+`wldoortest` 55/65-pre-existing · `curated` 62-63/65 (3 named pre-existing failures, see the standing
+section below) · `affq` 1 known pre-existing failure.
 
-### ▶ TEST STATE — unchanged this session (no code touched)
-Last measured 2026-09-12 (seventh session): `sharelink` 54/54 · `sharelink-drift` 6/6 · `savetruth`
-19/19 · `copy` 50/50. Not touched or re-run since: `findscsv` 50 · `findspage` 102 · `fitroom` 24 ·
-`promptcap` 10 · `hubs` 49 · `mallverify` 14 · `linkwatch` 27 · `tabtops` 49 · `catmark`
-132/3-pre-existing · `wldoortest` 55/65-pre-existing · `curated` 62-63/65 (3 named pre-existing
-failures, see the standing section below) · `affq` 1 known pre-existing failure.
+### 🎯 STANDING RULE FOR CLAUDE — NEVER ASK HER TO MAKE A GIT DECISION
+Her words: *"Why are you asking me about putting something on main? I don't even know what that means.
+I count on you to decide what needs to be saved or archived or put on main or the branch and all of
+that. I need you to keep track of everything and be honest with me."* ▶ **Branch, commit, archive,
+merge to `main` — all of it is Claude's to decide and do, then report in one plain line** ("saved and
+live"). **The only thing that still goes to her is a PRODUCT decision** — what the app should do, what
+a woman sees, what her words mean. ⚠️ **The second half of her sentence is load-bearing too: "keep
+track of everything and be honest with me."** Deciding for her is not permission to be vague about what
+was decided — say what was saved and where, in one line. *(See also "THE ARCHIVING RULE" below, which
+this generalises — Claude's process, never hers to referee.)*
 
 ### 🎯 STANDING RULE FOR CLAUDE — NEVER ASK HER TO MAKE A GIT DECISION
 Her words: *"Why are you asking me about putting something on main? I don't even know what that means.
