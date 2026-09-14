@@ -104,14 +104,26 @@ first, THEN affiliates" — is satisfied. Nothing legal blocks the money path an
 💵 **EARNINGS TO DATE: $27 in the Rakuten dashboard. Everything else has been an expense.** (Her figure,
 2026-09-08.) ▶ **Recorded because it is live operational status, and because it is the honest baseline
 that makes any future number mean something.**
-- ⭐⭐ **NEW OPEN THREAD, 2026-09-14: AN AMAZON STOREFRONT + PINTEREST, ENTIRELY OFF THE APP.** Her own
+- ⭐⭐ **OPEN THREAD, 2026-09-14: AN AMAZON STOREFRONT + PINTEREST, ENTIRELY OFF THE APP.** Her own
   idea, sharpened into a plan — a free Amazon Storefront (`amazon.com/shop/...`) fed by Pinterest, kept
   structurally separate from Style Star so the app never reads as "an Amazon shop" while still cashing
   in on the Associates relationship. Full build-order plan published as an artifact, **"Storefront &
   Pins"**: https://claude.ai/code/artifact/fc215634-9e09-4e2d-b93e-fd144312d6c9 — she said *"I
   definitely want to do this... let's explore this in detail."* ⚠️ **This is hers to execute** (Associate
   Central + Pinterest, no app code), with Claude drafting Collection names/captions when asked, same
-  "Claude organizes, she picks" rule as the Edit. **Resurface next session — ask what she's done on it.**
+  "Claude organizes, she picks" rule as the Edit.
+  🚨 **CORRECTED, SAME DAY, BY CHECKING HER REAL DASHBOARD RATHER THAN ASSUMING: STOREFRONT IS NOT PART
+  OF A STANDARD ASSOCIATES ACCOUNT.** She screenshotted her actual Associates dashboard (`stylestar01-20`)
+  — no Storefront under Tools (SiteStripe, Link Checker, Product Advertising API, Manage Your Tracking
+  IDs, CreatorsAPI) or Account (password, profile, tracking IDs, payment/tax). **Storefront belongs to
+  Amazon's separate INFLUENCER PROGRAM**, unlocked by linking a public social account (Instagram is the
+  fit for her) and getting approved on it — not something Associates approval grants automatically. The
+  artifact is updated to reflect this: step 1 is now *apply to the Influencer Program*
+  (`amazon.com/amazoninfluencerprogram`), not *build the Storefront directly*. ⚠️ **Amazon does not
+  publish an exact eligibility bar — the application itself is how she'd find out.** Pinterest and the
+  rest of the plan are UNCHANGED; only the Storefront's own first step moved.
+  ⏸️ **SHE SAID "I need to think on this" — PAUSED, NOT DECLINED.** Do not push it forward on her behalf.
+  **Resurface next session by asking where her thinking landed, not by re-explaining the plan.**
 - ▶ **AWIN — 3 applications PENDING:** Jackie Mack Designs · TERI JON · Under Armour US. ⚠️ **NONE of
   them fixes the price problem** — activewear, jewellery and eveningwear respectively (her own
   correction, and the measurement upheld it).
