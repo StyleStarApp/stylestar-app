@@ -147,6 +147,19 @@ that makes any future number mean something.**
   This session has no CJ login and cannot check it for her. ⚠️ **DO NOT read "no reply" as a decline or
   tell her anything is wrong** — nothing here suggests a problem yet; re-check in a week or two if the
   dashboard itself still shows Pending.
+  🚨 **SHE CHECKED THE DASHBOARD HERSELF, SAME SESSION 2026-09-15, EXACTLY AS ADVISED — 2 OF HER
+  APPLICATIONS SHOW DECLINED, THE REST STILL PENDING.** Screenshotted from her own CJ Advertisers screen
+  filtered to "Declined Applications": **Ashley Stewart** (7866290, women's, "Manual application
+  review") and **Pura Cashmere** (7992973, women's, "Manual application review"). ⚠️ **CJ shows no
+  decline REASON on this screen — not guessed at.** ▶ **WORTH SAYING PLAINLY: Ashley Stewart is a real
+  loss for the specific thing this file keeps flagging as missing (a genuine mid-market, plus-size-
+  focused women's retailer) — Pura Cashmere is a small luxury cashmere label, closer in kind to shops
+  she already has, so that decline costs the app much less.** Same likely cause as her other declines
+  this file already tracks (Impact, Bloomingdale's, Shopbop) — traffic, not the app or the policy pages
+  — though CJ gave no stated reason so this is the pattern, not a confirmed fact. ▶ **BOTH ARE
+  REAPPLYABLE FROM A STRONGER POSITION LATER, COSTS NOTHING** — same standing advice as the other
+  single-advertiser declines. ⚠️ **Everything else she applied to on CJ is still genuinely Pending, not
+  silently declined** — the dashboard check answered exactly the question it was meant to.
 - ▶ **NORDSTROM CREATORS** (`nordstromcreators.com`) — door 2 for Nordstrom, when her follower count is
   not the weakest thing she brings.
 - ▶ **REAPPLY to Impact, Bloomingdale's and Shopbop** from a stronger position. All three declined for
