@@ -401,94 +401,43 @@ that makes any future number mean something.**
 
 ---
 
-## ▶▶▶ WHERE WE LEFT OFF — 2026-09-14 (tenth session). READ THIS FIRST.
+## ▶▶▶ WHERE WE LEFT OFF — 2026-09-15 (eleventh session). READ THIS FIRST.
 🚨 **THIS BLOCK IS THE CURRENT TRUTH. Everything below it is standing reference — if a line further
 down contradicts this one, THIS ONE WINS.**
-📁 **The ninth-session 2026-09-13 entry moved to `CLAUDE-archive.md` in this commit, VERBATIM.** Nothing
-was deleted. Its live-operational facts (all 133 stores scored, the price filter, CJ live, etc.) are
-already carried forward into the sections below that never archive.
+📁 **The tenth-session 2026-09-14 entry moved to `CLAUDE-archive.md` in this commit, VERBATIM.** Nothing
+was deleted. Its live-operational facts (Amazon sales, the Finds CSV edits, etc.) are already carried
+forward into the sections below that never archive.
 
-### 🆕 A NEW INITIATIVE, HERS: AMAZON ASSOCIATES BEYOND THE APP — STOREFRONT + PINTEREST
-She asked, unprompted, how to use Amazon Associates to drive traffic and earn OUTSIDE the app, without
-Style Star ever reading as "an Amazon shop" — her own words: *"I don't want Style Star to be an
-'Amazon' branded shopping destination. That's not what I am as a stylist."* She also said plainly:
-*"I actually do order quite a bit from Amazon"* — that is the authenticity edge behind the whole idea.
-▶▶ **THE RECOMMENDATION, AND SHE LOVED IT: an Amazon Storefront (a free page on `amazon.com/shop/...`,
-built entirely on Amazon's own domain) fed by Pinterest.** This solves her worry structurally — it can
-look like a shopping page precisely because it never touches stylestar.app.
-⭐ **A GENUINE UNLOCK WORTH REMEMBERING: the Storefront uses Amazon's own product photos automatically.**
-The standing "no Amazon photos, ever" rule (see the FINDS PAGE and AMAZON sections below) is about
-hotlinking their images on OUR OWN site without a license — it does not apply to Amazon's own Storefront
-tool, which is built around their photos natively. **So she does not need her own photography to start
-the Storefront.** Her own photos matter more for PINTEREST specifically, where real human photos
-meaningfully outperform stock — a later layer, not a blocker.
-✅ **PUBLISHED: an artifact called "Storefront & Pins"** —
-https://claude.ai/code/artifact/fc215634-9e09-4e2d-b93e-fd144312d6c9 — a 9-step build-order checklist
-(progress saved locally in her browser) covering: build the Storefront homepage → 3-4 Collections →
-Storefront bio with the required Associates disclosure → Pinterest Business account + matching boards →
-first pins (Amazon photos to start) → disclosure on both surfaces → cross-linked bios → an optional tiny
-"Shop my Amazon picks" link from `/finds` (her call, not required) → line it up with the Fiverr
-Instagram plan once it lands.
-▶ **HER RESPONSE: *"This is excellent... I definitely want to do this... Let's explore this in
-detail."*** ⚠️ **THIS IS ENTIRELY HERS TO EXECUTE** — Associate Central and Pinterest are both off-app,
-no code involved. Claude's role going forward is drafting Collection names/Pinterest captions when she
-asks, same "Claude organizes, she picks" rule as the Edit and Finds. **Resurface this next session —
-ask what she's done on it, and keep offering to draft copy.**
+### 🎨🎨 OPEN THREAD, LIVE: FIVERR INSTAGRAM CONTENT — FIRST ROUND MISSED THE BRAND, REVISION SENT
+She hired a Fiverr team ("Sara & Alba") for Instagram content strategy + post design, **spent just under
+$200**. The strategic overview (a 51-page plan — content pillars, horoscope angle, posting cadence) was
+genuinely good. ⚠️ **THE POST DESIGNS THEMSELVES WERE OFF-BRAND** — invented colors and fonts Style Star
+doesn't use, no logo, no star motif anywhere. Her own read, worth keeping in her voice: *"I am
+disappointed because it seemed they didn't even look at my site really."*
+▶ **WHAT'S BEEN DONE:** she sent Fiverr her own detailed revision request first; they replied asking for
+exact font names, the logo file, and photography references before resubmitting. **A single consolidated
+follow-up email was drafted and SENT** (2026-09-15) — verified against the real codebase rather than
+recalled, so it carries: the five real fonts with their actual roles (DM Serif Display · Jost · Lora ·
+Dancing Script · DM Sans), the real color values including the gold GRADIENT family (`#EAD08A`→`#C99A2C`,
+not one flat hex) plus teal `#0FA6B6` and pink `#EC4899`, the two live logo file URLs
+(`stylestar.app/logo-star.png` and `/logo-tight.png`), and a concrete photography direction (editorial/
+lifestyle, warm natural light, NOT flat product-on-white stock, NOT generic corporate stock).
+🚨 **THIS IS THE SIGNAL, NOT A CLOSED LOOP: give them ONE revision round against this brief, with a clear
+bar.** If the resubmission still misses fonts/colors/logo/stars, that is real evidence about whether to
+keep working with them, not something to explain away. ▶ **RESURFACE NEXT SESSION: ask whether the
+revised posts came back, and if she's seen them, whether they actually match.**
 
-### 💵 AMAZON SALES UPDATE — LIVE OPERATIONAL STATUS, NEVER ARCHIVES
-**4 qualifying sales now showing on her Associates dashboard, 2026-09-14** (up from "6 clicks, 2 ordered
-items" reported 2026-09-13). ⚠️ **Per Amazon's own mechanics, "ordered" stays PENDING until the order
-ships and clears its return window** — so this is strong evidence, not yet a fully locked-in count, but
-4 is comfortably past the 3-sale bar. Re-check the dashboard in a few weeks to see if they clear.
-⚠️ **CLARIFIED FOR HER, WORTH KEEPING STRAIGHT: clearing "conditional" status and getting Product
-Advertising API access (real Amazon photos/price/stock data) are TWO SEPARATE GATES.** Clearing
-conditional status changes nothing about what the app can build — Associate links, tagging and earning
-are already fully live regardless. PA API access is a further application with its own minimum
-sales-RATE requirement to both get AND keep (not a one-time bar to clear), and the "10 sales in 30 days"
-figure already flagged elsewhere in this file as reported-not-confirmed still holds — **read the actual
-current PA API terms at the moment she applies, don't trust an old number.** If access is ever granted,
-that is what would let the Badu bangles finally rotate into Star of the Week for real (see the Star of
-the Week section — they're in the library but structurally blocked from rotating today, no photo license).
-
-### 📸 SHE WANTS TO TAKE HER OWN PHOTOS — FOR FINDS AND THE ABOUT PAGE, KEPT ON THE LIST
-Confirmed, not yet done: (a) some Amazon Finds items — now doubly useful, since her own photos will also
-feed Pinterest, where they outperform stock images; (b) one photo of herself for the founder/story page.
-Her words: *"I am not good w photography and just have not gotten to that yet but keep on our list."*
-⚠️ **DO NOT PUSH ON THIS.** She asked for it to stay on the list, not to be nagged about it.
-
-### 🛍️ AMAZON FINDS PAGE — THREE ROUNDS OF HER OWN EDITS THIS SESSION, ALL LIVE
-All applied via `data/amazon-finds.csv` (still the source of truth) and the CSV importer, each round
-verified with `findscsv.js` 50/50, `findspage.js` 102/102, `linkwatch.js` 27/27 and a direct render check
-of item order on the page. **Sunglasses & Sunny Things now reads, in order:** Jackie O Style Polarized
-Sunglasses (renamed from "Oversized Polarized Sunglasses," moved to the top per her follow-up ask) ·
-Trendy Shield Sunglasses · Cat Eye Sunglasses · Tory Burch Pilot Sunglasses · Meta Ray-Ban Wayfarer Smart
-Glasses (priciest, as she predicted) · Woven Straw Sunglasses Case · Magnetic Sunglass Clip for Car Visor
-· Extra Wide Brim Straw Sun Hat · Straw Visor (Packable!) · Swim Cover Up (renamed from "Kimono Swim
-Cover Up," the word "kimono" dropped per her ask). **Travel now reads:** 3-Piece Luggage Set · TUMI Just
-In Case Packable Tote · Cotton Garment Bag for Dresses · 15X Lighted Magnifying Mirror · Kai Bath and
-Shower Travel Set · Non-Aerosol Dry Shampoo Powder · 7SECONDS Leave-In Conditioner. **In My Kit** now
-leads with the Full Length Mirror with Wheels. **Easy Pieces:** Maxi Shirt Dress moved to sit right under
-Flowy Maxi Dress. **Jewelry & Other Accessories now groups by type:** jewelry first (Stretchy Stacking
-Bangles, Leather Teardrop Drop Earrings, Turquoise Huggie Hoops, Gemstone Beaded Bracelets — renamed from
-"Tiger's Eye Gemstone Bracelet") · then hair (Ponytail Cuff 4 Pack, Silk Hair Ties Set of 4) · then the
-Studded Leather Belt last. **Two more renames:** "HydroBag Crossbody Water Bottle Holder" → "Crossbody
-Water Bottle Holder" (WanderFull stays in the store column, her established pattern) · "Electric Mug
-Warmer Set" → "Paris Hilton Electric Mug Warmer Set". ▶ **She said more items are coming soon.**
-
-### ✅ A STALE ROW CAUGHT AND FIXED IN THE MASTER TO-DO LIST
-Board row 24 ("The Edit as a shareable link") still read **OPEN** while row 24b right below it correctly
-said **BUILT AND LIVE since 2026-09-10** — the exact "a stale note read back as fact" failure mode this
-file has been burned by before (the Zara duplicate-key incident, the Kohl's re-add). Verified directly
-against the code before saying anything to her — `_ROUTES` has `/edit`, `netlify.toml` has the redirect
-and edge-function registration, and `_openRoute` correctly calls `showDream()` rather than a bare
-`show()`, so the affiliate-wrap trap is guarded. Row 24 corrected to point at 24b instead of repeating
-the contradiction. **The lesson stands as written elsewhere in this file: grep the code before saying a
-line here still needs doing.**
+### 🤔 STILL UNANSWERED: "A WHOLE NEW STRATEGY" ON THE AMAZON STOREFRONT + PINTEREST THREAD
+She said, mid-session, *"On the Amazon storefront I think we need a whole new strategy there with the
+Pinterest"* — a clarifying question (what's prompting the rethink) was asked and never answered, because
+the conversation moved to the Fiverr topic. ▶ **DO NOT ASSUME what she meant. Ask again next session** —
+this is a live, dangling thread, separate from the Fiverr/Instagram thread above even though both touch
+her social strategy.
 
 ### ▶ TEST STATE
-No app-logic changes this session — only the three Finds CSV batches above, each re-verified clean after
-every round: `findscsv.js` 50/50 · `findspage.js` 102/102 · `linkwatch.js` 27/27, plus a direct parse of
-both `index.html` `<script>` blocks after each write. No other suites touched or expected to be affected.
+No app-logic changes this session. Work was entirely CLAUDE.md housekeeping (archiving, a stale-row fix,
+the Fonts section correction — see the sections below) plus off-app communication drafting (the Fiverr
+email). No suites touched or expected to be affected.
 
 ## 📌📌 STANDING REFERENCE — WHAT IS STILL TRUE (compacted from 2026-09-06 through 2026-09-11)
 🚨 **THE SESSION BLOCKS BEHIND THIS SECTION WERE ARCHIVED IN WAVES AND NOTHING WAS DELETED** — they are
