@@ -2321,6 +2321,10 @@ access (real Amazon photos/price/stock data) is a further application with its o
 requirement to both get AND keep — not a one-time bar — and the "10 sales in 30 days" figure already
 flagged below as reported-not-confirmed still holds. **Read the actual current PA API terms at the
 moment she applies; don't trust an old number.**
+📈📈 **UPDATED 2026-09-15: HER DASHBOARD NOW SHOWS 5 ORDERS, 2 OF WHICH HAVE SHIPPED.** Shipping is a
+real step toward a shipped order clearing its return window and locking in as a qualifying sale —
+worth re-checking the dashboard again in a couple weeks to see if "conditional" clears. ⚠️ **Not yet
+confirmed clear; still tracked the same way as the 9/13 and 9/14 figures above.**
 💵💵 **EARNINGS TO DATE, HER FIGURE 2026-09-08: $27 IN THE RAKUTEN DASHBOARD. EVERYTHING ELSE HAS BEEN
 AN EXPENSE.** ▶ **Recorded because it is live operational status and because it is the honest baseline
 that makes any future number mean something.** ⚠️ **It is also the whole argument in one line: the app
