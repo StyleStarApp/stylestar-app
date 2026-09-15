@@ -453,20 +453,76 @@ bar.** If the resubmission still misses fonts/colors/logo/stars, that is real ev
 keep working with them, not something to explain away. ▶ **RESURFACE NEXT SESSION: ask whether the
 revised posts came back, and if she's seen them, whether they actually match.**
 
-### 🤔 STILL OPEN: "A WHOLE NEW STRATEGY" ON THE AMAZON STOREFRONT + PINTEREST THREAD — SHE WANTS TO RESUME THIS NEXT SESSION
-She said, mid-session, *"On the Amazon storefront I think we need a whole new strategy there with the
-Pinterest"* — a clarifying question (what's prompting the rethink) was asked and never answered, because
-the conversation moved to the Fiverr topic. ▶ **DO NOT ASSUME what she meant.** She confirmed at session
-end, closing this session: *"I will open new session and want to talk about pinterest again."*
-🚨 **START HER NEXT SESSION BY ASKING WHAT'S PROMPTING THE RETHINK** — do not re-explain the existing
-"Storefront & Pins" plan (artifact link in the money-path section above) unprompted; let her say what
-changed in her thinking first, then work from there. This is separate from the Fiverr/Instagram thread
-even though both touch her social strategy.
+### 🎨🎨 PINTEREST — REAL PROGRESS THIS SESSION (twelfth), LIVE OPERATIONAL STATUS, NEVER ARCHIVES
+Her *"whole new strategy"* rethink turned out to be triggered by two things, both resolved the same
+session: **(a)** her Amazon dashboard now shows **5 orders, 2 shipped** (logged in the money-path section
+above) — real movement, worth naming since it's what's actually happening with Amazon right now. **(b)**
+checking her real Associates dashboard confirmed **Amazon Storefront needs the separate Influencer
+Program, not standard Associates approval** — this was already known from 2026-09-14, but she wanted it
+re-confirmed before deciding how to proceed. ⚠️ **SHE HAS NOT APPLIED TO THE INFLUENCER PROGRAM** — that
+thread is still paused, her own call, not resurfaced unprompted.
+▶▶ **THE REAL SHIFT: PINTEREST DOES NOT NEED THE STOREFRONT AND NEVER DID.** The two were bundled in the
+original plan; separated out, Pinterest works today with her existing Associates, CJ and Rakuten links —
+no Storefront, no Influencer Program approval required. That reframe is what let her move forward on
+Pinterest alone rather than waiting on Amazon.
+🚨 **HER STANDING TENSION, STATED PLAINLY, AND IT SHAPED EVERYTHING BUILT THIS SESSION:** she wants Style
+Star to grow and earn, but refuses the "influencer" playbook — on-camera video, pleading for follows,
+immediate email asks, anything that reads as pushy. ▶▶ **THE ANSWER GIVEN AND ACCEPTED: Pinterest is
+structurally NOT that.** It's a visual search/planning engine, not a persona-driven feed — a pin never
+interrupts anyone, is inherently patient (saved and revisited on a viewer's own time), and rewards
+curation/taste over a face or a voice. That's the same instinct behind her *"value first, no pop-ups"*
+rule, one channel further out — not a new principle, the same one applied to a new surface.
+✅✅ **BUILT AND LIVE, STEP BY STEP, ALL VERIFIED ON SCREEN WITH HER:**
+1. **Pinterest BUSINESS account created** (she had never had any Pinterest account before). Business type:
+   **Content creator** — matches her actual shape (affiliate-monetized content, no owned inventory/
+   checkout), not "Online merchant" (built for stores with their own product catalog and checkout, which
+   she does not have).
+2. **Username: `StyleStarbyCatherine`** — her own pick, and a good one: matches her real LLC name (*Style
+   Star by Catherine, LLC*), not just a fallback after the auto-generated `catherine2125`.
+3. **Profile built:** photo = `logo-star.png`, bio drafted by Claude in her voice and used as-is —
+   *"Personal styling meets AI, free, no pressure, no pop-ups. Built by Catherine, a stylist of 20+
+   years. stylestar.app"* — website field set to stylestar.app.
+   ⚠️ **SHE DELETED THE PUBLIC PHONE NUMBER FIELD, HER OWN CALL AFTER IT WAS FLAGGED.** Same exposure
+   shape as her home address getting scraped off the LLC's public Sunbiz filing (see the LLC section) —
+   a public number on a growing account invites the same kind of unwanted contact. Nothing forces this
+   field to be public; if a real business line ever makes sense it can be added back deliberately.
+4. **stylestar.app CLAIMED on Pinterest — verified and CONNECTED.** The verification meta tag
+   (`<meta name="p:domain_verify" content="50af877b59b0e60ce64449bab8acac6b"/>`) is live in `index.html`'s
+   `<head>`, in the same cluster as the Impact and Google Search Console verification tags and under the
+   same rule: **pasted verbatim, never edit or remove it — Pinterest re-checks it stays in place, it does
+   not just check once at signup.** Claiming unlocks pin analytics and puts her name/logo on anything
+   anyone else pins from stylestar.app.
+   ⚠️ **DECLINED THE PINTEREST CONVERSION TAG (the "Install tag" offer), DELIBERATELY.** That tag tracks
+   ad-conversion events (add-to-cart, checkout, purchase) that assume a sale happens ON the claimed site —
+   Style Star has no on-site checkout, every purchase happens on a third-party store. Nothing for it to
+   track today. It's a real, deliberate lever for later IF she ever runs paid Pinterest ads (the "Grow
+   your audience" path, separately declined this session — see below) — not something to bolt on now.
+5. **"Grow your audience" (paid ads) and "Share ideas" (create a Pin) were both explicitly SKIPPED this
+   session, her own sequencing, not an oversight.** Ads are a real spend decision, not something to fall
+   into by default. Content/boards/pins are deliberately deferred — her own words: *"let's do the first
+   step of setting up the pinterest business account and later figure out design choices and templates."*
+▶ **NOT YET STARTED, AND NOT TO BE STARTED WITHOUT HER: boards, board names, any actual pin, any
+published content.** The account exists and the domain is claimed. Nothing has been posted.
+⭐ **A SEPARATE BUT RELATED THREAD FROM THE SAME SESSION: A FIRST BATCH OF ON-BRAND INSTAGRAM TEMPLATES.**
+Prompted by the Fiverr miss (their designs invented colors/fonts Style Star doesn't use, no logo, no star
+motif — see the Fiverr thread above). Five templates drafted using her REAL brand system pulled directly
+from `styles.css`/`CLAUDE.md` (not guessed): DM Sans/DM Serif Display/Jost/Lora/Dancing Script, the real
+gold gradient (`#EAD08A`→`#C99A2C`), teal `#0FA6B6`, pink `#EC4899` (used correctly per the ledger's own
+*"gold is the app's voice, pink is Catherine's"* rule — the templates' color-switcher tweak literally
+encodes that rule), and the real `logo-star.png`. No invented product photography — pure typography/
+motif, matching the Edit page's own restraint. Published as a Claude Design canvas artifact:
+https://claude.ai/artifact/CW7xEo5a1aLm5bf3n8hWYb — she said *"I see the idea there"* and moved to
+Pinterest first; the templates are parked, not approved as final, and design/copy on them is still hers
+to react to whenever she returns to that thread.
+▶ **ASK NEXT SESSION, DO NOT RE-EXPLAIN UNPROMPTED: has she looked at the templates again, and does she
+want to start boards/pin content on Pinterest now that the account itself is set up?**
 
 ### ▶ TEST STATE
-No app-logic changes this session. Work was entirely CLAUDE.md housekeeping (archiving, a stale-row fix,
-the Fonts section correction — see the sections below) plus off-app communication drafting (the Fiverr
-email). No suites touched or expected to be affected.
+One real code change this session: the Pinterest domain-verification `<meta>` tag added to `index.html`'s
+`<head>` (see above) — static markup only, no logic touched, nothing to re-run. Otherwise CLAUDE.md
+housekeeping (archiving, a stale-row fix, the Fonts section correction, the two live-status updates above)
+plus off-app work (the Fiverr email, the Instagram template canvas, the Pinterest account build-out). No
+suites touched or expected to be affected.
 
 ## 📌📌 STANDING REFERENCE — WHAT IS STILL TRUE (compacted from 2026-09-06 through 2026-09-11)
 🚨 **THE SESSION BLOCKS BEHIND THIS SECTION WERE ARCHIVED IN WAVES AND NOTHING WAS DELETED** — they are
