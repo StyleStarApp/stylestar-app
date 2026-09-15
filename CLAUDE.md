@@ -43,7 +43,7 @@ gathers it going forward — that's an open, ongoing thing, not a one-time quest
 ⚠️ **SO AS OF 2026-09-15, EVERY LEAD CHASED IS RULED OUT: not Anthropic, not SerpApi, not the prompt cap, not the JSON-parse gap.** The honest read: this was very likely a ONE-OFF TRANSIENT FAILURE — a dropped connection or a momentary 5xx from Anthropic's side, which `if(!r.ok)throw 0` in `index.html` catches exactly the same as a structural bug, with the same message. **Nothing wrong was found to fix, because four real, live-tested checks came back clean.** ▶ **IF IT HAPPENS AGAIN: the next useful thing is the exact time and her phone's ask, so a Netlify function log for that minute could be pulled from her dashboard** — that is the one diagnostic this session could not reach from here. | Claude | ✅ **CLOSED FOR NOW — every live-testable cause ruled out 2026-09-15; reopen only with a fresh, timestamped occurrence** |
 | 20 | ~~Her two failed searches: "vacation dress" and "white jeans"~~ ✅ **BUILT AND LIVE 2026-09-10.** *White jeans WORKED* — Google's half was flapping (0 results one minute, 23 the next) and her own shelf carried it. *Vacation dress* found nothing because the word went INTO the search. | — | ✅ done |
 | 21 | ~~Five of the app's own nine suggested prompts were things it could not do~~ ✅ **HER CATCH 2026-09-10 — three occasions now translate, and the two PRICE prompts came off, her ruling.** | — | ✅ done |
-| 22 | 💰 **A PRICE FILTER — THE SEARCH HAS NO PRICE FIELD AT ALL.** A find request carries item · colour · fabric · cut · size · width and nothing else, so *"under $100"* was never filtered, only ignored. ▶ **When it is built, put `Try: tops under $100` and `Try: white jeans under $150` straight back — the only thing wrong with them was that they were promises.** | Claude, hers to green-light | ⏳ **OPEN** |
+| 22 | ~~💰 A PRICE FILTER — THE SEARCH HAS NO PRICE FIELD AT ALL.~~ ✅ **BUILT AND LIVE 2026-09-13 — THIS ROW WAS STALE AND SAID OPEN UNTIL CAUGHT AND FIXED 2026-09-15 BY CHECKING THE CODE, NOT THE FILE.** `price` is a real field now (`product-find.js`'s `body.price`/`request.price`, a plain number with no dollar sign, only when SHE states an actual figure — never a guess, never a vibe), it passes through as a `max_price` to the live search, `verifyPrice` in `find-products.js` CONFIRMS/REJECTS against it, and it stays honest when a store doesn't publish price (UNKNOWN, never a silent pass). `Try: tops under $100` and `Try: white jeans under $150` are both back in `_ASK_RING`, exactly as this row asked. ⚠️ **IT ONLY FIRES WHEN SHE NAMES A PRICE.** An ordinary ask with no budget stated still has no ceiling — see the 2026-09-15 Heather/$8,900-dress thread in "WHERE WE LEFT OFF": a real, unconfirmed report that a Mytheresa dress (very plausibly genuinely priced, not a parsing bug) got recommended with nothing to flag or cap how far outside an ordinary budget it sat. **That is a different, still-open gap — a default ceiling for an UNSTATED price, not the stated one this row was about.** | — | ✅ done (the stated-price case); the unstated-price case is a new, separate open thread |
 | 19 | ⭐⭐⭐ **APPLY TO THE 41 BRANDS THAT PUBLISH CATALOGUES** — Everlane · Boden · Tuckernuck · Universal Standard · Cuyana · Alo Yoga · Summersalt · Good American · Veronica Beard and more. ✅ **CJ account is active and she's applied broadly (2026-09-13) — Cashmere Boutique approved, Belk/Macy's/TJ Maxx/Marshalls/Talbots/Lands' End PENDING, worth watching.** | **HERS, and worth more than anything Claude can build** | ⏳ **OPEN — watch the pending queue** |
 | 11 | ✅✅ ~~THE FINDER HAS NEVER BEEN SHOWN HER STYLE PROFILE~~ **GREENLIT AND CLOSED 2026-09-13 — AND IT TURNED OUT TO ALREADY BE BUILT.** Her original complaint: *"I like fitted clothing and many of them were shapeless."* ▶▶ **INVESTIGATED BEFORE BUILDING, PER HER OWN STANDING RULE, AND THE BUILD WASN'T NEEDED:** her fitted lean (0.70, from `_herDims()`) already feeds `_storeFit`, which is already wired into BOTH pickers — `curatedPicks()`'s Gate 2 (Wardrobe feed, filters out below-median stores) and `_findByHerShops` (the live finder's "nicer shops first" order, her 2026-09-10 ruling). **A fitted/relaxed *text* filter was considered and rejected — her own stylist correction: fitted dresses rarely say "fitted," so it's not a usable search word; STORE CHOICE is the real signal** (her examples: Express/Revolve/Alice + Olivia run fitted, Talbots/J.Jill/Gap run relaxed). ⚠️ **CHECKING HER OWN NAMED STORES AGAINST THE REAL TABLE FOUND ONE STALE SCORE:** Talbots sat at a neutral 6 relaxed/6 fitted, not grouped with J.Jill/Gap as she just described. **CORRECTED to 8 relaxed/3 fitted, her instruction** — moves her `_storeFit` score from 13.25 to 11.75, now correctly below the fitted cluster and beside Gap. **SHE CONFIRMED: keep browsing wide** (reorder only, never filter, on the live finder) — so nothing else changed there. `storepool.js` 49/49, verified with a direct `_storeFit` computation against her real profile. | — | ✅ done |
 | 23 | 🛍️ **IMPROVE THE WISHLIST PAGE — HER ASK, 2026-09-10, ANSWERED 2026-09-12: THE FITTING ROOM.** She confirmed it's for comparison — fit, price, does it work with what she owns, is it worth the money — and greenlit building it the same session. **BUILT AND LIVE: a List View/Fitting Room toggle, same list, no second thing to save into.** Full build story (the reload-survival bug it caught, the three upstream photo gaps it fixed, the 24-check suite) is in `CLAUDE-archive.md`'s 2026-09-12 (second session) entry. ⭐ **A follow-up round the same session, also merged live:** the toggle's tappable-arrow indicator was rebuilt to match Wardrobe's real tabs after her first version came out wrong (arrow beside the label instead of stacked below it, per her catch), and "List" became "List View" so the pairing with "Fitting Room" reads as two views of one list. | — | ✅ done |
@@ -427,144 +427,72 @@ that makes any future number mean something.**
 
 ---
 
-## ▶▶▶ WHERE WE LEFT OFF — 2026-09-15 (eleventh session). READ THIS FIRST.
+## ▶▶▶ WHERE WE LEFT OFF — 2026-09-15 (fourteenth session). READ THIS FIRST.
 🚨 **THIS BLOCK IS THE CURRENT TRUTH. Everything below it is standing reference — if a line further
 down contradicts this one, THIS ONE WINS.**
-📁 **The tenth-session 2026-09-14 entry moved to `CLAUDE-archive.md` in this commit, VERBATIM.** Nothing
-was deleted. Its live-operational facts (Amazon sales, the Finds CSV edits, etc.) are already carried
-forward into the sections below that never archive.
+📁 **The eleventh/twelfth/thirteenth-session entry moved to `CLAUDE-archive.md` in this commit, VERBATIM.**
+Nothing was deleted. Its still-open threads and live operational status are carried forward below.
 
-### 🎨🎨 OPEN THREAD, LIVE: FIVERR INSTAGRAM CONTENT — FIRST ROUND MISSED THE BRAND, REVISION SENT
-She hired a Fiverr team ("Sara & Alba") for Instagram content strategy + post design, **spent just under
-$200**. The strategic overview (a 51-page plan — content pillars, horoscope angle, posting cadence) was
-genuinely good. ⚠️ **THE POST DESIGNS THEMSELVES WERE OFF-BRAND** — invented colors and fonts Style Star
-doesn't use, no logo, no star motif anywhere. Her own read, worth keeping in her voice: *"I am
-disappointed because it seemed they didn't even look at my site really."*
-▶ **WHAT'S BEEN DONE:** she sent Fiverr her own detailed revision request first; they replied asking for
-exact font names, the logo file, and photography references before resubmitting. **A single consolidated
-follow-up email was drafted and SENT** (2026-09-15) — verified against the real codebase rather than
-recalled, so it carries: the five real fonts with their actual roles (DM Serif Display · Jost · Lora ·
-Dancing Script · DM Sans), the real color values including the gold GRADIENT family (`#EAD08A`→`#C99A2C`,
-not one flat hex) plus teal `#0FA6B6` and pink `#EC4899`, the two live logo file URLs
-(`stylestar.app/logo-star.png` and `/logo-tight.png`), and a concrete photography direction (editorial/
-lifestyle, warm natural light, NOT flat product-on-white stock, NOT generic corporate stock).
-🚨 **THIS IS THE SIGNAL, NOT A CLOSED LOOP: give them ONE revision round against this brief, with a clear
-bar.** If the resubmission still misses fonts/colors/logo/stars, that is real evidence about whether to
-keep working with them, not something to explain away. ▶ **RESURFACE NEXT SESSION: ask whether the
-revised posts came back, and if she's seen them, whether they actually match.**
+### 🎨 OPEN THREAD, LIVE: FIVERR INSTAGRAM CONTENT — ONE REVISION ROUND SENT, NOT YET BACK
+A single consolidated, code-verified brief (real fonts, real gold-gradient/teal/pink values, both real
+logo file URLs, a concrete photography direction) was sent to Fiverr 2026-09-15 after their first round
+came back off-brand. ▶ **RESURFACE NEXT SESSION: ask whether the revised posts came back, and if she's
+seen them, whether they actually match the brief.**
 
-### 🎨🎨 PINTEREST — REAL PROGRESS THIS SESSION (twelfth), LIVE OPERATIONAL STATUS, NEVER ARCHIVES
-Her *"whole new strategy"* rethink turned out to be triggered by two things, both resolved the same
-session: **(a)** her Amazon dashboard now shows **5 orders, 2 shipped** (logged in the money-path section
-above) — real movement, worth naming since it's what's actually happening with Amazon right now. **(b)**
-checking her real Associates dashboard confirmed **Amazon Storefront needs the separate Influencer
-Program, not standard Associates approval** — this was already known from 2026-09-14, but she wanted it
-re-confirmed before deciding how to proceed. ⚠️ **SHE HAS NOT APPLIED TO THE INFLUENCER PROGRAM** — that
-thread is still paused, her own call, not resurfaced unprompted.
-▶▶ **THE REAL SHIFT: PINTEREST DOES NOT NEED THE STOREFRONT AND NEVER DID.** The two were bundled in the
-original plan; separated out, Pinterest works today with her existing Associates, CJ and Rakuten links —
-no Storefront, no Influencer Program approval required. That reframe is what let her move forward on
-Pinterest alone rather than waiting on Amazon.
-🚨 **HER STANDING TENSION, STATED PLAINLY, AND IT SHAPED EVERYTHING BUILT THIS SESSION:** she wants Style
-Star to grow and earn, but refuses the "influencer" playbook — on-camera video, pleading for follows,
-immediate email asks, anything that reads as pushy. ▶▶ **THE ANSWER GIVEN AND ACCEPTED: Pinterest is
-structurally NOT that.** It's a visual search/planning engine, not a persona-driven feed — a pin never
-interrupts anyone, is inherently patient (saved and revisited on a viewer's own time), and rewards
-curation/taste over a face or a voice. That's the same instinct behind her *"value first, no pop-ups"*
-rule, one channel further out — not a new principle, the same one applied to a new surface.
-✅✅ **BUILT AND LIVE, STEP BY STEP, ALL VERIFIED ON SCREEN WITH HER:**
-1. **Pinterest BUSINESS account created** (she had never had any Pinterest account before). Business type:
-   **Content creator** — matches her actual shape (affiliate-monetized content, no owned inventory/
-   checkout), not "Online merchant" (built for stores with their own product catalog and checkout, which
-   she does not have).
-2. **Username: `StyleStarbyCatherine`** — her own pick, and a good one: matches her real LLC name (*Style
-   Star by Catherine, LLC*), not just a fallback after the auto-generated `catherine2125`.
-3. **Profile built:** photo = `logo-star.png`, bio drafted by Claude in her voice and used as-is —
-   *"Personal styling meets AI, free, no pressure, no pop-ups. Built by Catherine, a stylist of 20+
-   years. stylestar.app"* — website field set to stylestar.app.
-   ⚠️ **SHE DELETED THE PUBLIC PHONE NUMBER FIELD, HER OWN CALL AFTER IT WAS FLAGGED.** Same exposure
-   shape as her home address getting scraped off the LLC's public Sunbiz filing (see the LLC section) —
-   a public number on a growing account invites the same kind of unwanted contact. Nothing forces this
-   field to be public; if a real business line ever makes sense it can be added back deliberately.
-   ✅✅ **PROFILE PHOTO REBUILT FROM SCRATCH, SAME SESSION — the real `logo-star.png` is round-cropped
-   unsafely** (the gold rod/dot underline runs wide toward the corners, exactly where a circular avatar
-   crop bites hardest). Built a corrected mark by actually measuring the real logo file pixel-by-pixel
-   (no PIL/ImageMagick in this sandbox, so read/decoded the PNG by hand) rather than redrawing it from a
-   guess: real wordmark pixels cropped precisely (the first attempt cut off the tops of "t"/"l" — fixed
-   by finding the true ascender row, not eyeballing it), the star's outline replaced with a filled version
-   using the app's own real star polygon (`index.html:581`'s `38,4 46,25 68,25...` points, the same star
-   used elsewhere in the app) at its exact original position/scale, flat bright gold `#EACD68` (not the
-   muted `#D4AF37`, her call). ⚠️ **HER CENTERED-MATH VERSION STILL LOOKED "TOO LOW" ON PINTEREST'S OWN
-   CIRCULAR CROP PREVIEW** — likely optical (the bold black wordmark reads heavier than the thin gold
-   star, so true geometric center looks bottom-heavy), fixed by shifting the whole mark up within the
-   square rather than re-centering it. Final delivered file: `style-star-pinterest-avatar.png`, 500×500,
-   sent to her directly (not through the design-canvas export flow) since it needed no further editing.
-   **This lived entirely in a scratchpad working session — the corrected logo asset itself is NOT
-   committed anywhere in the repo**, only this record of how it was built; if a square, avatar-safe,
-   filled-star version of the logo is ever wanted again, redo the same measurement method rather than
-   guessing proportions from the eye.
-4. **stylestar.app CLAIMED on Pinterest — verified and CONNECTED.** The verification meta tag
-   (`<meta name="p:domain_verify" content="50af877b59b0e60ce64449bab8acac6b"/>`) is live in `index.html`'s
-   `<head>`, in the same cluster as the Impact and Google Search Console verification tags and under the
-   same rule: **pasted verbatim, never edit or remove it — Pinterest re-checks it stays in place, it does
-   not just check once at signup.** Claiming unlocks pin analytics and puts her name/logo on anything
-   anyone else pins from stylestar.app.
-   ⚠️ **DECLINED THE PINTEREST CONVERSION TAG (the "Install tag" offer), DELIBERATELY.** That tag tracks
-   ad-conversion events (add-to-cart, checkout, purchase) that assume a sale happens ON the claimed site —
-   Style Star has no on-site checkout, every purchase happens on a third-party store. Nothing for it to
-   track today. It's a real, deliberate lever for later IF she ever runs paid Pinterest ads (the "Grow
-   your audience" path, separately declined this session — see below) — not something to bolt on now.
-5. **"Grow your audience" (paid ads) and "Share ideas" (create a Pin) were both explicitly SKIPPED this
-   session, her own sequencing, not an oversight.** Ads are a real spend decision, not something to fall
-   into by default. Content/boards/pins are deliberately deferred — her own words: *"let's do the first
-   step of setting up the pinterest business account and later figure out design choices and templates."*
-✅✅ **UPDATE, SAME DAY (thirteenth session): HER FIRST PIN IS LIVE.** ▶▶ **THIS IS THE FIRST THING SHE
-HAS EVER PUBLISHED ON PINTEREST — RECORD IT AS THE MILESTONE IT IS.** Built as a real content pin (not
-just a branded card): it previews her actual first three quiz questions (Classic/Trendy, Natural/Glam,
-Preppy/Edgy, pulled straight from the real `questions` array in `index.html`, not invented), styled with
-the quiz's REAL chrome — the same silver-gradient frame + gold-thumb slider CSS as `.quiz-mirror` and
-`#s-quiz input[type=range]`, copied from `styles.css`, not approximated. Headline *"Let's Discover Your
-Style"* (echoes the real home-page headline). Reveal line names her real features by name: *"Then your
-full Style Portrait, plus a free stylist to help you shop it."* CTA styled like the app's own dark/gold
-"Continue" button, reading *"TAKE THE FREE QUIZ"* with `stylestar.app` printed beneath it as the actual
-destination — fixed after she asked whether the button really took a woman to the quiz (it doesn't
-directly; there is no dedicated `/quiz` route, so the destination link is the home page, which already
-carries a prominent quiz CTA).
-⚠️ **BOARD NAME, CORRECTED FROM EARLIER IN THIS SAME SESSION: it published to "Personal Style", not
-"Style Tips."** She chose "Style Tips" when we first talked about starting, then named the board
-"Personal Style" at the actual moment of publishing on Pinterest — the live board name is "Personal
-Style." **Don't go looking for a "Style Tips" board; it does not exist.**
-▶ **Design canvas for this pin, hers to keep iterating in:**
-https://claude.ai/artifact/WXN4HwP4PaH2SFssKGpVaS — export at 2000×3000 (2x) for future re-pins, her
-own settled call after asking which resolution to use.
-▶ **Published description, in her own final wording (lightly hers, not verbatim what was drafted for
-her):** *"You are invited to take Style Star's free style quiz and get your personal Style Portrait,
-plus a free AI stylist to help you shop. Built with love by a real stylist with 20+ years of
-experience. No sign up required."* Link: `https://stylestar.app`.
-▶ **NEXT: nothing is owed here — one pin is a real, complete first step.** Resurface next session by
-asking whether she wants to make a second pin (a different quiz spectrum, a Style Portrait teaser, an
-Amazon Finds piece) rather than re-explaining Pinterest mechanics she has now already done once herself.
-⭐ **A SEPARATE BUT RELATED THREAD FROM THE SAME SESSION: A FIRST BATCH OF ON-BRAND INSTAGRAM TEMPLATES.**
-Prompted by the Fiverr miss (their designs invented colors/fonts Style Star doesn't use, no logo, no star
-motif — see the Fiverr thread above). Five templates drafted using her REAL brand system pulled directly
-from `styles.css`/`CLAUDE.md` (not guessed): DM Sans/DM Serif Display/Jost/Lora/Dancing Script, the real
-gold gradient (`#EAD08A`→`#C99A2C`), teal `#0FA6B6`, pink `#EC4899` (used correctly per the ledger's own
-*"gold is the app's voice, pink is Catherine's"* rule — the templates' color-switcher tweak literally
-encodes that rule), and the real `logo-star.png`. No invented product photography — pure typography/
-motif, matching the Edit page's own restraint. Published as a Claude Design canvas artifact:
-https://claude.ai/artifact/CW7xEo5a1aLm5bf3n8hWYb — she said *"I see the idea there"* and moved to
-Pinterest first; the templates are parked, not approved as final, and design/copy on them is still hers
-to react to whenever she returns to that thread.
-▶ **ASK NEXT SESSION, DO NOT RE-EXPLAIN UNPROMPTED: has she looked at the templates again?** ⚠️ **THE
-SECOND HALF OF THIS QUESTION IS ANSWERED — she started Pinterest pin content herself the same day; see
-the first-pin update right above. Don't re-ask whether she wants to start.**
+### 🎨🎨 PINTEREST — LIVE OPERATIONAL STATUS, NEVER ARCHIVES
+✅✅ **Business account live** (`StyleStarbyCatherine`, Content creator type), domain `stylestar.app`
+claimed and verified, profile photo a corrected filled-star mark (not committed to the repo — rebuild
+from `logo-tight.png` + the real star polygon in `index.html` if it's ever needed again). ✅✅ **HER FIRST
+PIN IS LIVE** — board **"Personal Style"** (not "Style Tips," which was discussed but never used). A real
+content pin: her actual first three quiz questions (Classic/Trendy, Natural/Glam, Preppy/Edgy, from the
+real `questions` array), styled with the quiz's real chrome frame and gold-thumb slider CSS, headline
+*"Let's Discover Your Style,"* reveal line naming her real features (*"your full Style Portrait, plus a
+free stylist"*), CTA styled like the app's real dark/gold Continue button. Destination link
+`https://stylestar.app` (there is no dedicated `/quiz` route — the home page itself carries the quiz CTA).
+Design canvas: https://claude.ai/artifact/WXN4HwP4PaH2SFssKGpVaS — **export at 2000×3000 (2x), her
+settled call.** ▶ **NEXT: ask whether she wants a second pin (another quiz spectrum, a Style Portrait
+teaser, an Amazon Finds piece) — don't re-explain Pinterest mechanics she has now already done herself.**
+⭐ **A related, still-parked thread:** five on-brand Instagram templates (real fonts/colors/logo, no
+invented product photography) — https://claude.ai/artifact/CW7xEo5a1aLm5bf3n8hWYb. She said *"I see the
+idea there"* and moved to Pinterest first. ▶ **ASK: has she looked at the templates again?**
+
+### 🚨 SESSION FOURTEEN: COMPETITOR CHECK, A REAL BUG REPORT FROM A REAL FRIEND, AND HER NEXT THREE ASKS
+⭐⭐ **SHE LOOKED AROUND AT OTHER STYLE APPS/CONTENT WITH FRESH EYES AND HER OWN DIRECTION HELD UP.** Her
+words: *"All of them annoying like I have talked about before. Shallow content. Sign up here email
+there. I feel more confident in the overall intent and shape of style star as a whole."* ▶▶ **THIS IS
+REAL, EXTERNAL VALIDATION OF HER STANDING PRODUCT PRINCIPLE (value first, never pay-to-try, no pop-ups)
+— worth naming as genuine momentum, per her own standing ask not to let generic cheerleading stand in
+for something countable.**
+🚨 **A REAL USER (HEATHER, A FRIEND) REPORTED AN $8,900 DRESS RECOMMENDATION AND ASKED IF THE DECIMAL WAS
+WRONG.** ⚠️ **UNCONFIRMED — Heather gave no further detail (no screenshot, no exact phrase searched, no
+link), and Cath said so plainly. Do not treat this as a confirmed bug; treat it as a real but incomplete
+report.** Cath's own guess: probably a Mytheresa item. ▶▶ **THAT GUESS MAKES A GENUINE-PRICE EXPLANATION
+FAR MORE LIKELY THAN A DECIMAL/PARSING BUG** — Mytheresa is one of her fed luxury stores, and her own
+recorded Mytheresa prices already span $570–$1,595 for BAGS AND A BELT (see Star of the Week schedule);
+a real formal dress there reaching $8,900 is entirely plausible. **So this most likely sharpens an
+ALREADY-TRACKED gap rather than reveals a new one: `verifyPrice`/`max_price` (see row 22's correction
+just above, in the Master To-Do List) only constrains price when SHE states a figure — an ordinary ask
+with no stated budget still has no ceiling at all**, and it just produced the starkest real example of
+that yet. Three options were named, none decided, none to be started without her:
+1. A default price ceiling even when nobody states a budget.
+2. An honest "why is this shown" / outlier label on a price far outside the norm, rather than hiding it
+   (she has never wanted fewer options).
+3. Leave it as the accepted cost of full luxury-store browsing.
+▶ **IF MORE DETAIL FROM HEATHER EVER SURFACES (a link, a screenshot, the exact phrase she typed), that
+is what actually settles which store/path produced it — chase that before building anything.**
+⭐⭐⭐ **HER THREE NAMED PRIORITIES GOING FORWARD, IN HER OWN WORDS: "I still want to work on fixing the
+searches... I want to get more traffic and more affiliates."** ▶▶ **SHE ASKED TO PAUSE HERE TO ORGANIZE
+HER OWN THOUGHTS — do not launch into any of the three unprompted next session.** Open by asking how she
+wants to sequence them; a plain, honest status recap of each (searches: the Heather thread above plus
+the standing search-quality/quality-gate threads; traffic: Pinterest's first pin plus the stalled Fiverr/
+Instagram threads; affiliates: the CJ/AWIN pending queues and the Amazon 180-day clock, all in the money-
+path section) is ready to give the moment she wants it, not before.
 
 ### ▶ TEST STATE
-One real code change this session: the Pinterest domain-verification `<meta>` tag added to `index.html`'s
-`<head>` (see above) — static markup only, no logic touched, nothing to re-run. Otherwise CLAUDE.md
-housekeeping (archiving, a stale-row fix, the Fonts section correction, the two live-status updates above)
-plus off-app work (the Fiverr email, the Instagram template canvas, the Pinterest account build-out). No
-suites touched or expected to be affected.
+No app-logic changes this session. One real fix: Master To-Do List row 22 ("a price filter") was
+corrected — it said OPEN and hadn't been re-checked against the code, which actually shows it was built
+and live 2026-09-13 (verified directly in `find-products.js`/`product-find.js` this session, not assumed).
+Otherwise CLAUDE.md housekeeping only (this archiving pass, the row 22 correction, this entry).
 
 ## 📌📌 STANDING REFERENCE — WHAT IS STILL TRUE (compacted from 2026-09-06 through 2026-09-11)
 🚨 **THE SESSION BLOCKS BEHIND THIS SECTION WERE ARCHIVED IN WAVES AND NOTHING WAS DELETED** — they are

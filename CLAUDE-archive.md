@@ -23356,3 +23356,148 @@ line here still needs doing.**
 No app-logic changes this session — only the three Finds CSV batches above, each re-verified clean after
 every round: `findscsv.js` 50/50 · `findspage.js` 102/102 · `linkwatch.js` 27/27, plus a direct parse of
 both `index.html` `<script>` blocks after each write. No other suites touched or expected to be affected.
+
+## ARCHIVED 2026-09-15 (fourteenth session, start) — the eleventh/twelfth/thirteenth-session entry, verbatim
+# Moved here per the archiving rule when the fourteenth session's notes were saved. NOTHING IS DELETED.
+# Its still-open threads (Fiverr revision, Instagram templates) and live operational status (the
+# Pinterest account + first pin) are carried forward, compacted, into CLAUDE.md's new WHERE WE LEFT
+# OFF entry and the standing Pinterest/Fiverr note, so nothing here is the only copy of a live fact.
+
+## ▶▶▶ WHERE WE LEFT OFF — 2026-09-15 (eleventh session). READ THIS FIRST.
+🚨 **THIS BLOCK IS THE CURRENT TRUTH. Everything below it is standing reference — if a line further
+down contradicts this one, THIS ONE WINS.**
+📁 **The tenth-session 2026-09-14 entry moved to `CLAUDE-archive.md` in this commit, VERBATIM.** Nothing
+was deleted. Its live-operational facts (Amazon sales, the Finds CSV edits, etc.) are already carried
+forward into the sections below that never archive.
+
+### 🎨🎨 OPEN THREAD, LIVE: FIVERR INSTAGRAM CONTENT — FIRST ROUND MISSED THE BRAND, REVISION SENT
+She hired a Fiverr team ("Sara & Alba") for Instagram content strategy + post design, **spent just under
+$200**. The strategic overview (a 51-page plan — content pillars, horoscope angle, posting cadence) was
+genuinely good. ⚠️ **THE POST DESIGNS THEMSELVES WERE OFF-BRAND** — invented colors and fonts Style Star
+doesn't use, no logo, no star motif anywhere. Her own read, worth keeping in her voice: *"I am
+disappointed because it seemed they didn't even look at my site really."*
+▶ **WHAT'S BEEN DONE:** she sent Fiverr her own detailed revision request first; they replied asking for
+exact font names, the logo file, and photography references before resubmitting. **A single consolidated
+follow-up email was drafted and SENT** (2026-09-15) — verified against the real codebase rather than
+recalled, so it carries: the five real fonts with their actual roles (DM Serif Display · Jost · Lora ·
+Dancing Script · DM Sans), the real color values including the gold GRADIENT family (`#EAD08A`→`#C99A2C`,
+not one flat hex) plus teal `#0FA6B6` and pink `#EC4899`, the two live logo file URLs
+(`stylestar.app/logo-star.png` and `/logo-tight.png`), and a concrete photography direction (editorial/
+lifestyle, warm natural light, NOT flat product-on-white stock, NOT generic corporate stock).
+🚨 **THIS IS THE SIGNAL, NOT A CLOSED LOOP: give them ONE revision round against this brief, with a clear
+bar.** If the resubmission still misses fonts/colors/logo/stars, that is real evidence about whether to
+keep working with them, not something to explain away. ▶ **RESURFACE NEXT SESSION: ask whether the
+revised posts came back, and if she's seen them, whether they actually match.**
+
+### 🎨🎨 PINTEREST — REAL PROGRESS THIS SESSION (twelfth), LIVE OPERATIONAL STATUS, NEVER ARCHIVES
+Her *"whole new strategy"* rethink turned out to be triggered by two things, both resolved the same
+session: **(a)** her Amazon dashboard now shows **5 orders, 2 shipped** (logged in the money-path section
+above) — real movement, worth naming since it's what's actually happening with Amazon right now. **(b)**
+checking her real Associates dashboard confirmed **Amazon Storefront needs the separate Influencer
+Program, not standard Associates approval** — this was already known from 2026-09-14, but she wanted it
+re-confirmed before deciding how to proceed. ⚠️ **SHE HAS NOT APPLIED TO THE INFLUENCER PROGRAM** — that
+thread is still paused, her own call, not resurfaced unprompted.
+▶▶ **THE REAL SHIFT: PINTEREST DOES NOT NEED THE STOREFRONT AND NEVER DID.** The two were bundled in the
+original plan; separated out, Pinterest works today with her existing Associates, CJ and Rakuten links —
+no Storefront, no Influencer Program approval required. That reframe is what let her move forward on
+Pinterest alone rather than waiting on Amazon.
+🚨 **HER STANDING TENSION, STATED PLAINLY, AND IT SHAPED EVERYTHING BUILT THIS SESSION:** she wants Style
+Star to grow and earn, but refuses the "influencer" playbook — on-camera video, pleading for follows,
+immediate email asks, anything that reads as pushy. ▶▶ **THE ANSWER GIVEN AND ACCEPTED: Pinterest is
+structurally NOT that.** It's a visual search/planning engine, not a persona-driven feed — a pin never
+interrupts anyone, is inherently patient (saved and revisited on a viewer's own time), and rewards
+curation/taste over a face or a voice. That's the same instinct behind her *"value first, no pop-ups"*
+rule, one channel further out — not a new principle, the same one applied to a new surface.
+✅✅ **BUILT AND LIVE, STEP BY STEP, ALL VERIFIED ON SCREEN WITH HER:**
+1. **Pinterest BUSINESS account created** (she had never had any Pinterest account before). Business type:
+   **Content creator** — matches her actual shape (affiliate-monetized content, no owned inventory/
+   checkout), not "Online merchant" (built for stores with their own product catalog and checkout, which
+   she does not have).
+2. **Username: `StyleStarbyCatherine`** — her own pick, and a good one: matches her real LLC name (*Style
+   Star by Catherine, LLC*), not just a fallback after the auto-generated `catherine2125`.
+3. **Profile built:** photo = `logo-star.png`, bio drafted by Claude in her voice and used as-is —
+   *"Personal styling meets AI, free, no pressure, no pop-ups. Built by Catherine, a stylist of 20+
+   years. stylestar.app"* — website field set to stylestar.app.
+   ⚠️ **SHE DELETED THE PUBLIC PHONE NUMBER FIELD, HER OWN CALL AFTER IT WAS FLAGGED.** Same exposure
+   shape as her home address getting scraped off the LLC's public Sunbiz filing (see the LLC section) —
+   a public number on a growing account invites the same kind of unwanted contact. Nothing forces this
+   field to be public; if a real business line ever makes sense it can be added back deliberately.
+   ✅✅ **PROFILE PHOTO REBUILT FROM SCRATCH, SAME SESSION — the real `logo-star.png` is round-cropped
+   unsafely** (the gold rod/dot underline runs wide toward the corners, exactly where a circular avatar
+   crop bites hardest). Built a corrected mark by actually measuring the real logo file pixel-by-pixel
+   (no PIL/ImageMagick in this sandbox, so read/decoded the PNG by hand) rather than redrawing it from a
+   guess: real wordmark pixels cropped precisely (the first attempt cut off the tops of "t"/"l" — fixed
+   by finding the true ascender row, not eyeballing it), the star's outline replaced with a filled version
+   using the app's own real star polygon (`index.html:581`'s `38,4 46,25 68,25...` points, the same star
+   used elsewhere in the app) at its exact original position/scale, flat bright gold `#EACD68` (not the
+   muted `#D4AF37`, her call). ⚠️ **HER CENTERED-MATH VERSION STILL LOOKED "TOO LOW" ON PINTEREST'S OWN
+   CIRCULAR CROP PREVIEW** — likely optical (the bold black wordmark reads heavier than the thin gold
+   star, so true geometric center looks bottom-heavy), fixed by shifting the whole mark up within the
+   square rather than re-centering it. Final delivered file: `style-star-pinterest-avatar.png`, 500×500,
+   sent to her directly (not through the design-canvas export flow) since it needed no further editing.
+   **This lived entirely in a scratchpad working session — the corrected logo asset itself is NOT
+   committed anywhere in the repo**, only this record of how it was built; if a square, avatar-safe,
+   filled-star version of the logo is ever wanted again, redo the same measurement method rather than
+   guessing proportions from the eye.
+4. **stylestar.app CLAIMED on Pinterest — verified and CONNECTED.** The verification meta tag
+   (`<meta name="p:domain_verify" content="50af877b59b0e60ce64449bab8acac6b"/>`) is live in `index.html`'s
+   `<head>`, in the same cluster as the Impact and Google Search Console verification tags and under the
+   same rule: **pasted verbatim, never edit or remove it — Pinterest re-checks it stays in place, it does
+   not just check once at signup.** Claiming unlocks pin analytics and puts her name/logo on anything
+   anyone else pins from stylestar.app.
+   ⚠️ **DECLINED THE PINTEREST CONVERSION TAG (the "Install tag" offer), DELIBERATELY.** That tag tracks
+   ad-conversion events (add-to-cart, checkout, purchase) that assume a sale happens ON the claimed site —
+   Style Star has no on-site checkout, every purchase happens on a third-party store. Nothing for it to
+   track today. It's a real, deliberate lever for later IF she ever runs paid Pinterest ads (the "Grow
+   your audience" path, separately declined this session — see below) — not something to bolt on now.
+5. **"Grow your audience" (paid ads) and "Share ideas" (create a Pin) were both explicitly SKIPPED this
+   session, her own sequencing, not an oversight.** Ads are a real spend decision, not something to fall
+   into by default. Content/boards/pins are deliberately deferred — her own words: *"let's do the first
+   step of setting up the pinterest business account and later figure out design choices and templates."*
+✅✅ **UPDATE, SAME DAY (thirteenth session): HER FIRST PIN IS LIVE.** ▶▶ **THIS IS THE FIRST THING SHE
+HAS EVER PUBLISHED ON PINTEREST — RECORD IT AS THE MILESTONE IT IS.** Built as a real content pin (not
+just a branded card): it previews her actual first three quiz questions (Classic/Trendy, Natural/Glam,
+Preppy/Edgy, pulled straight from the real `questions` array in `index.html`, not invented), styled with
+the quiz's REAL chrome — the same silver-gradient frame + gold-thumb slider CSS as `.quiz-mirror` and
+`#s-quiz input[type=range]`, copied from `styles.css`, not approximated. Headline *"Let's Discover Your
+Style"* (echoes the real home-page headline). Reveal line names her real features by name: *"Then your
+full Style Portrait, plus a free stylist to help you shop it."* CTA styled like the app's own dark/gold
+"Continue" button, reading *"TAKE THE FREE QUIZ"* with `stylestar.app` printed beneath it as the actual
+destination — fixed after she asked whether the button really took a woman to the quiz (it doesn't
+directly; there is no dedicated `/quiz` route, so the destination link is the home page, which already
+carries a prominent quiz CTA).
+⚠️ **BOARD NAME, CORRECTED FROM EARLIER IN THIS SAME SESSION: it published to "Personal Style", not
+"Style Tips."** She chose "Style Tips" when we first talked about starting, then named the board
+"Personal Style" at the actual moment of publishing on Pinterest — the live board name is "Personal
+Style." **Don't go looking for a "Style Tips" board; it does not exist.**
+▶ **Design canvas for this pin, hers to keep iterating in:**
+https://claude.ai/artifact/WXN4HwP4PaH2SFssKGpVaS — export at 2000×3000 (2x) for future re-pins, her
+own settled call after asking which resolution to use.
+▶ **Published description, in her own final wording (lightly hers, not verbatim what was drafted for
+her):** *"You are invited to take Style Star's free style quiz and get your personal Style Portrait,
+plus a free AI stylist to help you shop. Built with love by a real stylist with 20+ years of
+experience. No sign up required."* Link: `https://stylestar.app`.
+▶ **NEXT: nothing is owed here — one pin is a real, complete first step.** Resurface next session by
+asking whether she wants to make a second pin (a different quiz spectrum, a Style Portrait teaser, an
+Amazon Finds piece) rather than re-explaining Pinterest mechanics she has now already done once herself.
+⭐ **A SEPARATE BUT RELATED THREAD FROM THE SAME SESSION: A FIRST BATCH OF ON-BRAND INSTAGRAM TEMPLATES.**
+Prompted by the Fiverr miss (their designs invented colors/fonts Style Star doesn't use, no logo, no star
+motif — see the Fiverr thread above). Five templates drafted using her REAL brand system pulled directly
+from `styles.css`/`CLAUDE.md` (not guessed): DM Sans/DM Serif Display/Jost/Lora/Dancing Script, the real
+gold gradient (`#EAD08A`→`#C99A2C`), teal `#0FA6B6`, pink `#EC4899` (used correctly per the ledger's own
+*"gold is the app's voice, pink is Catherine's"* rule — the templates' color-switcher tweak literally
+encodes that rule), and the real `logo-star.png`. No invented product photography — pure typography/
+motif, matching the Edit page's own restraint. Published as a Claude Design canvas artifact:
+https://claude.ai/artifact/CW7xEo5a1aLm5bf3n8hWYb — she said *"I see the idea there"* and moved to
+Pinterest first; the templates are parked, not approved as final, and design/copy on them is still hers
+to react to whenever she returns to that thread.
+▶ **ASK NEXT SESSION, DO NOT RE-EXPLAIN UNPROMPTED: has she looked at the templates again?** ⚠️ **THE
+SECOND HALF OF THIS QUESTION IS ANSWERED — she started Pinterest pin content herself the same day; see
+the first-pin update right above. Don't re-ask whether she wants to start.**
+
+### ▶ TEST STATE
+One real code change this session: the Pinterest domain-verification `<meta>` tag added to `index.html`'s
+`<head>` (see above) — static markup only, no logic touched, nothing to re-run. Otherwise CLAUDE.md
+housekeeping (archiving, a stale-row fix, the Fonts section correction, the two live-status updates above)
+plus off-app work (the Fiverr email, the Instagram template canvas, the Pinterest account build-out). No
+suites touched or expected to be affected.
