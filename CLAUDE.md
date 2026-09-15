@@ -1535,10 +1535,24 @@ There is also a hidden Netlify Forms form (`name="style-star-emails"`) in
 
 ## Fonts
 
-Google Fonts are loaded in the `<head>` of `index.html`: **DM Sans** (default body
-font), **Fraunces** (elegant display serif), **Cormorant Garamond**, and
-**Noto Serif**. To use one, set `font-family` in the relevant CSS rule — no extra
-setup needed since they're already loaded.
+🚨 **CORRECTED 2026-09-15: THIS SECTION NAMED FONTS THAT WERE NEVER ACTUALLY LOADED.** It used to say
+Fraunces, Cormorant Garamond and Noto Serif — none of the three appear anywhere in `index.html` or
+`styles.css`. **Caught only because Cath was about to send font names to a Fiverr designer to fix an
+off-brand deliverable, and this file would have handed her the SAME wrong names that got Fiverr's work
+off-brand in the first place.** Grepped `styles.css` directly for the real, live `font-family:` rules —
+**five fonts, all Google Fonts, loaded in the `<head>` of `index.html`:**
+- **DM Sans** — the default body font, most of the app's copy (30 rules).
+- **DM Serif Display** — the elegant display serif, used for headlines and product names (e.g.
+  `.wks-name`, the Star of the Week piece name).
+- **Jost** — a geometric sans used for UI chrome: labels, eyebrow text, buttons and store names,
+  especially on the dark "dressing room" screens (welcome, photo, results, welcome back).
+- **Lora** — a warm serif used for editorial body text: stylist notes, subtitles, disclosures, quotes
+  (`.wks-note`, `.dc-item-note`, `.dc-subtitle`).
+- **Dancing Script** — the cursive signature font, used once: "Catherine," the gold-underlined link to
+  My Story on the home page.
+To use one, set `font-family` in the relevant CSS rule — no extra setup needed since they're already
+loaded. ⚠️ **Re-grep `styles.css` before naming these to anyone outside the repo — this is exactly the
+kind of note that goes stale silently, the same family as the Zara duplicate-key and the Kohl's re-add.**
 
 ## Working with this repo
 
