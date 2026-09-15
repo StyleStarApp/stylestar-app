@@ -2348,6 +2348,28 @@ photography for anything she picks from it, and it is a genuine addition to the 
 (it stocks Celine, Saint Laurent and Bottega, the exact houses that rule was written for) — **but the
 answer to affordability is still users.**
 
+🆕 **RAKUTEN → IMPACT.COM MIGRATION — LINKED 2026-09-15, LIVE OPERATIONAL STATUS, NEVER ARCHIVES.**
+Rakuten Advertising is folding its publisher business into impact.com. She got Rakuten's own migration
+email for SID 4740535 and worried about which login to use, since Impact already remembered her
+`partners@stylestar` address from her August application. ▶ **SHE WAS TOLD TO USE THE SAME ACCOUNT,
+NOT CREATE A SECOND ONE** — duplicate publisher accounts are a real risk with affiliate networks, a
+past decline is not, and this Rakuten-driven linking is a different process from a general network
+application even inside the same account. **SHE DID, AND IT WORKED: confirmed by screenshot, the
+linked account reads "Style Star by Catherine, LLC, 7645411"** — her real LLC name, so this is
+genuinely her account, not a stray one.
+⚠️ **THIS IS A LINK, NOT AN INSTANT TRANSFER.** Impact's own confirmation screen: *"As Brands join
+impact, partnerships related to your Rakuten Advertising SID 4740535 will **appear** in your Style
+Star by Catherine, LLC, 7645411 account."* Future tense, conditional — matches Rakuten's own email
+("as each advertiser migrates from Rakuten Advertising to impact.com, you'll already be set up in
+their program with your commission rate intact"). **Her 8 current Rakuten advertisers do NOT all show
+up in Impact today.** Each one migrates to Impact on its OWN schedule; until it does, it keeps paying
+her through Rakuten exactly as now. ⚠️ **NOTHING TO DO RIGHT NOW** — just watch this Impact account
+over time for advertisers appearing in it.
+▶ **AND IT IS SEPARATE FROM HER 2026-08-20 IMPACT NETWORK DECLINE (traffic).** The link went through
+clean, no warning, no rejection — supporting the read given her at the time: a general publisher
+application and a Rakuten-relationship migration are different gates even inside one account. This
+does not reopen or need to overcome that August decline.
+
 **❌ THE REJECTIONS, AND THE ONE THING THEY ALL HAVE IN COMMON:**
 | Who | When | Level | Reason |
 |---|---|---|---|
