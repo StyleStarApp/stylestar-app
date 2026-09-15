@@ -135,6 +135,18 @@ that makes any future number mean something.**
   PENDING — Belk, Macy's, TJ Maxx, Marshalls, Talbots and Lands' End are the ones worth watching** (real
   mid-market/department-store names, unlike the rest of the luxury-adjacent queue) — each just needs its
   own real link pasted the same way the moment it approves.
+  🚨 **CHECKED WITH HER 2026-09-15: STILL NO REPLY FROM ANY OTHER ADVERTISER.** Her words: *"I have not
+  gotten any emails back from CJ. I applied to a lot of their stores. The only one we got back right
+  away was Cashmere Boutique. The rest are no reply."* ⚠️ **THIS IS NORMAL, NOT A BAD SIGN — only 2 days
+  since she applied (2026-09-13), and Cashmere Boutique replying same-day was the fast exception, not
+  the standard.** Advertiser review on CJ commonly runs 1-4 weeks, and **many advertisers never send an
+  email either way** — approval and decline both often show up ONLY as a status change inside CJ's own
+  dashboard (the Advertiser Relationships / My Advertisers screen), never as a message to her inbox.
+  ▶ **THE ACTIONABLE ADVICE: check that dashboard screen directly for each pending program's real status
+  (Pending/Approved/Declined) rather than waiting on email — email silence proves nothing either way.**
+  This session has no CJ login and cannot check it for her. ⚠️ **DO NOT read "no reply" as a decline or
+  tell her anything is wrong** — nothing here suggests a problem yet; re-check in a week or two if the
+  dashboard itself still shows Pending.
 - ▶ **NORDSTROM CREATORS** (`nordstromcreators.com`) — door 2 for Nordstrom, when her follower count is
   not the weakest thing she brings.
 - ▶ **REAPPLY to Impact, Bloomingdale's and Shopbop** from a stronger position. All three declined for
