@@ -129,9 +129,19 @@ that makes any future number mean something.**
 - 🚨 **AWIN — CHECKED BY HER 2026-09-15: UNDER ARMOUR DECLINED, Jackie Mack Designs and TERI JON still
   PENDING.** ⚠️ **NONE of the three would have fixed the price problem anyway** — activewear, jewellery
   and eveningwear respectively (her own correction, and the measurement upheld it) — so this decline
-  costs the app nothing strategically, same shape as the Pura Cashmere CJ decline. ▶ **SHE'S APPLYING
-  TO MORE STORES ON AWIN NOW** — see the candidate list handed to her the same session, aimed at real
-  mid-market generalists (the one thing that actually would fix the price problem).
+  costs the app nothing strategically, same shape as the Pura Cashmere CJ decline.
+  ✅ **SHE APPLIED TO A BATCH OF NEW AWIN ADVERTISERS THE SAME SESSION, 2026-09-15 — CONFIRMED SENT:**
+  Marks & Spencer US · Vuori · lululemon (already one of her 133 scored stores, just not earning yet —
+  the strongest of the batch) · Southern Tide · The Noli Shop · Ripley Rader · Mestiza New York ·
+  Stella & Dot · Victoria Beckham · Yellow The Label · Dress The Population (genuinely accessible-luxury
+  priced, a real fit for the affordability gap). **All PENDING, no replies yet as of end of session.**
+  ⚠️ **TWO MORE WERE DRAFTED BUT NOT CONFIRMED SENT — UNTUCKit and Torrid** — she moved to "that's
+  enough for today" right after the Torrid draft. **Ask her next session whether those two went out.**
+  Torrid especially is worth following up on: plus-size (10-30), affordable, a real gap in her feed.
+  🚨 **BOOHOO WAS CAUGHT AND SKIPPED, NOT APPLIED TO** — it is fast fashion (their own overview: "hundreds
+  of new pieces added every week"), the same category as Shein/Temu/Cider/Princess Polly/Meshki/
+  Peppermayo/Cotton On, all of which she explicitly excluded 2026-07-27. **A real example of the
+  store-pool exclusion rule catching a live case before it wasted an application — the rule worked.**
 - ✅✅ **CJ — ACCOUNT ACTIVE (2026-09-12), FIRST ADVERTISER APPROVED (2026-09-13): Cashmere Boutique**,
   added to `STORES` AND NOW EARNING (2026-09-13, same session — she supplied a real CJ link and
   link-wrapping is live, see "THE MALL NOW HAS ALL EIGHT..."). ⏳ **A broad set of other applications are
@@ -443,12 +453,15 @@ bar.** If the resubmission still misses fonts/colors/logo/stars, that is real ev
 keep working with them, not something to explain away. ▶ **RESURFACE NEXT SESSION: ask whether the
 revised posts came back, and if she's seen them, whether they actually match.**
 
-### 🤔 STILL UNANSWERED: "A WHOLE NEW STRATEGY" ON THE AMAZON STOREFRONT + PINTEREST THREAD
+### 🤔 STILL OPEN: "A WHOLE NEW STRATEGY" ON THE AMAZON STOREFRONT + PINTEREST THREAD — SHE WANTS TO RESUME THIS NEXT SESSION
 She said, mid-session, *"On the Amazon storefront I think we need a whole new strategy there with the
 Pinterest"* — a clarifying question (what's prompting the rethink) was asked and never answered, because
-the conversation moved to the Fiverr topic. ▶ **DO NOT ASSUME what she meant. Ask again next session** —
-this is a live, dangling thread, separate from the Fiverr/Instagram thread above even though both touch
-her social strategy.
+the conversation moved to the Fiverr topic. ▶ **DO NOT ASSUME what she meant.** She confirmed at session
+end, closing this session: *"I will open new session and want to talk about pinterest again."*
+🚨 **START HER NEXT SESSION BY ASKING WHAT'S PROMPTING THE RETHINK** — do not re-explain the existing
+"Storefront & Pins" plan (artifact link in the money-path section above) unprompted; let her say what
+changed in her thinking first, then work from there. This is separate from the Fiverr/Instagram thread
+even though both touch her social strategy.
 
 ### ▶ TEST STATE
 No app-logic changes this session. Work was entirely CLAUDE.md housekeeping (archiving, a stale-row fix,
