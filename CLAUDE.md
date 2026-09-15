@@ -126,9 +126,12 @@ that makes any future number mean something.**
   rest of the plan are UNCHANGED; only the Storefront's own first step moved.
   ⏸️ **SHE SAID "I need to think on this" — PAUSED, NOT DECLINED.** Do not push it forward on her behalf.
   **Resurface next session by asking where her thinking landed, not by re-explaining the plan.**
-- ▶ **AWIN — 3 applications PENDING:** Jackie Mack Designs · TERI JON · Under Armour US. ⚠️ **NONE of
-  them fixes the price problem** — activewear, jewellery and eveningwear respectively (her own
-  correction, and the measurement upheld it).
+- 🚨 **AWIN — CHECKED BY HER 2026-09-15: UNDER ARMOUR DECLINED, Jackie Mack Designs and TERI JON still
+  PENDING.** ⚠️ **NONE of the three would have fixed the price problem anyway** — activewear, jewellery
+  and eveningwear respectively (her own correction, and the measurement upheld it) — so this decline
+  costs the app nothing strategically, same shape as the Pura Cashmere CJ decline. ▶ **SHE'S APPLYING
+  TO MORE STORES ON AWIN NOW** — see the candidate list handed to her the same session, aimed at real
+  mid-market generalists (the one thing that actually would fix the price problem).
 - ✅✅ **CJ — ACCOUNT ACTIVE (2026-09-12), FIRST ADVERTISER APPROVED (2026-09-13): Cashmere Boutique**,
   added to `STORES` AND NOW EARNING (2026-09-13, same session — she supplied a real CJ link and
   link-wrapping is live, see "THE MALL NOW HAS ALL EIGHT..."). ⏳ **A broad set of other applications are
@@ -2381,7 +2384,9 @@ the strongest argument this file has for her own stated growth edge — *more so
 **Say it plainly when the affordability question comes round again; it is the same answer.**
 
 **▶ THE ORDER TO APPLY, unchanged and still right:**
-1. **AWIN** — ⚠️ **3 applications PENDING: Jackie Mack Designs · TERI JON · Under Armour US.**
+1. **AWIN** — 🚨 **CHECKED BY HER 2026-09-15: Under Armour DECLINED, Jackie Mack Designs and TERI JON
+   still PENDING.** No reason given by AWIN. ▶ **She's applying to more stores on AWIN now** — see the
+   candidate list handed to her the same session.
    ⚠️ Small **REFUNDABLE** deposit to apply (their spam filter, refunded against the first commission) —
    **verify the amount on the day.**
    🚨🚨 **CORRECTED 2026-09-08, BY CATH, AND THE OLD CLAIM HERE WAS WRONG.** This file used to say
