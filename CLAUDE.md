@@ -486,6 +486,23 @@ rule, one channel further out — not a new principle, the same one applied to a
    shape as her home address getting scraped off the LLC's public Sunbiz filing (see the LLC section) —
    a public number on a growing account invites the same kind of unwanted contact. Nothing forces this
    field to be public; if a real business line ever makes sense it can be added back deliberately.
+   ✅✅ **PROFILE PHOTO REBUILT FROM SCRATCH, SAME SESSION — the real `logo-star.png` is round-cropped
+   unsafely** (the gold rod/dot underline runs wide toward the corners, exactly where a circular avatar
+   crop bites hardest). Built a corrected mark by actually measuring the real logo file pixel-by-pixel
+   (no PIL/ImageMagick in this sandbox, so read/decoded the PNG by hand) rather than redrawing it from a
+   guess: real wordmark pixels cropped precisely (the first attempt cut off the tops of "t"/"l" — fixed
+   by finding the true ascender row, not eyeballing it), the star's outline replaced with a filled version
+   using the app's own real star polygon (`index.html:581`'s `38,4 46,25 68,25...` points, the same star
+   used elsewhere in the app) at its exact original position/scale, flat bright gold `#EACD68` (not the
+   muted `#D4AF37`, her call). ⚠️ **HER CENTERED-MATH VERSION STILL LOOKED "TOO LOW" ON PINTEREST'S OWN
+   CIRCULAR CROP PREVIEW** — likely optical (the bold black wordmark reads heavier than the thin gold
+   star, so true geometric center looks bottom-heavy), fixed by shifting the whole mark up within the
+   square rather than re-centering it. Final delivered file: `style-star-pinterest-avatar.png`, 500×500,
+   sent to her directly (not through the design-canvas export flow) since it needed no further editing.
+   **This lived entirely in a scratchpad working session — the corrected logo asset itself is NOT
+   committed anywhere in the repo**, only this record of how it was built; if a square, avatar-safe,
+   filled-star version of the logo is ever wanted again, redo the same measurement method rather than
+   guessing proportions from the eye.
 4. **stylestar.app CLAIMED on Pinterest — verified and CONNECTED.** The verification meta tag
    (`<meta name="p:domain_verify" content="50af877b59b0e60ce64449bab8acac6b"/>`) is live in `index.html`'s
    `<head>`, in the same cluster as the Impact and Google Search Console verification tags and under the
