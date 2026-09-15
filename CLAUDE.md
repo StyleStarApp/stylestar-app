@@ -518,8 +518,32 @@ rule, one channel further out — not a new principle, the same one applied to a
    session, her own sequencing, not an oversight.** Ads are a real spend decision, not something to fall
    into by default. Content/boards/pins are deliberately deferred — her own words: *"let's do the first
    step of setting up the pinterest business account and later figure out design choices and templates."*
-▶ **NOT YET STARTED, AND NOT TO BE STARTED WITHOUT HER: boards, board names, any actual pin, any
-published content.** The account exists and the domain is claimed. Nothing has been posted.
+✅✅ **UPDATE, SAME DAY (thirteenth session): HER FIRST PIN IS LIVE.** ▶▶ **THIS IS THE FIRST THING SHE
+HAS EVER PUBLISHED ON PINTEREST — RECORD IT AS THE MILESTONE IT IS.** Built as a real content pin (not
+just a branded card): it previews her actual first three quiz questions (Classic/Trendy, Natural/Glam,
+Preppy/Edgy, pulled straight from the real `questions` array in `index.html`, not invented), styled with
+the quiz's REAL chrome — the same silver-gradient frame + gold-thumb slider CSS as `.quiz-mirror` and
+`#s-quiz input[type=range]`, copied from `styles.css`, not approximated. Headline *"Let's Discover Your
+Style"* (echoes the real home-page headline). Reveal line names her real features by name: *"Then your
+full Style Portrait, plus a free stylist to help you shop it."* CTA styled like the app's own dark/gold
+"Continue" button, reading *"TAKE THE FREE QUIZ"* with `stylestar.app` printed beneath it as the actual
+destination — fixed after she asked whether the button really took a woman to the quiz (it doesn't
+directly; there is no dedicated `/quiz` route, so the destination link is the home page, which already
+carries a prominent quiz CTA).
+⚠️ **BOARD NAME, CORRECTED FROM EARLIER IN THIS SAME SESSION: it published to "Personal Style", not
+"Style Tips."** She chose "Style Tips" when we first talked about starting, then named the board
+"Personal Style" at the actual moment of publishing on Pinterest — the live board name is "Personal
+Style." **Don't go looking for a "Style Tips" board; it does not exist.**
+▶ **Design canvas for this pin, hers to keep iterating in:**
+https://claude.ai/artifact/WXN4HwP4PaH2SFssKGpVaS — export at 2000×3000 (2x) for future re-pins, her
+own settled call after asking which resolution to use.
+▶ **Published description, in her own final wording (lightly hers, not verbatim what was drafted for
+her):** *"You are invited to take Style Star's free style quiz and get your personal Style Portrait,
+plus a free AI stylist to help you shop. Built with love by a real stylist with 20+ years of
+experience. No sign up required."* Link: `https://stylestar.app`.
+▶ **NEXT: nothing is owed here — one pin is a real, complete first step.** Resurface next session by
+asking whether she wants to make a second pin (a different quiz spectrum, a Style Portrait teaser, an
+Amazon Finds piece) rather than re-explaining Pinterest mechanics she has now already done once herself.
 ⭐ **A SEPARATE BUT RELATED THREAD FROM THE SAME SESSION: A FIRST BATCH OF ON-BRAND INSTAGRAM TEMPLATES.**
 Prompted by the Fiverr miss (their designs invented colors/fonts Style Star doesn't use, no logo, no star
 motif — see the Fiverr thread above). Five templates drafted using her REAL brand system pulled directly
@@ -531,8 +555,9 @@ motif, matching the Edit page's own restraint. Published as a Claude Design canv
 https://claude.ai/artifact/CW7xEo5a1aLm5bf3n8hWYb — she said *"I see the idea there"* and moved to
 Pinterest first; the templates are parked, not approved as final, and design/copy on them is still hers
 to react to whenever she returns to that thread.
-▶ **ASK NEXT SESSION, DO NOT RE-EXPLAIN UNPROMPTED: has she looked at the templates again, and does she
-want to start boards/pin content on Pinterest now that the account itself is set up?**
+▶ **ASK NEXT SESSION, DO NOT RE-EXPLAIN UNPROMPTED: has she looked at the templates again?** ⚠️ **THE
+SECOND HALF OF THIS QUESTION IS ANSWERED — she started Pinterest pin content herself the same day; see
+the first-pin update right above. Don't re-ask whether she wants to start.**
 
 ### ▶ TEST STATE
 One real code change this session: the Pinterest domain-verification `<meta>` tag added to `index.html`'s
