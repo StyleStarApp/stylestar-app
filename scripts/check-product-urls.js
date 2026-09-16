@@ -62,7 +62,19 @@ async function check(p) {
     const finalUrl = res.url || p.url;
     const status = res.status;
     let body = '';
-    try { body = (await res.text()).slice(0, 400000); } catch (e) {}
+    // 🚨 REAL BUG FOUND AND FIXED 2026-09-16, MEASURED NOT ASSUMED: this used to
+    // slice to 400,000 chars. Olivela's product pages run ~800-850KB and their
+    // JSON-LD Product block (the authoritative stock signal stockVerdict reads)
+    // sits at byte ~527,000-539,000 -- PAST the old cutoff, every time, on all
+    // four of her Olivela Edit picks. So the watchdog could never see it and
+    // fell back to the noisy prose "sold out" regex, filing four genuinely
+    // healthy, InStock pieces under NEEDS HER EYE every single Saturday since
+    // Olivela joined 2026-08-24. res.text() already materializes the full
+    // string before any slice, so the old cap saved no fetch cost -- only
+    // shrank the string handed to the regexes, silently blinding them on any
+    // store with a page this large. Raised well past what's been measured;
+    // batches run 5-at-a-time (see below), so the memory cost is trivial.
+    try { body = (await res.text()).slice(0, 2000000); } catch (e) {}
     const ms = Date.now() - started;
 
     if (status === 404 || status === 410) return {p, bucket: 'BROKEN', why: `HTTP ${status}`, ms};
