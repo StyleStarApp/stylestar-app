@@ -2032,6 +2032,13 @@ body.menu-open .menu-panel{display:block}
 .dc-item-note{font-family:'Lora',Georgia,serif;font-size:15.5px;color:#4a463e;font-style:normal;line-height:1.62;margin:0 0 17px;position:relative;padding-left:21px}
 .dc-item-note::before{content:"\201C";position:absolute;left:-2px;top:-4px;font-family:'DM Serif Display',Georgia,serif;font-size:34px;color:#DFC271;line-height:1}
 .dc-item-note::after{content:"\201D";font-family:'DM Serif Display',Georgia,serif;font-size:34px;color:#DFC271;line-height:0;vertical-align:-0.28em;margin-left:3px}
+/* ▶ AN INLINE CROSS-PAGE LINK INSIDE A NOTE, ADDED 2026-09-16 -- her catch, the
+   Manolo Blahnik mules note. Same pink (#EC4899, her stylist-mark colour, the
+   same one .dc-xlink already uses for an Edit<->Finds pointer) and the same
+   underline convention, just inline rather than the block-level closing
+   invitation -- a note can reference the other page mid-sentence without
+   waiting for the page's own footer link. */
+.dc-item-note .dc-note-link{color:#EC4899;font-weight:600;text-decoration:underline;text-underline-offset:2px;cursor:pointer}
 .dc-item-btn{display:inline-flex;align-items:center;gap:9px;padding:11px 22px;border-radius:2px;font:700 11px/1 'Jost',sans-serif;letter-spacing:.16em;text-transform:uppercase;cursor:pointer;background:#1a1a1a;color:#fff;border:1px solid #1a1a1a;box-shadow:inset 0 0 0 2px rgba(201,161,78,.5);text-decoration:none;transition:background .2s}
 .dc-item-btn .dc-arr{color:#E4C86B;font-size:14px;transition:transform .2s}
 .dc-item-btn .dc-bag{width:16px;height:16px;flex:0 0 auto}
