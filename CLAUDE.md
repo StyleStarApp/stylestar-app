@@ -1500,8 +1500,30 @@ and Cath hit it in a real session before this rule existed.**
 - Deploys happen **automatically** when the `main` branch updates on GitHub.
   (GitHub `main` → Netlify build → live site.)
 - It's a PWA: `manifest.json` + `icon-192.png` / `icon-512.png` / `apple-touch-icon.png`.
-
-## Backend (Netlify Functions)
+- ⚠️⚠️ **A REAL, LIVE-CONFIRMED PLATFORM LIMIT, 2026-09-16: TAPPING AN OUTBOUND SHOP LINK FROM THE
+  HOME-SCREEN APP CAN LAND ON A STORE'S OWN "UPDATE OUR APP" NAG, AND THERE IS NO CODE FIX.** Cath
+  tapped the Simkhai tote's Olivela link and got an Olivela-branded "please update to the latest
+  version from the App Store" modal, over the correct product page (right name, right price, InStock
+  — verified live the same session) — confusing, since she has no Olivela app at all. **She isolated
+  the real cause herself, cleanly: from Safari the same link works fine; from Style Star's HOME-SCREEN
+  ICON it pops up.** ▶▶ **THE MECHANISM, KNOWN iOS PLATFORM BEHAVIOR, NOT GUESSED:** `manifest.json`
+  sets `"display":"standalone"` and `apple-mobile-web-app-capable` is `yes` (both confirmed in the code)
+  — that's what makes Style Star a true home-screen app with no browser chrome. **On iOS, a standalone
+  web app cannot open an outbound link in real Safari at all** — the OS always routes it through a
+  constrained, embedded browser (the exact back/share/X/"open in Safari" toolbar in her screenshot).
+  Olivela's own app-detection script apparently reads that embedded browser as an outdated app install
+  and nags her to update it — a false read on THEIR side, and one their own script would produce for
+  ANY standalone PWA's outbound tap, not something specific to a Style Star link. **No HTML/JS change on
+  our side can force iOS to open full Safari instead from a standalone app** — this is an Apple platform
+  constraint, confirmed by her own A/B (Safari vs. home screen), not a bug in `_affUrl`, the `dc-item-btn`
+  markup, or anything wrapped in this session's Olivela check.
+  ▶ **THE WORKAROUND, FOR HER OR ANYONE HITTING IT: tap the "open in Safari" icon in that embedded
+  browser's own toolbar** (the compass-style icon, bottom right in her screenshot) — that escapes into
+  real Safari, where this has never been seen to misfire.
+  ⚠️ **WORTH WATCHING, NOT YET MEASURED: any OTHER store running a similar app-nag script could show the
+  same false popup from the home-screen app**, since the trigger is the iOS webview itself, not anything
+  Olivela-specific. Nobody has swept the other 8 earning stores for this. If she or a tester sees the
+  same modal on a different store, it's this, not a new bug.
 
 Two serverless functions in `netlify/functions/`:
 
