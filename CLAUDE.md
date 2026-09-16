@@ -1520,10 +1520,35 @@ and Cath hit it in a real session before this rule existed.**
   ▶ **THE WORKAROUND, FOR HER OR ANYONE HITTING IT: tap the "open in Safari" icon in that embedded
   browser's own toolbar** (the compass-style icon, bottom right in her screenshot) — that escapes into
   real Safari, where this has never been seen to misfire.
-  ⚠️ **WORTH WATCHING, NOT YET MEASURED: any OTHER store running a similar app-nag script could show the
-  same false popup from the home-screen app**, since the trigger is the iOS webview itself, not anything
-  Olivela-specific. Nobody has swept the other 8 earning stores for this. If she or a tester sees the
-  same modal on a different store, it's this, not a new bug.
+  🚨 **SHE TRIED THE WORKAROUND AND IT DID NOT WORK — THE MODAL WAS NOT DISMISSIBLE.** Worse than first
+  assumed: no tap on or around the card, and no visible escape in that toolbar, got her past it on that
+  device in that moment. ⚠️ **So today, on her own phone, tapping an Olivela link from the home-screen
+  icon is a genuine dead end** — not just an annoying popup, but no confirmed way through it to "Add to
+  bag." Nothing on Style Star's side can fix this (see above — it's Apple's routing plus Olivela's own
+  script, not our markup), but it should not be undersold as a minor nuisance either.
+  ✅✅ **RESOLVED, 2026-09-16, SAME DAY — SHE TESTED INSTAGRAM DIRECTLY AND IT DOES NOT REPRODUCE THERE.**
+  Her words: *"it seems like this only happens when i open it from my home screen style star app. not
+  happening from instagram."* ▶▶ **THIS CONFIRMS THE MECHANISM RATHER THAN JUST NARROWING IT: the
+  trigger is very likely `navigator.standalone`, an iOS-Safari-only flag that reads `true` ONLY inside a
+  home-screen "Add to Home Screen" standalone app** — Instagram's own in-app browser is a different kind
+  of embedded webview (a native app's own webview, not an iOS standalone-PWA context) and would read
+  `navigator.standalone` as `false`, same as real Safari. So Olivela's script is very likely keying off
+  that exact iOS home-screen-app signal, not "any embedded browser" as first guessed. **This is informed
+  technical reasoning matching her real A/B/C test (Safari clean, home screen broken, Instagram clean),
+  not something read from Olivela's own source** (their JS is client-rendered and unreadable from a
+  sandbox fetch — see the tote page's generic `<title>Back</title>`).
+  🚨🚨 **PRACTICAL UPSHOT — THE PART THAT MATTERS FOR CONTENT DECISIONS: HER EXISTING AND FUTURE
+  INSTAGRAM TRAFFIC TO ANY OLIVELA PIECE (VIA THE EDIT, STAR OF THE WEEK, OR A DIRECT POST) IS NOT AT
+  RISK OF THIS.** The "worth watching" line this used to carry — that Instagram traffic might hit the
+  same dead end — is now STOOD DOWN by her own direct test. ▶ **Posting an Olivela product on Instagram
+  is safe as far as this specific bug goes.** ⚠️ **The dead end is real but narrow: it only affects
+  Style Star's OWN home-screen-icon users (including her) tapping out to Olivela specifically** — a
+  smaller, still-real UX cost worth knowing about but not a marketing blocker.
+  ⚠️ **STILL WORTH WATCHING, NOT YET MEASURED: any OTHER store running a similar `navigator.standalone`-
+  keyed app-nag could show the same dead end from the home-screen icon.** Nobody has swept the other 8
+  earning stores for this. If she or a tester sees the same modal on a different store FROM THE HOME
+  SCREEN ICON, it's this, not a new bug — but if it ever shows from INSTAGRAM on any store, that would be
+  a genuinely new, different mechanism worth a fresh look.
 
 Two serverless functions in `netlify/functions/`:
 
