@@ -1844,21 +1844,38 @@
          listed long is in her own note below, not hidden from a future
          session that finds it gone.
          ✅ No tracking to strip -- her link arrived as the bare product page.
-         ✅ PHOTO CHECKED, NOT ASSUMED: fetched and measured at 1094x1237
-         (ratio 0.88), wider than the card's 3:4 frame -- under the shared
-         top-anchored cover crop this loses ~7.6% off EACH SIDE and nothing
-         off the top or bottom, the same shape as the Devon Suede Tote's
-         (which cost 3% a side and needed no override). A moderate, purely
-         horizontal, symmetric crop on a centered product shot -- no pxPos or
-         pxFit override needed. Hotlinking not separately verified (Mytheresa
-         blocks the request that would confirm it, same as her other
-         Mytheresa photos); flagged rather than assumed.
+         🚨 PHOTO: THE FIRST PASS HERE WAS WRONG, AND SHE CAUGHT IT LIVE ON HER
+         PHONE -- fixed same session, and the wrong reasoning is kept below so
+         nobody repeats it. The image is 1094x1237 (ratio 0.88), wider than the
+         card's 3:4 frame -- that part was measured correctly. What was NOT
+         done was RENDERING the actual crop and looking at it (the ledger's own
+         rule: measure to find candidates, look to decide). The assumption was
+         "a centered product shot crops evenly and safely" -- false here: the
+         shoe pair's own content spans x=19 to x=1076 of the 1094px source
+         (measured with a background-diff mask, not eyeballed), nearly the
+         FULL width, so the shared top-anchored COVER crop (927px visible)
+         cannot avoid cutting real content on at least one side. Centered, it
+         clips the back-left shoe's heel -- the exact thing her own note is
+         about ("the artistic shape of the heel is stunning"). Shifted left to
+         save the heel, it clips the front shoe's toe instead. Neither is
+         right for a single photo with no room to spare.
+         ✅ FIXED: style="object-fit:contain" on this img only. The source is
+         proportionally WIDER than the frame, so contain letterboxes top and
+         bottom, not the sides, and BOTH shoes render complete -- rendered and
+         looked at before shipping, not assumed. The bands are close enough to
+         the card's own #F5EFE2 that it reads as a clean full shot rather than
+         a letterboxed compromise, the same effect already measured on the
+         Veronica Beard Crosbie Jean. ⚠️ DO NOT swap this back to the default
+         cover crop to "match the other cards" -- this exact photo cannot take
+         it. Hotlinking not separately verified (Mytheresa blocks the request
+         that would confirm it, same as her other Mytheresa photos); flagged
+         rather than assumed.
          ⚠️ THE NOTE MENTIONS AN AMAZON FINDS PIECE THAT DID NOT EXIST YET WHEN
          THIS SHIPPED -- the suede protection spray, added to Amazon Finds
          the same session. If that Finds piece is ever renamed or removed,
          re-check this sentence still makes sense. -->
     <div class="dc-item">
-      <img class="dc-item-px" src="https://www.mytheresa.com/image/1094/1238/100/51/P01158722.jpg" alt="Manolo Blahnik Larache 90 suede mules in beige with a sculptural heel" loading="lazy" decoding="async" onerror="this.remove()">
+      <img class="dc-item-px" style="object-fit:contain" src="https://www.mytheresa.com/image/1094/1238/100/51/P01158722.jpg" alt="Manolo Blahnik Larache 90 suede mules in beige with a sculptural heel" loading="lazy" decoding="async" onerror="this.remove()">
       <span class="dc-item-star">&#11088;</span>
       <div class="dc-item-name">Manolo Blahnik Larache 90 Suede Mules</div>
       <div class="dc-item-meta"><span class="dc-store">Mytheresa</span><span class="dc-price">$1,050</span></div>
