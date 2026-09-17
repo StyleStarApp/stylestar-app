@@ -23501,3 +23501,74 @@ One real code change this session: the Pinterest domain-verification `<meta>` ta
 housekeeping (archiving, a stale-row fix, the Fonts section correction, the two live-status updates above)
 plus off-app work (the Fiverr email, the Instagram template canvas, the Pinterest account build-out). No
 suites touched or expected to be affected.
+
+## ARCHIVED 2026-09-17 (fifteenth session, start) — the fourteenth-session entry, verbatim
+📁 Moved verbatim, nothing deleted. Its still-open threads are carried forward into the new
+"WHERE WE LEFT OFF" entry in `CLAUDE.md`.
+
+## ▶▶▶ WHERE WE LEFT OFF — 2026-09-15 (fourteenth session). READ THIS FIRST.
+🚨 **THIS BLOCK IS THE CURRENT TRUTH. Everything below it is standing reference — if a line further
+down contradicts this one, THIS ONE WINS.**
+📁 **The eleventh/twelfth/thirteenth-session entry moved to `CLAUDE-archive.md` in this commit, VERBATIM.**
+Nothing was deleted. Its still-open threads and live operational status are carried forward below.
+
+### 🎨 OPEN THREAD, LIVE: FIVERR INSTAGRAM CONTENT — ONE REVISION ROUND SENT, NOT YET BACK
+A single consolidated, code-verified brief (real fonts, real gold-gradient/teal/pink values, both real
+logo file URLs, a concrete photography direction) was sent to Fiverr 2026-09-15 after their first round
+came back off-brand. ▶ **RESURFACE NEXT SESSION: ask whether the revised posts came back, and if she's
+seen them, whether they actually match the brief.**
+
+### 🎨🎨 PINTEREST — LIVE OPERATIONAL STATUS, NEVER ARCHIVES
+✅✅ **Business account live** (`StyleStarbyCatherine`, Content creator type), domain `stylestar.app`
+claimed and verified, profile photo a corrected filled-star mark (not committed to the repo — rebuild
+from `logo-tight.png` + the real star polygon in `index.html` if it's ever needed again). ✅✅ **HER FIRST
+PIN IS LIVE** — board **"Personal Style"** (not "Style Tips," which was discussed but never used). A real
+content pin: her actual first three quiz questions (Classic/Trendy, Natural/Glam, Preppy/Edgy, from the
+real `questions` array), styled with the quiz's real chrome frame and gold-thumb slider CSS, headline
+*"Let's Discover Your Style,"* reveal line naming her real features (*"your full Style Portrait, plus a
+free stylist"*), CTA styled like the app's real dark/gold Continue button. Destination link
+`https://stylestar.app` (there is no dedicated `/quiz` route — the home page itself carries the quiz CTA).
+Design canvas: https://claude.ai/artifact/WXN4HwP4PaH2SFssKGpVaS — **export at 2000×3000 (2x), her
+settled call.** ▶ **NEXT: ask whether she wants a second pin (another quiz spectrum, a Style Portrait
+teaser, an Amazon Finds piece) — don't re-explain Pinterest mechanics she has now already done herself.**
+⭐ **A related, still-parked thread:** five on-brand Instagram templates (real fonts/colors/logo, no
+invented product photography) — https://claude.ai/artifact/CW7xEo5a1aLm5bf3n8hWYb. She said *"I see the
+idea there"* and moved to Pinterest first. ▶ **ASK: has she looked at the templates again?**
+
+### 🚨 SESSION FOURTEEN: COMPETITOR CHECK, A REAL BUG REPORT FROM A REAL FRIEND, AND HER NEXT THREE ASKS
+⭐⭐ **SHE LOOKED AROUND AT OTHER STYLE APPS/CONTENT WITH FRESH EYES AND HER OWN DIRECTION HELD UP.** Her
+words: *"All of them annoying like I have talked about before. Shallow content. Sign up here email
+there. I feel more confident in the overall intent and shape of style star as a whole."* ▶▶ **THIS IS
+REAL, EXTERNAL VALIDATION OF HER STANDING PRODUCT PRINCIPLE (value first, never pay-to-try, no pop-ups)
+— worth naming as genuine momentum, per her own standing ask not to let generic cheerleading stand in
+for something countable.**
+🚨 **A REAL USER (HEATHER, A FRIEND) REPORTED AN $8,900 DRESS RECOMMENDATION AND ASKED IF THE DECIMAL WAS
+WRONG.** ⚠️ **UNCONFIRMED — Heather gave no further detail (no screenshot, no exact phrase searched, no
+link), and Cath said so plainly. Do not treat this as a confirmed bug; treat it as a real but incomplete
+report.** Cath's own guess: probably a Mytheresa item. ▶▶ **THAT GUESS MAKES A GENUINE-PRICE EXPLANATION
+FAR MORE LIKELY THAN A DECIMAL/PARSING BUG** — Mytheresa is one of her fed luxury stores, and her own
+recorded Mytheresa prices already span $570–$1,595 for BAGS AND A BELT (see Star of the Week schedule);
+a real formal dress there reaching $8,900 is entirely plausible. **So this most likely sharpens an
+ALREADY-TRACKED gap rather than reveals a new one: `verifyPrice`/`max_price` (see row 22's correction
+just above, in the Master To-Do List) only constrains price when SHE states a figure — an ordinary ask
+with no stated budget still has no ceiling at all**, and it just produced the starkest real example of
+that yet. Three options were named, none decided, none to be started without her:
+1. A default price ceiling even when nobody states a budget.
+2. An honest "why is this shown" / outlier label on a price far outside the norm, rather than hiding it
+   (she has never wanted fewer options).
+3. Leave it as the accepted cost of full luxury-store browsing.
+▶ **IF MORE DETAIL FROM HEATHER EVER SURFACES (a link, a screenshot, the exact phrase she typed), that
+is what actually settles which store/path produced it — chase that before building anything.**
+⭐⭐⭐ **HER THREE NAMED PRIORITIES GOING FORWARD, IN HER OWN WORDS: "I still want to work on fixing the
+searches... I want to get more traffic and more affiliates."** ▶▶ **SHE ASKED TO PAUSE HERE TO ORGANIZE
+HER OWN THOUGHTS — do not launch into any of the three unprompted next session.** Open by asking how she
+wants to sequence them; a plain, honest status recap of each (searches: the Heather thread above plus
+the standing search-quality/quality-gate threads; traffic: Pinterest's first pin plus the stalled Fiverr/
+Instagram threads; affiliates: the CJ/AWIN pending queues and the Amazon 180-day clock, all in the money-
+path section) is ready to give the moment she wants it, not before.
+
+### ▶ TEST STATE
+No app-logic changes this session. One real fix: Master To-Do List row 22 ("a price filter") was
+corrected — it said OPEN and hadn't been re-checked against the code, which actually shows it was built
+and live 2026-09-13 (verified directly in `find-products.js`/`product-find.js` this session, not assumed).
+Otherwise CLAUDE.md housekeeping only (this archiving pass, the row 22 correction, this entry).
