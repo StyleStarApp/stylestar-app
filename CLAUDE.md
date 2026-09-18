@@ -427,67 +427,76 @@ that makes any future number mean something.**
 
 ---
 
-## ▶▶▶ WHERE WE LEFT OFF — 2026-09-17 (fifteenth session). READ THIS FIRST.
+## ▶▶▶ WHERE WE LEFT OFF — 2026-09-18 (sixteenth session). READ THIS FIRST.
 🚨 **THIS BLOCK IS THE CURRENT TRUTH. Everything below it is standing reference — if a line further
 down contradicts this one, THIS ONE WINS.**
-📁 **The fourteenth-session entry moved to `CLAUDE-archive.md` in this commit, VERBATIM.** Nothing was
+📁 **The fifteenth-session entry moved to `CLAUDE-archive.md` in this commit, VERBATIM.** Nothing was
 deleted. Its still-open threads (Fiverr, Pinterest, Heather's $8,900 dress, her three named priorities)
 are carried forward below, untouched this session.
 
-### 🛠️ SESSION FIFTEEN: A REAL WATCHDOG BUG FOUND, TWO NEW EDIT PIECES, AND FIVE FINDS EDITS
-🚨🚨 **A REAL, LIVE-CONFIRMED BUG FOUND AND FIXED: THE WATCHDOG WAS BLIND TO OLIVELA'S REAL STOCK
-SIGNAL.** She asked for a plain check on her 4 Olivela Edit links (all genuinely fine — right product,
-right price, right photo, InStock). While checking, found `scripts/check-product-urls.js` truncated
-fetched bodies at 400,000 chars — but Olivela's product pages run ~800-850KB and their JSON-LD `Product`
-block (the authoritative stock signal) sits at byte ~525,000-540,000, PAST that cutoff, on all four of
-her Olivela pieces, every time. So the watchdog had been blind to Olivela's real InStock data since she
-was approved 2026-08-24, filing all four under NEEDS HER EYE on a noisy prose fallback every Saturday for
-no reason. ✅ **FIXED: cap raised, re-run against the live pages now correctly reads three as InStock and
-the fourth (the Stella sandal) as the already-documented single-size gap.** Also corrected the `_AFF_MID`
-comment for `olivela.com`, which still said "inert until a link exists" — stale since 2026-09-10, the
-same trap the Marissa Collections comment beside it had already been caught for.
-🚨 **A REAL PLATFORM LIMIT FOUND AND DOCUMENTED (Hosting & deploy section, never archives): tapping an
-Olivela link from Style Star's HOME-SCREEN ICON can land on Olivela's own "update our app" nag, with no
-way through it on her device.** Traced to iOS's `navigator.standalone` (true only inside a home-screen
-"Add to Home Screen" app) — confirmed by her own A/B/C test: clean from Safari, clean from Instagram,
-broken only from the home-screen icon. ⚠️ **PRACTICAL UPSHOT, SETTLED: her Instagram traffic to any
-Olivela piece is NOT at risk of this** — only Style Star's own home-screen-icon users hit it, and there
-is no code fix on our side (Apple's routing plus Olivela's own script, not `_affUrl` or the markup). Full
-detail lives permanently in the Hosting & deploy section; not repeated here.
-⭐⭐ **TWO NEW EDIT PIECES, BOTH MYTHERESA, BOTH LIVE:** Manolo Blahnik Larache 90 Suede Mules ($1,050)
-and Roger Vivier Épine Rose 85 Suede Mules ($1,645). **THE MULES CAUGHT A REAL PHOTO-CROP MISS, HER OWN
-PHONE, SAME SESSION:** the default top-anchored cover crop looked fine by the numbers (0.88 ratio vs.
-the card's 3:4) but the shoe pair's own content spans nearly the FULL width of the source photo, so any
-crop clipped either the heel (her note's whole point) or the toe. Measuring the ratio was not enough —
-rendering the actual crop and looking was what caught it (the ledger's own rule, re-learned the hard
-way). **Fixed with `object-fit:contain` on that one card**, whole photo visible, no crop. ▶ **THE LESSON
-WAS THEN APPLIED, NOT JUST WRITTEN DOWN: the Roger Vivier photo has the identical 1094x1237 dimensions,
-and this time the crop was rendered and checked BEFORE shipping** — real margin in that shot, default
-crop is genuinely clean, no override needed. Also built while adding the mules: `.dc-note-link`
-(styles.css), an inline pink-underlined version of `.dc-xlink`'s Edit↔Finds convention, so a note can
-link out to Amazon Finds mid-sentence — her ask, first used on the mules' suede-spray mention.
-**The Edit is 21 items now** (was 19). Both notes were edited again per her follow-up: the mules lost
-their opening "These are a splurge" line; the Roger Vivier note's colour-variants line became "This rose
-shoe design also comes in a pump and a flat too."
-⭐ **FIVE AMAZON FINDS EDITS, ALL VIA THE CSV IMPORTER, ALL VERIFIED:** added Suede Protector Spray (In
-My Kit — the piece the mules note points to), Good American Classic Slim Bootcut Jeans (Easy Pieces,
-then reordered next to Mother Jeans on her ask), Beyond Yoga Spacedye Cropped Tank and High Waisted
-Leggings (Fitness & Active Things) · fixed the Stila Waterproof Liquid Eyeliner, which was linking to
-the wrong colorway (a blue) — repointed to the black micro-tip ASIN she confirmed, handled as a genuine
-removal+addition since the importer matches by ASIN and this was a different physical Amazon listing,
-not a rename · removed the Cropped Cable Knit Sweater outright — a real defect, a hole, found while she
-was wearing it. **Amazon Finds is 68 pieces now** (was 65).
-▶ **STILL OWED, SHE ASKED TO BE REMINDED: check on the pending CJ/AWIN advertiser queue** (see the money
-path section) — not done this session, she asked to hold off on it for now.
+### 🎨 SESSION SIXTEEN: THE LOGO REBUILD ACTUALLY WENT LIVE — AND TWO REAL LESSONS FROM GETTING THERE
+⭐⭐ **`logo-star-gray.png` IS NOW ACTUALLY WIRED INTO THE APP — IT WAS NOT BEFORE.** A prior session
+rebuilt this file (crisp vector star, real DM Serif Display wordmark, a gold gradient sourced from the
+app's own `hmSeal` button gradient) and it was committed to `main` and called "official" — **but nothing
+in `index.html` ever referenced it.** Grepping the whole repo for the filename turned up zero hits
+outside the file itself. So an entire prior session's approved work was sitting on `main`, unused, until
+this session actually pointed something at it.
+✅ **FIXED, DELIBERATELY NARROW: only the Discover/Welcome screen's hanging star locket
+(`.hm-star-inner img`, `index.html` ~line 427) now loads `/logo-star-gray.png`.** Every other spot that
+still uses `/logo-star.png` (the shared header, the menu drawer, FAQ/Privacy/Terms) is **untouched on
+purpose** — that file is `width:Npx;height:auto`-sized in those spots, and the new file's different
+aspect ratio blows those up huge if it's dropped in blindly. **Confirmed by actually swapping it in and
+screenshotting: menu and FAQ rendered broken, header did not.** ⚠️ **DO NOT "finish the job" by pointing
+every `logo-star.png` reference at the new file — it is not a drop-in replacement for the small,
+width-anchored spots.** If those get a crisp upgrade later, they need their own correctly-cropped export
+(the aspect ratio has to match the OLD file's, since those spots are sized by width not height).
+▶ **THE FINAL STATE OF THAT ONE STAR, ALL FOUR SETTLED BY HER, IN ORDER:** the rail was trimmed so its
+two ends land exactly at the wordmark's own left/right letter edges (not the star's points) — her own
+words, *"The end of the lines should land at the end of the letters above"* — done by measuring the real
+dark-ink bbox of "style"/"Star" in the file and setting the rail's cut points to those exact x-values,
+not by eyeballing a percentage. `.hm-star-inner img` then went `height:56px→63px` (a size bump) and
+`top:-6px→-1px→4px→-1px→-5px→-2px` (several small vertical nudges, each one shown to her before the next,
+each one committed to the branch but held off `main` until she said go). ⚠️ **Every one of these numbers
+is now load-bearing — don't "clean them up" back toward round numbers without her eyes on it again.**
+🚨🚨 **THE PROCESS LESSON, THE EXPENSIVE ONE: SHE ASKED WHY SOMETHING WENT LIVE WITHOUT HER CHECKING IT
+FIRST, AND SHE WAS RIGHT TO.** Early in this session, changes were pushed straight to `main` on my own
+read of a comparison image. ▶▶ **THE FIX THAT HELD FOR THE REST OF THE SESSION: commit and push every
+attempt to the WORKING BRANCH ONLY, send her the comparison, and wait for an explicit "go live" /
+"let's go live" before ever pushing that branch onto `main`.** The stop-hook's "commit your changes"
+nudge was satisfied by the branch push alone — it does not require touching `main`. **This is the
+pattern for any further visual/logo tuning: branch push + screenshot + wait, main push only on her
+explicit word.**
+🚨🚨 **THE OTHER EXPENSIVE LESSON: A LOCAL TEST RENDER WITH BROKEN FONT-LOADING IS NOT A FAIR COMPARISON,
+AND IT LOOKED LIKE ONE.** Screenshotting the app locally (via a plain `python -m http.server` +
+Playwright) silently failed to load Google Fonts through this sandbox's proxy unless the browser was
+explicitly launched with `proxy:{server:'http://127.0.0.1:39297', bypass:'127.0.0.1,localhost,<-loopback>'}`
+and `ignoreHTTPSErrors:true`. **Without that, the page falls back to system fonts, which changes text
+metrics enough to shift surrounding layout** — this produced a comparison that looked exactly like "the
+star renders 3x too small," which was never real and cost a long detour before the actual live page
+(fonts loading normally) showed the sizing had been fine all along. ⚠️ **Any future local screenshot
+comparison of this app MUST launch Chromium with that proxy config, or the render cannot be trusted for
+anything beyond raw pixel geometry of the app's own PNG/SVG assets.** A real device screenshot from her
+is the one reference that was never in question all session — when a local render and her phone
+disagree, trust her phone and go find the bug in the render, not the reverse.
+▶ **THE THIRD LESSON, SMALLER: measure the RULE, not the pixel column, when the thing being measured has
+a diagonal edge.** An early attempt to measure "the rail's length relative to the star's own width" from
+the old jagged art sampled only 5 x-columns and concluded the rail spanned nearly the star's full
+tip-to-tip width — it was actually catching the star's own slanted outline at those same rows, not the
+rail. Dense, contiguous sampling (not a handful of spot checks) is what caught it.
+▶ **STILL OWED, CARRIED FROM SESSION FIFTEEN, UNTOUCHED THIS SESSION: check on the pending CJ/AWIN
+advertiser queue** (see the money path section) — she asked to be reminded, then asked to hold off again
+last session; not raised this session either since the whole session went to the logo.
 
 ### ▶ TEST STATE
-Real code changes this session: `scripts/check-product-urls.js`'s body-truncation cap raised (the
-Olivela bug fix) · a stale `_AFF_MID` comment corrected · two new `.dc-item` blocks in the Edit (photo,
-name, price, note, affiliate link each) · one new CSS rule (`.dc-note-link`) · five CSV-driven edits to
-`data/amazon-finds.csv` (4 additions, 1 removal, 1 reorder, 1 ASIN swap) · four note-text edits. Every
-change was re-verified after: `affwrap` 35/35, `linkwatch` 27/27, `findscsv` 50/50, `findspage` 102/102,
-`editshare` 30/30, both `index.html` `<script>` blocks parse, sitemap restamped for `/edit` and `/finds`
-each time content changed. All pushed to `main` and confirmed live, commit by commit, same session.
+Real changes this session, all pushed to `main` and confirmed live: `index.html` — one `<img src>`
+changed from `/logo-star.png` to `/logo-star-gray.png` inside `.hm-star-inner` only. `logo-star-gray.png`
+— the rail's two ends trimmed inward to land at the wordmark's own letter edges (same star, same
+wordmark, same gradient; only the rail's length changed). `styles.css` — `.hm-star-inner img`'s `height`
+and `top` values tuned per the sequence above; restamped via `node scripts/css-version.js --write` after
+every edit, each time confirmed against the new hash before pushing. No other screen, no other logo
+file, and no other `.hm-*` selector touched. Verified by rendering the real repo files (not a
+reconstruction) through a properly-configured local Chromium against the welcome screen, the menu, and
+the FAQ page, every round, before ever asking her to look.
 
 ### 🎨 OPEN THREAD, LIVE: FIVERR INSTAGRAM CONTENT — ONE REVISION ROUND SENT, NOT YET BACK
 A single consolidated, code-verified brief (real fonts, real gold-gradient/teal/pink values, both real

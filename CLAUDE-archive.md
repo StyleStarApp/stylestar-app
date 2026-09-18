@@ -23572,3 +23572,114 @@ No app-logic changes this session. One real fix: Master To-Do List row 22 ("a pr
 corrected — it said OPEN and hadn't been re-checked against the code, which actually shows it was built
 and live 2026-09-13 (verified directly in `find-products.js`/`product-find.js` this session, not assumed).
 Otherwise CLAUDE.md housekeeping only (this archiving pass, the row 22 correction, this entry).
+
+## ARCHIVED 2026-09-18 (sixteenth session, start) — the fifteenth-session entry, verbatim
+
+## ▶▶▶ WHERE WE LEFT OFF — 2026-09-17 (fifteenth session). READ THIS FIRST.
+🚨 **THIS BLOCK IS THE CURRENT TRUTH. Everything below it is standing reference — if a line further
+down contradicts this one, THIS ONE WINS.**
+📁 **The fourteenth-session entry moved to `CLAUDE-archive.md` in this commit, VERBATIM.** Nothing was
+deleted. Its still-open threads (Fiverr, Pinterest, Heather's $8,900 dress, her three named priorities)
+are carried forward below, untouched this session.
+
+### 🛠️ SESSION FIFTEEN: A REAL WATCHDOG BUG FOUND, TWO NEW EDIT PIECES, AND FIVE FINDS EDITS
+🚨🚨 **A REAL, LIVE-CONFIRMED BUG FOUND AND FIXED: THE WATCHDOG WAS BLIND TO OLIVELA'S REAL STOCK
+SIGNAL.** She asked for a plain check on her 4 Olivela Edit links (all genuinely fine — right product,
+right price, right photo, InStock). While checking, found `scripts/check-product-urls.js` truncated
+fetched bodies at 400,000 chars — but Olivela's product pages run ~800-850KB and their JSON-LD `Product`
+block (the authoritative stock signal) sits at byte ~525,000-540,000, PAST that cutoff, on all four of
+her Olivela pieces, every time. So the watchdog had been blind to Olivela's real InStock data since she
+was approved 2026-08-24, filing all four under NEEDS HER EYE on a noisy prose fallback every Saturday for
+no reason. ✅ **FIXED: cap raised, re-run against the live pages now correctly reads three as InStock and
+the fourth (the Stella sandal) as the already-documented single-size gap.** Also corrected the `_AFF_MID`
+comment for `olivela.com`, which still said "inert until a link exists" — stale since 2026-09-10, the
+same trap the Marissa Collections comment beside it had already been caught for.
+🚨 **A REAL PLATFORM LIMIT FOUND AND DOCUMENTED (Hosting & deploy section, never archives): tapping an
+Olivela link from Style Star's HOME-SCREEN ICON can land on Olivela's own "update our app" nag, with no
+way through it on her device.** Traced to iOS's `navigator.standalone` (true only inside a home-screen
+"Add to Home Screen" app) — confirmed by her own A/B/C test: clean from Safari, clean from Instagram,
+broken only from the home-screen icon. ⚠️ **PRACTICAL UPSHOT, SETTLED: her Instagram traffic to any
+Olivela piece is NOT at risk of this** — only Style Star's own home-screen-icon users hit it, and there
+is no code fix on our side (Apple's routing plus Olivela's own script, not `_affUrl` or the markup). Full
+detail lives permanently in the Hosting & deploy section; not repeated here.
+⭐⭐ **TWO NEW EDIT PIECES, BOTH MYTHERESA, BOTH LIVE:** Manolo Blahnik Larache 90 Suede Mules ($1,050)
+and Roger Vivier Épine Rose 85 Suede Mules ($1,645). **THE MULES CAUGHT A REAL PHOTO-CROP MISS, HER OWN
+PHONE, SAME SESSION:** the default top-anchored cover crop looked fine by the numbers (0.88 ratio vs.
+the card's 3:4) but the shoe pair's own content spans nearly the FULL width of the source photo, so any
+crop clipped either the heel (her note's whole point) or the toe. Measuring the ratio was not enough —
+rendering the actual crop and looking was what caught it (the ledger's own rule, re-learned the hard
+way). **Fixed with `object-fit:contain` on that one card**, whole photo visible, no crop. ▶ **THE LESSON
+WAS THEN APPLIED, NOT JUST WRITTEN DOWN: the Roger Vivier photo has the identical 1094x1237 dimensions,
+and this time the crop was rendered and checked BEFORE shipping** — real margin in that shot, default
+crop is genuinely clean, no override needed. Also built while adding the mules: `.dc-note-link`
+(styles.css), an inline pink-underlined version of `.dc-xlink`'s Edit↔Finds convention, so a note can
+link out to Amazon Finds mid-sentence — her ask, first used on the mules' suede-spray mention.
+**The Edit is 21 items now** (was 19). Both notes were edited again per her follow-up: the mules lost
+their opening "These are a splurge" line; the Roger Vivier note's colour-variants line became "This rose
+shoe design also comes in a pump and a flat too."
+⭐ **FIVE AMAZON FINDS EDITS, ALL VIA THE CSV IMPORTER, ALL VERIFIED:** added Suede Protector Spray (In
+My Kit — the piece the mules note points to), Good American Classic Slim Bootcut Jeans (Easy Pieces,
+then reordered next to Mother Jeans on her ask), Beyond Yoga Spacedye Cropped Tank and High Waisted
+Leggings (Fitness & Active Things) · fixed the Stila Waterproof Liquid Eyeliner, which was linking to
+the wrong colorway (a blue) — repointed to the black micro-tip ASIN she confirmed, handled as a genuine
+removal+addition since the importer matches by ASIN and this was a different physical Amazon listing,
+not a rename · removed the Cropped Cable Knit Sweater outright — a real defect, a hole, found while she
+was wearing it. **Amazon Finds is 68 pieces now** (was 65).
+▶ **STILL OWED, SHE ASKED TO BE REMINDED: check on the pending CJ/AWIN advertiser queue** (see the money
+path section) — not done this session, she asked to hold off on it for now.
+
+### ▶ TEST STATE
+Real code changes this session: `scripts/check-product-urls.js`'s body-truncation cap raised (the
+Olivela bug fix) · a stale `_AFF_MID` comment corrected · two new `.dc-item` blocks in the Edit (photo,
+name, price, note, affiliate link each) · one new CSS rule (`.dc-note-link`) · five CSV-driven edits to
+`data/amazon-finds.csv` (4 additions, 1 removal, 1 reorder, 1 ASIN swap) · four note-text edits. Every
+change was re-verified after: `affwrap` 35/35, `linkwatch` 27/27, `findscsv` 50/50, `findspage` 102/102,
+`editshare` 30/30, both `index.html` `<script>` blocks parse, sitemap restamped for `/edit` and `/finds`
+each time content changed. All pushed to `main` and confirmed live, commit by commit, same session.
+
+### 🎨 OPEN THREAD, LIVE: FIVERR INSTAGRAM CONTENT — ONE REVISION ROUND SENT, NOT YET BACK
+A single consolidated, code-verified brief (real fonts, real gold-gradient/teal/pink values, both real
+logo file URLs, a concrete photography direction) was sent to Fiverr 2026-09-15 after their first round
+came back off-brand. ▶ **RESURFACE NEXT SESSION: ask whether the revised posts came back, and if she's
+seen them, whether they actually match the brief.**
+
+### 🎨🎨 PINTEREST — LIVE OPERATIONAL STATUS, NEVER ARCHIVES
+✅✅ **Business account live** (`StyleStarbyCatherine`, Content creator type), domain `stylestar.app`
+claimed and verified, profile photo a corrected filled-star mark (not committed to the repo — rebuild
+from `logo-tight.png` + the real star polygon in `index.html` if it's ever needed again). ✅✅ **HER FIRST
+PIN IS LIVE** — board **"Personal Style"** (not "Style Tips," which was discussed but never used). A real
+content pin: her actual first three quiz questions (Classic/Trendy, Natural/Glam, Preppy/Edgy, from the
+real `questions` array), styled with the quiz's real chrome frame and gold-thumb slider CSS, headline
+*"Let's Discover Your Style,"* reveal line naming her real features (*"your full Style Portrait, plus a
+free stylist"*), CTA styled like the app's real dark/gold Continue button. Destination link
+`https://stylestar.app` (there is no dedicated `/quiz` route — the home page itself carries the quiz CTA).
+Design canvas: https://claude.ai/artifact/WXN4HwP4PaH2SFssKGpVaS — **export at 2000×3000 (2x), her
+settled call.** ▶ **NEXT: ask whether she wants a second pin (another quiz spectrum, a Style Portrait
+teaser, an Amazon Finds piece) — don't re-explain Pinterest mechanics she has now already done herself.**
+⭐ **A related, still-parked thread:** five on-brand Instagram templates (real fonts/colors/logo, no
+invented product photography) — https://claude.ai/artifact/CW7xEo5a1aLm5bf3n8hWYb. She said *"I see the
+idea there"* and moved to Pinterest first. ▶ **ASK: has she looked at the templates again?**
+
+### 🚨 OPEN THREAD, UNCHANGED THIS SESSION: THE HEATHER / $8,900 DRESS QUESTION
+🚨 **A REAL USER (HEATHER, A FRIEND) REPORTED AN $8,900 DRESS RECOMMENDATION AND ASKED IF THE DECIMAL WAS
+WRONG.** ⚠️ **STILL UNCONFIRMED — Heather gave no further detail (no screenshot, no exact phrase searched,
+no link), and Cath said so plainly.** Cath's own guess: probably a Mytheresa item — plausible, since her
+own recorded Mytheresa prices already span $570–$1,595 for BAGS AND A BELT (see Star of the Week
+schedule), so a real formal dress there reaching $8,900 is entirely believable. **Most likely sharpens
+an ALREADY-TRACKED gap rather than a new one: `verifyPrice`/`max_price` only constrains price when SHE
+states a figure — an ordinary ask with no stated budget still has no ceiling at all.** Three options
+named, none decided, none to be started without her:
+1. A default price ceiling even when nobody states a budget.
+2. An honest "why is this shown" / outlier label on a price far outside the norm, rather than hiding it.
+3. Leave it as the accepted cost of full luxury-store browsing.
+▶ **IF MORE DETAIL FROM HEATHER EVER SURFACES, chase that before building anything.**
+
+### ⭐⭐⭐ HER THREE NAMED PRIORITIES, UNCHANGED THIS SESSION — SHE HAS NOT SEQUENCED THEM YET
+Her own words: *"I still want to work on fixing the searches... I want to get more traffic and more
+affiliates."* ▶▶ **SHE ASKED TO PAUSE AND ORGANIZE HER OWN THOUGHTS — do not launch into any of the
+three unprompted.** Open by asking how she wants to sequence them; a plain status recap of each is ready
+the moment she wants it: **searches** — the Heather thread above plus the standing search-quality/
+quality-gate threads; **traffic** — Pinterest's first pin plus the stalled Fiverr/Instagram threads;
+**affiliates** — the CJ/AWIN pending queues (she asked to be reminded this session, see above) and the
+Amazon 180-day clock, all in the money-path section.
+
