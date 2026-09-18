@@ -254,7 +254,7 @@
   ▶ RESTAMP AFTER ANY CSS EDIT:  node scripts/css-version.js --write
   ⚠️ DO NOT hand-type or "tidy" the value — it is derived from the file, and
   scratchpad/copy.js fails if it is stale. -->
-  <link rel="stylesheet" href="/styles.css?v=54cda88a1d">
+  <link rel="stylesheet" href="/styles.css?v=a09c2451a2">
 </head>
 <body>
 <!-- build: quiz glow-up (chrome frame, gold knob, gold button, gold progress) 2026-07-11 r2 -->
@@ -510,10 +510,6 @@
       <svg class="ss-glow" viewBox="0 0 200 200"><defs><radialGradient id="ssGlowG" cx="50%" cy="50%" r="50%"><stop offset="0" stop-color="#FFFDF8" stop-opacity=".9"/><stop offset="45%" stop-color="#FAEFCE" stop-opacity=".32"/><stop offset="100%" stop-color="#FAEFCE" stop-opacity="0"/></radialGradient></defs><circle cx="100" cy="100" r="100" fill="url(#ssGlowG)"/></svg>
       <svg class="ss-star-svg" viewBox="0 0 24 24"><defs><linearGradient id="ssStarHalo" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#F7E199"/><stop offset=".5" stop-color="#D8A52E"/><stop offset="1" stop-color="#C8971E"/></linearGradient></defs><path fill="#FFFFFF" stroke="url(#ssStarHalo)" stroke-width="0.4" stroke-linejoin="round" stroke-linecap="round" d="M12 1L15.04 7.82L22.46 8.6L16.92 13.6L18.47 20.9L12 17.17L5.53 20.9L7.08 13.6L1.54 8.6L8.96 7.82Z"/></svg>
       <img class="ss-star-logo" src="/logo-star.png" alt="Style Star" onerror="_logoRetry(this)">
-      <div class="ss-wordmark">
-        <svg class="ss-mini-star" viewBox="0 0 24 24" aria-hidden="true"><path fill="#F2C43D" stroke="#1a1a1a" stroke-width="0.7" stroke-linejoin="round" d="M12 1.6L14.47 8.6L21.89 8.79L15.99 13.3L18.11 20.41L12 16.2L5.89 20.41L8.01 13.3L2.11 8.79L9.53 8.6Z"/></svg>
-        <div class="ss-word-wrap"><img class="ss-word-img" src="/logo-star-text.png" alt="Style Star" onerror="_logoRetry(this)"></div>
-      </div>
     </div>
   </div>
 
@@ -15136,13 +15132,15 @@ function _applyRestoredRecord(json){
   return true;
 }
 
-// Home entrance reveal — closet doors swing open onto the home screen. The full
-// long reveal plays every time the app opens, for all visitors — on the welcome
-// screen (s-wel) AND on Welcome Back (s-wb), which now carries its own hanging star
-// for the flying stars to merge into. The reveal is driven by classes on <body> and
-// a single shared overlay, so it plays over whichever of those two screens is the
-// first thing shown. Honors prefers-reduced-motion, and always tears the overlay
-// down afterward.
+// Home entrance reveal — the same centered star reveal plays every time the app
+// opens, for all visitors, identically whether she lands on the welcome screen
+// (s-wel) or Welcome Back (s-wb) — her call, 2026-09-18, once logo-star.png
+// stopped being a hollow "unlit" star: with both destinations' own persistent
+// stars now the same crisp solid gold star, there was no reason left for the
+// entrance to show two different versions on the way in. The reveal is driven
+// by classes on <body> and a single shared overlay, so it plays over whichever
+// of those two screens is the first thing shown. Honors prefers-reduced-motion,
+// and always tears the overlay down afterward.
 function maybePlayEntrance(){
   // Plays once on cold load, over whichever screen ends up being the landing screen
   // (s-wel or s-wb) -- the overlay draws its own centered star, entirely independent
@@ -15155,8 +15153,6 @@ function maybePlayEntrance(){
   var reduce=false;
   try{reduce=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches}catch(e){}
   if(reduce)return;
-  var wbScr=document.getElementById('s-wb');
-  document.body.classList.toggle('ss-wb-star',!!(wbScr&&wbScr.classList.contains('act')));
   requestAnimationFrame(function(){
     document.body.classList.add('ss-anim');
     void document.body.offsetWidth;
@@ -15469,18 +15465,25 @@ function buildCardBlob(source,callback){
   logo.src='/logo-tight.png';
   let logoCut=null,logoStarCut=false;
   /* WHERE THE DRAWN LOGO'S OWN STAR SITS, MEASURED OFF logo-tight.png ITSELF
-     (296x312): its outline star occupies x 108..189, y 6..84, and NOTHING ELSE
-     lives above the wordmark - every opaque pixel over row 77 is part of it, the
-     top of the "s" in "style" being the first ink at 77. Her call is to swap that
-     flat outline star for the shiny one from the middle of the card, at the same
-     size, so the two stars on the sheet are the same star.
+     (296x312): its star occupies x 97..194, y 6..99, and NOTHING ELSE lives
+     above the wordmark - every opaque pixel over row 83 is part of it, the
+     top of the "l" in "style" being the first ink at 83. Her call is to swap
+     that flat outline star for the shiny one from the middle of the card, at
+     the same size, so the two stars on the sheet are the same star.
      ⚠️ These numbers describe ONE PIECE OF ARTWORK. If logo-tight.png is ever
      redrawn, re-measure them - which is why the surgery below refuses to run
      unless the image is exactly the size it was measured at. A guard that fails
      safe leaves the old star showing; a guard that fails open would gouge a hole
-     in a logo nobody meant to touch. */
+     in a logo nobody meant to touch.
+     ⭐ RE-MEASURED 2026-09-18 when logo-tight.png was rebuilt with the crisp
+     gray-rail star (same file the menu/header/FAQ/entrance now use, resized to
+     this file's own 296x312 frame): the new star sits in a bigger, differently
+     shaped box than the old outline one did, found by connected-component
+     labelling on the real pixels, not eyeballed. The old numbers (108..189,
+     6..84, inkTop 77) are stale the moment the art changes size or shape -
+     re-run the same measurement rather than nudging these by hand. */
   const LOGO_ART_W=296,LOGO_ART_H=312;
-  const LOGO_STAR={x0:108,x1:189,y0:6,y1:84,inkTop:77};
+  const LOGO_STAR={x0:97,x1:194,y0:6,y1:99,inkTop:83};
   function cutLogo(){
     const c=document.createElement('canvas');
     c.width=logo.naturalWidth;c.height=logo.naturalHeight;
