@@ -147,9 +147,15 @@ that makes any future number mean something.**
   the strongest of the batch) · Southern Tide · The Noli Shop · Ripley Rader · Mestiza New York ·
   Stella & Dot · Victoria Beckham · Yellow The Label · Dress The Population (genuinely accessible-luxury
   priced, a real fit for the affordability gap). **All PENDING, no replies yet as of end of session.**
-  ⚠️ **TWO MORE WERE DRAFTED BUT NOT CONFIRMED SENT — UNTUCKit and Torrid** — she moved to "that's
-  enough for today" right after the Torrid draft. **Ask her next session whether those two went out.**
-  Torrid especially is worth following up on: plus-size (10-30), affordable, a real gap in her feed.
+  ✅ **CONFIRMED 2026-09-18: UNTUCKit and Torrid also went out.** All 13 of the 2026-09-15 AWIN
+  batch are now confirmed applied. Torrid is still the one worth watching closest: plus-size (10-30),
+  affordable, a real gap in her feed.
+  🚨 **CHECKED WITH HER 2026-09-18: SHE HAS CHECKED EVERY AWIN AND CJ DASHBOARD HERSELF — NOTHING HAS
+  MOVED.** Her words: *"I have checked dashboards on all - and nothing more. No acceptions or
+  rejections. Applications just sitting there."* ⚠️ **THIS IS STILL NORMAL, NOT A BAD SIGN** — only 3
+  days since the AWIN batch (09-15) and 5 since the CJ batch (09-13); advertiser review commonly runs
+  1-4 weeks on both networks. **Nothing here suggests a problem. Re-check again in another week or two
+  rather than every session** — a dashboard that hasn't moved in 3-5 days is not new information.
   🚨 **BOOHOO WAS CAUGHT AND SKIPPED, NOT APPLIED TO** — it is fast fashion (their own overview: "hundreds
   of new pieces added every week"), the same category as Shein/Temu/Cider/Princess Polly/Meshki/
   Peppermayo/Cotton On, all of which she explicitly excluded 2026-07-27. **A real example of the
@@ -503,8 +509,9 @@ REPO** (same convention as her Pinterest profile photo, per the standing note be
 1080×1080 and a full-wordmark 1080×1080, both on white, sized and centered so the mark survives
 Instagram's circular crop with margin to spare. She has both; no further action unless she asks for a
 different size/crop.
-▶ **STILL OWED, CARRIED FORWARD AGAIN, UNTOUCHED TWO SESSIONS RUNNING: check on the pending CJ/AWIN
-advertiser queue** (see the money path section).
+✅ **CHECKED 2026-09-18: the CJ/AWIN advertiser queue has been reviewed by her directly — see the
+money path section.** Both the UNTUCKit/Torrid AWIN applications were confirmed sent, and she's
+checked every dashboard herself: everything is still genuinely Pending, no new approvals or declines.
 
 ### 📁 PRIOR SESSION SIXTEEN (now archived) — WHAT IT DID, KEPT SHORT SINCE THE DETAIL MOVED
 The logo rebuild that had been sitting on `main` unused finally got wired in: `logo-star-gray.png` to the
