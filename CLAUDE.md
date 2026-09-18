@@ -106,6 +106,18 @@ first, THEN affiliates" — is satisfied. Nothing legal blocks the money path an
 💵 **EARNINGS TO DATE: $27 in the Rakuten dashboard. Everything else has been an expense.** (Her figure,
 2026-09-08.) ▶ **Recorded because it is live operational status, and because it is the honest baseline
 that makes any future number mean something.**
+- 🚨 **A NEW SCAM PATTERN, 2026-09-18 — SAME FAMILY AS THE LLC SCRAPER WAVE, NOW TARGETING THE AFFILIATE
+  SIDE.** An email claiming to be from DVF's "Director, Digital Marketing" arrived asking her to update
+  Rakuten text-link IDs to new `dvf.com` collection URLs. ⚠️ **IT ARRIVED AT HER PERSONAL EMAIL, NOT HER
+  RAKUTEN-REGISTERED ONE.** Checked against her real Rakuten dashboard: **nothing there matches it.**
+  ▶ **TREATED AS NOT LEGITIMATE. NOT ACTED ON.** Her public affiliate relationships (which stores she
+  carries) are visible on stylestar.app, which makes a real partner name a plausible impersonation
+  target — same mechanism as the Sunbiz-scraped LLC junk mail. ⚠️ **STANDING RULE, EXTENDED: any
+  affiliate-partner email is verified against the actual network dashboard (Rakuten/CJ/AWIN) before
+  anything in it is acted on — never the email alone.** ▶ **Nothing in the app's build uses Rakuten's
+  named marketing text-link kit anyway** — her DVF placement is one specific product page (the Jeanne
+  Silk Jersey Wrap Dress, Star of the Week), wired through `_affMid`/`_affUrl`, not a collection banner
+  — so even a legitimate version of this email would need her curation call, not a code change.
 - ⭐⭐ **OPEN THREAD, 2026-09-14: AN AMAZON STOREFRONT + PINTEREST, ENTIRELY OFF THE APP.** Her own
   idea, sharpened into a plan — a free Amazon Storefront (`amazon.com/shop/...`) fed by Pinterest, kept
   structurally separate from Style Star so the app never reads as "an Amazon shop" while still cashing
@@ -2451,6 +2463,10 @@ moment she applies; don't trust an old number.**
 real step toward a shipped order clearing its return window and locking in as a qualifying sale —
 worth re-checking the dashboard again in a couple weeks to see if "conditional" clears. ⚠️ **Not yet
 confirmed clear; still tracked the same way as the 9/13 and 9/14 figures above.**
+📈📈📈 **UPDATED 2026-09-18: HER DASHBOARD NOW SHOWS 6 SALES, 4 SHIPPED.** Continued growth, same
+not-yet-confirmed-clear status as every figure above until an order actually clears its return window.
+**Well past the 3-sale bar repeatedly now — re-check in a couple weeks for the first one to actually
+clear and see whether "conditional" status changes.**
 💵💵 **EARNINGS TO DATE, HER FIGURE 2026-09-08: $27 IN THE RAKUTEN DASHBOARD. EVERYTHING ELSE HAS BEEN
 AN EXPENSE.** ▶ **Recorded because it is live operational status and because it is the honest baseline
 that makes any future number mean something.** ⚠️ **It is also the whole argument in one line: the app
