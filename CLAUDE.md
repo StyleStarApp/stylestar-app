@@ -469,15 +469,28 @@ explicit word.**
 🚨🚨 **THE OTHER EXPENSIVE LESSON: A LOCAL TEST RENDER WITH BROKEN FONT-LOADING IS NOT A FAIR COMPARISON,
 AND IT LOOKED LIKE ONE.** Screenshotting the app locally (via a plain `python -m http.server` +
 Playwright) silently failed to load Google Fonts through this sandbox's proxy unless the browser was
-explicitly launched with `proxy:{server:'http://127.0.0.1:39297', bypass:'127.0.0.1,localhost,<-loopback>'}`
-and `ignoreHTTPSErrors:true`. **Without that, the page falls back to system fonts, which changes text
-metrics enough to shift surrounding layout** — this produced a comparison that looked exactly like "the
-star renders 3x too small," which was never real and cost a long detour before the actual live page
-(fonts loading normally) showed the sizing had been fine all along. ⚠️ **Any future local screenshot
-comparison of this app MUST launch Chromium with that proxy config, or the render cannot be trusted for
-anything beyond raw pixel geometry of the app's own PNG/SVG assets.** A real device screenshot from her
-is the one reference that was never in question all session — when a local render and her phone
-disagree, trust her phone and go find the bug in the render, not the reverse.
+explicitly launched with the session's own `$HTTPS_PROXY` (⚠️ **the port changes every session — read
+it from the env var, never hard-code a port number from a prior session**) and `ignoreHTTPSErrors:true`.
+**Without that, the page falls back to system fonts, which changes text metrics enough to shift
+surrounding layout** — this produced a comparison that looked exactly like "the star renders 3x too
+small," which was never real and cost a long detour before the actual live page (fonts loading
+normally) showed the sizing had been fine all along. ⚠️ **Any future local screenshot comparison of
+this app MUST launch Chromium with that proxy config, or the render cannot be trusted for anything
+beyond raw pixel geometry of the app's own PNG/SVG assets.** A real device screenshot from her is the
+one reference that was never in question all session — when a local render and her phone disagree,
+trust her phone and go find the bug in the render, not the reverse.
+🚨 **A FOURTH LESSON, FOUND LATER THE SAME SESSION: THE PROXY'S `bypass` OPTION ALONE DOES NOT ACTUALLY
+BYPASS LOCALHOST.** Screenshotting the two local test servers (ports 8792/8796 etc.) came back as a
+blank, script-less page — `document.body.innerHTML` was ~400 bytes, no scripts, every function
+undefined — even though `curl` to the same URL worked fine. **Cause: Playwright's
+`proxy:{server,bypass:'127.0.0.1,localhost'}` config was still routing plain-HTTP localhost requests
+INTO the proxy**, which only accepts HTTPS CONNECT and returned 405s (confirmed via
+`curl $HTTPS_PROXY/__agentproxy/status`, which logs exactly this as `not_connect` / "non-CONNECT
+request: GET http://127.0.0.1:8792"). **THE FIX: also pass
+`args:['--ignore-certificate-errors','--proxy-bypass-list=127.0.0.1;localhost']`** (semicolon-separated,
+Chromium's own flag) — the `proxy.bypass` field on its own was not enough. ⚠️ **Any future Playwright
+launch in this sandbox needs BOTH the proxy config (for real outbound fonts/CDN) AND this bypass-list
+arg (for local test servers to actually load), or one half silently breaks.**
 ▶ **THE THIRD LESSON, SMALLER: measure the RULE, not the pixel column, when the thing being measured has
 a diagonal edge.** An early attempt to measure "the rail's length relative to the star's own width" from
 the old jagged art sampled only 5 x-columns and concluded the rail spanned nearly the star's full
@@ -497,6 +510,52 @@ every edit, each time confirmed against the new hash before pushing. No other sc
 file, and no other `.hm-*` selector touched. Verified by rendering the real repo files (not a
 reconstruction) through a properly-configured local Chromium against the welcome screen, the menu, and
 the FAQ page, every round, before ever asking her to look.
+
+### 🎨🎨 SAME SESSION, LATER: THE LOGO ROLLED OUT EVERYWHERE ELSE — LIVE, CONFIRMED BY HER
+✅✅ **`/logo-star.png` ITSELF IS NOW THE CRISP ART, LIVE, HER WORDS: *"Let's go live. Looks like you did
+a thorough and amazing job with this."*** This is the file used by the menu drawer heading
+(`.menu-logo`), the shared app header (`.logo-img`), FAQ/Privacy/Terms/Journal/Contact/Add-as-App
+(`.faq-lh-logo`/`.pp-lh-logo`, all screens sharing that header pattern) and the entrance/splash overlay
+(`.ss-star-logo`) — so this one file swap reached every remaining spot in one move, not screen by
+screen. **The Discover-page star (`.hm-star-inner`, wired earlier this session to `logo-star-gray.png`
+directly) was untouched and re-verified unchanged.**
+▶ **HOW THE FILE WAS BUILT, so it never needs re-deriving:** cropped `logo-star-gray.png` to its alpha
+content bbox, padded to match the OLD `logo-star.png`'s exact aspect ratio (296:312 = 0.9487), so it
+drops into every existing `width:Npx;height:auto` spot with zero distortion. **This is the general
+recipe for upgrading any other width-anchored logo spot later: crop to content, pad to the OLD file's
+aspect, never just drop the new art in raw** (the earlier session already learned the "raw swap breaks
+width-anchored spots" half of this the hard way; this is the fix, not just the warning).
+🚨 **A REAL DESIGN FORK WAS FOUND AND SHOWN TO HER BEFORE PICKING A SIDE — GRAY RAIL, HER CALL.** The
+approved Discover-page file has a GRAY rail (right, because it sits inside a big GOLD decorative star
+locket there, and a second gold rail would compete with it). The menu/header/FAQ/entrance have no such
+gold backdrop, so a GOLD-rail variant was also built and rendered side-by-side at all three spots before
+asking. **Her answer: *"I prefer the gray rail on all."*** ✅ Gray it is, everywhere, including the
+entrance overlay's own big white/gold outline star (checked separately — gray reads clean there too,
+no clash).
+🚨🚨 **HER OWN CATCH, SAME ROUND: A REAL PRE-EXISTING LAYOUT BUG, NOT A LOGO-FILE PROBLEM.** She spotted
+"a shadow" / "something grayish" at the top of the FAQ logo. ▶ **Root cause, measured, not guessed:**
+the fixed `.menu-chip` ("☰ MENU" pill, top-left, `top:10px;left:10px`, with its own
+`box-shadow:0 4px 10px -6px rgba(0,0,0,.4)`) sat with its bottom edge at EXACTLY the same y-coordinate
+(42px) as the top of the FAQ/Privacy/Terms logo, with a ~40px horizontal overlap — so the chip's own
+drop shadow fell directly onto the star's top-left tip. **This was there with the OLD jagged logo too
+(confirmed: identical pixel values, (221,221,221) fading to white, present before any file was
+touched)** — the old thin-outline star just had almost nothing solid in that corner, so the shadow was
+invisible against it; the new denser gold star made it visible for the first time. ✅ **FIXED: the real
+controlling CSS was NOT the `.faq-head,.pp-head{margin-top:40px}` rule it looks like — that rule is
+already dead, overridden by a LATER, same-specificity `.faq-head,.pp-head{margin:2px 0 0.6rem}` shorthand
+(2215) that quietly resets margin-top to 2px.** Bumped that shorthand's top value to 20px, which moves
+the logo's top edge from 42px to 60px — clear of the chip's shadow (verified: measured `chipBottom` vs
+`logoTop` before/after, and re-screenshotted the isolated logo with the gray gone). **Applies to every
+screen sharing `.faq-head`/`.pp-head`** (FAQ, Privacy, Terms, Journal, Journal Hub, Journal-fall-florida,
+Contact, Add-as-App) since the fixed chip sits in the same spot on all of them.
+⚠️ **THE LESSON THAT GENERALISES: when two CSS rules set the same shorthand-vs-longhand property on the
+same selector, the one LATER in the file wins regardless of which one looks like "the real rule" —
+always grep for every occurrence of a selector before editing the one that seems obvious.** The first
+edit here (bumping the dead 1977 rule) changed nothing and would have shipped a no-op fix if not
+re-verified against the actual rendered `getBoundingClientRect()`.
+✅ **VERIFIED against the real committed files** (not a reconstruction) at all four spots — menu,
+header, FAQ, entrance overlay — plus a re-check that the Discover-page star was untouched, before
+pushing to the branch; pushed to `main` only after her explicit "Let's go live."
 
 ### 🎨 OPEN THREAD, LIVE: FIVERR INSTAGRAM CONTENT — ONE REVISION ROUND SENT, NOT YET BACK
 A single consolidated, code-verified brief (real fonts, real gold-gradient/teal/pink values, both real
