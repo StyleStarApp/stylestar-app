@@ -2212,7 +2212,7 @@ body.menu-open .menu-panel{display:block}
 .story-manifesto{font-size:18px;font-weight:700;color:#1a1a1a;text-align:center;line-height:1.6;margin-top:0.5rem}
 .story-heart{font-size:28px;text-align:center;margin:1rem 0}
 /* Letterhead (FAQ + Privacy): small logo top-left, back top-right, title one line */
-.faq-head,.pp-head{display:flex;align-items:center;justify-content:space-between;margin:2px 0 0.6rem}
+.faq-head,.pp-head{display:flex;align-items:center;justify-content:space-between;margin:20px 0 0.6rem}
 .faq-lh-logo,.pp-lh-logo{width:66px;height:auto;display:block}
 .faq-head .top-back,.pp-head .top-back{position:absolute;top:5px;right:8px;color:#666;z-index:20}
 #s-faq .faq-head .top-back{top:3px;right:9px}
