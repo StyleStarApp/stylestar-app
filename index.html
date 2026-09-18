@@ -15465,9 +15465,9 @@ function buildCardBlob(source,callback){
   logo.src='/logo-tight.png';
   let logoCut=null,logoStarCut=false;
   /* WHERE THE DRAWN LOGO'S OWN STAR SITS, MEASURED OFF logo-tight.png ITSELF
-     (296x312): its star occupies x 97..194, y 6..99, and NOTHING ELSE lives
-     above the wordmark - every opaque pixel over row 83 is part of it, the
-     top of the "l" in "style" being the first ink at 83. Her call is to swap
+     (296x312): its star occupies x 95..195, y 4..100, and NOTHING ELSE lives
+     above the wordmark - every opaque pixel over row 84 is part of it, the
+     top of the "l" in "style" being the first ink at 84. Her call is to swap
      that flat outline star for the shiny one from the middle of the card, at
      the same size, so the two stars on the sheet are the same star.
      ⚠️ These numbers describe ONE PIECE OF ARTWORK. If logo-tight.png is ever
@@ -15475,15 +15475,15 @@ function buildCardBlob(source,callback){
      unless the image is exactly the size it was measured at. A guard that fails
      safe leaves the old star showing; a guard that fails open would gouge a hole
      in a logo nobody meant to touch.
-     ⭐ RE-MEASURED 2026-09-18 when logo-tight.png was rebuilt with the crisp
-     gray-rail star (same file the menu/header/FAQ/entrance now use, resized to
-     this file's own 296x312 frame): the new star sits in a bigger, differently
-     shaped box than the old outline one did, found by connected-component
-     labelling on the real pixels, not eyeballed. The old numbers (108..189,
-     6..84, inkTop 77) are stale the moment the art changes size or shape -
-     re-run the same measurement rather than nudging these by hand. */
+     ⭐⭐ RE-MEASURED AGAIN 2026-09-18 (same day, later session) when the star was
+     redrawn as clean vector art and grown ~1.5% to fully cover the old jagged
+     outline with no clearing step: it now sits 1-2px wider on every edge than
+     the numbers below it. The prior "RE-MEASURED 2026-09-18" values (97..194,
+     6..99, inkTop 83) are stale the moment the art changes size or shape again -
+     re-run the same connected-component measurement rather than nudging these
+     by hand. */
   const LOGO_ART_W=296,LOGO_ART_H=312;
-  const LOGO_STAR={x0:97,x1:194,y0:6,y1:99,inkTop:83};
+  const LOGO_STAR={x0:95,x1:195,y0:4,y1:100,inkTop:84};
   function cutLogo(){
     const c=document.createElement('canvas');
     c.width=logo.naturalWidth;c.height=logo.naturalHeight;
