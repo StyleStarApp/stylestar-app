@@ -813,11 +813,22 @@ products already carrying title, store, price and photo; a **look-up** (~2.5¢) 
 is what earns a tick — and is **the only way to get a link that reaches the shop and can earn** (every
 raw search link points at `google.com/search`). ▶▶ **MORE CARDS: FREE. MORE SEARCHES: 2.5¢ EACH. A
 TICK: 2.5¢ EACH.**
-⭐ **THE DESIGN THAT FALLS OUT AND IS STILL NOT BUILT: RENDER MANY, LOOK UP LAZILY.** Today the app
-spends 6 look-ups every time whether she taps anything or not. **Render a wide row from the one search,
-verify the top few, spend a look-up only on pieces she actually reaches for.** 💰 **At 1000 users, 10
-searches per question is −$132/month and 4 is +$18/month.** ▶ **More options AND fewer searches — the
-two goals point the same way, which is rare enough to write down.**
+✅✅ **CORRECTED 2026-09-19 — THIS ROW USED TO SAY "STILL NOT BUILT" AND THAT WAS STALE, CAUGHT BEFORE A
+SESSION ALMOST RE-BUILT IT FROM SCRATCH.** `MAX_VERIFY` dropped from 6 to 4 back on 2026-09-08, and the
+browse wall (built 2026-09-08 through 09-10) already spends **zero** look-ups on any card: instead of
+verifying a browse card, the page links it straight to that store's own search for the exact product
+title — instant, still affiliate-wrapped so it still earns, and immune to the iOS pop-up-blocker problem
+a tap-triggered look-up would hit (nothing has to `await` before the tap). **THE CODE'S OWN COMMENT SAYS
+THE "lazy look-up on tap" SKETCH WAS CONSIDERED AND DELIBERATELY REJECTED FOR EXACTLY THAT REASON before
+this was built** — so a future session proposing it is proposing the road already tried and left. ⚠️ **The
+4 look-ups still spent every request are not waste** — they verify the cards that LEAD the row, the ones
+the app calls "confirmed," and that promise cannot be made lazy without breaking her own never-claim-
+unverified rule. ▶ **THE ONE GENUINE GAP LEFT, small and not yet built:** the whole row — including the
+free browse cards that need no verification — waits behind the paid look-ups and the AI judge call before
+anything paints. Browse cards could paint the moment the search itself returns, with the verified leads
+filling in a beat later. **No cost change, no card-count change — purely a perceived-speed improvement.**
+Not started; ask her before building it, since it's a real (if small) change to how the wait feels, and
+her rules about the wait (the status line replaces itself, nothing jumps, a fast answer skips it) apply.
 ▶ **THE OTHER UNSTARTED LEVER, HERS TO SAY YES TO: her belted-dress question fired only 1 of the 4
 searches `MAX_QUERIES` allows.** Three or four would multiply the pool for about 5-7¢ a question.
 
