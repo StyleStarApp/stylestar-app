@@ -137,7 +137,18 @@ that makes any future number mean something.**
   publish an exact eligibility bar — the application itself is how she'd find out.** Pinterest and the
   rest of the plan are UNCHANGED; only the Storefront's own first step moved.
   ⏸️ **SHE SAID "I need to think on this" — PAUSED, NOT DECLINED.** Do not push it forward on her behalf.
-  **Resurface next session by asking where her thinking landed, not by re-explaining the plan.**
+  🚨🚨 **UPDATED 2026-09-21 — THE FIRST STEP DISAPPEARED, CONFIRMED ON HER REAL DASHBOARD, NOT ASSUMED.**
+  She received Amazon's own approval email, which told her plainly to "Set up your Storefront" — directly
+  contradicting the 2026-09-14 finding. Rather than trust either source blind, she screenshotted her live
+  Associates dashboard: a banner reads **"NEW FOR YOU — Associates now have Storefronts,"** with a
+  **"Set up now"** link. ▶▶ **AMAZON HAS ROLLED STOREFRONTS OUT TO REGULAR ASSOCIATES SINCE THE 09-14
+  CHECK. That finding was correct when it was made — this is a genuine platform change, not a stale
+  note.** ⚠️ **So the Influencer Program step is GONE — she can set up her Storefront directly from her
+  own account today, no separate application.** The plan artifact is updated to match:
+  **https://claude.ai/artifact/Y8nANywZfPbbN35CZmhAyN** (same document, new link — step 1 now reads "Set
+  up your Storefront directly"). ▶ **STILL HERS TO DECIDE WHETHER TO START — she has not said go yet,
+  only sent the screenshot.** Resurface by asking whether she wants to begin now that it's simpler, not
+  by re-explaining the plan.
 - 🚨 **AWIN — CHECKED BY HER 2026-09-15: UNDER ARMOUR DECLINED, Jackie Mack Designs and TERI JON still
   PENDING.** ⚠️ **NONE of the three would have fixed the price problem anyway** — activewear, jewellery
   and eveningwear respectively (her own correction, and the measurement upheld it) — so this decline
@@ -2485,6 +2496,18 @@ confirmed clear; still tracked the same way as the 9/13 and 9/14 figures above.*
 not-yet-confirmed-clear status as every figure above until an order actually clears its return window.
 **Well past the 3-sale bar repeatedly now — re-check in a couple weeks for the first one to actually
 clear and see whether "conditional" status changes.**
+🎉🎉🎉 **UPDATED 2026-09-21 — FIRST REAL AMAZON DOLLARS AND FIRST REAL TRAFFIC NUMBERS, BOTH FROM HER OWN
+LIVE DASHBOARD SCREENSHOT.** She received an Amazon "approved" email (see the Storefront thread above for
+what that turned out to mean) and checked her dashboard directly. Real, current figures, "Last updated:
+Sep 21 2026": **Total Earnings $3.40 · Total Items Shipped 4 · Total Ordered Items 13 · Clicks 175 ·
+Conversion 7.43%, all for the last 30 days.** ▶▶ **$3.40 IS HER FIRST CONFIRMED AMAZON DOLLAR FIGURE** —
+everything before this was pending-sale evidence, never an actual earned amount. ⭐⭐ **AND 7.43%
+CONVERSION IS GENUINELY STRONG** — typical e-commerce conversion runs 2-4%, so of the women who do click
+through from Style Star, an unusually high share are buying. **The bottleneck is still traffic (175
+clicks this month), not the shopping experience itself — the app is doing its job well on the clicks it
+gets.** ⚠️ **"Conditional" status was NOT visible on this particular dashboard screen** (it lives under
+Account Settings, not the home page) — still unconfirmed whether it has cleared; ask her to check that
+specific field next time this comes up, don't assume from this screenshot alone.
 💵💵 **EARNINGS TO DATE, HER FIGURE 2026-09-08: $27 IN THE RAKUTEN DASHBOARD. EVERYTHING ELSE HAS BEEN
 AN EXPENSE.** ▶ **Recorded because it is live operational status and because it is the honest baseline
 that makes any future number mean something.** ⚠️ **It is also the whole argument in one line: the app
