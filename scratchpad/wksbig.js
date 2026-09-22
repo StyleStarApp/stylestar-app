@@ -1,15 +1,25 @@
-/* wksbig.js — the bigger STAR OF THE WEEK label + the gradient star
- * (2026-08-25, her pick "B2").
+/* wksbig.js — the bigger STAR OF THE WEEK label + the star's own colour
+ * (label: 2026-08-25, her pick "B2"; star colour: CORRECTED 2026-09-22).
  *
  * ⚠️ SHE ASKED FOR "the same exact as the word SHOP" AND IT DOES NOT FIT.
  *    SHOP is Jost 700 21px/.2em but SHOP is FOUR letters; hers is sixteen, and
  *    .2em tracking alone costs 67px at 21px. Measured on the real label with
  *    the real fonts, 21px/.2em wraps to two lines at 390, 375 AND 360.
  *    19px/.10em is the largest that holds one line at all three.
+ * 🚨🚨 PART 2's ORIGINAL RULE WAS OVERTURNED, NOT JUST UPDATED, 2026-09-22 —
+ *    read this before "restoring" the gradient. On 2026-08-25 "B2" picked a
+ *    gradient (FDF0B8→CE9A26) over a flatter gold (#E0B84C), reasonably at
+ *    the time. It turned out to be the SAME washed-out, saturation-capped
+ *    gradient later identified (session seventeen, the raster-art rebuild)
+ *    as reading dull/brownish rather than bright gold -- she caught it AGAIN
+ *    live on the Finds page star ("this one looks brownish") and confirmed
+ *    a flat, bright #FFD500 for it and every sibling that shared this exact
+ *    gradient, Star of the Week included. **#FFD500 is now correct; a
+ *    gradient here is the regression, not the fix.**
  * ⚠️ NEGATIVE CONTROLS:
  *    font-size:19px -> 21px and letter-spacing .10em -> .20em  → Part 1 fails
  *    delete the @media(max-width:344px) block                  → Part 1 fails at 320
- *    _wksStarSvg's fill back to a flat "#E0B84C"               → Part 2 fails
+ *    _wksStarSvg's fill back to ANY gradient or to "#E0B84C"    → Part 2 fails
  *    .wks-card padding-top 10px -> 14px                        → Part 4 fails
  */
 import pwmod from '/opt/node22/lib/node_modules/playwright/index.js';
@@ -87,16 +97,15 @@ const srv=http.createServer((q,r)=>{let p=decodeURIComponent(q.url.split('?')[0]
   ok('and 58% bigger than the 12px it replaces', +(M[375].fs/12).toFixed(2)===1.58);
   ok('320px steps DOWN to 15px rather than wrapping', M[320].fs===15, M[320].fs);
 
-  console.log('\nPART 2 — her star: the gradient one, not the flat one');
-  ok('the star fill references a gradient, not a flat colour',
-     /^url\(#wksStarG\d+\)$/.test(M[375].fill), M[375].fill);
-  ok('it is NOT the old flat #E0B84C', M[375].fill!=='#E0B84C');
+  console.log('\nPART 2 — her star: flat bright gold, never the old washed-out gradient');
+  ok('the star fill is her corrected flat gold, #FFD500',
+     M[375].fill==='#FFD500', M[375].fill);
+  ok('it is NOT the old muted flat #E0B84C either', M[375].fill!=='#E0B84C');
   ok('star scaled up with the type (22px, was 17)', M[375].starW===22, M[375].starW);
-  // ⚠️ this markup is injected 4x across two screens. Duplicate ids all resolve
-  //    to the first in document order, and a defs inside a display:none screen
-  //    may not paint in Safari (the prefSeal2 lesson).
-  ok('every gradient id on the page is UNIQUE', M[375].ids>0 && M[375].ids===M[375].uniq,
-     M[375].ids+' ids, '+M[375].uniq+' unique');
+  // ⚠️ a flat fill needs no id at all, which retires the old cross-screen
+  //    gradient-id/Safari concern (the prefSeal2 lesson) rather than merely
+  //    satisfying it — zero ids is the correct count now, not a red flag.
+  ok('no leftover gradient ids for this star', M[375].ids===0, M[375].ids+' ids');
 
   console.log('\nPART 3 — the photo stub is really in place (or the fold check is vacuous)');
   ok('the Star photo rendered at a real height', M[375].photoStubbed===true);
@@ -121,7 +130,7 @@ const srv=http.createServer((q,r)=>{let p=decodeURIComponent(q.url.split('?')[0]
             starW:svg?parseFloat(getComputedStyle(svg).width):null};
   });
   await pg.close();
-  ok('Discovery Star uses the same gradient star', !d.missing && /^url\(#wksStarG\d+\)$/.test(d.fill), d.fill);
+  ok('Discovery Star uses the same corrected flat gold', !d.missing && d.fill==='#FFD500', d.fill);
   ok('but keeps its OWN 11px label, untouched', d.lblPx===11, d.lblPx);
   ok('and its own 13px star size', d.starW===13, d.starW);
 
