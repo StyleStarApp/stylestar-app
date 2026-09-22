@@ -2649,6 +2649,21 @@ clicks this month), not the shopping experience itself — the app is doing its 
 gets.** ⚠️ **"Conditional" status was NOT visible on this particular dashboard screen** (it lives under
 Account Settings, not the home page) — still unconfirmed whether it has cleared; ask her to check that
 specific field next time this comes up, don't assume from this screenshot alone.
+📈📈📈📈 **UPDATED 2026-09-22 — ANOTHER REAL DASHBOARD SCREENSHOT, GROWTH CONTINUES.** "Summary for This
+Month," last updated Sep 22 2026: **Total Items Shipped 6 · Total Earnings $4.47 · Total Ordered Items
+14 · Clicks 228 · Conversion 6.14%.** ▶▶ **THIS IS THE FIGURE THAT ANSWERS PART OF THE CREATORS API
+QUESTION ABOVE, AND IT'S STILL SHORT.** "Items shipped" is the closest available proxy for "qualifying
+sales" on this dashboard, and 6 is short of the 10-in-30-days bar the Creators API page names. ⚠️
+**NOT A CLEAN 1:1 COMPARISON** — this box is headed "This Month" while the chart above it says "Last
+30 days" (both cover roughly the same Aug 23–Sep 22 window in the screenshot, but the two labels aren't
+guaranteed to mean the identical rolling window Amazon's own PA-API eligibility check uses). **The
+honest read: real growth (4→6 shipped, $3.40→$4.47, 175→228 clicks in a day), but by the best proxy
+visible from here, still below the 10-shipped bar for Creators API/PA-API access as of this screenshot.**
+▶ **Conversion dipped slightly (7.43%→6.14%) as clicks grew faster than shipped orders — still well
+above the 2-4% e-commerce norm, nothing concerning.** ▶ **STILL HERS TO DO IF SHE WANTS A DEFINITIVE
+ANSWER RATHER THAN INFERRING FROM THIS PROXY: click Create App on the Creators API page and let a real
+credential/API call report her actual eligibility** — this dashboard number is a reasonable guess, not
+the number Amazon's own gate actually checks.
 💵💵 **EARNINGS TO DATE, HER FIGURE 2026-09-08: $27 IN THE RAKUTEN DASHBOARD. EVERYTHING ELSE HAS BEEN
 AN EXPENSE.** ▶ **Recorded because it is live operational status and because it is the honest baseline
 that makes any future number mean something.** ⚠️ **It is also the whole argument in one line: the app
