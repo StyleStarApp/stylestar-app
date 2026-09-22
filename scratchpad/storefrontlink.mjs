@@ -23,16 +23,11 @@ await page.goto(base + '/', { waitUntil: 'networkidle' });
 await page.evaluate(() => { openFinds(); });
 await page.waitForTimeout(200);
 
-const g = id => document.getElementById(id);
-const info = a => a ? { href: a.href, text: a.textContent.trim(), target: a.target, rel: a.rel,
-  visible: getComputedStyle(a).display !== 'none', color: getComputedStyle(a).color,
-  radius: getComputedStyle(a).borderRadius, fontSize: parseFloat(getComputedStyle(a).fontSize),
-  top: a.getBoundingClientRect().top } : null;
-
 const [bottom, top] = await page.evaluate((ids) => {
   const g = id => document.getElementById(id);
   const info = a => a ? { href: a.href, text: a.textContent.trim(), target: a.target, rel: a.rel,
     visible: getComputedStyle(a).display !== 'none', color: getComputedStyle(a).color,
+    bg: getComputedStyle(a).backgroundColor,
     radius: getComputedStyle(a).borderRadius, fontSize: parseFloat(getComputedStyle(a).fontSize),
     top: a.getBoundingClientRect().top } : null;
   return [info(g(ids[0])), info(g(ids[1]))];
@@ -47,7 +42,8 @@ ok(bottom && bottom.rel.includes('sponsored') && bottom.rel.includes('noopener')
 ok(bottom && bottom.visible, 'visible on the page');
 ok(bottom && /Storefront/.test(bottom.text), 'wording names the Storefront (' + JSON.stringify(bottom&&bottom.text) + ')');
 ok(bottom && bottom.radius === '999px', 'a real pill shape, not a text link (' + (bottom&&bottom.radius) + ')');
-ok(bottom && bottom.color === 'rgb(168, 104, 26)', 'her darkened page-tan (#A8681A, her 2nd ask -- also clears the 4.5:1 contrast floor) (' + (bottom&&bottom.color) + ')');
+ok(bottom && bottom.bg === 'rgb(236, 189, 131)', 'the button is FILLED with her real page tan (#ECBD83), her 3rd-round ask (' + (bottom&&bottom.bg) + ')');
+ok(bottom && bottom.color === 'rgb(74, 70, 62)', 'dark text on top of the tan fill (#4a463e, already used for .dc-xlink), 5.44:1 on this tan (' + (bottom&&bottom.color) + ')');
 
 console.log('THE SMALLER TOP COPY, HER ASK — a woman who never scrolls should still see it');
 ok(!!top, 'a second, top-of-page Storefront button exists');

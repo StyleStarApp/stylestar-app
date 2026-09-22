@@ -2208,15 +2208,19 @@ body.menu-open .menu-panel{display:block}
    button gives it its own weight without borrowing .dc-item-btn's
    black/white "buy this one thing" styling, which would wrongly read as a
    single product rather than a whole shop.
-   ⚠️ COLOUR CHANGED SAME DAY, HER ASK: her page's own tan hue (same hue/
-   saturation as the #ECBD83 background bleed, see html.finds-velvet above),
-   but DARKENED to #A8681A -- her second ask, "make the tan darker", after
-   seeing the pale version rendered. This also happens to be the point where
-   it clears the 4.5:1 contrast floor this file's own standing rule requires
-   for text (measured, not eyeballed) -- so darkening solved both her taste
-   note and the accessibility flag from the first render at once. */
-#s-finds .dc-store-btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;border-radius:999px;background:#fff;border:1.5px solid #A8681A;color:#A8681A;font:700 12px/1 'Jost',sans-serif;letter-spacing:.1em;text-transform:uppercase;text-decoration:none;cursor:pointer;-webkit-tap-highlight-color:transparent;width:fit-content;transition:background .2s,color .2s}
-#s-finds .dc-store-btn:hover{background:#A8681A;color:#fff}
+   ⚠️ REBUILT A THIRD TIME ON COLOUR, HER CATCH: a thin tan OUTLINE with tan
+   TEXT on white read "greenish brown" to her -- a small amount of a warm
+   tan ink at low weight can look muddy even at a contrast ratio that passes
+   on paper. FIX, HER OWN SUGGESTION: fill the whole pill with the real page
+   tan (#ECBD83, matching html.finds-velvet's background exactly -- her
+   very first ask, honoured properly now) and put DARK text/icon on TOP of
+   it instead of thin tan ink on white. #4a463e is not a new colour -- it is
+   the same warm dark already used for `.dc-xlink`'s sentence on this page --
+   and measures 5.44:1 on this tan, comfortably past the 4.5:1 floor. White
+   text on this light a tan measured only 1.73:1, so white was never an
+   option here. */
+#s-finds .dc-store-btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;border-radius:999px;background:#ECBD83;border:none;color:#4a463e;font:700 12px/1 'Jost',sans-serif;letter-spacing:.1em;text-transform:uppercase;text-decoration:none;cursor:pointer;-webkit-tap-highlight-color:transparent;width:fit-content;transition:background .2s}
+#s-finds .dc-store-btn:hover{background:#E7AA60}
 #s-finds .dc-store-btn.is-bottom{padding:13px 26px;margin:16px auto 0}
 /* Smaller, scoped to the top so it complements the search bar/category nav
    rather than competing with the hero -- her own ask, same reasoning as the
