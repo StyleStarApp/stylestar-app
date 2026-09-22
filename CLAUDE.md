@@ -1128,6 +1128,23 @@ maintain. 🚨 **HER OWN LINE, ON BOTH PAGES, EACH POINTING AT THE OTHER — NEV
   boxes opens the door; the 10-in-30 is the separate, harder bar that keeps it open. **NEXT: she clicks
   through to Creators API and reports what it shows about that number** — that is what actually decides
   whether building this now is worth it, or worth waiting for.
+  ✅✅ **SHE CLICKED THROUGH, SAME DAY — REAL SCREENSHOT OF `affiliate-program.amazon.com/creatorsapi`.**
+  Confirms the mechanism in Amazon's own words, but **the page is generic documentation, not a
+  personalized dashboard — it does NOT show her actual trailing-30-day qualifying-sale count.** Their
+  own FAQ, verbatim: *"In addition to an approved creators account, you must also have at least 10
+  qualifying sales within the past 30 days to access the PA API through the Creators API."* ▶ **AND A
+  GENUINELY USEFUL DETAIL THE FAQ ALSO GAVE UP: CREATING AN APP COSTS NOTHING AND DOES NOT ITSELF
+  REQUIRE MEETING THE 10-SALE BAR.** The "Create App" button is free to click; the gate only bites when
+  she actually CALLS the API afterward — an ineligible account gets `AssociateNotEligible` (and Amazon
+  says to allow up to 48 hours before treating that as a real answer, not a bug). ▶▶ **SO THE FASTEST
+  WAY TO GET A DEFINITIVE ANSWER ISN'T READING MORE DOCS, IT'S TRYING IT: she can click Create App,
+  generate credentials, and a real API call will tell her directly whether she's eligible today** —
+  faster and more certain than trying to reconstruct a rolling 30-day count by hand from the dashboard.
+  ⚠️ **HER LAST KNOWN DASHBOARD FIGURE (2026-09-21): 13 ordered items, 4 shipped, in a 30-day window** —
+  possibly short of 10 depending on how many of the 13 ultimately ship and clear, but that snapshot is
+  a week stale against a rolling window, so it's a hint, not an answer. **NEXT, HERS TO DO IF SHE WANTS
+  TO KNOW NOW: click Create App and see what a real credential/API call reports.** Nothing gets built
+  on this side until she has that answer AND decides she wants the photo feature scoped.
   ⚠️ **A SEPARATE, ALREADY-LIVE NUANCE, WORTH KNOWING BUT NOT ALARM: this rule was always about the
   CURATED `/finds` page.** Amazon has been a scored `STORES` entry and is in the live finder's domain
   allowlist since her Associates approval, so an Amazon result CAN already surface on chat/Shop your
