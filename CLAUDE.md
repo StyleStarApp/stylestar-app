@@ -214,6 +214,14 @@ that makes any future number mean something.**
   the PROFILE-level bio link, not the individual pins, which may already point where they should. **Ask
   her to tap "Visit site" on one of her new pins and say where it lands, before assuming step 7 is still
   fully open.**
+  ✅ **DECIDED, 2026-09-22: YES — LINK, SCOPED TO `/finds` ONLY.** She asked to decide it; the narrower
+  middle ground above is the call, confirmed. ⚠️ **NOT BUILT YET — BLOCKED ON ONE THING: her actual
+  Storefront URL.** Claude does not have it and must never guess or fabricate a link like this — she
+  needs to paste the real `amazon.com/shop/...` (or whatever her Storefront's real address is) before
+  any code gets written. ▶ **The moment she sends it: add it to `/finds`'s closing section, near the
+  existing "Curious what's trending" / Edit cross-link, worded plainly (something like "See more of my
+  Amazon picks in my Storefront") and carrying `_AMZ_TAG` the same way every other Amazon link on this
+  page already does — never a bare, untagged link.**
 - 🚨 **AWIN — CHECKED BY HER 2026-09-15: UNDER ARMOUR DECLINED, Jackie Mack Designs and TERI JON still
   PENDING.** ⚠️ **NONE of the three would have fixed the price problem anyway** — activewear, jewellery
   and eveningwear respectively (her own correction, and the measurement upheld it) — so this decline
@@ -934,6 +942,17 @@ AGAINST.** ⚠️ **It is a fact she supplied, not a build that happened, and it
 because nobody wrote it down. Re-ask only if she says she has retaken the quiz.**
 
 ### ⭐⭐ STAR OF THE WEEK — HOW IT WORKS
+🚨🚨 **THE STAR'S OWN GOLD WAS BROWNISH TOO, AND IT'S FIXED — 2026-09-22.** She caught one washed-out
+gold star on the Amazon Finds page and asked for a bright yellow fix; checking the code found the exact
+same gradient (`FDF0B8→CE9A26`) copy-pasted into **8 places**, including the twin stars this section
+governs (both the Welcome Back card and the Discovery page). ▶▶ **THIS OVERTURNS A NAMED PRIOR
+DECISION — "her pick B2", 2026-08-25, which chose this gradient OVER a flatter gold (`#E0B84C`) — and
+that pick turned out to be the same washed-out problem session seventeen already fixed on the raster
+star art, just never swept into this inline SVG copy.** All 8 now use flat `#FFD500`, matching the
+already-established correct fix. `scratchpad/wksbig.js` (the test protecting the 2026-08-25 pick) is
+updated to assert the corrected color, not the old gradient — the gradient itself was the bug. ▶ **If
+this ever looks wrong on a real phone, that is the thing to check now, not the position/spacing math
+the rest of this section covers.**
 🚨 **HER RULE, 2026-09-11: *"star of the week is only for items we have photos of."*** Two tables, not
 the same thing: `WEEK_STARS` (35 entries) is the LIBRARY — being there does nothing on its own.
 `WEEK_STAR_PHOTO_ORDER` (16 names) is the WHITELIST, and the only thing that rotates. A photo is only
