@@ -60,7 +60,30 @@ name or note contains the literal word "shoe" (mules, sandals, boots, sneakers, 
 plain text-only search for "shoes" (Carrie's own real word) would have found NOTHING, the exact failure
 this was built to fix. Scoped to `#s-finds` only, hand-written outside the `FINDS:ITEMS` markers so the
 CSV importer never overwrites it. Resets on every `openFinds()` so a returning woman never lands on her
-last visit's filter. `scratchpad/findsearch.mjs`, 20 checks, real Chromium against the real page. |
+last visit's filter. `scratchpad/findsearch.mjs`, 20 checks, real Chromium against the real page.
+🎉 **A SECOND REAL, EXTERNAL TESTER, SAME DAY — RELAYED BY A FRIEND, NOT CATH HERSELF.** Her friend told a
+coworker about Style Star; the coworker went through it and sent feedback back through the friend. She
+independently hit the EXACT SAME scroll-to-find-Shoes problem as Carrie, and asked for *"add photos and
+categories to top of Amazon."* ▶▶ **THE CATEGORIES HALF IS BUILT AND LIVE THE SAME SESSION — a
+quick-jump pill nav** right under the search bar, one pill per real `.dc-cat` heading (rendered from the
+live DOM, never hardcoded, so it can never drift when the CSV adds/renames a category), scrolls with
+clearance below the fixed MENU chip, and clears any active search first so a jump never lands on a
+filtered, empty-looking section. `scratchpad/findscatnav.mjs`, 8 checks. **Two independent real users
+hitting the identical complaint on the same page, same day, is a strong signal — worth remembering as a
+case study the next time "is this really a problem" comes up.**
+⚠️ **THE PHOTOS HALF IS NOT BUILT, AND IT DIRECTLY HITS HER OWN STANDING RULE.** *"Photos on Finds will
+be my own, or none"* (see AMAZON section above) — Amazon photos there are gated behind the Creators API's
+10-sales/30-day bar, which is unconfirmed as met and, even if met, still needs a real integration nobody
+has built. **Two real testers independently wanting photos on this page is real pressure worth naming to
+her, but not a reason to quietly build around her own rule.** Ask her directly whether she wants to
+revisit it.
+▶ **THE OTHER TWO PIECES OF THIS SAME FEEDBACK, NEITHER STARTED, BOTH NEED HER INPUT BEFORE ANYTHING IS
+BUILT:** (a) *"will it learn her style after a while?"* — a real, unbuilt personalization idea (an
+adaptive profile that updates from what she saves/does over time), a genuinely large feature, not a
+quick add — flag it, do not scope it without her. (b) *"After quiz no personalized findings"* — too
+vague to diagnose blind (which screen, what did she expect to see, what did she actually see) — same
+shape as the still-unconfirmed Heather/$8,900-dress thread: **chase the specific detail before building
+anything**, do not guess at a fix for a secondhand, one-line report. |
 | 12 | ~~The wall arrives in Google's order, not hers~~ ✅ **HER DECISION, BUILT AND LIVE 2026-09-10 — her ten dimensions order the browse row. Measured: Google sent `Old Navy > Nordstrom > Kohl's > Talbots`, she sees `Nordstrom > Talbots > Old Navy > Kohl's`.** | — | ✅ done |
 | 13 | ~~The app promises before it knows it can deliver~~ ✅ **HER DECISION, BUILT AND LIVE 2026-09-10 — the stylist's sentence is HELD until there are cards to keep it with. Retires a FAMILY of faults, not one.** | — | ✅ done |
 | 14 | ~~Affiliate shops should appear "somewhere in there"~~ ✅ **POSITION was already built (`_findSpread`, 2026-09-09). ⚠️ Her ruling was in NEITHER file; it is in the ledger now.** | — | ✅ done |
