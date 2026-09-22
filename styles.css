@@ -2160,6 +2160,19 @@ body.menu-open .menu-panel{display:block}
    much longer paragraph that is SUPPOSED to wrap, and must keep the shared
    base rule above untouched. */
 #s-finds .dc-disclosure{margin:0 -36px 5px}
+/* Amazon Finds search bar, her ask 2026-09-22 -- scoped to #s-finds only, the
+   Edit is not this long yet. Sits between the disclosure and the first
+   category heading, inside the normal padded column (no bleed, unlike the
+   disclosure above it). */
+#s-finds .dc-search{position:relative;max-width:420px;margin:1.5rem auto 0;display:block}
+#s-finds .dc-search-ic{position:absolute;left:14px;top:50%;transform:translateY(-50%);width:17px;height:17px;pointer-events:none}
+#s-finds .dc-search-input{width:100%;box-sizing:border-box;font-family:'DM Sans',sans-serif;font-size:16px;color:#1a1a1a;background:#fff;border:1.5px solid #E4DCC8;border-radius:22px;padding:11px 40px;outline:none;transition:border-color .15s}
+#s-finds .dc-search-input::placeholder{color:#9b9384}
+#s-finds .dc-search-input:focus{border-color:#0FA6B6}
+#s-finds .dc-search-clear{position:absolute;right:8px;top:50%;transform:translateY(-50%);width:26px;height:26px;border:none;background:none;color:#9b9384;font-size:21px;line-height:1;cursor:pointer;padding:0}
+#s-finds .dc-search-clear:hover{color:#0FA6B6}
+#s-finds .dc-search-empty{font-family:'Lora',Georgia,serif;font-size:14px;color:#777;text-align:center;padding:2.2rem 1rem 1rem;line-height:1.6}
+#s-finds .dc-search-empty a{color:#0FA6B6;font-weight:600;text-decoration:underline;cursor:pointer}
 .dc-sign{font-family:'Dancing Script',cursive;font-weight:600;font-size:30px;color:#C8A24B;line-height:1.15;margin:1.7rem 0 0}
 /* The third of her three sign-offs, matched to the other two: the gap was a
    TRAILING SPACE in the text node (7.8px). ⚠️ Position lives HERE, never
