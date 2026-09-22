@@ -2209,7 +2209,7 @@ body.menu-open .menu-panel{display:block}
    not a new colour) gives it its own weight without borrowing .dc-item-btn's
    black/white "buy this one thing" styling, which would wrongly read as a
    single product rather than a whole shop. */
-#s-finds .dc-store-btn{display:inline-flex;align-items:center;justify-content:center;gap:7px;border-radius:999px;background:#fff;border:1.5px solid #C8971E;color:#C8971E;font:700 12px/1 'Jost',sans-serif;letter-spacing:.1em;text-transform:uppercase;text-decoration:none;cursor:pointer;-webkit-tap-highlight-color:transparent;width:fit-content;transition:background .2s,color .2s}
+#s-finds .dc-store-btn{display:inline-flex;align-items:center;justify-content:center;text-align:center;gap:7px;border-radius:999px;background:#fff;border:1.5px solid #C8971E;color:#C8971E;font:700 12px/1 'Jost',sans-serif;letter-spacing:.1em;text-transform:uppercase;text-decoration:none;cursor:pointer;-webkit-tap-highlight-color:transparent;width:fit-content;transition:background .2s,color .2s}
 #s-finds .dc-store-btn:hover{background:#C8971E;color:#fff}
 #s-finds .dc-store-btn.is-bottom{padding:13px 26px;margin:16px auto 0}
 /* Smaller, scoped to the top so it complements the search bar/category nav
@@ -2217,6 +2217,14 @@ body.menu-open .menu-panel{display:block}
    search bar and category pills: a woman who never scrolls to the bottom
    should still be able to find this. */
 #s-finds .dc-store-btn.is-top{padding:8px 16px;font-size:10px;letter-spacing:.08em;margin:2px auto 16px}
+/* HER ASK, SAME DAY: the arrow was the same small size as the button label and
+   read as an afterthought. 1.6em scales it off whichever variant (.is-top or
+   .is-bottom) it sits in, so both stay proportional to each other. Welded to
+   the word before it via .nb, the same convention as .dc-xlink/.dc-trend-link
+   above -- an arrow stranded alone on a wrapped line is the exact fault she
+   already caught once on this page. */
+#s-finds .dc-store-btn .dc-store-arr{font-size:1.6em;line-height:0;vertical-align:-3px;display:inline-block;margin-left:1px}
+#s-finds .dc-store-btn .nb{white-space:nowrap}
 .our-story-link{background:none;border:none;font-family:'DM Sans',sans-serif;font-size:13px;color:#6e6e6e;cursor:pointer;text-decoration:underline;margin-top:4px;letter-spacing:0.04em}
 .our-story-link:hover{color:#666}
 .story-wrap{padding:0.5rem 0.5rem 1.5rem;text-align:center}
