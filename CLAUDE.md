@@ -71,12 +71,19 @@ clearance below the fixed MENU chip, and clears any active search first so a jum
 filtered, empty-looking section. `scratchpad/findscatnav.mjs`, 8 checks. **Two independent real users
 hitting the identical complaint on the same page, same day, is a strong signal — worth remembering as a
 case study the next time "is this really a problem" comes up.**
-⚠️ **THE PHOTOS HALF IS NOT BUILT, AND IT DIRECTLY HITS HER OWN STANDING RULE.** *"Photos on Finds will
-be my own, or none"* (see AMAZON section above) — Amazon photos there are gated behind the Creators API's
-10-sales/30-day bar, which is unconfirmed as met and, even if met, still needs a real integration nobody
-has built. **Two real testers independently wanting photos on this page is real pressure worth naming to
-her, but not a reason to quietly build around her own rule.** Ask her directly whether she wants to
-revisit it.
+✅✅ **THE PHOTOS HALF ISN'T BUILT YET, BUT HER OWN RULE AGAINST IT IS GONE — SAME SESSION, HER WORDS:
+*"I don't want to keep that as a rule. If we could use Amazon photos that would be amazing."*** ▶ **See
+the AMAZON section above for the full detail** — the gate is real and unmoved (Amazon's Creators API,
+10 qualifying sales in a trailing 30 days, and she has to check Associates Central herself for a "Join"
+button before anything can be built). **Two independent testers wanting this the same day is exactly
+the kind of real feedback that changed her mind — worth remembering as a case study for how her rules
+get revisited, not just set once and left.**
+⭐ **AND THE SCROLL-HINT FOLLOW-UP, SAME SESSION: she asked whether the category pill row needs an arrow
+so a woman knows it scrolls sideways.** Built a soft right-edge fade instead of a literal arrow icon (an
+arrow reads as a tappable button, the wrong invitation for a sideways swipe) — matches the same "edge
+peek" affordance her Wardrobe/Trending carousels already use, just reinforced since a text pill's peek
+is a subtler cue than a photo card's. Live, not static: clears itself once she has actually scrolled to
+the last pill, verified with real before/after screenshots of the pill row.
 ▶ **THE OTHER TWO PIECES OF THIS SAME FEEDBACK, NEITHER STARTED, BOTH NEED HER INPUT BEFORE ANYTHING IS
 BUILT:** (a) *"will it learn her style after a while?"* — a real, unbuilt personalization idea (an
 adaptive profile that updates from what she saves/does over time), a genuinely large feature, not a
@@ -1066,21 +1073,31 @@ maintain. 🚨 **HER OWN LINE, ON BOTH PAGES, EACH POINTING AT THE OTHER — NEV
   Target). The Saturday watchdog files an Amazon piece as NEEDS HER EYE, never BROKEN, by design.
 - ▶ **Canonicalise every link to `https://www.amazon.com/dp/<ASIN>`** — strip `ref=` (pure tracking off
   her orders page); keep `th=`/`psc=` only when she deliberately pinned a colourway.
-- 🚨🚨 **NO AMAZON PRODUCT PHOTOS ON `/finds`, EVER, EVEN AFTER APPROVAL — STILL TRUE 2026-09-22, AND THE
-  GATE ITSELF CHANGED NAME.** ⚠️ **CORRECTED: the "Product Advertising API" this used to name was
-  DEPRECATED by Amazon on May 15, 2026 — it no longer exists.** Its replacement, the **Creators API**,
-  carries the same shape of gate, confirmed by web search this session (not re-derived from an old
-  note): **3 qualifying sales within 180 days of JOINING to become initially eligible, then 10 qualifying
-  sales in a TRAILING 30 DAYS to both get AND keep API access** — the old "10 sales in 30 days" figure in
-  this file was previously flagged as reported-not-confirmed; it is now confirmed, just under the new
-  API's name. ⚠️ **IT IS NOT AUTOMATIC.** Even once eligible, she has to go INTO Associates Central
-  herself — Tools menu → Product Advertising API/Creators API — and see a "Join" button before credentials
-  exist; nothing in the app can check or trigger this from here. ⚠️ **AND EVEN IF SHE GETS IT, NOTHING IN
-  THE CODE USES IT TODAY** — wiring the Creators API into `/finds` would be new, unbuilt work, not a
-  flag to flip. Her own rule is a SEPARATE, deliberate choice on top of all that: *"Photos on Finds will
-  be my own, or none."* `ownPx` (her own photography of a piece she owns) is the one open door. ▶ **Ask
-  her plainly whether she still wants that rule once/if real Amazon photos are ever actually available —
-  do not silently keep or silently drop it.**
+- 🚨🚨 **HER OWN "PHOTOS ON FINDS WILL BE MY OWN, OR NONE" RULE IS RETIRED — HER WORDS, 2026-09-22:
+  *"I don't want to keep that as a rule. If we could use Amazon photos that would be amazing."*** ▶▶
+  **PROMPTED BY REAL FEEDBACK: two independent testers the same day both asked for photos on this page.**
+  ⚠️ **THIS IS A DELIBERATE REVERSAL OF A RULE SHE HERSELF SET (2026-09-11-era), NOT A CORRECTION OF A
+  MISTAKE — do not read the old rule as ever having been wrong; she changed her mind with new evidence.**
+  `ownPx` (her own photography of a piece she owns) is no longer the only door; Amazon's own catalog
+  photos are now something she genuinely wants, WHEN they can honestly be shown.
+  ⚠️⚠️ **BUT WANTING THEM DOES NOT MEAN THEY CAN BE USED YET — THE GATE ITSELF IS UNCHANGED BY HER
+  DECISION, AND IT ALSO CHANGED NAME THIS SESSION, BEFORE SHE EVEN ASKED.** The "Product Advertising API"
+  this file used to name was DEPRECATED by Amazon on May 15, 2026 — it no longer exists. Its replacement,
+  the **Creators API**, carries the same shape of gate, confirmed by web search this session (not
+  re-derived from an old note): **3 qualifying sales within 180 days of JOINING to become initially
+  eligible, then 10 qualifying sales in a TRAILING 30 DAYS to both get AND keep API access** — the old
+  "10 sales in 30 days" figure in this file was previously flagged as reported-not-confirmed; it is now
+  confirmed, just under the new API's name. ⚠️ **IT IS NOT AUTOMATIC.** Even once eligible, she has to go
+  INTO Associates Central herself — Tools menu → Product Advertising API/Creators API — and see a "Join"
+  button before credentials exist; nothing in the app can check or trigger this from here.
+  ▶▶ **THE ACTUAL NEXT STEP, HERS TO DO, BEFORE ANY CODE GETS WRITTEN: CHECK THAT SCREEN.** Nothing
+  about building the photo feature can start until she knows whether a "Join" button is even there for
+  her yet. ▶ **AND EVEN IF SHE GETS IT, NOTHING IN THE CODE USES IT TODAY** — wiring the Creators API
+  into `/finds` (or the Edit, or anywhere else Amazon photos might now belong) would be new, unbuilt
+  work: real API credentials, a new Netlify function or an extension of an existing one, a call to fetch
+  each ASIN's image, and a decision about what happens to a piece whose photo call fails (never invent
+  one — same honesty floor as everything else in this app). ⚠️ **NOT STARTED. Do not begin wiring this
+  in speculatively — confirm eligibility with her first, THEN scope the build with her.**
   ⚠️ **A SEPARATE, ALREADY-LIVE NUANCE, WORTH KNOWING BUT NOT ALARM: this rule was always about the
   CURATED `/finds` page.** Amazon has been a scored `STORES` entry and is in the live finder's domain
   allowlist since her Associates approval, so an Amazon result CAN already surface on chat/Shop your
