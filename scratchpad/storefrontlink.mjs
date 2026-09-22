@@ -47,7 +47,7 @@ ok(bottom && bottom.rel.includes('sponsored') && bottom.rel.includes('noopener')
 ok(bottom && bottom.visible, 'visible on the page');
 ok(bottom && /Storefront/.test(bottom.text), 'wording names the Storefront (' + JSON.stringify(bottom&&bottom.text) + ')');
 ok(bottom && bottom.radius === '999px', 'a real pill shape, not a text link (' + (bottom&&bottom.radius) + ')');
-ok(bottom && bottom.color === 'rgb(200, 151, 30)', 'her page-own gold (#C8971E, matching .dc-price), NOT teal (' + (bottom&&bottom.color) + ')');
+ok(bottom && bottom.color === 'rgb(236, 189, 131)', 'her exact page-tan (#ECBD83, matching the finds-velvet bleed), her ask 2026-09-22 (' + (bottom&&bottom.color) + ')');
 
 console.log('THE SMALLER TOP COPY, HER ASK — a woman who never scrolls should still see it');
 ok(!!top, 'a second, top-of-page Storefront button exists');

@@ -2205,32 +2205,35 @@ body.menu-open .menu-panel{display:block}
 /* Her Amazon Storefront link, 2026-09-22 -- her own catch: sitting the same
    teal underline as Trending made two very different actions (stay in the
    app vs. leave for Amazon) read as the same kind of thing. A real pill
-   button in her page's own established gold (matches .dc-price's #C8971E,
-   not a new colour) gives it its own weight without borrowing .dc-item-btn's
+   button gives it its own weight without borrowing .dc-item-btn's
    black/white "buy this one thing" styling, which would wrongly read as a
-   single product rather than a whole shop. */
-#s-finds .dc-store-btn{display:inline-flex;align-items:center;justify-content:center;text-align:center;gap:7px;border-radius:999px;background:#fff;border:1.5px solid #C8971E;color:#C8971E;font:700 12px/1 'Jost',sans-serif;letter-spacing:.1em;text-transform:uppercase;text-decoration:none;cursor:pointer;-webkit-tap-highlight-color:transparent;width:fit-content;transition:background .2s,color .2s}
-#s-finds .dc-store-btn:hover{background:#C8971E;color:#fff}
+   single product rather than a whole shop.
+   ⚠️ COLOUR CHANGED SAME DAY, HER ASK: the exact tan of this page's own
+   background bleed (#ECBD83, see html.finds-velvet above) instead of the
+   gold used elsewhere on the page. ⚠️ FLAGGED TO HER, NOT BLOCKED ON: this
+   is the same tan the standing rule above says "may never be text" (1.73:1
+   on white, under the 4.5:1 floor) -- built and rendered as asked so she can
+   look and decide, not silently swapped in against her own rule with no
+   flag. If it reads too pale at button size, a slightly deeper tan is the
+   fix, not reverting to gold. */
+#s-finds .dc-store-btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;border-radius:999px;background:#fff;border:1.5px solid #ECBD83;color:#ECBD83;font:700 12px/1 'Jost',sans-serif;letter-spacing:.1em;text-transform:uppercase;text-decoration:none;cursor:pointer;-webkit-tap-highlight-color:transparent;width:fit-content;transition:background .2s,color .2s}
+#s-finds .dc-store-btn:hover{background:#ECBD83;color:#fff}
 #s-finds .dc-store-btn.is-bottom{padding:13px 26px;margin:16px auto 0}
 /* Smaller, scoped to the top so it complements the search bar/category nav
    rather than competing with the hero -- her own ask, same reasoning as the
    search bar and category pills: a woman who never scrolls to the bottom
    should still be able to find this. */
 #s-finds .dc-store-btn.is-top{padding:8px 16px;font-size:10px;letter-spacing:.08em;margin:2px auto 16px}
-/* HER ASK, SAME DAY: the arrow was the same small size as the button label and
-   read as an afterthought. 1.4em scales it off whichever variant (.is-top or
-   .is-bottom) it sits in, so both stay proportional to each other. Welded to
-   the word before it via .nb, the same convention as .dc-xlink/.dc-trend-link
-   above -- an arrow stranded alone on a wrapped line is the exact fault she
-   already caught once on this page.
-   ⚠️ FIRST ATTEMPT WAS WRONG AND SHE CAUGHT IT: `line-height:0` PLUS
-   `display:inline-block` PLUS a NEGATIVE vertical-align squashed the glyph's
-   own line box and pushed it below the baseline instead of centering it --
-   exactly her "very small and way too low." Plain vertical-align:middle on a
-   normal inline span, no forced line-height, is the safe cross-browser way
-   to center a bigger glyph against surrounding text. */
-#s-finds .dc-store-btn .dc-store-arr{font-size:1.4em;vertical-align:middle}
-#s-finds .dc-store-btn .nb{white-space:nowrap}
+/* ⚠️⚠️ REBUILT SAME DAY, HER SECOND CATCH: vertical-align on an inline span
+   is at the mercy of the font's own x-height metrics, and text-transform:
+   uppercase does not change those metrics even though the letters LOOK
+   capital-height -- so "middle" was centering against the wrong reference
+   box, and on her real phone it still read small/off. FIX: the arrow is now
+   its OWN flex child of `.dc-store-btn` (not nested inside the label's text
+   run), so the container's own `align-items:center` centers it by its real
+   box, the same mechanism the button already uses for everything else --
+   no font-metric guessing left in the calculation at all. */
+#s-finds .dc-store-btn .dc-store-arr{font-size:1.7em;line-height:1;flex:0 0 auto}
 .our-story-link{background:none;border:none;font-family:'DM Sans',sans-serif;font-size:13px;color:#6e6e6e;cursor:pointer;text-decoration:underline;margin-top:4px;letter-spacing:0.04em}
 .our-story-link:hover{color:#666}
 .story-wrap{padding:0.5rem 0.5rem 1.5rem;text-align:center}
