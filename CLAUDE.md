@@ -2664,6 +2664,19 @@ above the 2-4% e-commerce norm, nothing concerning.** ▶ **STILL HERS TO DO IF 
 ANSWER RATHER THAN INFERRING FROM THIS PROXY: click Create App on the Creators API page and let a real
 credential/API call report her actual eligibility** — this dashboard number is a reasonable guess, not
 the number Amazon's own gate actually checks.
+✅✅ **DONE, SAME DAY 2026-09-22 — SHE CREATED THE APP AND GENERATED CREDENTIALS.** App name
+"Catherine-StyleStar" (`Applicationid: stylestar01-20.catherine-stylestar`), one credential generated
+and downloaded via the CSV option, confirmed **Active**. ⚠️ **A stray click landed on the "Create App"
+button (which starts a SECOND app) instead of "Add new credential" first — caught before it created a
+duplicate; she cancelled and used the right button.** ▶ **NOTHING ELSE TO DO ON THIS RIGHT NOW.** She
+is still short of the 10-shipped-items bar (6 as of the 2026-09-22 dashboard, see above), so a real API
+call today would almost certainly report ineligible and teach nothing new. **THE CREDENTIAL JUST SITS
+READY, AT NO COST, UNTIL A FUTURE DASHBOARD CHECK SHOWS HER CROSSING 10 SHIPPED** — that is the moment
+to actually try a real call and get a definitive yes/no, rather than re-deriving it from the shipped-
+items proxy. ⚠️ **HER SECRET KEY WAS VISIBLE IN A SCREENSHOT SHE SENT THIS SESSION** — flagged to her
+gently, not urgent; Amazon supports a second credential per app for rotation if she ever wants a clean
+one. **Nothing in the app's code uses these credentials yet — still fully unbuilt**, per the standing
+note above: confirm real eligibility first, THEN scope the actual photo-fetch build with her.
 💵💵 **EARNINGS TO DATE, HER FIGURE 2026-09-08: $27 IN THE RAKUTEN DASHBOARD. EVERYTHING ELSE HAS BEEN
 AN EXPENSE.** ▶ **Recorded because it is live operational status and because it is the honest baseline
 that makes any future number mean something.** ⚠️ **It is also the whole argument in one line: the app
