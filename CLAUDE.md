@@ -235,6 +235,38 @@ that makes any future number mean something.**
   grow — **102/102 clean after the fix.** Sitemap restamped (`sitemap-lastmod.js --write`) for the
   content change. ⚠️ **SCOPED TO `/finds` ONLY, PER HER DECISION** — the app's main nav still never
   mentions the Storefront, so the rest of Style Star does not read as "an Amazon shop."
+  🚨🚨 **THE DESIGN WENT THROUGH FOUR ROUNDS THE SAME DAY BEFORE SHE APPROVED IT — MERGED LIVE
+  2026-09-22.** Final state, both the small top copy (right under the search/category controls) and
+  the big bottom copy: a FILLED pill, background `#ECBD83` (her page's own exact tan, `html.finds-
+  velvet`'s bleed colour), dark text `#4a463e` (already used for `.dc-xlink` on this same page, 5.44:1
+  on this tan), and a real stroke-based SVG arrow icon (the same one `.mall-go` already uses,
+  `stroke="currentColor"` so it always matches the button's own colour). **What each round actually
+  fixed, so the reasoning isn't lost:**
+  1. First build: gold `#C8971E` outline, text-glyph arrow welded to the last word via `.nb`. She
+     said the arrow was too small/low.
+  2. Enlarged the arrow with `vertical-align:middle` — **still wrong on her real phone.** Root cause:
+     `text-transform:uppercase` doesn't change a font's actual x-height, so `vertical-align:middle`
+     was centering against the wrong reference box for what LOOKS like cap-height text.
+  3. Rebuilt the arrow as its own flex child so the button's `align-items:center` would center it by
+     a real box instead — **still wrong.** Root cause, only found here: the Unicode `→` GLYPH ITSELF
+     sits low in its own em-box in this font, invisible at normal text size, obvious once enlarged.
+     No amount of container-level alignment can fix a font's own glyph placement.
+  4. Swapped the text arrow for a real SVG icon (reusing `.mall-go`'s exact path) — an SVG's viewBox
+     is genuinely symmetric, so flex centering finally had a real shape to center, not a font's guess.
+  ⚠️ **THE COLOUR WENT THROUGH ITS OWN TWO ROUNDS, SEPARATELY:** she asked for the exact page tan as a
+  thin outline/text colour first — flagged to her before building that this exact tan measures 1.73:1
+  on white, under this file's own 4.5:1 text floor, but built and rendered anyway so she could judge it
+  herself rather than being blocked on a rule she might have overridden anyway. She then asked to
+  darken it (which incidentally also fixed the contrast problem, to `#A8681A`, 4.51:1) — but at that
+  outline weight it read "greenish brown" to her, muddy despite passing contrast on paper. **Her own
+  fix, and the right one: FILL the pill with the light, true page tan instead of using it as thin
+  ink**, and put dark text on top for contrast rather than fighting a pale colour at text-weight.
+  ⭐ **THE GENERAL LESSON, worth keeping for any future colour-as-text decision:** a colour that reads
+  fine as a big flat fill can read muddy or washed out as thin text/outline at the same hex value —
+  contrast math alone doesn't capture that, only rendering and looking does.
+  `scratchpad/storefrontlink.mjs`, 21/21, covers the final state: real fill colour, real text colour,
+  pill shape, both copies present and identically tagged, no double-tagging on reopen, existing
+  crosslinks untouched.
 - 🚨 **AWIN — CHECKED BY HER 2026-09-15: UNDER ARMOUR DECLINED, Jackie Mack Designs and TERI JON still
   PENDING.** ⚠️ **NONE of the three would have fixed the price problem anyway** — activewear, jewellery
   and eveningwear respectively (her own correction, and the measurement upheld it) — so this decline
