@@ -1117,6 +1117,17 @@ maintain. 🚨 **HER OWN LINE, ON BOTH PAGES, EACH POINTING AT THE OTHER — NEV
   each ASIN's image, and a decision about what happens to a piece whose photo call fails (never invent
   one — same honesty floor as everything else in this app). ⚠️ **NOT STARTED. Do not begin wiring this
   in speculatively — confirm eligibility with her first, THEN scope the build with her.**
+  ✅✅ **SHE CHECKED, SAME DAY — REAL SCREENSHOT OF `affiliate-program.amazon.com/assoc_credentials/home`,
+  NOT ASSUMED.** Confirms everything the web search found, straight from her own account: **both entry
+  checkboxes read green — "Have achieved 3 qualifying sales in 180 days" and "Have an Approved
+  Associates Account."** ⚠️ **BUT THE PAGE ITSELF, IN RED TEXT, SAYS THE OLD PATH IS RETIRED:** *"PAAPI
+  is now available on Creators API. To generate credentials and access PAAPI, please visit Creators
+  API."* The legacy "Request for PA API access" button is the one being phased out — she was told to
+  click **Creators API** instead, not that button. ▶ **WHAT THIS PAGE DOES NOT SHOW: her actual
+  trailing-30-day qualifying-sale count against the 10-sale maintenance bar** — meeting the two green
+  boxes opens the door; the 10-in-30 is the separate, harder bar that keeps it open. **NEXT: she clicks
+  through to Creators API and reports what it shows about that number** — that is what actually decides
+  whether building this now is worth it, or worth waiting for.
   ⚠️ **A SEPARATE, ALREADY-LIVE NUANCE, WORTH KNOWING BUT NOT ALARM: this rule was always about the
   CURATED `/finds` page.** Amazon has been a scored `STORES` entry and is in the live finder's domain
   allowlist since her Associates approval, so an Amazon result CAN already surface on chat/Shop your
