@@ -254,7 +254,7 @@
   ▶ RESTAMP AFTER ANY CSS EDIT:  node scripts/css-version.js --write
   ⚠️ DO NOT hand-type or "tidy" the value — it is derived from the file, and
   scratchpad/copy.js fails if it is stale. -->
-  <link rel="stylesheet" href="/styles.css?v=edb0b2c70f">
+  <link rel="stylesheet" href="/styles.css?v=d9ca625dec">
 </head>
 <body>
 <!-- build: quiz glow-up (chrome frame, gold knob, gold button, gold progress) 2026-07-11 r2 -->
@@ -9151,6 +9151,20 @@ function findsCatNavRender(){
     b.onclick=()=>findsCatNavJump(i);
     nav.appendChild(b);
   });
+  // her ask, 2026-09-22: "do we need an arrow so she knows she can scroll
+  // sideways?" -- a right-edge fade is the same affordance her Wardrobe/
+  // Trending carousels already lean on (an edge-cut card), just made more
+  // visible since a text pill's peek is a subtler cue than a photo card's.
+  // Live, not static: it clears itself once she has actually scrolled to
+  // the last pill, so it never keeps promising more when there is none.
+  _findsCatNavUpdateFade();
+  nav.onscroll=_findsCatNavUpdateFade;
+}
+function _findsCatNavUpdateFade(){
+  const nav=document.getElementById('findsCatNav');
+  if(!nav)return;
+  const hasMore=nav.scrollWidth-nav.scrollLeft-nav.clientWidth>4;
+  nav.classList.toggle('has-more',hasMore);
 }
 function findsCatNavJump(i){
   const wrap=document.querySelector('#s-finds .dc-wrap');

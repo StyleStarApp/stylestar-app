@@ -2179,6 +2179,12 @@ body.menu-open .menu-panel{display:block}
 #s-finds .dc-catnav::-webkit-scrollbar{display:none}
 #s-finds .dc-catnav-btn{flex:0 0 auto;font-family:'Jost',sans-serif;font-size:12px;font-weight:600;letter-spacing:.04em;text-transform:uppercase;color:#6b6459;background:#fff;border:1.3px solid #E4DCC8;border-radius:999px;padding:7px 14px;cursor:pointer;white-space:nowrap;transition:border-color .15s,color .15s}
 #s-finds .dc-catnav-btn:hover,#s-finds .dc-catnav-btn:active{border-color:#0FA6B6;color:#0FA6B6}
+/* Her ask 2026-09-22: a scroll hint, since a text pill's edge-peek is a
+   subtler cue than a photo card's. A soft right-edge fade rather than a
+   literal arrow -- an arrow icon reads as a tappable button, which is the
+   wrong invitation for a sideways swipe. Toggled live by JS; clears itself
+   once she has scrolled all the way to the last pill. */
+#s-finds .dc-catnav.has-more{-webkit-mask-image:linear-gradient(to right,#000 calc(100% - 28px),transparent 100%);mask-image:linear-gradient(to right,#000 calc(100% - 28px),transparent 100%)}
 .dc-sign{font-family:'Dancing Script',cursive;font-weight:600;font-size:30px;color:#C8A24B;line-height:1.15;margin:1.7rem 0 0}
 /* The third of her three sign-offs, matched to the other two: the gap was a
    TRAILING SPACE in the text node (7.8px). ⚠️ Position lives HERE, never
