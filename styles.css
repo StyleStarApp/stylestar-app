@@ -2226,7 +2226,7 @@ body.menu-open .menu-panel{display:block}
    rather than competing with the hero -- her own ask, same reasoning as the
    search bar and category pills: a woman who never scrolls to the bottom
    should still be able to find this. */
-#s-finds .dc-store-btn.is-top{padding:8px 16px;font-size:10px;letter-spacing:.08em;margin:2px auto 16px}
+#s-finds .dc-store-btn.is-top{padding:10px 20px;font-size:11px;letter-spacing:.09em;margin:2px auto 16px}
 /* ⚠️⚠️⚠️ REBUILT A THIRD TIME, HER REPEATED CATCH: two rounds of CSS-only
    fixes (vertical-align, then a flex child with align-items:center) both
    still read "too low" on her real phone. THE REAL CAUSE, ONLY FOUND HERE:
@@ -2240,7 +2240,7 @@ body.menu-open .menu-panel{display:block}
    symmetric, so flex `align-items:center` on the button now centers a real
    shape instead of guessing at a font's glyph placement. */
 #s-finds .dc-store-btn svg.dc-store-arr{width:18px;height:18px;flex:0 0 auto;display:block}
-#s-finds .dc-store-btn.is-top svg.dc-store-arr{width:14px;height:14px}
+#s-finds .dc-store-btn.is-top svg.dc-store-arr{width:16px;height:16px}
 .our-story-link{background:none;border:none;font-family:'DM Sans',sans-serif;font-size:13px;color:#6e6e6e;cursor:pointer;text-decoration:underline;margin-top:4px;letter-spacing:0.04em}
 .our-story-link:hover{color:#666}
 .story-wrap{padding:0.5rem 0.5rem 1.5rem;text-align:center}
