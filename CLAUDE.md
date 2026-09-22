@@ -170,6 +170,20 @@ that makes any future number mean something.**
   tool to post them** — not a separate Pinterest-side creation step. ▶ **So Storefront and Pinterest are
   more tightly linked in her real workflow than the plan artifact's step-by-step implied** (it reads as
   two separate builds); worth knowing before rewriting that document again.
+  🚨 **NEW OPEN QUESTION, 2026-09-22: SHOULD STYLE STAR ITSELF LINK OUT TO HER AMAZON STOREFRONT?** She
+  asked directly. ⚠️ **THIS IS IN REAL TENSION WITH THE PLAN'S OWN FOUNDING REASON, WRITTEN ABOVE IN THIS
+  SAME THREAD: "kept structurally separate from Style Star so the app never reads as 'an Amazon shop.'"**
+  A link from the app's main nav/menu would cut directly against that. ▶ **A NARROWER MIDDLE GROUND,
+  OFFERED NOT BUILT: a link from `/finds` only** — that page is already fully Amazon-branded and
+  disclosed, so a Storefront link there widens an already-Amazon page rather than making the REST of the
+  app (home, quiz, chat) read as one. **Not started. Her call, and she should be told plainly this
+  reverses part of a decision she made deliberately, not just "sure, easy add."**
+  ▶ **SEPARATELY, WORTH HER OWN CHECK: pins made through Storefront's own share-to-Pinterest tool likely
+  already carry the Storefront as their OWN destination link** (that is normally how a shopping
+  platform's native share button works) — if so, the "cross-link the bios" ask (step 7) is really about
+  the PROFILE-level bio link, not the individual pins, which may already point where they should. **Ask
+  her to tap "Visit site" on one of her new pins and say where it lands, before assuming step 7 is still
+  fully open.**
 - 🚨 **AWIN — CHECKED BY HER 2026-09-15: UNDER ARMOUR DECLINED, Jackie Mack Designs and TERI JON still
   PENDING.** ⚠️ **NONE of the three would have fixed the price problem anyway** — activewear, jewellery
   and eveningwear respectively (her own correction, and the measurement upheld it) — so this decline
@@ -1029,10 +1043,29 @@ maintain. 🚨 **HER OWN LINE, ON BOTH PAGES, EACH POINTING AT THE OTHER — NEV
   Target). The Saturday watchdog files an Amazon piece as NEEDS HER EYE, never BROKEN, by design.
 - ▶ **Canonicalise every link to `https://www.amazon.com/dp/<ASIN>`** — strip `ref=` (pure tracking off
   her orders page); keep `th=`/`psc=` only when she deliberately pinned a colourway.
-- 🚨🚨 **NO AMAZON PRODUCT PHOTOS, EVER, EVEN AFTER APPROVAL.** The Product Advertising API that licenses
-  them is itself gated behind her first 3 qualifying sales, so the permission arrives AFTER selling, not
-  before — hotlinking one now would risk her whole Associates account. Her rule: *"Photos on Finds will
-  be my own, or none."* `ownPx` (her own photography of a piece she owns) is the one open door.
+- 🚨🚨 **NO AMAZON PRODUCT PHOTOS ON `/finds`, EVER, EVEN AFTER APPROVAL — STILL TRUE 2026-09-22, AND THE
+  GATE ITSELF CHANGED NAME.** ⚠️ **CORRECTED: the "Product Advertising API" this used to name was
+  DEPRECATED by Amazon on May 15, 2026 — it no longer exists.** Its replacement, the **Creators API**,
+  carries the same shape of gate, confirmed by web search this session (not re-derived from an old
+  note): **3 qualifying sales within 180 days of JOINING to become initially eligible, then 10 qualifying
+  sales in a TRAILING 30 DAYS to both get AND keep API access** — the old "10 sales in 30 days" figure in
+  this file was previously flagged as reported-not-confirmed; it is now confirmed, just under the new
+  API's name. ⚠️ **IT IS NOT AUTOMATIC.** Even once eligible, she has to go INTO Associates Central
+  herself — Tools menu → Product Advertising API/Creators API — and see a "Join" button before credentials
+  exist; nothing in the app can check or trigger this from here. ⚠️ **AND EVEN IF SHE GETS IT, NOTHING IN
+  THE CODE USES IT TODAY** — wiring the Creators API into `/finds` would be new, unbuilt work, not a
+  flag to flip. Her own rule is a SEPARATE, deliberate choice on top of all that: *"Photos on Finds will
+  be my own, or none."* `ownPx` (her own photography of a piece she owns) is the one open door. ▶ **Ask
+  her plainly whether she still wants that rule once/if real Amazon photos are ever actually available —
+  do not silently keep or silently drop it.**
+  ⚠️ **A SEPARATE, ALREADY-LIVE NUANCE, WORTH KNOWING BUT NOT ALARM: this rule was always about the
+  CURATED `/finds` page.** Amazon has been a scored `STORES` entry and is in the live finder's domain
+  allowlist since her Associates approval, so an Amazon result CAN already surface on chat/Shop your
+  Style/Wardrobe Ideas, same as any other store — and when it does, its card photo comes from **SerpApi's
+  Google Shopping thumbnail**, not from Amazon's own licensed catalog data. That is a different image
+  source than the Creators API paragraph above is about, so it does not appear to be the same licensing
+  risk — but it was never explicitly reasoned through as its own decision, so flag it if it ever comes up
+  rather than assuming it is fine.
 - ✅ **`/finds` prices round UP, never to the nearest** (`Math.ceil`, printed with a tilde — `~$17`) —
   a cheaper surprise is recoverable, a dearer one is not (her 2026-07-31 sale-price rule, one step out).
   A trailing qualifier survives rounding ("$9.99 for 4" → "~$10 for 4"). Exact price stays in
