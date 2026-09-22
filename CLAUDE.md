@@ -267,6 +267,22 @@ that makes any future number mean something.**
   `scratchpad/storefrontlink.mjs`, 21/21, covers the final state: real fill colour, real text colour,
   pill shape, both copies present and identically tagged, no double-tagging on reopen, existing
   crosslinks untouched.
+  ⭐ **A FIFTH, SMALLER ROUND THE SAME DAY: she asked to enlarge the TOP copy specifically** (the small
+  one under the search/category controls, for a woman who never scrolls) — *"Let's make the Amazon tan
+  button slightly larger."* `.is-top` went from 8/16px padding, 10px text, 14px arrow to 10/20px, 11px,
+  16px; still genuinely smaller than the bottom pill (11px vs 12px), so the size hierarchy holds. Shown
+  as a full-page render (her ask, after a zoomed-in crop wasn't enough to judge it) before going live.
+  `storefrontlink.mjs` 21/21, `findspage.js` 102/102. **MERGED LIVE 2026-09-22.**
+  📱📱 **SHE POSTED THE STOREFRONT LINK TO INSTAGRAM, 2026-09-22 — LIVE OPERATIONAL STATUS, NEVER
+  ARCHIVES.** ▶ **One real cleanup question came up first and is worth keeping as a general note for any
+  future share link she generates from the Amazon app: a link copied via Amazon's own "Share" button
+  carries a one-time `ccs_id=` tracking token bolted onto her real, permanent `tag=stylestar01-20` — same
+  family as the `onamzstyl0e7f-20` share-tag substitution caught 2026-09-22 earlier the same day.** The
+  `ccs_id` isn't harmful, it just isn't hers to keep; she was told to always post the clean
+  `https://www.amazon.com/shop/stylestar01?tag=stylestar01-20` (identical to what the app's own button
+  uses) rather than whatever a fresh share action generates. **This is now real, live promotion of the
+  Storefront — the first time it's been pushed to her actual audience, separate from her own in-app
+  building of it.**
 - 🚨 **AWIN — CHECKED BY HER 2026-09-15: UNDER ARMOUR DECLINED, Jackie Mack Designs and TERI JON still
   PENDING.** ⚠️ **NONE of the three would have fixed the price problem anyway** — activewear, jewellery
   and eveningwear respectively (her own correction, and the measurement upheld it) — so this decline
