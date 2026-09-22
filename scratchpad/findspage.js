@@ -321,6 +321,7 @@ const foot = async (route, screen) => {
          welds are font- and width-independent, which a hand-typed &nbsp; tuned
          to one screen would not be. */
       welds: document.querySelectorAll('#' + s + ' .dc-xlink .nb, #' + s + ' .dc-trend-link .nb').length,
+      crosslinks: document.querySelectorAll('#' + s + ' .dc-xlink, #' + s + ' .dc-trend-link').length,
       xlText: (xl || {}).textContent || '',
       xlGo: (xl && xl.getAttribute('onclick')) || '',
       xlColour: xl ? g(xl.querySelector('span')).color : '',
@@ -350,7 +351,12 @@ for (const [route, screen, label] of [['/finds', 's-finds', 'Amazon Finds'], ['/
   ok(label + ': and they are held apart so a thumb cannot bump the wrong one', f.gap >= 8, f.gap + 'px');
   ok(label + ': the trending line is no longer the smaller of the two — her ask',
      f.tlSize >= f.xlSize, f.tlSize + ' vs ' + f.xlSize);
-  ok(label + ': the arrows are welded to their words, so none can strand', f.welds === 2, String(f.welds));
+  // Pinned to the RULE (every closing crosslink's arrow is welded to its word,
+  // whatever the count), not a hardcoded 2 -- the count itself is free to grow
+  // (Finds added a third, the Storefront link, 2026-09-22) and that is not a
+  // regression. See CLAUDE.md's "pin the rule, never the string" lesson.
+  ok(label + ': the arrows are welded to their words, so none can strand',
+     f.welds === f.crosslinks && f.crosslinks >= 2, f.welds + ' welds / ' + f.crosslinks + ' crosslinks');
   ok(label + ': the closing heart is welded to her last words', f.subtitleWeld);
   /* 🚨 HER RULING 2026-09-11, AND IT DELIBERATELY BREAKS THE HOUSE PATTERN, WHICH
      IS EXACTLY WHY IT IS ASSERTED. Asked whether these two lines needed a period

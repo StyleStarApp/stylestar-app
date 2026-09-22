@@ -215,13 +215,26 @@ that makes any future number mean something.**
   her to tap "Visit site" on one of her new pins and say where it lands, before assuming step 7 is still
   fully open.**
   ✅ **DECIDED, 2026-09-22: YES — LINK, SCOPED TO `/finds` ONLY.** She asked to decide it; the narrower
-  middle ground above is the call, confirmed. ⚠️ **NOT BUILT YET — BLOCKED ON ONE THING: her actual
-  Storefront URL.** Claude does not have it and must never guess or fabricate a link like this — she
-  needs to paste the real `amazon.com/shop/...` (or whatever her Storefront's real address is) before
-  any code gets written. ▶ **The moment she sends it: add it to `/finds`'s closing section, near the
-  existing "Curious what's trending" / Edit cross-link, worded plainly (something like "See more of my
-  Amazon picks in my Storefront") and carrying `_AMZ_TAG` the same way every other Amazon link on this
-  page already does — never a bare, untagged link.**
+  middle ground above is the call, confirmed.
+  ✅✅ **BUILT AND LIVE, 2026-09-22 — SHE SENT THE REAL URL.** She shared her actual share link
+  (`a.co/d/0bZozPdX`), which resolved to the canonical `amazon.com/shop/stylestar01` — confirmed by
+  its redirect, not guessed. ⚠️ **HER SHARE LINK'S OWN `tag=` PARAM WAS NOT HER REAL `_AMZ_TAG`** (it
+  carried a different auto-generated social-share tag, `onamzstyl0e7f-20`) — stripped along with the
+  rest of the share-specific tracking (`ref=`, `social_share=`, `language=`), keeping only the bare
+  `amazon.com/shop/stylestar01` path as the source. ▶ **A new `<a id="findsStorefrontLink">` sits in
+  `/finds`'s closing section**, after the existing Edit and Trending crosslinks, reusing `.dc-trend-link`'s
+  teal style rather than new CSS: *"See more of my Amazon picks in my Storefront →."* **The href stays
+  RAW in markup** (same pattern as `_wlDecorateEdit()`'s Edit items) — `openFinds()` runs it through
+  `_affUrl()` at runtime so it always carries her CURRENT `_AMZ_TAG`, never a value frozen at build time,
+  and `_affUrl` never double-tags so reopening the page is safe. **`scratchpad/storefrontlink.mjs`, 9/9**,
+  proves the live tag, the `rel="sponsored noopener"`, the wording, no double-tag on reopen, and that the
+  existing two crosslinks were untouched. ⚠️ **A GENUINE "PIN THE RULE, NEVER THE STRING" HIT WHILE
+  BUILDING THIS:** `findspage.js` asserted the Finds/Edit closing section carries EXACTLY 2 welded arrows
+  — true before this link, and legitimately 3 on `/finds` now that it has a third crosslink. Rewritten to
+  assert every crosslink has a welded arrow, whatever the count, rather than a number she is now free to
+  grow — **102/102 clean after the fix.** Sitemap restamped (`sitemap-lastmod.js --write`) for the
+  content change. ⚠️ **SCOPED TO `/finds` ONLY, PER HER DECISION** — the app's main nav still never
+  mentions the Storefront, so the rest of Style Star does not read as "an Amazon shop."
 - 🚨 **AWIN — CHECKED BY HER 2026-09-15: UNDER ARMOUR DECLINED, Jackie Mack Designs and TERI JON still
   PENDING.** ⚠️ **NONE of the three would have fixed the price problem anyway** — activewear, jewellery
   and eveningwear respectively (her own correction, and the measurement upheld it) — so this decline
