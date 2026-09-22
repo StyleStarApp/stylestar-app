@@ -11,6 +11,127 @@ The standing rules, current decisions, store system and open threads all live in
 
 ---
 
+## ▶▶▶ WHERE WE LEFT OFF — 2026-09-18 (seventeenth session). ARCHIVED.
+🚨 **THIS BLOCK IS THE CURRENT TRUTH. Everything below it is standing reference — if a line further
+down contradicts this one, THIS ONE WINS.**
+📁 **The sixteenth-session entry moved to `CLAUDE-archive.md` in this commit, VERBATIM.** Nothing was
+deleted. Its still-open threads (Fiverr, Pinterest, Heather's $8,900 dress, her three named priorities)
+are carried forward below, untouched this session too.
+
+### 🎨 SESSION SEVENTEEN: THE SHARE-CARD REDESIGN, AND A REAL BUG IN THE STAR'S OWN ARTWORK
+⭐⭐ **`og-image.png` (the link-preview card for stylestar.app) WAS FULLY REDESIGNED AND IS LIVE.** She
+asked to make it more compelling than the old "Align your style. Shine your light." card. Ended on: the
+real crisp logo, headline **"Your Personal Stylist is Here."**, and a **"Style Advice · Shop · See
+What's Trending"** tagline row, on plain white, sized to fill the frame with the whole cluster balanced
+top-to-bottom. ⚠️ **An early WebSearch-based assumption that iMessage crops this image to a tight square
+turned out to be WRONG for at least this rendering path** — her own screenshot showed the real bubble
+much closer to the full 1200×630 aspect, with real horizontal room the "safe zone" math had been
+needlessly guarding. **Corrected mid-session: designed for the full canvas after that, not the
+assumed crop.**
+🚨🚨 **THE BIG FIND: THE STAR'S JAGGED EDGE WAS A REAL, PRE-EXISTING BUG IN THE RASTER ART ITSELF, NOT
+SOMETHING THIS SESSION'S COLOR WORK CAUSED.** She asked to brighten the star's dull, washed-out gold
+(pale cream fading to muted khaki, saturation never got past ~0.55) into a flat sunny yellow
+(**`#FFD500`**, no gradient). The first two color-remap attempts (an HSV shift, then a saturation-based
+smooth blend) both left a dotted/jagged ring right at the star's outline — because the color transform
+was recoloring pixels, but the underlying alpha mask itself had a genuinely serrated, stair-stepped
+stroke baked into the original file, invisible against the old pale gold and only exposed once the
+color got bright enough for the eye to see the stroke's own edge quality. ▶▶ **THE FIX: traced the
+star's real outline (10 vertices, via radial ray-casting against each file's own alpha mask), rebuilt it
+as a clean SVG polygon with a smooth stroke and the flat yellow fill, rendered with real anti-aliasing
+at 8x supersampling, and composited back in at the exact position/scale — slightly grown (~1.5%) so it
+fully covers the old jagged pixels with no clearing step needed.** Did the same for the small gold dot
+on the rail (also redrawn as a clean vector circle, same flat yellow).
+🚨 **A REAL, SUB-PIXEL BUG THIS CAUGHT: THE DOT WAS OFF THE RAIL'S OWN CENTERLINE BY 0.5–1PX IN EVERY
+FILE.** Invisible on the white backgrounds this session kept checking against; showed as a visible
+stepped notch where the rail met the ring once she viewed it at real size against black (the entrance
+overlay's transparent background, per her real screenshot). ▶ **Fixed by measuring the rail's own
+centerline independently of the dot** (sampled far from the dot, away from any interference) and
+recentering every dot exactly on it. ⚠️ **THE GENERAL LESSON: checking a color/shape fix only against a
+light background is not enough — a sub-pixel misalignment that white hides, black (or any real device
+screenshot) will not.**
+🚨🚨 **TWO REAL REGRESSIONS FOUND AND FIXED WHILE AUDITING "did we miss a spot":**
+1. **`logo-star-text.png`** (the Welcome Back screen's wordmark-only asset, paired with its own separate
+   inline SVG star) **got its BLACK TEXT wrongly recolored to yellow** by an over-broad flatten pass that
+   was meant only for gold pixels — this file has no real star content worth touching at all. **Fixed by
+   restoring it byte-for-byte to the original.** ⚠️ **Lesson: before batch-applying a color transform to
+   a list of files, check whether each file's role even involves the color being changed** — this one
+   didn't, and got swept in anyway.
+2. **The Style Star Card's (the shareable canvas-drawn card) hardcoded `LOGO_STAR` pixel coordinates**
+   (in `index.html`, used to surgically cut the drawn star out of `logo-tight.png` and replace it with a
+   shinier canvas-drawn one) **went stale the moment the star was regrown ~1.5%** — its own governing
+   comment already said "re-measure if this art ever changes," and it had. Re-ran the same
+   connected-component measurement and updated the constants; verified live (actually rendered the real
+   card via Playwright, not just read the code) that the cut is clean with no leftover fragment.
+✅ **BOTH FLATTEN-TO-YELLOW MISTAKES ALSO TAUGHT THE SAME LESSON TWICE: A HARD SATURATION THRESHOLD NEAR
+AN ANTI-ALIASED BOUNDARY BLEEDS.** The rail's own neutral gray (saturation ~0.07) sat just above one
+version of the "is this gold" cutoff and picked up a faint yellow tint on one side — fixed by raising the
+threshold with real margin, not by eyeballing it closer.
+✅ **EVERYTHING LANDED ON `main`, confirmed against the real files, not reconstructions**, including two
+fixes pushed straight to `main` without a branch-first round (the wordmark-recolor and the LOGO_STAR
+fixes) because they were correctness bugs, not design choices — the branch-first/wait-for-"go live"
+rule from session sixteen is for design decisions, not for undoing a mistake.
+▶ **SHE ALSO ASKED FOR TWO INSTAGRAM-READY EXPORTS, DELIVERED DIRECTLY TO HER, NOT COMMITTED TO THE
+REPO** (same convention as her Pinterest profile photo, per the standing note below): a star-only
+1080×1080 and a full-wordmark 1080×1080, both on white, sized and centered so the mark survives
+Instagram's circular crop with margin to spare. She has both; no further action unless she asks for a
+different size/crop.
+✅ **CHECKED 2026-09-18: the CJ/AWIN advertiser queue has been reviewed by her directly — see the
+money path section.** Both the UNTUCKit/Torrid AWIN applications were confirmed sent, and she's
+checked every dashboard herself: everything is still genuinely Pending, no new approvals or declines.
+
+### 📁 PRIOR SESSION SIXTEEN (now archived) — WHAT IT DID, KEPT SHORT SINCE THE DETAIL MOVED
+The logo rebuild that had been sitting on `main` unused finally got wired in: `logo-star-gray.png` to the
+Discover-page star, then the crisp `logo-star.png` rolled out everywhere else (menu, header,
+FAQ/Privacy/Terms, entrance overlay) after she picked gray rail over gold. Caught and fixed a real
+pre-existing layout bug (the menu chip's shadow falling on the FAQ logo) along the way. Full detail,
+including the four sandbox/Playwright proxy lessons from that session, is in `CLAUDE-archive.md`.
+
+### 🎨 OPEN THREAD, LIVE: FIVERR INSTAGRAM CONTENT — ONE REVISION ROUND SENT, NOT YET BACK
+A single consolidated, code-verified brief (real fonts, real gold-gradient/teal/pink values, both real
+logo file URLs, a concrete photography direction) was sent to Fiverr 2026-09-15 after their first round
+came back off-brand. ▶ **RESURFACE NEXT SESSION: ask whether the revised posts came back, and if she's
+seen them, whether they actually match the brief.**
+
+### 🎨🎨 PINTEREST — LIVE OPERATIONAL STATUS, NEVER ARCHIVES
+✅✅ **Business account live** (`StyleStarbyCatherine`, Content creator type), domain `stylestar.app`
+claimed and verified, profile photo a corrected filled-star mark (not committed to the repo — rebuild
+from `logo-tight.png` + the real star polygon in `index.html` if it's ever needed again). ✅✅ **HER FIRST
+PIN IS LIVE** — board **"Personal Style"** (not "Style Tips," which was discussed but never used). A real
+content pin: her actual first three quiz questions (Classic/Trendy, Natural/Glam, Preppy/Edgy, from the
+real `questions` array), styled with the quiz's real chrome frame and gold-thumb slider CSS, headline
+*"Let's Discover Your Style,"* reveal line naming her real features (*"your full Style Portrait, plus a
+free stylist"*), CTA styled like the app's real dark/gold Continue button. Destination link
+`https://stylestar.app` (there is no dedicated `/quiz` route — the home page itself carries the quiz CTA).
+Design canvas: https://claude.ai/artifact/WXN4HwP4PaH2SFssKGpVaS — **export at 2000×3000 (2x), her
+settled call.** ▶ **NEXT: ask whether she wants a second pin (another quiz spectrum, a Style Portrait
+teaser, an Amazon Finds piece) — don't re-explain Pinterest mechanics she has now already done herself.**
+⭐ **A related, still-parked thread:** five on-brand Instagram templates (real fonts/colors/logo, no
+invented product photography) — https://claude.ai/artifact/CW7xEo5a1aLm5bf3n8hWYb. She said *"I see the
+idea there"* and moved to Pinterest first. ▶ **ASK: has she looked at the templates again?**
+
+### 🚨 OPEN THREAD, UNCHANGED THIS SESSION: THE HEATHER / $8,900 DRESS QUESTION
+🚨 **A REAL USER (HEATHER, A FRIEND) REPORTED AN $8,900 DRESS RECOMMENDATION AND ASKED IF THE DECIMAL WAS
+WRONG.** ⚠️ **STILL UNCONFIRMED — Heather gave no further detail (no screenshot, no exact phrase searched,
+no link), and Cath said so plainly.** Cath's own guess: probably a Mytheresa item — plausible, since her
+own recorded Mytheresa prices already span $570–$1,595 for BAGS AND A BELT (see Star of the Week
+schedule), so a real formal dress there reaching $8,900 is entirely believable. **Most likely sharpens
+an ALREADY-TRACKED gap rather than a new one: `verifyPrice`/`max_price` only constrains price when SHE
+states a figure — an ordinary ask with no stated budget still has no ceiling at all.** Three options
+named, none decided, none to be started without her:
+1. A default price ceiling even when nobody states a budget.
+2. An honest "why is this shown" / outlier label on a price far outside the norm, rather than hiding it.
+3. Leave it as the accepted cost of full luxury-store browsing.
+▶ **IF MORE DETAIL FROM HEATHER EVER SURFACES, chase that before building anything.**
+
+### ⭐⭐⭐ HER THREE NAMED PRIORITIES, UNCHANGED THIS SESSION — SHE HAS NOT SEQUENCED THEM YET
+Her own words: *"I still want to work on fixing the searches... I want to get more traffic and more
+affiliates."* ▶▶ **SHE ASKED TO PAUSE AND ORGANIZE HER OWN THOUGHTS — do not launch into any of the
+three unprompted.** Open by asking how she wants to sequence them; a plain status recap of each is ready
+the moment she wants it: **searches** — the Heather thread above plus the standing search-quality/
+quality-gate threads; **traffic** — Pinterest's first pin plus the stalled Fiverr/Instagram threads;
+**affiliates** — the CJ/AWIN pending queues (she asked to be reminded this session, see above) and the
+Amazon 180-day clock, all in the money-path section.
+
 ## ▶▶▶ WHERE WE LEFT OFF — 2026-09-18 (sixteenth session). ARCHIVED.
 🚨 **THIS BLOCK IS THE CURRENT TRUTH. Everything below it is standing reference — if a line further
 down contradicts this one, THIS ONE WINS.**
