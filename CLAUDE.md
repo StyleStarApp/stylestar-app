@@ -146,9 +146,15 @@ that makes any future number mean something.**
   note.** ⚠️ **So the Influencer Program step is GONE — she can set up her Storefront directly from her
   own account today, no separate application.** The plan artifact is updated to match:
   **https://claude.ai/artifact/Y8nANywZfPbbN35CZmhAyN** (same document, new link — step 1 now reads "Set
-  up your Storefront directly"). ▶ **STILL HERS TO DECIDE WHETHER TO START — she has not said go yet,
-  only sent the screenshot.** Resurface by asking whether she wants to begin now that it's simpler, not
-  by re-explaining the plan.
+  up your Storefront directly").
+  ✅✅ **UPDATED 2026-09-22 — SHE HAS STARTED, FOR REAL.** Her words: *"I have added lots of things to
+  amazon storefront and also pinned them on pinterest."* ▶▶ **THE PLAN MOVES FROM "NOT STARTED" TO
+  "UNDERWAY."** Steps 1 (Storefront setup), 2 (Collections/items) and 5 (pins) are in motion, her own
+  pace, unprompted. **TWO THINGS WORTH CONFIRMING WITH HER NEXT, since they're easy to skip and matter:**
+  (a) the required Associates disclosure sentence on the Storefront bio AND on every pin description
+  (step 6) — Amazon and Pinterest both require it, not just this plan; (b) cross-linking the bios
+  (step 7) — Pinterest bio → Storefront, Instagram bio → Storefront — since that's what turns two
+  isolated posts into an actual funnel. ▶ **Ask her directly rather than assuming either is done.**
 - 🚨 **AWIN — CHECKED BY HER 2026-09-15: UNDER ARMOUR DECLINED, Jackie Mack Designs and TERI JON still
   PENDING.** ⚠️ **NONE of the three would have fixed the price problem anyway** — activewear, jewellery
   and eveningwear respectively (her own correction, and the measurement upheld it) — so this decline
