@@ -130,7 +130,7 @@ first, THEN affiliates" — is satisfied. Nothing legal blocks the money path an
   the year between a final Schedule C and everything under the LLC. **And ask about startup expenses** —
   the LLC is running at a loss and that is the tax-relevant part this year, not the $27.
 - 🚨🚨 **INDIE LAW — A REAL, DOCUMENTED PATTERN OF FIVE ERRORS, PLUS A BROKEN PROMISE ON COMMUNICATION.
-  UPDATED 2026-09-29, LIVE OPERATIONAL STATUS, NEVER ARCHIVES.** The 2026-08-05 "unresolved, nobody
+  UPDATED 2026-09-28, LIVE OPERATIONAL STATUS, NEVER ARCHIVES.** The 2026-08-05 "unresolved, nobody
   knows" framing above is STALE — replaced with the full, current picture:
   1. **The original Articles of Organization (filed July 27, 2026) misspelled her middle name** —
      "Catherine Bail Ellspermann" instead of "Bailey," in Articles III and IV, though both signature
@@ -163,7 +163,7 @@ first, THEN affiliates" — is satisfied. Nothing legal blocks the money path an
   ⚠️ **HER SON (a 2nd-year law student) said this pattern could rise to a state-bar complaint — logged,
   never acted on by Claude.** Whether it's bar-complaint-worthy is a real legal judgment for her or an
   independent attorney, never Claude's to weigh in on.
-  ✅✅ **SHE SENT A FULL, DOCUMENTED EMAIL TO AMBER AND ALMIRA, 2026-09-29**, naming all five errors plus
+  ✅✅ **SHE SENT A FULL, DOCUMENTED EMAIL TO AMBER AND ALMIRA, 2026-09-28**, naming all five errors plus
   the communication breakdown, and asking for: (1) the Member-listing correction filed, with written
   confirmation and a copy of the filed document; (2) an explanation of what's changing to prevent
   further errors; (3) consistently signed, named updates going forward, as already promised once; (4) a
