@@ -254,7 +254,7 @@
   ▶ RESTAMP AFTER ANY CSS EDIT:  node scripts/css-version.js --write
   ⚠️ DO NOT hand-type or "tidy" the value — it is derived from the file, and
   scratchpad/copy.js fails if it is stale. -->
-  <link rel="stylesheet" href="/styles.css?v=ebbd60501b">
+  <link rel="stylesheet" href="/styles.css?v=926a5725e1">
 </head>
 <body>
 <!-- build: quiz glow-up (chrome frame, gold knob, gold button, gold progress) 2026-07-11 r2 -->
@@ -618,6 +618,32 @@
         </div>
       </div>
     </div>
+
+    <!-- PIECE 2.4: "From My Edit" — her own pieces, with photographs, right in
+         the scroll after the quiz (2026-09-28, her decision).
+         ▶ WHY IT IS HERE AT ALL: before this, the whole post-quiz scroll was
+           text and icons — not one product photograph anywhere on it. A woman
+           finished her portrait, the most excited she will ever be, and met a
+           menu. Real tester feedback asked to "immediately see lots and lots of
+           visuals". This is that, built from pieces that need no search, cost
+           nothing to show and are already watched by the Saturday link check.
+         🚨🚨 THE HEADING MAY NEVER CLAIM THE QUIZ CHOSE THESE. Her catch, and
+           she was right: a first draft said "Styled For You" above pieces she
+           picked months ago, in Edit order, with nothing personalised about
+           them. That is the same fault as claiming a size or colour we never
+           verified — see the rule ledger. The copy states only what is true:
+           SHE picked them. ⚠️ If this panel is ever genuinely personalised, it
+           needs real matching underneath it and a SEPARATE honest label; do not
+           quietly re-word this one.
+         ⚠️ HER PLACEMENT RULING, AND THE REASON, so it is not "tidied" later:
+           after the Style Signature, BEFORE the Style Star Card. The portrait
+           and signature read as one whole, and the Card's ASK — share this with
+           a friend — comes only after she has seen something beautiful. Asking
+           for a share before that is asking too early.
+         ⚠️ Rendered from the Edit's OWN markup at runtime, never a second list,
+           so every piece she adds to the Edit appears here for free. Same
+           pattern as _renderEditTeaser() and _wlDecorateEdit(). -->
+    <div id="resEditGallery"></div>
 
     <!-- PIECE 2.5: her Style Star card on the striped curtain panel.
          (It REPLACED the Style Constellation 2026-08-22, her call, after the one
@@ -3743,6 +3769,14 @@ function show(id,skipHistory){
   try{_syncHeartTip();}catch(e){}
   // The portrait's "what's next → refine" strip stays honest the same way.
   if(id==='s-res')try{_syncRefineHint();}catch(e){}
+  /* "From My Edit" is built from the Edit's own markup at runtime, so it is
+     refilled HERE rather than in showResult() — the rule in the comment just
+     below, and the reason it is not at the call site: the results screen is
+     also reached by /results, by resBack() and by loadSaved(), and a rule that
+     must hold on every route belongs at the choke point. Re-rendering on every
+     visit is also what keeps the hrefs right after a trip to the Edit, since
+     _wlDecorateEdit() rewrites those and _affUrl never double-wraps. */
+  if(id==='s-res')try{_renderEditGallery();}catch(e){}
   // ⚠️⚠️ A SCREEN WHOSE CONTENT IS BUILT AT RUNTIME MUST BE REFILLED HERE,
   // NOT BY ITS OWN ENTRY FUNCTION (2026-09-01, the homepage trim). On a
   // trimmed route the screen does not exist yet when the entry function
@@ -15089,6 +15123,70 @@ function _renderEditTeaser(){
   el.classList.add('on');
   var _scrollEl=document.getElementById('wbEditTeaserScroll'),_hintEl=document.getElementById('wbEditTeaserSwipe');
   _swipeHint(_scrollEl,_hintEl);_nudgeScroll(_scrollEl);
+}
+/* ── "FROM MY EDIT" ON THE QUIZ RESULTS (2026-09-28, her decision) ──────────
+   Her own pieces, with photographs, in the scroll straight after the Style
+   Signature. Read the long note above <div id="resEditGallery"> for WHY it
+   exists and why the heading may never claim the quiz chose any of it.
+
+   🚨 THE COPY IS HERS AND IT IS LOAD-BEARING, NOT DECORATION. She chose it by
+      looking at three rendered options: "From My Edit" over "What I am
+      recommending to my clients right now." ▶ It states only what is true —
+      these are HER picks — and the second line does the work no algorithm can:
+      it invokes twenty years of real clients. Do not "warm it up", do not make
+      it sound personalised, and do not paraphrase it fuller. Her standing rule.
+
+   ⚠️ ORDER IS THE EDIT'S OWN ORDER, DELIBERATELY. Her 2026-09-10 ruling put the
+      shops that pay her first on that page, and this panel inherits it rather
+      than re-sorting. She was asked about store repetition on this surface and
+      ruled it a non-issue ("I'm not concerned about store repetition here"), so
+      no variety shuffle is applied — that rule still governs _shopRules and the
+      compare carousel, where it was actually made.
+
+   ⚠️ ONE PHOTO PER CARD, even for a px2 STACKED PAIR. Same call _wlEditItems()
+      makes for a wishlist thumbnail and for the same reason: a small grid cell
+      is not the place to reproduce a two-view stack built for a much bigger
+      card. The strip on Welcome Back is wider, which is why IT renders stacks. */
+var RES_EDIT_MAX=10;   // a preview, with a real door to the rest; safe to turn
+function _renderEditGallery(){
+  var el=document.getElementById('resEditGallery');if(!el)return;
+  var items=_wlEditItems().filter(function(it){
+    return it.el.closest('#s-dream') && it.image;   // Edit only, and only with a photograph
+  }).slice(0,RES_EDIT_MAX);
+  if(!items.length){el.classList.remove('on');el.innerHTML='';return;}
+  el.innerHTML='<div class="p2 fme-wrap"><div class="board"><span class="lacq"></span>'
+    +'<span class="sweep"></span><div class="page">'
+    +'<span class="stud tl"></span><span class="stud tr"></span>'
+    +'<span class="stud bl"></span><span class="stud br"></span>'
+    +'<div class="eng si fme-eng"><div class="eng-row"><span class="eng-rule l"></span>'
+    +'<span class="eng-lbl">From My Edit</span><span class="eng-rule r"></span></div></div>'
+    +'<div class="fme-sub">What I am recommending to my clients right now.</div>'
+    +'<div class="fme-grid">'
+    +items.map(function(it){
+      /* ⚠️ _affUrl AT RENDER TIME, NEVER A HARD-CODED AFFILIATE LINK. `it.url` is
+         read RAW off the Edit's markup; _wlDecorateEdit() rewrites those hrefs
+         only once she OPENS the Edit, so a woman who lands here first would get
+         an untagged link that earns nothing. _affUrl never double-wraps. */
+      return '<div class="fme-card">'
+        +'<a class="fme-go" href="'+_esc(_affUrl(it.url))+'" target="_blank" rel="sponsored noopener">'
+        +'<span class="fme-px"><img src="'+_esc(it.image)+'" alt="'+_esc(it.name)+'"'
+        +' loading="lazy" decoding="async"'
+        /* a photo that 404s takes its own card with it rather than leaving a hole */
+        +' onerror="var c=this.closest(\'.fme-card\');if(c)c.remove()"></span>'
+        +'<span class="fme-n">'+_esc(it.name)+'</span>'
+        +'<span class="fme-m">'+_esc(it.store||'')+'</span>'
+        +'<span class="fme-p">'+_esc(it.price||'')+'</span></a>'
+        +'<div class="fme-act">'+_wlSaveBtn(it)+'</div></div>';
+    }).join('')
+    +'</div>'
+    +'<button class="fme-all" onclick="showDream()">See the full Edit'
+    +'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h13"/><path d="M12 6.5 18.5 12 12 17.5"/></svg></button>'
+    /* the Edit's own disclosure wording, because this IS the Edit's pieces */
+    +'<div class="fme-disc">Nothing here is chosen by AI. Every piece is personally '
+    +'selected by Catherine. Some links may earn a commission.</div>'
+    +'</div></div></div>';
+  el.classList.add('on');
+  try{_wlSyncButtons();}catch(e){}
 }
 // ⭐ THE SAME STAR, ON THE DISCOVERY PAGE — her idea 2026-08-21. Read the CSS
 // note at #dsStar for why it exists, why it sits after the founder line, and why

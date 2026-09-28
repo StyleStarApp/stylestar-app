@@ -3184,6 +3184,54 @@ body.card-fb{padding:0}
   #wbEditTeaser .wet-card,#wbEditTeaser .wet-card>img,#wbEditTeaser .wet-card>.wet-px{flex-basis:98px;width:98px}
   #wbEditTeaser .wet-all{flex-basis:84px}
 }
+
+/* ══ "FROM MY EDIT" ON THE QUIZ RESULTS — #resEditGallery (2026-09-28) ══════
+   The second surface that renders the Edit's photographs, and it sits beside
+   #wbEditTeaser on purpose: when one of them needs a photo rule changed, the
+   other almost always does too.
+   🚨 THE HEADING MAY NEVER CLAIM THE QUIZ CHOSE THESE PIECES. Her catch this
+      session, and it is the same family as every never-claim-what-you-cannot-
+      verify rule in CLAUDE.md. The wording is hers, chosen from three rendered
+      options; the JS comment above _renderEditGallery() holds the reasoning.
+   ⚠️ PHOTOS ARE `contain`, NEVER CROPPED — identical reasoning to #wbEditTeaser
+      right above: the Edit's own cards are hand-tuned per item with pxPos for
+      the EDIT's frame, and this grid is a different shape, so a crop tuned
+      there would cut a garment here. A cream band is the accepted cost.
+   ⚠️ IT REUSES `.p2`/`.board`/`.page` RATHER THAN A NEW PANEL, so it inherits
+      the portrait screen's own clipboard exactly. Do not fork those styles. */
+#resEditGallery{display:none}
+#resEditGallery.on{display:block}
+#resEditGallery .fme-eng{margin:0 0 14px}
+#resEditGallery .fme-sub{font-family:Lora,serif;font-size:13.5px;line-height:1.5;color:#4a463e;
+  text-align:center;margin:-4px auto 18px;max-width:292px;text-wrap:balance}
+#resEditGallery .fme-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px 11px}
+#resEditGallery .fme-card{display:flex;flex-direction:column}
+#resEditGallery .fme-go{display:block;text-decoration:none;color:inherit}
+#resEditGallery .fme-px{display:block;width:100%;aspect-ratio:3/4;background:#F5EFE2;
+  border:1px solid #E2D7BE;overflow:hidden}
+#resEditGallery .fme-px img{width:100%;height:100%;object-fit:contain;object-position:center;display:block}
+#resEditGallery .fme-n{font-family:'DM Serif Display',serif;font-size:13px;line-height:1.26;
+  color:#1a1a1a;margin:8px 0 3px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+#resEditGallery .fme-m{font:400 9.5px/1.3 'Jost',sans-serif;letter-spacing:.09em;
+  text-transform:uppercase;color:#6e6e6e;display:block}
+#resEditGallery .fme-p{font:500 11.5px/1 'Jost',sans-serif;color:#26221c;display:block;margin-top:3px}
+/* ⚠️ THE SAVE CONTROL IS THE APP'S OWN `_wlSaveBtn`, KEPT WITH ITS WORD "Save"
+   AND SAT BELOW THE PHOTO RATHER THAN FLOATING OVER IT. Her mother's 2026-07-26
+   lesson: a control she cannot read is not a control — which is also why the
+   heart on a product card has always carried the word. ⚠️ The padding IS the
+   tap target; tighten the margins around it, never the padding inside. */
+#resEditGallery .fme-act{margin-top:7px}
+#resEditGallery .fme-act .wl-save{padding:7px 11px;border-color:#E6D6A8}
+#resEditGallery .fme-all{display:flex;align-items:center;justify-content:center;gap:6px;
+  margin:22px auto 0;font:500 11.5px/1 'Jost',sans-serif;letter-spacing:.1em;text-transform:uppercase;
+  color:#26221c;background:#ECD9A4;border:1px solid #C9A44C;border-radius:999px;
+  padding:13px 22px;max-width:252px;width:100%;cursor:pointer;-webkit-tap-highlight-color:transparent}
+#resEditGallery .fme-all svg{width:15px;height:15px;flex:0 0 auto}
+#resEditGallery .fme-disc{font-size:11px;line-height:1.45;color:#6e6e6e;text-align:center;margin-top:14px}
+@media(max-width:374px){
+  #resEditGallery .fme-grid{gap:13px 9px}
+  #resEditGallery .fme-n{font-size:12px}
+}
 /* ⭐ THE STAR OF THE WEEK ON THE DISCOVERY PAGE — her idea, 2026-08-21:
    "I am wondering if the Discovery page, for first time users, before she even
    takes the quiz, could be able to get a peak at the star of the week."

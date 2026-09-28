@@ -92,7 +92,24 @@ const anchors = allOutbound.filter(a => !/instagram\.com/.test(a));
 //   for a woman to leave. ▶ SO: when this goes red, FIND the new anchor, CHECK
 //   it is sponsored + wrapped, then bump the number with a line saying which
 //   template it was. Never derive it away.
-const TEMPLATES = 15;
+// 15 → 18, FOUND 2026-09-28. THREE at once, and two of them were PRE-EXISTING:
+//   this went red while adding the 18th, and measuring HEAD first showed it was
+//   ALREADY red at 17. ▶ That is the census doing its job late rather than not
+//   at all — and the reason to measure the baseline before bumping a tripwire,
+//   instead of assuming your own change caused the whole gap.
+// ▶ THE 16TH AND 17TH are `.dc-store-btn.is-top` and `.dc-store-btn.is-bottom`,
+//   the two Amazon Storefront buttons added to /finds on 2026-09-22 (her
+//   decision to link the Storefront from that page only). Both verified here:
+//   rel="sponsored noopener" in the markup, href left RAW and run through
+//   _affUrl() by openFinds() at runtime so it always carries her current
+//   _AMZ_TAG. Nobody bumped this number when they shipped.
+// ▶ THE 18TH is `.fme-go`, built by `_renderEditGallery()` — the "From My Edit"
+//   grid on the quiz results (2026-09-28, her decision). Verified before
+//   bumping: rel="sponsored noopener", and its href goes through _affUrl() at
+//   RENDER time rather than being hardcoded, because a woman who lands on the
+//   portrait before ever opening the Edit would otherwise get an untagged link
+//   that earns nothing. `scratchpad/fromedit.mjs` §3 and §4 pin both halves.
+const TEMPLATES = 18;
 const EDIT_N = (HTML.match(/<a class="dc-item-btn"/g) || []).length;
 ok('found the full set of outbound PRODUCT anchors (every Edit link + ' + TEMPLATES + ' templates)',
    anchors.length === EDIT_N + TEMPLATES, 'got ' + anchors.length + ' with ' + EDIT_N + ' Edit links');
