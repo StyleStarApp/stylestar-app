@@ -129,11 +129,53 @@ first, THEN affiliates" — is satisfied. Nothing legal blocks the money path an
 - ▶ **TELL HER ACCOUNTANT ONE DATE:** the day she stopped operating as Your Fashion Friend. It splits
   the year between a final Schedule C and everything under the LLC. **And ask about startup expenses** —
   the LLC is running at a loss and that is the tax-relevant part this year, not the $27.
-- ⚠️ **INDIE LAW — UNRESOLVED AND WORTH CHASING.** A combined 2-ask reply was drafted for her on
-  2026-08-05 and **nobody knows whether she sent it or what came back**: (a) her middle name is
-  misspelled in the filed Articles — **"CATHERINE BAIL ELLSPERMANN"** in Articles III + IV while both
-  signature lines correctly read BAILEY · (b) the **Operating Agreement was delivered INCOMPLETE** —
-  blank effective date, `#Registered Agent Name#` placeholder still in §1.2, Exhibit A unconfirmed.
+- 🚨🚨 **INDIE LAW — A REAL, DOCUMENTED PATTERN OF FIVE ERRORS, PLUS A BROKEN PROMISE ON COMMUNICATION.
+  UPDATED 2026-09-29, LIVE OPERATIONAL STATUS, NEVER ARCHIVES.** The 2026-08-05 "unresolved, nobody
+  knows" framing above is STALE — replaced with the full, current picture:
+  1. **The original Articles of Organization (filed July 27, 2026) misspelled her middle name** —
+     "Catherine Bail Ellspermann" instead of "Bailey," in Articles III and IV, though both signature
+     lines correctly read Bailey.
+  2. **The EIN was issued August 4, 2026, but she wasn't told until August 17** — she found out
+     incidentally, despite being told her account was being monitored closely.
+  3. **Class 045 (personal stylist services) was missing from BOTH trademark applications**, despite
+     being requested June 25, confirmed in writing June 30, and paid for July 2 ($2,100 for 3 classes
+     × 2 marks). The drafts sent for her signature August 17 only carried 2 classes, $700 each — **she
+     caught it herself by dividing the quote by the unit price** ($2,100 ÷ $350 = six filings, the
+     drafts covered four) and refused to sign, since a class can never be ADDED to a TM application
+     after filing, only removed. Corrected 3-class applications arrived within 24 hours; both filed
+     2026-08-20 with all three classes (035/042/045), serials 50060992 (word) and 50060998 (logo).
+  4. **The Operating Agreement was first delivered with an unfilled template placeholder**
+     (`#Registered Agent Name#`) still in §1.2, in place of the registered agent's name. (Later
+     completed and signed 2026-08-18 — this specific document is now clean.)
+  5. **The Statement of Correction (Bail → Bailey), filed 2026-08-25, only fixed HALF the typo.**
+     ✅ **VERIFIED DIRECTLY ON SUNBIZ, 2026-09-28**: the Registered Agent line now correctly reads
+     "Ellspermann, Catherine Bailey," but the Authorized Member (AMBR) listing still reads "Catherine
+     Bail" — the same underlying typo, left standing in one of its two spots in the filed record.
+  ▶ **EVERY ONE OF THESE FIVE WAS CAUGHT BY HER, NOT REPORTED TO HER BY THE FIRM.** That consistency,
+  not any single filing, is the real problem.
+  🚨 **A SIXTH, SEPARATE ISSUE — COMMUNICATION, NOT A DOCUMENT — AND IT WAS ALREADY ESCALATED ONCE
+  BEFORE.** On 2026-08-25 an email signed only "Warmly, Indie Client Care Team" (no name) directly
+  contradicted one Almira had sent the day before, and separately contradicted what Amber had told her
+  by phone (that Almira personally was handling her file). Cath sent a firmer email 2026-08-28 asking
+  for named, signed updates going forward; Almira replied in writing: *"All communications will be
+  coming from me."* **That has not held** — the Sept 28 Sunbiz discovery (item 5 above) is the same
+  "found it myself" pattern continuing, a month after that promise.
+  ⚠️ **HER SON (a 2nd-year law student) said this pattern could rise to a state-bar complaint — logged,
+  never acted on by Claude.** Whether it's bar-complaint-worthy is a real legal judgment for her or an
+  independent attorney, never Claude's to weigh in on.
+  ✅✅ **SHE SENT A FULL, DOCUMENTED EMAIL TO AMBER AND ALMIRA, 2026-09-29**, naming all five errors plus
+  the communication breakdown, and asking for: (1) the Member-listing correction filed, with written
+  confirmation and a copy of the filed document; (2) an explanation of what's changing to prevent
+  further errors; (3) consistently signed, named updates going forward, as already promised once; (4) a
+  **$500 service credit** for the repeated mistakes and her own time spent catching them.
+  ▶ **NEXT SESSION: ask whether Indie Law replied, and to what.** A written, specific reply (the
+  correction actually filed, a real explanation, consistently signed updates from here) is a real fix.
+  Another vague or unsigned reply, or silence, is the same pattern continuing — at that point it's worth
+  revisiting the "switch firms" question plainly with her, not deciding it for her.
+  ⚠️ **Total paid to Indie Law to date: $6,229** ($3,999 TM Max service fee + $130 FL LLC filing +
+  $2,100 USPTO filing fees) — none of the five errors actually cost her money in the end (all caught
+  before real harm), which is why the $500 ask is framed as compensation for her time and the repeated
+  pattern, not a specific dollar loss.
   ▶ **Banks often want the operating agreement, and she now HAS the bank account — so ask whether they
   accepted it as-is, which tells us how urgent the fix is.**
 - ▶ **WATCH FOR THE TRADEMARK "FINAL ACTION STEPS" EMAIL.** It will need her signature/declaration and
