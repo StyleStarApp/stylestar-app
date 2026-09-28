@@ -2742,6 +2742,34 @@ costs her nothing and is strictly more informative than watching the shipped-ite
 ▶ **IF SHE TRIES IT AND IT SUCCEEDS:** that is the trigger to come back and actually scope the Amazon-
 photos build with her (which page(s) get them, how a failed photo call degrades — never inventing one,
 same honesty floor as everywhere else in this app). **STILL NOT STARTED, STILL HERS TO GREENLIGHT.**
+🚨🚨 **THE REAL TEST WAS ACTUALLY RUN, SAME DAY 2026-09-28 — A LIVE RESULT, NOT A GUESS: STILL
+`AssociateNotEligible`.** She shared her real Access Key ID / Secret Access Key for the existing
+"Catherine-StyleStar" credential (v3.1) in-session; a one-time script got a real OAuth token (200, via
+`POST https://api.amazon.com/auth/o2/token`, `grant_type:client_credentials`, `scope:creatorsapi::default`
+— confirms the credential itself is valid) and then called the real
+`POST https://creatorsapi.amazon/catalog/v1/getItems` endpoint with her real `partnerTag`
+(`stylestar01-20`). ⚠️ **FIRST ATTEMPT'S 400 (a `resources` enum typo on Claude's side, "ItemInfo.Title"
+vs the real `itemInfo.title`) WAS WRONGLY READ AS GOOD NEWS AND HAD TO BE CORRECTED TO HER — validation
+happens BEFORE the eligibility check, so a 400 proves nothing about eligibility.** The corrected call,
+with valid parameters, got a clean **403 `AssociateNotEligible`: "Your account does not currently meet
+the eligibility requirements."** ▶▶ **THIS IS CONSISTENT WITH "NOT YET REVIEWED", NOT NECESSARILY "NO"**
+— the Creators API's own FAQ says review can take up to 48 hours after crossing the bar, and she only
+hit 10 shipped items the same day this test ran. **NEXT: RE-RUN THE IDENTICAL TEST in 24-48 hours** (the
+credential is already known-good, so a retest is just re-running the same two calls, seconds of work) —
+if it is STILL `AssociateNotEligible` after that window, that is Amazon's real answer for now, not a
+final closed door, since her shipped-items count is still climbing. **The credential was used only for
+this one live test, was never written to the repo or committed anywhere, and is not stored by this
+session anywhere durable.**
+▶ **TECHNICAL NOTE WORTH KEEPING FOR WHEN THE BUILD ACTUALLY HAPPENS, so it never has to be re-derived:
+the Creators API uses OAuth2 client_credentials (Login with Amazon), NOT the old PA-API's AWS SigV4
+signing.** Token endpoint `https://api.amazon.com/auth/o2/token` (v3.1 = US/CA/MX/BR), body
+`{grant_type,client_id,client_secret,scope:"creatorsapi::default"}`, token valid 3600s. Catalog calls go
+to `https://creatorsapi.amazon/catalog/v1/getItems` (also `searchItems`, `getVariations`,
+`getBrowseNodes`) with `Authorization: Bearer <token>`, `x-marketplace: www.amazon.com`, and a body
+carrying `itemIds`/`itemIdType`/`marketplace`/`partnerTag`/`resources` (resources is a large closed enum,
+camelCase, e.g. `itemInfo.title`, `images.primary.medium`, `offersV2.listings.price` — not the old
+PascalCase PA-API resource names). ⚠️ **The old AWS Access Key/Secret Key PA-API credentials will NOT
+work here at all — this is a genuinely different auth system, not just a new key.**
 💵💵 **EARNINGS TO DATE, HER FIGURE 2026-09-08: $27 IN THE RAKUTEN DASHBOARD. EVERYTHING ELSE HAS BEEN
 AN EXPENSE.** ▶ **Recorded because it is live operational status and because it is the honest baseline
 that makes any future number mean something.** ⚠️ **It is also the whole argument in one line: the app
