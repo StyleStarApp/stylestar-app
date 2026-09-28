@@ -2725,6 +2725,23 @@ items proxy. ⚠️ **HER SECRET KEY WAS VISIBLE IN A SCREENSHOT SHE SENT THIS S
 gently, not urgent; Amazon supports a second credential per app for rotation if she ever wants a clean
 one. **Nothing in the app's code uses these credentials yet — still fully unbuilt**, per the standing
 note above: confirm real eligibility first, THEN scope the actual photo-fetch build with her.
+🚨🚨 **UPDATED 2026-09-28 — REAL DASHBOARD SCREENSHOT, AND THIS IS THE MOMENT THE 09-22 NOTE ABOVE WAS
+WAITING FOR: SHE HAS CROSSED 10 SHIPPED.** "Summary for This Month," last updated Sep 28 2026: **Total
+Items Shipped 10 · Total Earnings $6.89 · Total Ordered Items 25 · Clicks 338 · Conversion 7.40%.**
+▶▶ **6→10 shipped, $4.47→$6.89, 228→338 clicks, conversion back up 6.14%→7.40% — real, continued
+growth, and by the best proxy visible from here she is now AT the 10-in-30-days bar the Creators API
+page names, not still short of it.** ⚠️ **SAME CAVEAT AS BEFORE, NOT DROPPED: "items shipped this
+month" is a proxy for "qualifying sales in a trailing 30 days," not a guaranteed match to Amazon's own
+rolling window** — being at 10 on this screen is a strong sign, not a certified pass.
+▶ **SO THIS IS HER MOMENT TO ACTUALLY TRY THE REAL CALL, PER THE STANDING PLAN:** she already has the
+"Catherine-StyleStar" app and an Active credential from 2026-09-22, sitting unused — she can go back to
+the Creators API page and attempt a real credential/API call now, which will report her ACTUAL
+eligibility (`AssociateNotEligible` if not, real access if so) rather than this session inferring it
+from a dashboard proxy. **Nothing on the code side needs to happen before she tries this — trying it
+costs her nothing and is strictly more informative than watching the shipped-items number.**
+▶ **IF SHE TRIES IT AND IT SUCCEEDS:** that is the trigger to come back and actually scope the Amazon-
+photos build with her (which page(s) get them, how a failed photo call degrades — never inventing one,
+same honesty floor as everywhere else in this app). **STILL NOT STARTED, STILL HERS TO GREENLIGHT.**
 💵💵 **EARNINGS TO DATE, HER FIGURE 2026-09-08: $27 IN THE RAKUTEN DASHBOARD. EVERYTHING ELSE HAS BEEN
 AN EXPENSE.** ▶ **Recorded because it is live operational status and because it is the honest baseline
 that makes any future number mean something.** ⚠️ **It is also the whole argument in one line: the app
