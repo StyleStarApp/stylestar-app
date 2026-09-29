@@ -197,6 +197,10 @@ const look = await page.evaluate(() => {
     rule: g(document.querySelector('#s-finds .dc-logo'), '::after').backgroundColor,
     xlink: g(document.querySelector('#s-finds .dc-xlink span')).color,
     editXlink: g(document.querySelector('#s-dream .dc-xlink span')).color,
+    xlinkFont: g(document.querySelector('#s-finds .dc-xlink>span')).fontFamily,
+    editXlinkFont: g(document.querySelector('#s-dream .dc-xlink>span')).fontFamily,
+    xlinkSize: g(document.querySelector('#s-finds .dc-xlink>span')).fontSize,
+    editXlinkSize: g(document.querySelector('#s-dream .dc-xlink>span')).fontSize,
   };
 });
 ok('the shared Style Star logo is hidden, same as the Edit', look.headerHidden);
@@ -213,8 +217,18 @@ ok('the subtitle is the Edit\'s serif, not the default sans', /Lora/i.test(look.
    still passes -- which is the whole point of "the same colour as the Edit". */
 ok('HAND SELECTED BY CATHERINE is the Edit\'s exact teal — her ruling',
    !!look.tagline && look.tagline === look.editTagline, look.tagline + '  vs  ' + look.editTagline);
-ok('the invitation at the foot is the Edit\'s teal too',
-   !!look.xlink && look.xlink === look.editXlink, look.xlink + '  vs  ' + look.editXlink);
+/* 🚨🚨 THIS USED TO ASSERT THE TWO PAGES' INVITATIONS WERE THE SAME COLOUR, AND HER
+   2026-09-29 RULING RETIRED THAT: a pill wears the colour of WHERE IT GOES, and
+   these two go to different places (Finds -> The Edit, pink; the Edit -> Amazon,
+   tan). ▶ The 2026-09-11 rule underneath it SURVIVES and is what is asserted now:
+   no PER-PAGE accent — both invitations are built by the one shared pill rule, so
+   they share their typography and differ only in the one thing she made differ.
+   Compared screen-against-screen, never against a hex, so a restyle of the pill
+   carries both pages together exactly as her "same as the Edit page" asked. */
+ok('both pages\' invitations come off the ONE shared pill rule — no per-page accent',
+   !!look.xlinkFont && look.xlinkFont === look.editXlinkFont
+     && !!look.xlinkSize && look.xlinkSize === look.editXlinkSize,
+   look.xlinkFont + ' ' + look.xlinkSize + '  vs  ' + look.editXlinkFont + ' ' + look.editXlinkSize);
 ok('and no tan accent survived inside the frame',
    !/rgb\(140, 90, 30\)|rgb\(201, 139, 60\)/.test([look.tagline, look.rule, look.xlink].join(' ')),
    [look.tagline, look.rule, look.xlink].join(' '));
@@ -341,7 +355,8 @@ const foot = async (route, screen) => {
          RULE. Before 2026-09-29 pink and teal were the TEXT colour; her ruling
          moved them into the frame and made the writing black. So the colour is
          looked for across every property that can carry it, not just `color`. */
-      spInk: sp ? [g(sp).color, g(sp).boxShadow, g(sp).borderTopColor, g(sp).backgroundImage].join(' | ') : '',
+      spInk: sp ? [g(sp).color, g(sp).boxShadow, g(sp).borderTopColor, g(sp).backgroundImage, g(sp).backgroundColor].join(' | ') : '',
+      spBg: sp ? g(sp).backgroundColor : '',
       tlInk: tl ? [g(tl).color, g(tl).boxShadow, g(tl).borderTopColor, g(tl).backgroundImage].join(' | ') : '',
       /* her sentence and her invitation each sit on their OWN line: no word of the
          sentence may share a line with the pill. Measured as a real geometric
@@ -428,8 +443,10 @@ for (const [route, screen, label] of [['/finds', 's-finds', 'Amazon Finds'], ['/
      this is to copy one page's markup onto the other, which would leave a page
      inviting a woman to explore the page she is already standing on. */
   const goesTo = label === 'Amazon Finds'
-    ? { names: /explore\s+The Edit/i, calls: /showDream/, notItself: /Amazon Finds/i }
-    : { names: /explore\s+Amazon Finds/i, calls: /openFinds/, notItself: /The Edit/i };
+    ? { names: /explore\s+The Edit/i, calls: /showDream/, notItself: /Amazon Finds/i,
+        ink: 'rgb(236, 72, 153)', inkName: 'PINK, the Edit\'s colour' }
+    : { names: /explore\s+Amazon Finds/i, calls: /openFinds/, notItself: /The Edit/i,
+        ink: 'rgb(236, 189, 131)', inkName: 'TAN, Amazon\'s colour' };
   ok(label + ': its closing link NAMES the other page', goesTo.names.test(f.xlText), f.xlText.trim());
   ok(label + ': ...and actually goes there', goesTo.calls.test(f.xlGo), f.xlGo);
   ok(label + ': ...and never invites her to the page she is already on',
@@ -438,19 +455,32 @@ for (const [route, screen, label] of [['/finds', 's-finds', 'Amazon Finds'], ['/
      pink instead of turquoise. Keep the Curious what's trending line turquoise."
      ▶ So the test asserts they DIFFER, not just that one is pink — the failure
      she would actually mind is a sweep that recolours both. */
-  /* ⚠️ REWRITTEN 2026-09-29 TO NAME WHERE THE COLOUR MATTERS, NOT WHICH PROPERTY
-     CARRIES IT. These three read `color` on the invitation and the trending link,
-     which was right while the words themselves were pink and teal. Her ruling
-     that day made the WRITING BLACK and moved her two colours into the frame:
-     "I don't want them filled pink or teal. Make the button white but framed pink
-     and teal... Black writing." ▶ Same two rulings, same two colours, a different
-     property — so the assertion looks for each colour anywhere on its own pill. */
-  ok(label + ': the link to her other page still wears PINK — her ruling',
-     f.spInk.includes('rgb(236, 72, 153)'), f.spInk);
-  ok(label + ': and the trending pill beside it STAYS turquoise — also her ruling',
+  /* 🚨🚨 REWRITTEN TWICE ON 2026-09-29, AND THE SECOND REWRITE IS THE REAL RULE.
+     (1) These read `color` on the invitation and the trending link, which was right
+     while the words themselves were pink and teal. Her ruling that morning made the
+     WRITING BLACK and moved her colours into the frame, so they went red on a
+     correct page — the property is hers to move, the colour is the rule.
+     (2) Then the pink one was asserted on BOTH pages, reading "The Edit stays pink"
+     as a rule about the PAGE. She caught it from a screenshot of the EDIT page:
+     "The Amazon button is supposed to be tan." ▶▶ A PILL WEARS THE COLOUR OF WHERE
+     IT GOES, NOT OF THE PAGE IT SITS ON — and the two pages' invitations point at
+     DIFFERENT places, which is why one rule looked like two.
+     ▶ Asserted CROSSWISE off `goesTo`, the same shape as the wording check right
+     above, so the commonest break (copying one page's markup onto the other) fails
+     on the colour as well as on the words. */
+  ok(label + ': its closing link wears ' + goesTo.inkName + ' — the colour of where it GOES',
+     f.spInk.includes(goesTo.ink), f.spInk);
+  ok(label + ': and the trending pill beside it STAYS turquoise — her ruling',
      f.tlInk.includes('rgb(15, 166, 182)'), f.tlInk);
   ok(label + ': ...and neither has picked up the other\'s colour — the sweep she would mind',
-     !f.spInk.includes('rgb(15, 166, 182)') && !f.tlInk.includes('rgb(236, 72, 153)'));
+     !f.spInk.includes('rgb(15, 166, 182)') && !f.tlInk.includes(goesTo.ink));
+  /* 🚨 AND THE TAN IS A FILL, NEVER THIN INK — she ruled on exactly that on
+     2026-09-22 (a tan outline read "greenish brown" to her even after it was
+     darkened to pass contrast; her own fix was to FILL the pill instead). So on
+     the page whose invitation goes to Amazon, the tan must be the BACKGROUND. */
+  if (goesTo.ink === 'rgb(236, 189, 131)')
+    ok(label + ': ...and that tan is a FILL, not an outline — her 2026-09-22 ruling',
+       f.spBg === 'rgb(236, 189, 131)', f.spBg);
   /* 🚨 HER ASK 2026-09-11: "the spacing looks better on the edit. Can you make it
      match on finds?" Nothing was styled differently — the two pages carry the
      SAME sentence and DIFFERENT link text, and `text-wrap:balance` split them at
