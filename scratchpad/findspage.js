@@ -136,18 +136,28 @@ ok('and it links to the Edit', (await page.evaluate(() => !!document.querySelect
    assert the literal string "click here to explore more", and it went red when
    she renamed the link to say WHERE it goes — the app changed, it did not break.
    ▶ The rule she actually gave is about EMPHASIS: her sentence reads plainly and
-   only the invitation carries the underline, because underlining the whole thing
-   turns a stylist's sentence into a banner. That survives any rewording.
-   ▶ The WORDS are asserted in §9, against the page each link must name. */
-ok('the sentence reads plainly and only the INVITATION is underlined — her ask',
+   only the invitation is set apart, because emphasising the whole thing turns a
+   stylist's sentence into a banner. That survives any rewording.
+   ▶ The WORDS are asserted in §9, against the page each link must name.
+   ⚠️ REWRITTEN AGAIN 2026-09-29, AND FOR THE SAME REASON AS LAST TIME: it used to
+   assert the invitation was UNDERLINED, which named the MECHANISM rather than the
+   rule. Her 2026-09-29 ruling turned the invitation into a framed white pill
+   ("Make the button white but framed pink and teal with silver edged mirror
+   around the button"), so the underline went away and a correct page went red.
+   ▶ HOW it is set apart is hers to change; THAT it is set apart while her own
+   sentence stays plain is the rule. Underline OR frame both satisfy it. */
+ok('the sentence reads plainly and only the INVITATION is set apart — her ask',
    (await page.evaluate(() => {
      const el = document.querySelector('#s-finds .dc-xlink');
      if (!el) return false;
      const sp = el.querySelector('span');
      const plain = el.childNodes[0];
-     return getComputedStyle(el).textDecorationLine === 'none'
-         && !!sp && getComputedStyle(sp).textDecorationLine.includes('underline')
-         && !!plain && plain.nodeType === 3 && plain.textContent.trim().length > 20;
+     if (!sp || !plain || plain.nodeType !== 3 || plain.textContent.trim().length <= 20) return false;
+     const cs = getComputedStyle(sp);
+     const setApart = cs.textDecorationLine.includes('underline')
+         || parseFloat(cs.borderTopWidth) > 0
+         || cs.boxShadow !== 'none';
+     return getComputedStyle(el).textDecorationLine === 'none' && setApart;
    })));
 await page.evaluate(() => window.showDream());
 await page.waitForTimeout(350);
@@ -310,6 +320,7 @@ const foot = async (route, screen) => {
     const g = e => e ? getComputedStyle(e) : null;
     const q = x => document.querySelector('#' + s + ' ' + x);
     const xl = q('.dc-xlink'), tl = q('.dc-trend-link');
+    const sp = xl && xl.querySelector(':scope > span');
     return {
       hasBoth: !!xl && !!tl,
       xlH: xl ? xl.getBoundingClientRect().height : 0,
@@ -317,6 +328,35 @@ const foot = async (route, screen) => {
       gap: (xl && tl) ? tl.getBoundingClientRect().top - xl.getBoundingClientRect().bottom : 0,
       tlSize: tl ? parseFloat(g(tl).fontSize) : 0,
       xlSize: xl ? parseFloat(g(xl).fontSize) : 0,
+      /* ⚠️ THE INVITATION'S OWN SIZE, WHICH IS NOT ITS PARENT'S. `.dc-xlink` is the
+         block holding HER SENTENCE (14px Lora); the invitation is the `>span`
+         inside it, and since 2026-09-29 that span is the pill. Comparing the
+         trending pill against the PARENT compared a button to a sentence. */
+      spSize: sp ? parseFloat(g(sp).fontSize) : 0,
+      spFont: sp ? g(sp).fontFamily.split(',')[0].replace(/['"]/g, '') : '',
+      tlFont: tl ? g(tl).fontFamily.split(',')[0].replace(/['"]/g, '') : '',
+      spW: sp ? Math.round(sp.getBoundingClientRect().width) : 0,
+      tlW: tl ? Math.round(tl.getBoundingClientRect().width) : 0,
+      /* ⚠️ WHERE A PILL WEARS ITS COLOUR IS HERS TO MOVE; THAT IT WEARS IT IS THE
+         RULE. Before 2026-09-29 pink and teal were the TEXT colour; her ruling
+         moved them into the frame and made the writing black. So the colour is
+         looked for across every property that can carry it, not just `color`. */
+      spInk: sp ? [g(sp).color, g(sp).boxShadow, g(sp).borderTopColor, g(sp).backgroundImage].join(' | ') : '',
+      tlInk: tl ? [g(tl).color, g(tl).boxShadow, g(tl).borderTopColor, g(tl).backgroundImage].join(' | ') : '',
+      /* her sentence and her invitation each sit on their OWN line: no word of the
+         sentence may share a line with the pill. Measured as a real geometric
+         overlap between the sentence's own text rects and the pill's box, which
+         survives any change of font, padding or pill shape. */
+      sentenceSharesPillLine: (() => {
+        if (!xl || !sp) return true;
+        const t = xl.childNodes[0];
+        if (!t || t.nodeType !== 3) return true;
+        const r = document.createRange(); r.selectNodeContents(t);
+        const pill = sp.getBoundingClientRect();
+        return [...r.getClientRects()].some(b => b.bottom > pill.top + 1 && b.top < pill.bottom - 1);
+      })(),
+      /* and the invitation itself is ONE pill, never split into two boxes */
+      pillBoxes: sp ? sp.getClientRects().length : 0,
       /* ⚠️ An arrow or a heart alone on a line is the fault she caught. These
          welds are font- and width-independent, which a hand-typed &nbsp; tuned
          to one screen would not be. */
@@ -349,8 +389,19 @@ for (const [route, screen, label] of [['/finds', 's-finds', 'Amazon Finds'], ['/
   ok(label + ': the explore line is a real tap target (>=44px)', f.xlH >= 44, f.xlH + 'px');
   ok(label + ': the trending line is a real tap target (>=44px)', f.tlH >= 44, f.tlH + 'px');
   ok(label + ': and they are held apart so a thumb cannot bump the wrong one', f.gap >= 8, f.gap + 'px');
-  ok(label + ': the trending line is no longer the smaller of the two — her ask',
-     f.tlSize >= f.xlSize, f.tlSize + ' vs ' + f.xlSize);
+  /* 🚨 HER RULING 2026-09-29: "Make all of the pills the same size and same font
+     and same look to the arrow." ▶ SO THE RULE IS NOW ABOUT THE PAIR, NOT ABOUT
+     ONE BEING BIGGER. This used to read `tlSize >= xlSize`, comparing the trending
+     PILL against `.dc-xlink`, which is the block holding HER SENTENCE — a button
+     measured against a paragraph. It happened to pass while both were 14px and
+     went red the moment the pills got their own type scale. */
+  ok(label + ': both closing pills are the same size as each other — her ruling',
+     f.spSize === f.tlSize && f.spW === f.tlW,
+     f.spSize + 'px/' + f.spW + 'px vs ' + f.tlSize + 'px/' + f.tlW + 'px');
+  ok(label + ': ...and the same font — also her ruling',
+     !!f.spFont && f.spFont === f.tlFont, f.spFont + ' vs ' + f.tlFont);
+  ok(label + ': ...and each is smaller than her own sentence, which still leads',
+     f.spSize < f.xlSize, f.spSize + ' vs ' + f.xlSize);
   // Pinned to the RULE (every closing crosslink's arrow is welded to its word,
   // whatever the count), not a hardcoded 2 -- the count itself is free to grow
   // (Finds added a third, the Storefront link, 2026-09-22) and that is not a
@@ -387,20 +438,36 @@ for (const [route, screen, label] of [['/finds', 's-finds', 'Amazon Finds'], ['/
      pink instead of turquoise. Keep the Curious what's trending line turquoise."
      ▶ So the test asserts they DIFFER, not just that one is pink — the failure
      she would actually mind is a sweep that recolours both. */
-  ok(label + ': the link to her other page is PINK — her ruling',
-     f.xlColour === 'rgb(236, 72, 153)', f.xlColour);
-  ok(label + ': and the trending line beside it STAYS turquoise — also her ruling',
-     f.tlColour === 'rgb(15, 166, 182)', f.tlColour);
-  ok(label + ': the two are not the same colour', f.xlColour !== f.tlColour,
-     f.xlColour + ' vs ' + f.tlColour);
+  /* ⚠️ REWRITTEN 2026-09-29 TO NAME WHERE THE COLOUR MATTERS, NOT WHICH PROPERTY
+     CARRIES IT. These three read `color` on the invitation and the trending link,
+     which was right while the words themselves were pink and teal. Her ruling
+     that day made the WRITING BLACK and moved her two colours into the frame:
+     "I don't want them filled pink or teal. Make the button white but framed pink
+     and teal... Black writing." ▶ Same two rulings, same two colours, a different
+     property — so the assertion looks for each colour anywhere on its own pill. */
+  ok(label + ': the link to her other page still wears PINK — her ruling',
+     f.spInk.includes('rgb(236, 72, 153)'), f.spInk);
+  ok(label + ': and the trending pill beside it STAYS turquoise — also her ruling',
+     f.tlInk.includes('rgb(15, 166, 182)'), f.tlInk);
+  ok(label + ': ...and neither has picked up the other\'s colour — the sweep she would mind',
+     !f.spInk.includes('rgb(15, 166, 182)') && !f.tlInk.includes('rgb(236, 72, 153)'));
   /* 🚨 HER ASK 2026-09-11: "the spacing looks better on the edit. Can you make it
      match on finds?" Nothing was styled differently — the two pages carry the
      SAME sentence and DIFFERENT link text, and `text-wrap:balance` split them at
      different points. The break is STRUCTURAL now, so it cannot drift again the
      next time she renames a link. ▶ Asserted on BOTH pages, because "match" is
      a claim about the pair. */
-  ok(label + ': her sentence gets its own line', f.xlSentenceLines <= 1.2, String(f.xlSentenceLines));
-  ok(label + ': and the invitation gets its own, unbroken', f.xlLinkLines <= 1.2, String(f.xlLinkLines));
+  /* ⚠️ REWRITTEN 2026-09-29 — THE RULE SURVIVED, THE ARITHMETIC DID NOT. Both of
+     these used to divide a leftover height by a line-height, which only works
+     while the invitation is plain inline text. It is a padded, bordered pill now,
+     so the subtraction counted its padding and border as lines of her sentence.
+     ▶ HER RULE IS THE STRUCTURAL BREAK: the invitation is never jammed onto the
+     end of her sentence. That is now measured as a real geometric overlap, which
+     no change of font, padding or pill shape can fool. */
+  ok(label + ': her sentence and the invitation never share a line — her ask',
+     f.sentenceSharesPillLine === false);
+  ok(label + ': and the invitation is one unbroken pill, not split across lines',
+     f.pillBoxes === 1, String(f.pillBoxes));
   /* ⚠️ THE MISTAKE THIS CAUGHT, AND IT COST A ROUND: `.dc-xlink span` matches the
      `.nb` weld nested INSIDE the invitation as well, so `display:block` on the
      loose selector put "The Edit →" on a line of its own at any width. The

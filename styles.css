@@ -2226,6 +2226,65 @@ body.menu-open .menu-panel{display:block}
    rather than competing with the hero -- her own ask, same reasoning as the
    search bar and category pills: a woman who never scrolls to the bottom
    should still be able to find this. */
+/* ══ THE THREE CLOSING PILLS — HER SPEC, 2026-09-29 ═══════════════════════════
+   Her words: "Make the button white but framed pink and teal with silver edged
+   mirror around the button. Black writing and same size arrow as on Amazon
+   button. Make all of the pills the same size and same font and same look to
+   the arrow."
+   ▶ SO ONLY THE AMAZON PILL IS TAN. The Edit keeps PINK and Trending keeps
+     TEAL -- as the FRAME, not as a fill. Her 2026-09-11 colour ruling survives
+     intact; this changes the shape those colours live in, never the colours.
+   ⚠️ THE SILVER IS THE APP'S OWN CHROME GRADIENT, lifted from `.dream-mirror`
+     at the top of this file, NOT a new grey invented here -- so the day that
+     mirror is ever retuned these follow it.
+   ⚠️ inline-block, NEVER inline-flex: the nested `.nb` weld that keeps the
+     arrow with the last word becomes its OWN FLEX CHILD inside a flex box and
+     splits her sentence in half. Cost a round on 2026-09-11 and again today.
+   ⚠️ THE ARROW IS THE `.mall-go`/Storefront SVG, never a text glyph -- the
+     Unicode arrow sits low in its own em-box in this font, which is the fault
+     that cost three rounds on the Storefront button. Do not "simplify" it back. */
+/* ⚠️ SIZE/FONT ONLY HERE, AND `display` IS DELIBERATELY ABSENT: the Storefront
+   pill is `inline-flex` so its SVG sits as a centred flex child. Setting
+   display on this shared rule overrode that and dropped its arrow onto a line
+   of its own -- caught in the first render, do not put `display` back here. */
+#s-dream .dc-xlink>span,#s-finds .dc-xlink>span,
+#s-dream .dc-trend-link,#s-finds .dc-trend-link,
+#s-finds .dc-store-btn.is-bottom{
+  width:284px;max-width:100%;box-sizing:border-box;
+  text-align:center;border-radius:999px;text-decoration:none;cursor:pointer;
+  font:700 12px/1.55 'Jost',sans-serif;letter-spacing:.1em;text-transform:uppercase;
+  padding:13px 20px;margin:14px auto 0;-webkit-tap-highlight-color:transparent;
+  /* ⚠️ HER INSTRUCTION WAS "all of the pills the same size", AND MEASUREMENT SAID
+     THE BOX, NOT THE FONT, WAS THE THING THAT DIFFERED. Her own copy is longer on
+     two of the three ("Click here to explore The Edit", "Curious what's trending
+     right now?") so those wrap to two lines at 70px, while "My Amazon Storefront"
+     sits on one at 45px. ▶ THE HEIGHT IS EQUALISED HERE RATHER THAN BY SHORTENING
+     HER WORDS -- her standing rule is that her copy is never rewritten to satisfy
+     a rule. The short pill grows to match; it is `inline-flex`, so its own
+     align-items centres the line. The two long ones are already taller than this
+     floor, so it changes nothing for them. */
+  min-height:70px}
+/* white fill + the app's silver mirror as the outer edge */
+#s-dream .dc-xlink>span,#s-finds .dc-xlink>span,
+#s-dream .dc-trend-link,#s-finds .dc-trend-link{
+  display:inline-block;color:#1a1a1a;border:3px solid transparent;
+  background:linear-gradient(#fff,#fff) padding-box,
+    linear-gradient(135deg,#FFFFFF 0%,#C6CACE 15%,#8C9298 34%,#F4F6F8 50%,#9AA0A6 66%,#DFE2E5 84%,#FFFFFF 100%) border-box}
+/* the coloured frame sits INSIDE the silver, as an inset ring */
+#s-dream .dc-xlink>span,#s-finds .dc-xlink>span{box-shadow:inset 0 0 0 2px #EC4899}
+#s-dream .dc-trend-link,#s-finds .dc-trend-link{box-shadow:inset 0 0 0 2px #0FA6B6}
+/* ⚠️ THE INVITATION'S PARENT CARRIES 2px OF SIDE PADDING, which clamped its
+   pill to 274px against the other two at 278 -- "all the pills the same size"
+   is her instruction, so the parent gives that padding back. Measured, not
+   eyeballed: all three now report the identical width. */
+#s-dream .dc-xlink,#s-finds .dc-xlink{padding-left:0;padding-right:0}
+/* the weld stays INLINE inside the pill, and the arrow matches the Amazon one */
+#s-dream .dc-xlink>span .nb,#s-finds .dc-xlink>span .nb,
+#s-dream .dc-trend-link .nb,#s-finds .dc-trend-link .nb{display:inline}
+svg.dc-xl-arr{width:18px;height:18px;display:inline-block;vertical-align:-4px;margin-left:4px}
+/* ⚠️ the SMALL top Storefront pill is deliberately NOT in the rule above --
+   her round-5 decision keeps it smaller than the bottom one so the size
+   hierarchy on /finds holds. */
 #s-finds .dc-store-btn.is-top{padding:10px 20px;font-size:11px;letter-spacing:.09em;margin:2px auto 16px}
 /* ⚠️⚠️⚠️ REBUILT A THIRD TIME, HER REPEATED CATCH: two rounds of CSS-only
    fixes (vertical-align, then a flex child with align-items:center) both

@@ -67,11 +67,24 @@ ok(top2 === top.href, 'reopening does not double-tag the top button (' + top2 + 
 const others = await page.evaluate(() => ({
   edit: document.querySelector('#s-finds .dc-xlink') ? document.querySelector('#s-finds .dc-xlink').textContent.includes('The Edit') : false,
   trend: document.querySelector('#s-finds .dc-trend-link[onclick]') ? true : false,
-  trendColour: getComputedStyle(document.querySelector('#s-finds .dc-trend-link')).color,
+  /* ⚠️ REWRITTEN 2026-09-29: this read the trending link's TEXT colour, which was
+     teal until her ruling that day made all three pills white with black writing
+     and moved her colours into the frame ("framed pink and teal with silver edged
+     mirror around the button. Black writing"). ▶ Her rule is that TRENDING KEEPS
+     ITS OWN TEAL and stays distinct from the tan Storefront pill beside it — the
+     property carrying the teal is hers to move, so it is looked for wherever it
+     can live, and the Storefront's tan is asserted to be absent from it. */
+  trendInk: (() => {
+    const c = getComputedStyle(document.querySelector('#s-finds .dc-trend-link'));
+    return [c.color, c.boxShadow, c.borderTopColor, c.backgroundImage, c.backgroundColor].join(' | ');
+  })(),
 }));
 ok(others.edit, 'the existing Edit crosslink is untouched');
 ok(others.trend, 'the existing Trending crosslink is untouched');
-ok(others.trendColour === 'rgb(15, 166, 182)', 'Trending keeps its own teal, now visually distinct from the gold Storefront buttons');
+ok(others.trendInk.includes('rgb(15, 166, 182)'),
+   'Trending keeps its own teal, wherever it wears it (' + others.trendInk + ')');
+ok(!/rgb\(236, 189, 131\)/.test(others.trendInk),
+   'and it never picks up the Storefront pill\'s tan — the two stay distinct');
 
 // the top button sits above the product cards, below the search/category controls
 const order = await page.evaluate(() => {
