@@ -358,6 +358,18 @@ const foot = async (route, screen) => {
          looked for across every property that can carry it, not just `color`. */
       spInk: sp ? [g(sp).color, g(sp).boxShadow, g(sp).borderTopColor, g(sp).backgroundImage, g(sp).backgroundColor].join(' | ') : '',
       spBg: sp ? g(sp).backgroundColor : '',
+      /* 🚨 HER RULING 2026-09-29: "I don't want the silver to be gradient." The
+         framed pills' silver edge must be ONE FLAT COLOUR. Read as: no gradient
+         anywhere on the pill (a gradient shows up as a `background-image`, which is
+         how the first build painted it), and the four border sides all the same. */
+      framedEdges: [...sc.querySelectorAll('.dc-xlink>span,.dc-trend-link')].map(e => {
+        const c = g(e);
+        return {
+          grad: c.backgroundImage !== 'none',
+          sides: [c.borderTopColor, c.borderRightColor, c.borderBottomColor, c.borderLeftColor],
+          w: c.borderTopWidth,
+        };
+      }),
       /* 🚨 HER TWO ASKS, 2026-09-29: "Make the spacing between buttons even" and
          "all of the pills the same size". ▶ Both are claims about the WHOLE run of
          closing pills, not about one pair, so the run is read in document order and
@@ -433,6 +445,17 @@ for (const [route, screen, label] of [['/finds', 's-finds', 'Amazon Finds'], ['/
      a 4px frame made the framed pills 2px taller than the tan one. Every pill now
      carries the same border box, so a future change to the frame's weight moves
      all of them together. */
+  /* 🚨🚨 HER RULING 2026-09-29, AND IT OVERTURNED A CHOICE THAT LOOKED SAFE:
+     "I don't want the silver to be gradient." The first build used `.dream-mirror`'s
+     own 7-stop metallic gradient, reasoning that it is the app's existing chrome.
+     ▶ It is — at a 13px PAGE FRAME. At a 5px BUTTON EDGE it read as a smear and it
+     dulled her pink and teal beside it, which is why the colours looked wrong to her
+     while the hex values were provably exact. ⚠️ Asserted as "no gradient and one
+     flat edge", never as a hex, so the silver itself stays hers to change. */
+  ok(label + ': the silver edge is FLAT, never a gradient — her ruling',
+     f.framedEdges.length > 0 && f.framedEdges.every(e =>
+       !e.grad && new Set(e.sides).size === 1 && parseFloat(e.w) > 0),
+     JSON.stringify(f.framedEdges));
   ok(label + ': ...and every one of them is the same size as the others — her ask',
      new Set(f.pillRun.heights).size === 1 && new Set(f.pillRun.widths).size === 1,
      f.pillRun.heights.join('/') + ' x ' + f.pillRun.widths.join('/'));
