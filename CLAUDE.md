@@ -643,16 +643,22 @@ there enough traffic for the Amazon clock" with no code written. *The original l
 ---
 
 ## ▶▶▶ WHERE WE LEFT OFF — 2026-09-28/29 (nineteenth session). READ THIS FIRST.
-🚪 **SHE SIGNED OFF AT THE END OF 2026-09-29 — her words: *"The buttons are fine for now. Let's save all
-and I will open a new session next week."*** ▶ **Everything below is saved, merged to `main` and live,
-verified on the SERVED files at stylestar.app. Nothing is half-finished and nothing is waiting on a push.**
-⭐ **WHERE TO START NEXT WEEK, in her own order of urgency — and ASK, do not launch:**
-**(1)** the **Oct 1 Florida cutover** (the only hard date on this page, and it will have PASSED or be days
-away — check what she did). **(2)** the **Amazon Creators API retest** — overdue since 09-29, needs her
-keys again, nothing stored. **(3)** whether **Indie Law replied**. **(4)** her **fall Edit batch**, which
-is her own active ask and the highest-value thing she can bring. ▶ **Her three named priorities (searches ·
-traffic · affiliates) are still unsequenced and she asked to organise her own thoughts first — a plain
-status recap of each is ready, but do NOT launch into any of them unprompted.**
+🚪 **SHE CLOSED THIS SESSION ON 2026-09-29 AND OPENED A FRESH ONE IMMEDIATELY** — *"let's save all and I
+will open a new session next"*. ⚠️ **She wrote "next week" first and corrected it to NEXT: do not read this
+as a week's gap, and do not greet her as though time has passed.** ▶ **Everything from it is saved, merged
+to `main` and live, verified on the SERVED files at stylestar.app. Nothing is half-finished and nothing is
+waiting on a push — the session was closed for CONTEXT ROOM, not because the work stopped.**
+⭐ **WHERE TO START, in her own order of urgency — and ASK, do not launch:**
+**(1)** 🚨 **THE OCT 1 FLORIDA CUTOVER IS IN TWO DAYS and it is the only hard date on this whole page.**
+Do NOT pay the Your Fashion Friend renewal; the wording and the two addresses are in BUSINESS & LEGAL, and
+the 407-246-2204 call has three questions attached. **This is the one thing with a deadline.**
+**(2)** the **Amazon Creators API retest** — due from 2026-09-29, so it is due NOW. Re-running the same two
+calls takes seconds; **it needs her Access Key ID / Secret Access Key again, because nothing was stored.**
+**(3)** whether **Indie Law replied** to her 2026-09-28 escalation.
+**(4)** her **fall Edit batch** — her own active ask, and the highest-value thing she can bring.
+▶ **Her three named priorities (searches · traffic · affiliates) are still unsequenced and she asked to
+organise her own thoughts first — a plain status recap of each is ready, but do NOT launch into any of
+them unprompted.**
 🚨 **THIS BLOCK IS THE CURRENT TRUTH. Everything below it is standing reference — if a line further
 down contradicts this one, THIS ONE WINS.**
 📁 **The eighteenth-session entry moved to `CLAUDE-archive.md` in this commit, VERBATIM.** Nothing was
