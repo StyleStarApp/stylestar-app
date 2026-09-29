@@ -713,6 +713,23 @@ at 12px Jost, but her own copy is longer on two of them ("Click here to explore�
 right now?") so those wrap to two lines while "My Amazon Storefront" sits on one. ▶ **Equalised with
 `min-height:70px`, NEVER by shortening her words** — her standing rule is that her copy is not rewritten to
 satisfy a rule. All three now measure **278 × 70**.
+⭐ **TWO MORE ROUNDS THE SAME DAY, BOTH HERS, BOTH LIVE — and each one's CAUSE is the useful part:**
+**(a) *"Make the spacing between buttons even."*** The first gap measured **27px against 14px** for every
+gap below it, and **the cause was not a margin**: `.dc-xlink`'s own 13px BOTTOM padding sat UNDERNEATH the
+first pill and added itself to the next pill's margin. ▶ That padding is given back; **the TOP padding
+stays, because it sits above HER SENTENCE rather than between two buttons.** The pills' margin moved 14 →
+16px to match the BACK button below them, so **the whole closing run is 16px: sentence · pill · pill ·
+pill · BACK.**
+**(b) *"the pink and silver border and teal and silver border frame should be thicker."*** Both halves
+thickened TOGETHER — silver 3→4px, the coloured ring 2→3px — **because thickening only one would change the
+PROPORTION of a frame she had already approved rather than its WEIGHT.**
+🚨 **AND (b) NEARLY BROKE (a)'s SIBLING RULE, WHICH IS THE LESSON: 4px of border made the framed pills 2px
+taller than the tan one.** ▶▶ **FIXED BY CONSTRUCTION, NOT BY A NUMBER: every pill now carries the SAME 4px
+border box, and a tan pill paints its own border tan so it still reads as a solid fill edge to edge.** All
+three measure **278 × 73**, and **the next change to the frame's weight needs no second edit anywhere.**
+⭐ **That is her standing direction applied to CSS — fewer rules and breakable things: a shared box beats a
+re-tuned magic height, because the magic height has to be found again every time.**
+
 🚨 **SHE IS CERTAIN THESE BUTTONS WERE DESIGNED ONCE BEFORE AND THEY WERE NOT — SEARCHED EXHAUSTIVELY** (every
 branch, the whole history of `.dc-xlink` in `styles.css`, the stash, `scratchpad/`, both note files): the only
 earlier ruling is her 2026-09-11 **colour + wording** call, never a button. She accepted it — *"if you don't
@@ -734,9 +751,15 @@ colour check is asserted CROSSWISE now, off the SAME `goesTo` map the wording ch
 copying one page's markup onto the other fails on the colour as well as on the words, and a page can never
 again invite a woman somewhere in the wrong colour. **The right assertion already existed two lines above
 it; it just had not been asked the same question.**
-✅ **`findspage` 107/107 · `storefrontlink` 22/22 · `editshare` 30/30 · `copy` 50/50 · `affq` 42/42 ·
+✅ **`findspage` 111/111 · `storefrontlink` 22/22 · `editshare` 30/30 · `copy` 50/50 · `affq` 42/42 ·
 `linkwatch` 27/27 · `fromedit` 24/24.** CSS and sitemap restamped. **Verified on the SERVED file at
 stylestar.app, not the deploy badge.**
+⭐⭐ **THE TWO NEWEST CHECKS ARE THE SHAPE THIS FILE KEEPS ASKING FOR, AND BOTH ARE PROVEN TO BITE: every
+gap in the closing run equals the others, and every pill is the same size as the others — asserted AGAINST
+EACH OTHER, never against a pixel value.** ▶ **The run is read from the DOM in document order, so it
+survives a FOURTH pill joining it the way the Storefront one did on 2026-09-22** (which is exactly the
+growth that broke the old welded-arrow count). **A check written this way follows her when she restyles
+instead of fighting her.**
 
 ### 🚨🚨 THE FAULT SHE CAUGHT THIS SESSION, AND IT IS THE MOST IMPORTANT THING ON THIS PAGE
 **The first build was headed "Styled For You" with a subtitle reading "Chosen for a polished trendsetter
