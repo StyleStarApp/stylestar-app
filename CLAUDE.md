@@ -685,9 +685,26 @@ all reach that screen, and a rule that must hold on every route belongs at the c
 trending stays teal... I don't want them filled pink or teal. Make the button white but framed pink and
 teal with silver edged mirror around the button. Black writing and same size arrow as on Amazon button.
 Make all of the pills the same size and same font and same look to the arrow."*
-▶ **On BOTH `/edit` and `/finds`: white fill · a 3px SILVER MIRROR as the outer edge · her colour as a 2px
-inset ring inside it (pink `#EC4899` for the Edit link, teal `#0FA6B6` for trending) · black `#1a1a1a`
-writing · the same 18px stroke SVG arrow the tan Storefront pill already uses.** ⚠️ **The silver gradient
+🚨🚨 **AND THE CORRECTION SHE MADE THE SAME DAY, WHICH IS THE PART THAT GENERALISES — A PILL WEARS THE
+COLOUR OF WHERE IT GOES, NEVER OF THE PAGE IT SITS ON.** The first build read *"The Edit stays pink"* as a
+rule about the PAGE and gave `.dc-xlink>span` pink on both. She caught it from a screenshot of the EDIT
+page: ***"The Amazon button is supposed to be tan."*** ▶▶ **The button she was pointing at is `/edit`'s own
+closing invitation, and it GOES TO AMAZON FINDS — so on that page it is an Amazon button.** The two pages'
+invitations point at different places, which is exactly why one rule looked like two:
+| where it goes | colour | where it lives |
+|---|---|---|
+| The Edit | pink `#EC4899` | `/finds` |
+| Amazon (Finds, or the Storefront) | tan `#ECBD83` | `/edit`, and both Storefront pills |
+| What's Trending | teal `#0FA6B6` | both pages |
+⚠️ **THE TAN IS A FILL, NEVER A RING — AND THAT IS HER OWN EARLIER RULING, NOT A STYLE CHOICE.** On
+2026-09-22 this exact tan was tried as thin outline/text ink and she rejected it as *"greenish brown"*,
+muddy, even after it was darkened to pass contrast; **her own fix was to FILL the pill and put dark text on
+top.** So an Amazon button is byte-for-byte the Storefront pill's colours: fill `#ECBD83`, ink `#4a463e`
+(5.44:1). ▶ **Rendering this tan as a border, an outline or text would repeat a mistake she has already
+corrected once.**
+▶ **So: the Edit link and the trending link are white · a 3px SILVER MIRROR as the outer edge · their
+colour as a 2px inset ring inside it · black `#1a1a1a` writing. The Amazon link is the filled tan pill.
+All of them carry the same 18px stroke SVG arrow the Storefront pill already uses.** ⚠️ **The silver gradient
 is lifted VERBATIM from `.dream-mirror` — the app's own chrome, not a new grey.** ⚠️ **The tan Storefront
 pill keeps its tan and the small top copy of it keeps its deliberately smaller size (her round-5 decision,
 2026-09-22).**
@@ -708,10 +725,16 @@ AND THIS IS THE FOURTH TIME THIS FILE HAS PAID FOR THE SAME LESSON:**
 | `tlSize >= xlSize` | it compared the trending PILL against `.dc-xlink`, which holds her SENTENCE — a button measured against a paragraph | the two pills are the same size and font as EACH OTHER, and both smaller than her sentence |
 | pink/teal read off `color` | her ruling moved both colours into the FRAME and made the writing black | each colour is looked for wherever its own pill wears it, **plus** that neither picked up the other's |
 | her sentence "gets its own line" = height ÷ line-height | a padded, bordered pill made the subtraction count padding as lines | a real GEOMETRIC overlap between the sentence's text rects and the pill's box |
+| **the two pages' invitations are the SAME colour** | her "a pill wears the colour of where it goes" | **no PER-PAGE accent — both come off the one shared pill rule, compared screen-against-screen** |
 ▶▶ **THE TELL WAS THE SAME EVERY TIME: the assertion named the MECHANISM (a text-decoration, a CSS property,
 a piece of arithmetic) rather than the thing she actually asked for.** ⭐ **Ask of any layout assertion: if she
 restyles this tomorrow and it still looks right to her, does this check still pass?**
-✅ **`findspage` 106/106 · `storefrontlink` 22/22 · `editshare` 30/30 · `copy` 50/50 · `affq` 42/42 ·
+⭐⭐ **AND THE FIFTH ROW IS THE ONE WORTH REMEMBERING LONGEST, because the FIX was better than the test: the
+colour check is asserted CROSSWISE now, off the SAME `goesTo` map the wording check already used** — so
+copying one page's markup onto the other fails on the colour as well as on the words, and a page can never
+again invite a woman somewhere in the wrong colour. **The right assertion already existed two lines above
+it; it just had not been asked the same question.**
+✅ **`findspage` 107/107 · `storefrontlink` 22/22 · `editshare` 30/30 · `copy` 50/50 · `affq` 42/42 ·
 `linkwatch` 27/27 · `fromedit` 24/24.** CSS and sitemap restamped. **Verified on the SERVED file at
 stylestar.app, not the deploy badge.**
 
@@ -1591,7 +1614,8 @@ invention — the Garnet Hill lesson was about inventing SILENTLY.**
   | the invitation is UNDERLINED | her 2026-09-29 ruling made it a framed pill | it is SET APART — underline **or** frame |
   | pink/teal read off `color` | the same ruling moved both colours into the FRAME | each colour is worn SOMEWHERE on its own pill |
   | "own line" = height ÷ line-height | a padded, bordered pill counted its padding as lines | a real GEOMETRIC overlap of the two boxes |
-  ▶▶ **THE LAST THREE ROWS ARE 2026-09-29 AND THEY WIDEN THE LESSON PAST STRINGS: a CSS PROPERTY and a
+  | the invitation is PINK on both pages | her "The Amazon button is supposed to be tan" | **a pill wears the colour of WHERE IT GOES, not of its page** |
+  ▶▶ **THE LAST FOUR ROWS ARE 2026-09-29 AND THEY WIDEN THE LESSON PAST STRINGS: a CSS PROPERTY and a
   PIECE OF ARITHMETIC go stale exactly the same way a word does.** Each named the MECHANISM she happened
   to be using rather than the thing she asked for, so a correct page went red the moment she restyled it.
   ⭐ **THE QUESTION THAT CATCHES ALL OF THEM: if she restyles this tomorrow and it still looks right TO
