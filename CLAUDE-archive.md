@@ -24055,3 +24055,128 @@ asked for so a new session can start from a checklist rather than a re-read of t
 ▶ **NONE OF THESE ARE URGENT OR TIME-SENSITIVE EXCEPT THE FLORIDA BUSINESS-TAX-YEAR OCT 1 CUTOVER** —
 this round-up exists so she can pick what she wants to work on next, not to pressure any particular one.
 
+
+---
+
+## 📈 ARCHIVED 2026-09-29 — THE AMAZON DASHBOARD SNAPSHOT RUN, VERBATIM
+🚨 **WHY THIS MOVED, AND WHAT DID NOT.** `CLAUDE.md` had SEVEN successive Amazon dashboard snapshots
+(2026-09-13 → 09-14 → 09-15 → 09-18 → 09-21 → 09-22 → 09-28) written one under the other, each keeping
+the full prose of the one before it — **11,139 bytes, 3.2% of the whole file, and only the LAST figure
+was true right now.** ▶ **Her own archiving test applied INSIDE a never-archive section rather than to
+it: a SUPERSEDED status line is what HAPPENED; the current one is what is TRUE.**
+⚠️ **EVERY FIGURE SURVIVED INTO `CLAUDE.md` AS A TREND TABLE, one row per date** — it is her business
+record and she is invested in watching it grow, so the NUMBERS were kept and only the PROSE around them
+was compacted. **Every caveat, every rule and every one of her verbatim words was lifted out first and
+re-checked by name.** This is the full original text, unedited.
+
+🎉🎉 **FIRST REAL, NON-CATH TRAFFIC CONFIRMED — 2026-09-13, LIVE OPERATIONAL STATUS, NEVER ARCHIVES.**
+Her own Amazon Associates dashboard, the day after Amazon approval (2026-09-12), showed **6 clicks and
+2 ordered items — her words, "and it wasn't me."** ▶▶ **THIS IS THE FIRST DIRECT EVIDENCE ANYONE BUT
+HER HAS EVER USED STYLE STAR TO SHOP.** Not a hypothetical, not a guess from analytics nobody's read —
+a real stranger clicked an Amazon Finds link and bought something. ⚠️ **"Ordered items" on the
+dashboard is PENDING until the order ships and clears its return window** — that's when Amazon confirms
+it as a qualifying sale, counts it toward the 3-sales/180-day clock, and pays a commission. So this is
+strong evidence, not yet a confirmed sale — re-check the dashboard in a few weeks to see if it converted.
+**2 of the 3 required qualifying sales, if they clear, well within day one of the 180-day window.**
+📈 **UPDATED 2026-09-14: HER DASHBOARD NOW SHOWS 4 SALES**, comfortably past the 3-sale bar — still
+technically PENDING under the same rule until they ship and clear their return window, not yet a fully
+locked-in count. ⚠️ **CLEARING "CONDITIONAL" STATUS AND GETTING PRODUCT ADVERTISING API ACCESS ARE TWO
+SEPARATE GATES, DO NOT CONFLATE THEM.** Clearing conditional status changes nothing about what the app
+can build — Associate links, tagging and earning are already fully live regardless of status. PA API
+access (real Amazon photos/price/stock data) is a further application with its own minimum SALES-RATE
+requirement to both get AND keep — not a one-time bar — and the "10 sales in 30 days" figure already
+flagged below as reported-not-confirmed still holds. **Read the actual current PA API terms at the
+moment she applies; don't trust an old number.**
+📈📈 **UPDATED 2026-09-15: HER DASHBOARD NOW SHOWS 5 ORDERS, 2 OF WHICH HAVE SHIPPED.** Shipping is a
+real step toward a shipped order clearing its return window and locking in as a qualifying sale —
+worth re-checking the dashboard again in a couple weeks to see if "conditional" clears. ⚠️ **Not yet
+confirmed clear; still tracked the same way as the 9/13 and 9/14 figures above.**
+📈📈📈 **UPDATED 2026-09-18: HER DASHBOARD NOW SHOWS 6 SALES, 4 SHIPPED.** Continued growth, same
+not-yet-confirmed-clear status as every figure above until an order actually clears its return window.
+**Well past the 3-sale bar repeatedly now — re-check in a couple weeks for the first one to actually
+clear and see whether "conditional" status changes.**
+🎉🎉🎉 **UPDATED 2026-09-21 — FIRST REAL AMAZON DOLLARS AND FIRST REAL TRAFFIC NUMBERS, BOTH FROM HER OWN
+LIVE DASHBOARD SCREENSHOT.** She received an Amazon "approved" email (see the Storefront thread above for
+what that turned out to mean) and checked her dashboard directly. Real, current figures, "Last updated:
+Sep 21 2026": **Total Earnings $3.40 · Total Items Shipped 4 · Total Ordered Items 13 · Clicks 175 ·
+Conversion 7.43%, all for the last 30 days.** ▶▶ **$3.40 IS HER FIRST CONFIRMED AMAZON DOLLAR FIGURE** —
+everything before this was pending-sale evidence, never an actual earned amount. ⭐⭐ **AND 7.43%
+CONVERSION IS GENUINELY STRONG** — typical e-commerce conversion runs 2-4%, so of the women who do click
+through from Style Star, an unusually high share are buying. **The bottleneck is still traffic (175
+clicks this month), not the shopping experience itself — the app is doing its job well on the clicks it
+gets.** ⚠️ **"Conditional" status was NOT visible on this particular dashboard screen** (it lives under
+Account Settings, not the home page) — still unconfirmed whether it has cleared; ask her to check that
+specific field next time this comes up, don't assume from this screenshot alone.
+📈📈📈📈 **UPDATED 2026-09-22 — ANOTHER REAL DASHBOARD SCREENSHOT, GROWTH CONTINUES.** "Summary for This
+Month," last updated Sep 22 2026: **Total Items Shipped 6 · Total Earnings $4.47 · Total Ordered Items
+14 · Clicks 228 · Conversion 6.14%.** ▶▶ **THIS IS THE FIGURE THAT ANSWERS PART OF THE CREATORS API
+QUESTION ABOVE, AND IT'S STILL SHORT.** "Items shipped" is the closest available proxy for "qualifying
+sales" on this dashboard, and 6 is short of the 10-in-30-days bar the Creators API page names. ⚠️
+**NOT A CLEAN 1:1 COMPARISON** — this box is headed "This Month" while the chart above it says "Last
+30 days" (both cover roughly the same Aug 23–Sep 22 window in the screenshot, but the two labels aren't
+guaranteed to mean the identical rolling window Amazon's own PA-API eligibility check uses). **The
+honest read: real growth (4→6 shipped, $3.40→$4.47, 175→228 clicks in a day), but by the best proxy
+visible from here, still below the 10-shipped bar for Creators API/PA-API access as of this screenshot.**
+▶ **Conversion dipped slightly (7.43%→6.14%) as clicks grew faster than shipped orders — still well
+above the 2-4% e-commerce norm, nothing concerning.** ▶ **STILL HERS TO DO IF SHE WANTS A DEFINITIVE
+ANSWER RATHER THAN INFERRING FROM THIS PROXY: click Create App on the Creators API page and let a real
+credential/API call report her actual eligibility** — this dashboard number is a reasonable guess, not
+the number Amazon's own gate actually checks.
+✅✅ **DONE, SAME DAY 2026-09-22 — SHE CREATED THE APP AND GENERATED CREDENTIALS.** App name
+"Catherine-StyleStar" (`Applicationid: stylestar01-20.catherine-stylestar`), one credential generated
+and downloaded via the CSV option, confirmed **Active**. ⚠️ **A stray click landed on the "Create App"
+button (which starts a SECOND app) instead of "Add new credential" first — caught before it created a
+duplicate; she cancelled and used the right button.** ▶ **NOTHING ELSE TO DO ON THIS RIGHT NOW.** She
+is still short of the 10-shipped-items bar (6 as of the 2026-09-22 dashboard, see above), so a real API
+call today would almost certainly report ineligible and teach nothing new. **THE CREDENTIAL JUST SITS
+READY, AT NO COST, UNTIL A FUTURE DASHBOARD CHECK SHOWS HER CROSSING 10 SHIPPED** — that is the moment
+to actually try a real call and get a definitive yes/no, rather than re-deriving it from the shipped-
+items proxy. ⚠️ **HER SECRET KEY WAS VISIBLE IN A SCREENSHOT SHE SENT THIS SESSION** — flagged to her
+gently, not urgent; Amazon supports a second credential per app for rotation if she ever wants a clean
+one. **Nothing in the app's code uses these credentials yet — still fully unbuilt**, per the standing
+note above: confirm real eligibility first, THEN scope the actual photo-fetch build with her.
+🚨🚨 **UPDATED 2026-09-28 — REAL DASHBOARD SCREENSHOT, AND THIS IS THE MOMENT THE 09-22 NOTE ABOVE WAS
+WAITING FOR: SHE HAS CROSSED 10 SHIPPED.** "Summary for This Month," last updated Sep 28 2026: **Total
+Items Shipped 10 · Total Earnings $6.89 · Total Ordered Items 25 · Clicks 338 · Conversion 7.40%.**
+▶▶ **6→10 shipped, $4.47→$6.89, 228→338 clicks, conversion back up 6.14%→7.40% — real, continued
+growth, and by the best proxy visible from here she is now AT the 10-in-30-days bar the Creators API
+page names, not still short of it.** ⚠️ **SAME CAVEAT AS BEFORE, NOT DROPPED: "items shipped this
+month" is a proxy for "qualifying sales in a trailing 30 days," not a guaranteed match to Amazon's own
+rolling window** — being at 10 on this screen is a strong sign, not a certified pass.
+▶ **SO THIS IS HER MOMENT TO ACTUALLY TRY THE REAL CALL, PER THE STANDING PLAN:** she already has the
+"Catherine-StyleStar" app and an Active credential from 2026-09-22, sitting unused — she can go back to
+the Creators API page and attempt a real credential/API call now, which will report her ACTUAL
+eligibility (`AssociateNotEligible` if not, real access if so) rather than this session inferring it
+from a dashboard proxy. **Nothing on the code side needs to happen before she tries this — trying it
+costs her nothing and is strictly more informative than watching the shipped-items number.**
+▶ **IF SHE TRIES IT AND IT SUCCEEDS:** that is the trigger to come back and actually scope the Amazon-
+photos build with her (which page(s) get them, how a failed photo call degrades — never inventing one,
+same honesty floor as everywhere else in this app). **STILL NOT STARTED, STILL HERS TO GREENLIGHT.**
+🚨🚨 **THE REAL TEST WAS ACTUALLY RUN, SAME DAY 2026-09-28 — A LIVE RESULT, NOT A GUESS: STILL
+`AssociateNotEligible`.** She shared her real Access Key ID / Secret Access Key for the existing
+"Catherine-StyleStar" credential (v3.1) in-session; a one-time script got a real OAuth token (200, via
+`POST https://api.amazon.com/auth/o2/token`, `grant_type:client_credentials`, `scope:creatorsapi::default`
+— confirms the credential itself is valid) and then called the real
+`POST https://creatorsapi.amazon/catalog/v1/getItems` endpoint with her real `partnerTag`
+(`stylestar01-20`). ⚠️ **FIRST ATTEMPT'S 400 (a `resources` enum typo on Claude's side, "ItemInfo.Title"
+vs the real `itemInfo.title`) WAS WRONGLY READ AS GOOD NEWS AND HAD TO BE CORRECTED TO HER — validation
+happens BEFORE the eligibility check, so a 400 proves nothing about eligibility.** The corrected call,
+with valid parameters, got a clean **403 `AssociateNotEligible`: "Your account does not currently meet
+the eligibility requirements."** ▶▶ **THIS IS CONSISTENT WITH "NOT YET REVIEWED", NOT NECESSARILY "NO"**
+— the Creators API's own FAQ says review can take up to 48 hours after crossing the bar, and she only
+hit 10 shipped items the same day this test ran. **NEXT: RE-RUN THE IDENTICAL TEST in 24-48 hours** (the
+credential is already known-good, so a retest is just re-running the same two calls, seconds of work) —
+if it is STILL `AssociateNotEligible` after that window, that is Amazon's real answer for now, not a
+final closed door, since her shipped-items count is still climbing. **The credential was used only for
+this one live test, was never written to the repo or committed anywhere, and is not stored by this
+session anywhere durable.**
+▶ **TECHNICAL NOTE WORTH KEEPING FOR WHEN THE BUILD ACTUALLY HAPPENS, so it never has to be re-derived:
+the Creators API uses OAuth2 client_credentials (Login with Amazon), NOT the old PA-API's AWS SigV4
+signing.** Token endpoint `https://api.amazon.com/auth/o2/token` (v3.1 = US/CA/MX/BR), body
+`{grant_type,client_id,client_secret,scope:"creatorsapi::default"}`, token valid 3600s. Catalog calls go
+to `https://creatorsapi.amazon/catalog/v1/getItems` (also `searchItems`, `getVariations`,
+`getBrowseNodes`) with `Authorization: Bearer <token>`, `x-marketplace: www.amazon.com`, and a body
+carrying `itemIds`/`itemIdType`/`marketplace`/`partnerTag`/`resources` (resources is a large closed enum,
+camelCase, e.g. `itemInfo.title`, `images.primary.medium`, `offersV2.listings.price` — not the old
+PascalCase PA-API resource names). ⚠️ **The old AWS Access Key/Secret Key PA-API credentials will NOT
+work here at all — this is a genuinely different auth system, not just a new key.**

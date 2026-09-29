@@ -642,7 +642,17 @@ there enough traffic for the Amazon clock" with no code written. *The original l
 
 ---
 
-## ▶▶▶ WHERE WE LEFT OFF — 2026-09-28 (nineteenth session). READ THIS FIRST.
+## ▶▶▶ WHERE WE LEFT OFF — 2026-09-28/29 (nineteenth session). READ THIS FIRST.
+🚪 **SHE SIGNED OFF AT THE END OF 2026-09-29 — her words: *"The buttons are fine for now. Let's save all
+and I will open a new session next week."*** ▶ **Everything below is saved, merged to `main` and live,
+verified on the SERVED files at stylestar.app. Nothing is half-finished and nothing is waiting on a push.**
+⭐ **WHERE TO START NEXT WEEK, in her own order of urgency — and ASK, do not launch:**
+**(1)** the **Oct 1 Florida cutover** (the only hard date on this page, and it will have PASSED or be days
+away — check what she did). **(2)** the **Amazon Creators API retest** — overdue since 09-29, needs her
+keys again, nothing stored. **(3)** whether **Indie Law replied**. **(4)** her **fall Edit batch**, which
+is her own active ask and the highest-value thing she can bring. ▶ **Her three named priorities (searches ·
+traffic · affiliates) are still unsequenced and she asked to organise her own thoughts first — a plain
+status recap of each is ready, but do NOT launch into any of them unprompted.**
 🚨 **THIS BLOCK IS THE CURRENT TRUTH. Everything below it is standing reference — if a line further
 down contradicts this one, THIS ONE WINS.**
 📁 **The eighteenth-session entry moved to `CLAUDE-archive.md` in this commit, VERBATIM.** Nothing was
@@ -734,8 +744,9 @@ own em-box and no alignment rule can fix a font's own placement). ⚠️ **NEVER
 ⚠️ **"SAME SIZE" WAS MEASURED, AND THE BOX — NOT THE FONT — WAS WHAT DIFFERED.** All three are 278px wide,
 but her own copy is longer on two of them ("Click here to explore…", "Curious what's trending
 right now?") so those wrap to two lines while "My Amazon Storefront" sits on one. ▶ **Equalised with
-`min-height:70px`, NEVER by shortening her words** — her standing rule is that her copy is not rewritten to
-satisfy a rule. All three now measure **278 × 70**.
+a `min-height`, NEVER by shortening her words** — her standing rule is that her copy is not rewritten to
+satisfy a rule. ⚠️ **The MECHANISM survived every later round; the NUMBER moved twice more as the frame
+thickened. Do not quote a pixel height from this paragraph — the settled figure is `278 × 77` above.**
 ⭐ **TWO MORE ROUNDS THE SAME DAY, BOTH HERS, BOTH LIVE — and each one's CAUSE is the useful part:**
 **(a) *"Make the spacing between buttons even."*** The first gap measured **27px against 14px** for every
 gap below it, and **the cause was not a margin**: `.dc-xlink`'s own 13px BOTTOM padding sat UNDERNEATH the
@@ -749,7 +760,9 @@ PROPORTION of a frame she had already approved rather than its WEIGHT.**
 🚨 **AND (b) NEARLY BROKE (a)'s SIBLING RULE, WHICH IS THE LESSON: 4px of border made the framed pills 2px
 taller than the tan one.** ▶▶ **FIXED BY CONSTRUCTION, NOT BY A NUMBER: every pill now carries the SAME 4px
 border box, and a tan pill paints its own border tan so it still reads as a solid fill edge to edge.** All
-three measure **278 × 73**, and **the next change to the frame's weight needs no second edit anywhere.**
+three stayed identical through that round and the next one, **and the next change to the frame's weight
+still needs no second edit anywhere** — which is exactly what happened when the frame went to 5px + 4px
+and every pill moved to `278 × 77` together, with nothing to re-tune.
 ⭐ **That is her standing direction applied to CSS — fewer rules and breakable things: a shared box beats a
 re-tuned magic height, because the magic height has to be found again every time.**
 
@@ -2030,23 +2043,33 @@ retired. Archiving once does not fix this; the rule does.
   re-reported each time it moves, with every earlier version kept in full beside it.
   ⭐⭐ **THE FIX, AND IT IS HER OWN TEST APPLIED *INSIDE* A NEVER-ARCHIVE SECTION RATHER THAN TO IT:**
   *is this what HAPPENED, or what is TRUE RIGHT NOW?* **A superseded status line is what HAPPENED.**
-  **TWO MEASURED, SAFE TARGETS, NEITHER STARTED:**
-  **(a)** the run of **five successive Amazon dashboard snapshots** (09-13 → 09-14 → 09-15 → 09-18 →
-  09-21 → 09-22 → 09-28) inside AFFILIATE STATUS is **10,896 bytes (3.3% of the whole file)** and only
-  the LAST one is true right now. ▶ **Replace with ONE trend table, one row per date — every figure
-  kept, the trend MORE visible, not less.** ⚠️ **It is her business record and she is invested in
-  watching it grow, so keep every number; compact the PROSE around them, never the figures.**
-  **(b)** THE BOARD is **27 closed rows and 3 open ones**; the closed ones are finished builds, which
+  **TWO MEASURED, SAFE TARGETS — (a) IS NOW DONE, (b) IS STILL OPEN:**
+  ✅ **(a) DONE 2026-09-29.** The run of **seven successive Amazon dashboard snapshots** (09-13 → 09-14 →
+  09-15 → 09-18 → 09-21 → 09-22 → 09-28) inside AFFILIATE STATUS was **10,895 bytes** of which only the
+  LAST reading was true. ▶ **Now ONE TREND TABLE, one row per date — every figure kept, the trend MORE
+  visible than it was as prose.** The originals are in `CLAUDE-archive.md` under *"ARCHIVED 2026-09-29 —
+  THE AMAZON DASHBOARD SNAPSHOT RUN, VERBATIM"*, and **a 34-point grep proof ran clean** over every
+  figure, every caveat, her verbatim *"and it wasn't me"*, and the whole Creators API technical note.
+  ⚠️ **ADD A ROW TO THAT TABLE, NEVER REPLACE IT** — it is her business record and she watches it grow.
+  🚨🚨 **AND THE HONEST RESULT, BECAUSE IT CHANGES THE PLAN: IT SAVED ONLY ~5.5 KB, 1.6% OF THE FILE.**
+  The compacted replacement has to carry every figure and every caveat, so it is barely shorter than
+  what it replaced. ▶▶ **COMPACTING PROSE IS NOT THE LEVER. (b) IS** — and so is the honest question
+  nobody has asked yet: **how much of the RULE LEDGER (43 KB, the single biggest section) is a rule she
+  gave versus the STORY of how it was found?** The rules never archive; the stories are history by her
+  own test. **That is where the weight actually is.**
+  ⏳ **(b) NOT STARTED.**
+  THE BOARD is **27 closed rows and 3 open ones**; the closed ones are finished builds, which
   is history by her own test. ⚠️ **BUT SEVERAL CARRY EMBEDDED RULES** (row 25b alone holds *"RENAME THE
   HEADING FREELY. NEVER RENAME THE PATH"*, the Amazon-photos rule reversal, and the two-independent-
   testers case study). **Lift every ⚠️/🚨 clause out verbatim BEFORE compacting a row, or a rule she
   gave dies inside a row marked done.**
-  ⚠️⚠️ **THIS WAS DELIBERATELY NOT DONE ON 2026-09-29 AND THE REASON IS THE POINT: it was the end of a
-  session she was signing off from, (a) rewrites her live business record and (b) risks silently losing
-  a rule — neither is a thing to scramble when she cannot look at it.** ▶ **It is a REAL JOB for a
-  session with room: archive verbatim first, then read back and keep only what is true, then GREP FOR
-  EVERY RULING BY NAME to prove nothing was lost (that proof pass ran 37/37 clean this session — use
-  the same method).**
+  ⚠️⚠️ **(b) WAS DELIBERATELY LEFT UNDONE ON 2026-09-29, AT THE END OF A SESSION SHE WAS SIGNING OFF
+  FROM, AND THE REASON IS THE POINT: it risks silently losing a rule she gave, and that is not a thing
+  to scramble when she cannot look at it.** ▶ **(a) was safe to do the same evening because it touches
+  only FIGURES, which can be proven present one by one; (b) touches PROSE THAT HIDES RULES, which
+  cannot.** ▶▶ **IT IS A REAL JOB FOR THE START OF A SESSION, NOT THE END: archive verbatim first, then
+  read back and keep only what is true, then GREP FOR EVERY RULING BY NAME to prove nothing was lost.**
+  ⭐ **THE METHOD IS PROVEN TWICE NOW — 37/37 clean on the 09-28 wave, 34/34 on (a) — use it again.**
 - 🎯 **ARCHIVING ITSELF IS ONE OF THE THINGS CLAUDE DECIDES, NEVER CATH — HER STANDING RULE, 2026-09-10.**
   Her words: *"Why are you asking me about putting something on main? I don't even know what that means.
   I count on you to decide what needs to be saved or archived or put on main or the branch and all of
@@ -2981,116 +3004,69 @@ can get into that account, then read the numbers with her — it answers "did an
 there enough traffic for the Amazon clock" with no code written. 
 
 🎉🎉 **FIRST REAL, NON-CATH TRAFFIC CONFIRMED — 2026-09-13, LIVE OPERATIONAL STATUS, NEVER ARCHIVES.**
-Her own Amazon Associates dashboard, the day after Amazon approval (2026-09-12), showed **6 clicks and
-2 ordered items — her words, "and it wasn't me."** ▶▶ **THIS IS THE FIRST DIRECT EVIDENCE ANYONE BUT
-HER HAS EVER USED STYLE STAR TO SHOP.** Not a hypothetical, not a guess from analytics nobody's read —
-a real stranger clicked an Amazon Finds link and bought something. ⚠️ **"Ordered items" on the
-dashboard is PENDING until the order ships and clears its return window** — that's when Amazon confirms
-it as a qualifying sale, counts it toward the 3-sales/180-day clock, and pays a commission. So this is
-strong evidence, not yet a confirmed sale — re-check the dashboard in a few weeks to see if it converted.
-**2 of the 3 required qualifying sales, if they clear, well within day one of the 180-day window.**
-📈 **UPDATED 2026-09-14: HER DASHBOARD NOW SHOWS 4 SALES**, comfortably past the 3-sale bar — still
-technically PENDING under the same rule until they ship and clear their return window, not yet a fully
-locked-in count. ⚠️ **CLEARING "CONDITIONAL" STATUS AND GETTING PRODUCT ADVERTISING API ACCESS ARE TWO
-SEPARATE GATES, DO NOT CONFLATE THEM.** Clearing conditional status changes nothing about what the app
-can build — Associate links, tagging and earning are already fully live regardless of status. PA API
-access (real Amazon photos/price/stock data) is a further application with its own minimum SALES-RATE
-requirement to both get AND keep — not a one-time bar — and the "10 sales in 30 days" figure already
-flagged below as reported-not-confirmed still holds. **Read the actual current PA API terms at the
-moment she applies; don't trust an old number.**
-📈📈 **UPDATED 2026-09-15: HER DASHBOARD NOW SHOWS 5 ORDERS, 2 OF WHICH HAVE SHIPPED.** Shipping is a
-real step toward a shipped order clearing its return window and locking in as a qualifying sale —
-worth re-checking the dashboard again in a couple weeks to see if "conditional" clears. ⚠️ **Not yet
-confirmed clear; still tracked the same way as the 9/13 and 9/14 figures above.**
-📈📈📈 **UPDATED 2026-09-18: HER DASHBOARD NOW SHOWS 6 SALES, 4 SHIPPED.** Continued growth, same
-not-yet-confirmed-clear status as every figure above until an order actually clears its return window.
-**Well past the 3-sale bar repeatedly now — re-check in a couple weeks for the first one to actually
-clear and see whether "conditional" status changes.**
-🎉🎉🎉 **UPDATED 2026-09-21 — FIRST REAL AMAZON DOLLARS AND FIRST REAL TRAFFIC NUMBERS, BOTH FROM HER OWN
-LIVE DASHBOARD SCREENSHOT.** She received an Amazon "approved" email (see the Storefront thread above for
-what that turned out to mean) and checked her dashboard directly. Real, current figures, "Last updated:
-Sep 21 2026": **Total Earnings $3.40 · Total Items Shipped 4 · Total Ordered Items 13 · Clicks 175 ·
-Conversion 7.43%, all for the last 30 days.** ▶▶ **$3.40 IS HER FIRST CONFIRMED AMAZON DOLLAR FIGURE** —
-everything before this was pending-sale evidence, never an actual earned amount. ⭐⭐ **AND 7.43%
-CONVERSION IS GENUINELY STRONG** — typical e-commerce conversion runs 2-4%, so of the women who do click
-through from Style Star, an unusually high share are buying. **The bottleneck is still traffic (175
-clicks this month), not the shopping experience itself — the app is doing its job well on the clicks it
-gets.** ⚠️ **"Conditional" status was NOT visible on this particular dashboard screen** (it lives under
-Account Settings, not the home page) — still unconfirmed whether it has cleared; ask her to check that
-specific field next time this comes up, don't assume from this screenshot alone.
-📈📈📈📈 **UPDATED 2026-09-22 — ANOTHER REAL DASHBOARD SCREENSHOT, GROWTH CONTINUES.** "Summary for This
-Month," last updated Sep 22 2026: **Total Items Shipped 6 · Total Earnings $4.47 · Total Ordered Items
-14 · Clicks 228 · Conversion 6.14%.** ▶▶ **THIS IS THE FIGURE THAT ANSWERS PART OF THE CREATORS API
-QUESTION ABOVE, AND IT'S STILL SHORT.** "Items shipped" is the closest available proxy for "qualifying
-sales" on this dashboard, and 6 is short of the 10-in-30-days bar the Creators API page names. ⚠️
-**NOT A CLEAN 1:1 COMPARISON** — this box is headed "This Month" while the chart above it says "Last
-30 days" (both cover roughly the same Aug 23–Sep 22 window in the screenshot, but the two labels aren't
-guaranteed to mean the identical rolling window Amazon's own PA-API eligibility check uses). **The
-honest read: real growth (4→6 shipped, $3.40→$4.47, 175→228 clicks in a day), but by the best proxy
-visible from here, still below the 10-shipped bar for Creators API/PA-API access as of this screenshot.**
-▶ **Conversion dipped slightly (7.43%→6.14%) as clicks grew faster than shipped orders — still well
-above the 2-4% e-commerce norm, nothing concerning.** ▶ **STILL HERS TO DO IF SHE WANTS A DEFINITIVE
-ANSWER RATHER THAN INFERRING FROM THIS PROXY: click Create App on the Creators API page and let a real
-credential/API call report her actual eligibility** — this dashboard number is a reasonable guess, not
-the number Amazon's own gate actually checks.
-✅✅ **DONE, SAME DAY 2026-09-22 — SHE CREATED THE APP AND GENERATED CREDENTIALS.** App name
-"Catherine-StyleStar" (`Applicationid: stylestar01-20.catherine-stylestar`), one credential generated
-and downloaded via the CSV option, confirmed **Active**. ⚠️ **A stray click landed on the "Create App"
-button (which starts a SECOND app) instead of "Add new credential" first — caught before it created a
-duplicate; she cancelled and used the right button.** ▶ **NOTHING ELSE TO DO ON THIS RIGHT NOW.** She
-is still short of the 10-shipped-items bar (6 as of the 2026-09-22 dashboard, see above), so a real API
-call today would almost certainly report ineligible and teach nothing new. **THE CREDENTIAL JUST SITS
-READY, AT NO COST, UNTIL A FUTURE DASHBOARD CHECK SHOWS HER CROSSING 10 SHIPPED** — that is the moment
-to actually try a real call and get a definitive yes/no, rather than re-deriving it from the shipped-
-items proxy. ⚠️ **HER SECRET KEY WAS VISIBLE IN A SCREENSHOT SHE SENT THIS SESSION** — flagged to her
-gently, not urgent; Amazon supports a second credential per app for rotation if she ever wants a clean
-one. **Nothing in the app's code uses these credentials yet — still fully unbuilt**, per the standing
-note above: confirm real eligibility first, THEN scope the actual photo-fetch build with her.
-🚨🚨 **UPDATED 2026-09-28 — REAL DASHBOARD SCREENSHOT, AND THIS IS THE MOMENT THE 09-22 NOTE ABOVE WAS
-WAITING FOR: SHE HAS CROSSED 10 SHIPPED.** "Summary for This Month," last updated Sep 28 2026: **Total
-Items Shipped 10 · Total Earnings $6.89 · Total Ordered Items 25 · Clicks 338 · Conversion 7.40%.**
-▶▶ **6→10 shipped, $4.47→$6.89, 228→338 clicks, conversion back up 6.14%→7.40% — real, continued
-growth, and by the best proxy visible from here she is now AT the 10-in-30-days bar the Creators API
-page names, not still short of it.** ⚠️ **SAME CAVEAT AS BEFORE, NOT DROPPED: "items shipped this
-month" is a proxy for "qualifying sales in a trailing 30 days," not a guaranteed match to Amazon's own
-rolling window** — being at 10 on this screen is a strong sign, not a certified pass.
-▶ **SO THIS IS HER MOMENT TO ACTUALLY TRY THE REAL CALL, PER THE STANDING PLAN:** she already has the
-"Catherine-StyleStar" app and an Active credential from 2026-09-22, sitting unused — she can go back to
-the Creators API page and attempt a real credential/API call now, which will report her ACTUAL
-eligibility (`AssociateNotEligible` if not, real access if so) rather than this session inferring it
-from a dashboard proxy. **Nothing on the code side needs to happen before she tries this — trying it
-costs her nothing and is strictly more informative than watching the shipped-items number.**
-▶ **IF SHE TRIES IT AND IT SUCCEEDS:** that is the trigger to come back and actually scope the Amazon-
-photos build with her (which page(s) get them, how a failed photo call degrades — never inventing one,
-same honesty floor as everywhere else in this app). **STILL NOT STARTED, STILL HERS TO GREENLIGHT.**
-🚨🚨 **THE REAL TEST WAS ACTUALLY RUN, SAME DAY 2026-09-28 — A LIVE RESULT, NOT A GUESS: STILL
-`AssociateNotEligible`.** She shared her real Access Key ID / Secret Access Key for the existing
-"Catherine-StyleStar" credential (v3.1) in-session; a one-time script got a real OAuth token (200, via
-`POST https://api.amazon.com/auth/o2/token`, `grant_type:client_credentials`, `scope:creatorsapi::default`
-— confirms the credential itself is valid) and then called the real
-`POST https://creatorsapi.amazon/catalog/v1/getItems` endpoint with her real `partnerTag`
-(`stylestar01-20`). ⚠️ **FIRST ATTEMPT'S 400 (a `resources` enum typo on Claude's side, "ItemInfo.Title"
-vs the real `itemInfo.title`) WAS WRONGLY READ AS GOOD NEWS AND HAD TO BE CORRECTED TO HER — validation
-happens BEFORE the eligibility check, so a 400 proves nothing about eligibility.** The corrected call,
-with valid parameters, got a clean **403 `AssociateNotEligible`: "Your account does not currently meet
-the eligibility requirements."** ▶▶ **THIS IS CONSISTENT WITH "NOT YET REVIEWED", NOT NECESSARILY "NO"**
-— the Creators API's own FAQ says review can take up to 48 hours after crossing the bar, and she only
-hit 10 shipped items the same day this test ran. **NEXT: RE-RUN THE IDENTICAL TEST in 24-48 hours** (the
-credential is already known-good, so a retest is just re-running the same two calls, seconds of work) —
-if it is STILL `AssociateNotEligible` after that window, that is Amazon's real answer for now, not a
-final closed door, since her shipped-items count is still climbing. **The credential was used only for
-this one live test, was never written to the repo or committed anywhere, and is not stored by this
-session anywhere durable.**
-▶ **TECHNICAL NOTE WORTH KEEPING FOR WHEN THE BUILD ACTUALLY HAPPENS, so it never has to be re-derived:
-the Creators API uses OAuth2 client_credentials (Login with Amazon), NOT the old PA-API's AWS SigV4
-signing.** Token endpoint `https://api.amazon.com/auth/o2/token` (v3.1 = US/CA/MX/BR), body
-`{grant_type,client_id,client_secret,scope:"creatorsapi::default"}`, token valid 3600s. Catalog calls go
-to `https://creatorsapi.amazon/catalog/v1/getItems` (also `searchItems`, `getVariations`,
-`getBrowseNodes`) with `Authorization: Bearer <token>`, `x-marketplace: www.amazon.com`, and a body
-carrying `itemIds`/`itemIdType`/`marketplace`/`partnerTag`/`resources` (resources is a large closed enum,
-camelCase, e.g. `itemInfo.title`, `images.primary.medium`, `offersV2.listings.price` — not the old
-PascalCase PA-API resource names). ⚠️ **The old AWS Access Key/Secret Key PA-API credentials will NOT
-work here at all — this is a genuinely different auth system, not just a new key.**
+Her own Amazon Associates dashboard, the day after approval, showed **6 clicks and 2 ordered items — her
+words, *"and it wasn't me."*** ▶▶ **THAT WAS THE FIRST DIRECT EVIDENCE ANYONE BUT HER HAD EVER USED STYLE
+STAR TO SHOP.** Not a hypothetical, not a guess from analytics nobody had read — a real stranger clicked an
+Amazon Finds link and bought something.
+📈📈 **HER DASHBOARD, EVERY READING SHE HAS SENT — one row per real screenshot, nothing estimated.**
+🚨 **COMPACTED 2026-09-29 FROM SEVEN SUCCESSIVE PROSE ENTRIES; the originals are in `CLAUDE-archive.md`
+under "ARCHIVED 2026-09-29 — THE AMAZON DASHBOARD SNAPSHOT RUN, VERBATIM".** ⚠️ **EVERY FIGURE IS KEPT —
+only the repeated prose around them was cut. This is her business record and she is invested in watching
+it grow: ADD A ROW, never replace the table.**
+| date | earnings | shipped | ordered | clicks | conversion |
+|---|---|---|---|---|---|
+| Sep 13 | — | — | 2 | 6 | — |
+| Sep 14 | — | — | 4 | — | — |
+| Sep 15 | — | 2 | 5 | — | — |
+| Sep 18 | — | 4 | 6 | — | — |
+| Sep 21 | **$3.40** | 4 | 13 | 175 | **7.43%** |
+| Sep 22 | **$4.47** | 6 | 14 | 228 | 6.14% |
+| Sep 28 | **$6.89** | 10 | 25 | 338 | **7.40%** |
+⚠️ **"ORDERED" IS NOT A SALE YET.** An ordered item stays PENDING until it ships AND clears its return
+window — that is when Amazon confirms it as a qualifying sale, counts it toward the 3-sales/180-day clock
+and pays. **No figure in this table is certified; every one is her dashboard's own live reading.**
+⭐⭐ **THE NUMBER THAT MATTERS MOST IS THE CONVERSION, AND IT IS GENUINELY STRONG: typical e-commerce runs
+2-4% and she sits at 6-7.4%.** ▶▶ **SO THE BOTTLENECK IS TRAFFIC, NOT THE SHOPPING EXPERIENCE — of the
+women who do click through, an unusually high share buy. The app is doing its job on the clicks it gets.**
+⚠️ **"ITEMS SHIPPED THIS MONTH" IS A PROXY FOR "QUALIFYING SALES IN A TRAILING 30 DAYS", NOT A MATCH.**
+The dashboard box is headed *"This Month"* while the chart above it says *"Last 30 days"*, and neither is
+guaranteed to be the rolling window Amazon's own eligibility check uses. **Crossing 10 on this screen is a
+strong sign, never a certified pass.**
+⚠️ **CLEARING "CONDITIONAL" STATUS AND GETTING CATALOGUE API ACCESS ARE TWO SEPARATE GATES — DO NOT
+CONFLATE THEM.** Conditional status changes NOTHING about what the app can build: Associate links, tagging
+and earning are fully live regardless. ▶ **Conditional lives under Account Settings, not the dashboard home,
+so it has never been visible in any screenshot she has sent — ask her to check that specific field rather
+than inferring it.**
+✅✅ **THE CREATORS API APP EXISTS AND ITS CREDENTIAL IS ACTIVE — 2026-09-22.** App **"Catherine-StyleStar"**
+(`Applicationid: stylestar01-20.catherine-stylestar`), one credential generated and downloaded as CSV.
+⚠️ **A stray click landed on "Create App" (which starts a SECOND app) instead of "Add new credential" —
+caught before it duplicated; she cancelled and used the right button.** ⚠️ **HER SECRET KEY WAS VISIBLE IN A
+SCREENSHOT SHE SENT** — flagged to her gently, not urgent; Amazon supports a second credential per app for
+rotation if she ever wants a clean one.
+🚨🚨 **THE REAL ELIGIBILITY TEST WAS RUN LIVE, 2026-09-28 — A REAL RESULT, NOT A GUESS: `AssociateNotEligible`.**
+She shared her real Access Key ID / Secret Access Key in-session; a one-time script got a real OAuth token
+(200 — which confirms the credential itself is valid) and then called the real catalogue endpoint with her
+real `partnerTag` (`stylestar01-20`). The corrected call, with valid parameters, returned a clean **403
+`AssociateNotEligible`: "Your account does not currently meet the eligibility requirements."**
+⚠️⚠️ **AND THE MISTAKE INSIDE THAT TEST, KEPT BECAUSE IT GENERALISES: the FIRST attempt's 400 (a `resources`
+enum typo on Claude's side, `ItemInfo.Title` vs the real `itemInfo.title`) WAS WRONGLY READ AS GOOD NEWS AND
+HAD TO BE CORRECTED TO HER.** ▶ **Validation happens BEFORE the eligibility check, so a 400 proves nothing
+about eligibility.** **A malformed request cannot answer the question it was sent to ask.**
+▶▶ **`AssociateNotEligible` IS CONSISTENT WITH "NOT YET REVIEWED", NOT NECESSARILY "NO"** — the Creators API
+FAQ allows up to 48 hours after crossing the bar, and she hit 10 shipped items the same day the test ran.
+**The credential was used for that one live test only, was never written to the repo or committed, and is
+not stored anywhere by any session. A retest needs her keys again.**
+▶ **THE TECHNICAL DETAIL, KEPT SO IT NEVER HAS TO BE RE-DERIVED: the Creators API uses OAuth2
+client_credentials (Login with Amazon), NOT the old PA-API's AWS SigV4 signing.** Token endpoint
+`https://api.amazon.com/auth/o2/token` (v3.1 = US/CA/MX/BR), body
+`{grant_type,client_id,client_secret,scope:"creatorsapi::default"}`, token valid 3600s. Catalog calls go to
+`https://creatorsapi.amazon/catalog/v1/getItems` (also `searchItems`, `getVariations`, `getBrowseNodes`) with
+`Authorization: Bearer <token>`, `x-marketplace: www.amazon.com`, and a body carrying
+`itemIds`/`itemIdType`/`marketplace`/`partnerTag`/`resources` (a large closed enum, **camelCase** — e.g.
+`itemInfo.title`, `images.primary.medium`, `offersV2.listings.price` — not the old PascalCase PA-API names).
+⚠️ **The old AWS Access Key/Secret Key PA-API credentials will NOT work here at all — a genuinely different
+auth system, not just a new key.**
+
 💵💵 **EARNINGS TO DATE, HER FIGURE 2026-09-08: $27 IN THE RAKUTEN DASHBOARD. EVERYTHING ELSE HAS BEEN
 AN EXPENSE.** ▶ **Recorded because it is live operational status and because it is the honest baseline
 that makes any future number mean something.** ⚠️ **It is also the whole argument in one line: the app
