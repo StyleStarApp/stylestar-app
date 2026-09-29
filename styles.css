@@ -2253,7 +2253,15 @@ body.menu-open .menu-panel{display:block}
   width:284px;max-width:100%;box-sizing:border-box;
   text-align:center;border-radius:999px;text-decoration:none;cursor:pointer;
   font:700 12px/1.55 'Jost',sans-serif;letter-spacing:.1em;text-transform:uppercase;
-  padding:13px 20px;margin:14px auto 0;-webkit-tap-highlight-color:transparent;
+  padding:13px 20px;margin:16px auto 0;-webkit-tap-highlight-color:transparent;
+  /* ⚠️ EVERY PILL CARRIES THE SAME 4px BORDER BOX, EVEN THE ONES THAT DO NOT SHOW
+     A FRAME -- a tan pill paints its border its own tan, so it reads as a solid
+     fill edge to edge. ▶ THIS IS WHAT KEEPS "all the pills the same size" TRUE
+     WHEN THE FRAME CHANGES WEIGHT: she asked for a thicker frame and the framed
+     pills grew 2px taller than the tan one. Rather than re-tune a magic height,
+     the tan pills now grow by exactly the same amount, so the next change to the
+     border width needs no second edit anywhere. */
+  border:4px solid transparent;
   /* ⚠️ HER INSTRUCTION WAS "all of the pills the same size", AND MEASUREMENT SAID
      THE BOX, NOT THE FONT, WAS THE THING THAT DIFFERED. Her own copy is longer on
      two of the three ("Click here to explore The Edit", "Curious what's trending
@@ -2263,7 +2271,7 @@ body.menu-open .menu-panel{display:block}
      a rule. The short pill grows to match; it is `inline-flex`, so its own
      align-items centres the line. The two long ones are already taller than this
      floor, so it changes nothing for them. */
-  min-height:70px}
+  min-height:73px}
 /* 🚨🚨 A PILL WEARS THE COLOUR OF WHERE IT GOES, NEVER OF THE PAGE IT SITS ON --
    HER CORRECTION, 2026-09-29, FROM A SCREENSHOT OF THE EDIT PAGE: "The Amazon
    button is supposed to be tan."
@@ -2276,14 +2284,18 @@ body.menu-open .menu-panel{display:block}
      to What's Trending -> teal #0FA6B6  (lives on both)
    ⚠️ DO NOT "unify" these two selectors back into one. */
 /* white fill + the app's silver mirror as the outer edge */
+/* ⚠️ HER ASK: "the pink and silver border and teal and silver border frame should
+   be thicker." BOTH halves thicken together -- silver 3->4px, the coloured ring
+   2->3px -- because thickening only one would change the proportion of a frame she
+   approved, not its weight. */
 #s-finds .dc-xlink>span,
 #s-dream .dc-trend-link,#s-finds .dc-trend-link{
-  display:inline-block;color:#1a1a1a;border:3px solid transparent;
+  display:inline-block;color:#1a1a1a;
   background:linear-gradient(#fff,#fff) padding-box,
     linear-gradient(135deg,#FFFFFF 0%,#C6CACE 15%,#8C9298 34%,#F4F6F8 50%,#9AA0A6 66%,#DFE2E5 84%,#FFFFFF 100%) border-box}
 /* the coloured frame sits INSIDE the silver, as an inset ring */
-#s-finds .dc-xlink>span{box-shadow:inset 0 0 0 2px #EC4899}
-#s-dream .dc-trend-link,#s-finds .dc-trend-link{box-shadow:inset 0 0 0 2px #0FA6B6}
+#s-finds .dc-xlink>span{box-shadow:inset 0 0 0 3px #EC4899}
+#s-dream .dc-trend-link,#s-finds .dc-trend-link{box-shadow:inset 0 0 0 3px #0FA6B6}
 /* 🚨 AND THE AMAZON ONE IS THE FILLED TAN PILL SHE ALREADY APPROVED, NOT A TAN
    RING -- BECAUSE SHE HAS ALREADY RULED ON EXACTLY THAT. On 2026-09-22 this tan
    was tried as thin outline/text ink and she rejected it as "greenish brown",
@@ -2292,12 +2304,19 @@ body.menu-open .menu-panel{display:block}
    byte-for-byte the Storefront pill's colours: fill #ECBD83, ink #4a463e (5.44:1).
    ⚠️ NEVER render this tan as a border, an outline or text. */
 #s-dream .dc-xlink>span{
-  display:inline-block;border:none;background:#ECBD83;color:#4a463e}
-/* ⚠️ THE INVITATION'S PARENT CARRIES 2px OF SIDE PADDING, which clamped its
-   pill to 274px against the other two at 278 -- "all the pills the same size"
-   is her instruction, so the parent gives that padding back. Measured, not
-   eyeballed: all three now report the identical width. */
-#s-dream .dc-xlink,#s-finds .dc-xlink{padding-left:0;padding-right:0}
+  display:inline-block;background:#ECBD83;border-color:#ECBD83;color:#4a463e}
+/* the Storefront pill paints its own border tan for the same reason */
+#s-finds .dc-store-btn.is-bottom{border-color:#ECBD83}
+/* ⚠️ THE INVITATION'S PARENT CARRIES PADDING ON ALL FOUR SIDES, and two of those
+   sides were distorting her pills. The SIDE padding (2px) clamped the invitation
+   to 274px against the other two at 278. The BOTTOM padding (13px) sat UNDERNEATH
+   the pill and added itself to the next pill's own margin, so the first gap
+   measured 27px against 14px for every gap below it -- "make the spacing between
+   buttons even" is her instruction, and this was the cause.
+   ▶ The parent gives both back; the TOP padding stays, because it sits above HER
+   SENTENCE rather than between two buttons. Measured, not eyeballed: identical
+   widths, and one single gap value all the way down. */
+#s-dream .dc-xlink,#s-finds .dc-xlink{padding-left:0;padding-right:0;padding-bottom:0}
 /* the weld stays INLINE inside the pill, and the arrow matches the Amazon one */
 #s-dream .dc-xlink>span .nb,#s-finds .dc-xlink>span .nb,
 #s-dream .dc-trend-link .nb,#s-finds .dc-trend-link .nb{display:inline}

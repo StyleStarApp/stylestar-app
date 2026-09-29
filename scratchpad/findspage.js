@@ -332,6 +332,7 @@ const foot = async (route, screen) => {
   await page.waitForTimeout(600);
   return page.evaluate(s => {
     const g = e => e ? getComputedStyle(e) : null;
+    const sc = document.getElementById(s);
     const q = x => document.querySelector('#' + s + ' ' + x);
     const xl = q('.dc-xlink'), tl = q('.dc-trend-link');
     const sp = xl && xl.querySelector(':scope > span');
@@ -357,6 +358,22 @@ const foot = async (route, screen) => {
          looked for across every property that can carry it, not just `color`. */
       spInk: sp ? [g(sp).color, g(sp).boxShadow, g(sp).borderTopColor, g(sp).backgroundImage, g(sp).backgroundColor].join(' | ') : '',
       spBg: sp ? g(sp).backgroundColor : '',
+      /* 🚨 HER TWO ASKS, 2026-09-29: "Make the spacing between buttons even" and
+         "all of the pills the same size". ▶ Both are claims about the WHOLE run of
+         closing pills, not about one pair, so the run is read in document order and
+         its gaps and heights are compared against each other -- never against a
+         pixel value she is free to restyle. The run grows on its own (the Amazon
+         Storefront pill joined it 2026-09-22) and these still hold. */
+      pillRun: (() => {
+        const els = [...sc.querySelectorAll('.dc-xlink>span,.dc-trend-link,.dc-store-btn.is-bottom')]
+          .map(e => e.getBoundingClientRect()).sort((a, b) => a.top - b.top);
+        return {
+          n: els.length,
+          gaps: els.slice(1).map((r, i) => +(r.top - els[i].bottom).toFixed(1)),
+          heights: els.map(r => +r.height.toFixed(1)),
+          widths: els.map(r => Math.round(r.width)),
+        };
+      })(),
       tlInk: tl ? [g(tl).color, g(tl).boxShadow, g(tl).borderTopColor, g(tl).backgroundImage].join(' | ') : '',
       /* her sentence and her invitation each sit on their OWN line: no word of the
          sentence may share a line with the pill. Measured as a real geometric
@@ -404,6 +421,21 @@ for (const [route, screen, label] of [['/finds', 's-finds', 'Amazon Finds'], ['/
   ok(label + ': the explore line is a real tap target (>=44px)', f.xlH >= 44, f.xlH + 'px');
   ok(label + ': the trending line is a real tap target (>=44px)', f.tlH >= 44, f.tlH + 'px');
   ok(label + ': and they are held apart so a thumb cannot bump the wrong one', f.gap >= 8, f.gap + 'px');
+  /* 🚨 HER ASK, 2026-09-29: "Make the spacing between buttons even." The first gap
+     measured 27px against 14px for every gap below it, because `.dc-xlink`'s own
+     bottom padding sat underneath the first pill and added itself to the next
+     pill's margin. ▶ Asserted as EQUAL TO EACH OTHER, never as a number, so the
+     day she changes the rhythm the check follows her instead of fighting her. */
+  ok(label + ': every gap between the closing buttons is the same — her ask',
+     f.pillRun.gaps.length > 0 && new Set(f.pillRun.gaps).size === 1,
+     f.pillRun.gaps.join(' / '));
+  /* 🚨 AND "all of the pills the same size", which the thicker frame nearly broke:
+     a 4px frame made the framed pills 2px taller than the tan one. Every pill now
+     carries the same border box, so a future change to the frame's weight moves
+     all of them together. */
+  ok(label + ': ...and every one of them is the same size as the others — her ask',
+     new Set(f.pillRun.heights).size === 1 && new Set(f.pillRun.widths).size === 1,
+     f.pillRun.heights.join('/') + ' x ' + f.pillRun.widths.join('/'));
   /* 🚨 HER RULING 2026-09-29: "Make all of the pills the same size and same font
      and same look to the arrow." ▶ SO THE RULE IS NOW ABOUT THE PAIR, NOT ABOUT
      ONE BEING BIGGER. This used to read `tlSize >= xlSize`, comparing the trending
