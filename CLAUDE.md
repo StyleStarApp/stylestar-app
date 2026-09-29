@@ -680,6 +680,41 @@ all reach that screen, and a rule that must hold on every route belongs at the c
 ▶ **`scratchpad/fromedit.mjs`, 24 checks, PROVEN TO BITE.** Suites re-run clean: `affq` 42/42 ·
 `copy` 50/50 · `wbedittasr` 42/42 · `starpx` 32/32. `styles.css` restamped.
 
+### 🔘 THE THREE CLOSING PILLS — HER DESIGN, BUILT AND LIVE 2026-09-29
+**Her ruling, verbatim:** *"The only one that is tan is the Amazon button. The Edit stays pink and what's
+trending stays teal... I don't want them filled pink or teal. Make the button white but framed pink and
+teal with silver edged mirror around the button. Black writing and same size arrow as on Amazon button.
+Make all of the pills the same size and same font and same look to the arrow."*
+▶ **On BOTH `/edit` and `/finds`: white fill · a 3px SILVER MIRROR as the outer edge · her colour as a 2px
+inset ring inside it (pink `#EC4899` for the Edit link, teal `#0FA6B6` for trending) · black `#1a1a1a`
+writing · the same 18px stroke SVG arrow the tan Storefront pill already uses.** ⚠️ **The silver gradient
+is lifted VERBATIM from `.dream-mirror` — the app's own chrome, not a new grey.** ⚠️ **The tan Storefront
+pill keeps its tan and the small top copy of it keeps its deliberately smaller size (her round-5 decision,
+2026-09-22).**
+⚠️ **"SAME SIZE" WAS MEASURED, AND THE BOX — NOT THE FONT — WAS WHAT DIFFERED.** All three are 278px wide
+at 12px Jost, but her own copy is longer on two of them ("Click here to explore…", "Curious what's trending
+right now?") so those wrap to two lines while "My Amazon Storefront" sits on one. ▶ **Equalised with
+`min-height:70px`, NEVER by shortening her words** — her standing rule is that her copy is not rewritten to
+satisfy a rule. All three now measure **278 × 70**.
+🚨 **SHE IS CERTAIN THESE BUTTONS WERE DESIGNED ONCE BEFORE AND THEY WERE NOT — SEARCHED EXHAUSTIVELY** (every
+branch, the whole history of `.dc-xlink` in `styles.css`, the stash, `scratchpad/`, both note files): the only
+earlier ruling is her 2026-09-11 **colour + wording** call, never a button. She accepted it — *"if you don't
+have them, I guess we just make them again."* ▶ **DO NOT RE-LITIGATE THIS.**
+🚨🚨 **THREE TESTS HAD PINNED THE OLD DESIGN AND WENT RED ON A CORRECT PAGE — ALL REWRITTEN TO NAME THE RULE,
+AND THIS IS THE FOURTH TIME THIS FILE HAS PAID FOR THE SAME LESSON:**
+| what was pinned | what broke it | the rule it names now |
+|---|---|---|
+| the invitation is UNDERLINED | her ruling made it a framed pill | the invitation is SET APART (underline **or** frame) while her own sentence stays plain |
+| `tlSize >= xlSize` | it compared the trending PILL against `.dc-xlink`, which holds her SENTENCE — a button measured against a paragraph | the two pills are the same size and font as EACH OTHER, and both smaller than her sentence |
+| pink/teal read off `color` | her ruling moved both colours into the FRAME and made the writing black | each colour is looked for wherever its own pill wears it, **plus** that neither picked up the other's |
+| her sentence "gets its own line" = height ÷ line-height | a padded, bordered pill made the subtraction count padding as lines | a real GEOMETRIC overlap between the sentence's text rects and the pill's box |
+▶▶ **THE TELL WAS THE SAME EVERY TIME: the assertion named the MECHANISM (a text-decoration, a CSS property,
+a piece of arithmetic) rather than the thing she actually asked for.** ⭐ **Ask of any layout assertion: if she
+restyles this tomorrow and it still looks right to her, does this check still pass?**
+✅ **`findspage` 106/106 · `storefrontlink` 22/22 · `editshare` 30/30 · `copy` 50/50 · `affq` 42/42 ·
+`linkwatch` 27/27 · `fromedit` 24/24.** CSS and sitemap restamped. **Verified on the SERVED file at
+stylestar.app, not the deploy badge.**
+
 ### 🚨🚨 THE FAULT SHE CAUGHT THIS SESSION, AND IT IS THE MOST IMPORTANT THING ON THIS PAGE
 **The first build was headed "Styled For You" with a subtitle reading "Chosen for a polished trendsetter
 who leans fitted, detailed and a little bit glam."** Both were FALSE: those are pieces she picked months
@@ -1553,6 +1588,14 @@ invention — the Garnet Hill lesson was about inventing SILENTLY.**
   | `name === 'Ponytail Cuff'` | *"Ponytail Cuff, 4 Pack"* | the name carries no METAL |
   | `Edit count === 33` | she removed two pieces | the importer cannot REACH the Edit |
   | `class="dc-cat"` exactly | a second class was added | match `dc-cat[^"]*` |
+  | the invitation is UNDERLINED | her 2026-09-29 ruling made it a framed pill | it is SET APART — underline **or** frame |
+  | pink/teal read off `color` | the same ruling moved both colours into the FRAME | each colour is worn SOMEWHERE on its own pill |
+  | "own line" = height ÷ line-height | a padded, bordered pill counted its padding as lines | a real GEOMETRIC overlap of the two boxes |
+  ▶▶ **THE LAST THREE ROWS ARE 2026-09-29 AND THEY WIDEN THE LESSON PAST STRINGS: a CSS PROPERTY and a
+  PIECE OF ARITHMETIC go stale exactly the same way a word does.** Each named the MECHANISM she happened
+  to be using rather than the thing she asked for, so a correct page went red the moment she restyled it.
+  ⭐ **THE QUESTION THAT CATCHES ALL OF THEM: if she restyles this tomorrow and it still looks right TO
+  HER, does this check still pass?**
   ▶▶ **THE TELL IS ALWAYS THE SAME: the assertion names a VALUE she is free to change.** A count she
   edits weekly, a word she is free to reword, an attribute another class can join. ⚠️ **AND IT KEEPS
   HAPPENING BECAUSE THE STRING IS ALWAYS THE EASIER LINE TO WRITE** — the rule takes a sentence of
