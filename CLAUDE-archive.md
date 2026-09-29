@@ -23936,3 +23936,122 @@ quality-gate threads; **traffic** — Pinterest's first pin plus the stalled Fiv
 **affiliates** — the CJ/AWIN pending queues (she asked to be reminded this session, see above) and the
 Amazon 180-day clock, all in the money-path section.
 
+
+
+---
+
+# ARCHIVED 2026-09-29 — THE EIGHTEENTH SESSION'S "WHERE WE LEFT OFF" BLOCK, VERBATIM
+▶ Moved here in the same commit that wrote the nineteenth session's notes, per this project's
+  archiving rule. NOTHING WAS DELETED. Every still-open thread inside it (Fiverr, Pinterest,
+  the Heather/$8,900 dress question, her three named priorities, the two Storefront/bio
+  confirmations) was CARRIED FORWARD into the new block in `CLAUDE.md` before this copy was
+  made — only what HAPPENED moved. Read this for the blow-by-blow of how session eighteen went.
+
+## ▶▶▶ WHERE WE LEFT OFF — 2026-09-22 (eighteenth session). READ THIS FIRST.
+🚨 **THIS BLOCK IS THE CURRENT TRUTH. Everything below it is standing reference — if a line further
+down contradicts this one, THIS ONE WINS.**
+📁 **The seventeenth-session entry moved to `CLAUDE-archive.md` in this commit, VERBATIM.** Nothing was
+deleted. Its still-open threads (Fiverr, Pinterest, Heather's $8,900 dress, her three named priorities)
+are carried forward below, untouched this session.
+
+### 🎨💰 SESSION EIGHTEEN: THE AMAZON STOREFRONT LINK SHIPPED, THE STAR'S GOLD WAS FIXED, AND SHE POSTED
+**None of this session's detail lives only here — it's all recorded in its own permanent, never-archived
+section, and this is a pointer plus what's still open, not a duplicate.**
+- ⭐⭐ **AMAZON STOREFRONT LINK ON `/finds` — BUILT, DESIGNED THROUGH FIVE ROUNDS, AND LIVE.** Full detail
+  (the real URL from her share link, the `ccs_id`/share-tag stripping, the four visual rounds — outline
+  → arrow-centering → arrow-centering again → SVG icon + filled tan pill — then a fifth round enlarging
+  the small top copy) is under **"💰 THE MONEY PATH" → the Amazon Storefront thread** in this file. She
+  approved every round from a render before it went live, exactly as her standing rule asks.
+  📱 **SHE POSTED THE CLEAN LINK ON INSTAGRAM THE SAME DAY** — first real promotion of the Storefront to
+  her actual audience. **NEXT SESSION: check her Amazon dashboard for any bump in clicks/orders that
+  traces to it.**
+- 🚨🚨 **THE STAR OF THE WEEK'S GOLD WAS ALSO WASHED-OUT/BROWNISH, SAME BUG AS SESSION SEVENTEEN'S RASTER
+  ART, JUST NEVER SWEPT INTO THIS INLINE SVG COPY.** Found and fixed across all 8 places using the same
+  gradient; full detail is under **"⭐⭐ STAR OF THE WEEK — HOW IT WORKS."** ▶ **If a gold star anywhere
+  in the app ever looks washed-out again on a real phone, that section is the one to check.**
+- ✅✅ **AMAZON CREATORS API: SHE CREATED THE APP AND GENERATED A REAL CREDENTIAL, CONFIRMED ACTIVE.**
+  She is still short of the 10-shipped-items-in-30-days bar (6 as of the 2026-09-22 dashboard). **NOTHING
+  TO DO until a future dashboard check shows her crossing 10 shipped** — that's the moment to actually
+  try a real API call. Full detail under **"🛒 AMAZON — WHAT CAN AND CANNOT BE DONE FROM HERE."**
+- 📈 **HER AMAZON DASHBOARD KEEPS GROWING** — 6 items shipped, $4.47 earned, 228 clicks, 6.14% conversion
+  as of 2026-09-22 (see the money-path section for the full week-by-week figures). Still well above
+  normal e-commerce conversion; traffic, not the shopping experience, remains the bottleneck.
+
+### 🤔 TWO THINGS STILL WORTH CONFIRMING WITH HER, FLAGGED 2026-09-22, NOT YET ASKED AGAIN
+Both are under the Amazon Storefront + Pinterest open thread in the money-path section — resurface them:
+1. **The required Associates disclosure sentence** on the Storefront bio AND on every pin description —
+   has she added it?
+2. **Cross-linking the bios** (Pinterest bio → Storefront, Instagram bio → Storefront) — has she done
+   this, and separately: does a pin made through Storefront's own share-to-Pinterest tool already carry
+   the Storefront as its own destination link? (Ask her to tap "Visit site" on one of her pins.)
+
+### 📁 PRIOR SESSION SEVENTEEN (now archived) — WHAT IT DID, KEPT SHORT SINCE THE DETAIL MOVED
+The link-preview card (`og-image.png`) was redesigned, and a real pre-existing jagged-edge bug in the
+star's raster artwork was found and fixed (not caused by that session's color work) — traced its outline,
+rebuilt it as a clean SVG, recomposited. Two real regressions caught and fixed the same session (a
+wordmark file wrongly recolored, and the Style Star Card's hardcoded cut coordinates going stale). Full
+detail, including the four Playwright/rendering lessons, is in `CLAUDE-archive.md`.
+
+### 🎨 OPEN THREAD, LIVE, UNCHANGED THIS SESSION: FIVERR INSTAGRAM CONTENT — ONE REVISION ROUND SENT
+A single consolidated, code-verified brief (real fonts, real gold-gradient/teal/pink values, both real
+logo file URLs, a concrete photography direction) was sent to Fiverr 2026-09-15 after their first round
+came back off-brand. ▶ **RESURFACE NEXT SESSION: ask whether the revised posts came back, and if she's
+seen them, whether they actually match the brief.**
+
+### 🎨🎨 PINTEREST — LIVE OPERATIONAL STATUS, NEVER ARCHIVES, UNCHANGED THIS SESSION
+✅✅ **Business account live** (`StyleStarbyCatherine`, Content creator type), domain `stylestar.app`
+claimed and verified, profile photo a corrected filled-star mark (not committed to the repo — rebuild
+from `logo-tight.png` + the real star polygon in `index.html` if it's ever needed again). ✅✅ **HER FIRST
+PIN IS LIVE** — board **"Personal Style"**. Design canvas:
+https://claude.ai/artifact/WXN4HwP4PaH2SFssKGpVaS — export at 2000×3000 (2x), her settled call.
+▶ **NEXT: ask whether she wants a second pin (another quiz spectrum, a Style Portrait teaser, an Amazon
+Finds piece) — don't re-explain Pinterest mechanics she has now already done herself.**
+⭐ **A related, still-parked thread:** five on-brand Instagram templates —
+https://claude.ai/artifact/CW7xEo5a1aLm5bf3n8hWYb. She said *"I see the idea there"* and moved to
+Pinterest first. ▶ **ASK: has she looked at the templates again?**
+
+### 🚨 OPEN THREAD, UNCHANGED THIS SESSION: THE HEATHER / $8,900 DRESS QUESTION
+🚨 **A REAL USER (HEATHER, A FRIEND) REPORTED AN $8,900 DRESS RECOMMENDATION AND ASKED IF THE DECIMAL WAS
+WRONG.** ⚠️ **STILL UNCONFIRMED — Heather gave no further detail**, and Cath said so plainly. Most likely
+sharpens an ALREADY-TRACKED gap: `verifyPrice`/`max_price` only constrains price when SHE states a
+figure — an ordinary ask with no stated budget still has no ceiling at all. Three options named, none
+decided, none to be started without her:
+1. A default price ceiling even when nobody states a budget.
+2. An honest "why is this shown" / outlier label on a price far outside the norm, rather than hiding it.
+3. Leave it as the accepted cost of full luxury-store browsing.
+▶ **IF MORE DETAIL FROM HEATHER EVER SURFACES, chase that before building anything.**
+
+### ⭐⭐⭐ HER THREE NAMED PRIORITIES, UNCHANGED THIS SESSION — SHE HAS NOT SEQUENCED THEM YET
+Her own words: *"I still want to work on fixing the searches... I want to get more traffic and more
+affiliates."* ▶▶ **SHE ASKED TO PAUSE AND ORGANIZE HER OWN THOUGHTS — do not launch into any of the
+three unprompted.** Open by asking how she wants to sequence them; a plain status recap of each is ready
+the moment she wants it: **searches** — the Heather thread above plus the standing search-quality/
+quality-gate threads; **traffic** — Pinterest, the Instagram Storefront post and the stalled Fiverr
+thread; **affiliates** — the CJ/AWIN pending queues and the Amazon Creators API 10-shipped bar, all in
+the money-path section.
+
+### ▶ EVERYTHING ELSE THAT'S STILL OPEN, GATHERED FOR HER, BY SECTION (nothing new invented — every item
+already has a home in the master to-do list or the standing reference; this is just the round-up she
+asked for so a new session can start from a checklist rather than a re-read of the whole file)
+- **Business/legal:** close the sole proprietorship (three parts — loose-ends check, county tax receipt
+  closure by mail/email, Sunbiz fictitious-name cancellation); get Style Star LLC's own Orlando business
+  tax receipt before/after Oct 1; tell her accountant the sole-prop cutover date; the Indie Law
+  middle-name/operating-agreement thread (unresolved, unknown if she ever sent the draft reply).
+- **Money path:** watch the CJ pending queue (Belk/Macy's/TJ Maxx/Marshalls/Talbots/Lands' End) and the
+  AWIN batch (13 applications, all still pending as of 2026-09-18) — re-check dashboards in a week or two,
+  not every session; Amazon Creators API per above; apply to the 41 catalogue-publishing brands as CJ/AWIN
+  approvals allow.
+- **App:** the SerpApi spend cap (warn, never block — her stance, not to be re-litigated); the flaky
+  `curated.js` never-wear check (needs an isolated test context, not a loosened assertion); draft the
+  twelve Rakuten merchant entries with `store-draft.js` when there's a batch to show her.
+- **Content:** more What's Trending items and more Style Star Edit items whenever she has them — always
+  her curation, never Claude's pick.
+- **Homework only she can do:** Homework 4 (spot-verify Talbots/Kendra Scott/SKIMS/etc. via the
+  address-bar trick) and Homework 6 (the real quality gate — tap through 10-15 shop searches and say
+  where they land wrong) are both still open and still the highest-value things she can do herself.
+- **Small decisions only she can make:** the taxonomy gaps (mini skirts, jumpsuits/rompers, gloves, clogs,
+  wellingtons, bags named only "Bag") and the four confessed defaults (Sandal→Flat sandals,
+  Boot→Ankle boots, Hat→Sun hats, Skirt→Flowy skirt) — confirm or change whenever she wants.
+▶ **NONE OF THESE ARE URGENT OR TIME-SENSITIVE EXCEPT THE FLORIDA BUSINESS-TAX-YEAR OCT 1 CUTOVER** —
+this round-up exists so she can pick what she wants to work on next, not to pressure any particular one.
+
