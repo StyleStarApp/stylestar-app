@@ -702,14 +702,37 @@ muddy, even after it was darkened to pass contrast; **her own fix was to FILL th
 top.** So an Amazon button is byte-for-byte the Storefront pill's colours: fill `#ECBD83`, ink `#4a463e`
 (5.44:1). ▶ **Rendering this tan as a border, an outline or text would repeat a mistake she has already
 corrected once.**
-▶ **So: the Edit link and the trending link are white · a 3px SILVER MIRROR as the outer edge · their
-colour as a 2px inset ring inside it · black `#1a1a1a` writing. The Amazon link is the filled tan pill.
-All of them carry the same 18px stroke SVG arrow the Storefront pill already uses.** ⚠️ **The silver gradient
-is lifted VERBATIM from `.dream-mirror` — the app's own chrome, not a new grey.** ⚠️ **The tan Storefront
-pill keeps its tan and the small top copy of it keeps its deliberately smaller size (her round-5 decision,
-2026-09-22).**
-⚠️ **"SAME SIZE" WAS MEASURED, AND THE BOX — NOT THE FONT — WAS WHAT DIFFERED.** All three are 278px wide
-at 12px Jost, but her own copy is longer on two of them ("Click here to explore…", "Curious what's trending
+▶▶ **THE SETTLED STATE, AFTER SIX ROUNDS, AND SHE APPROVED IT LIVE: the Edit link and the trending link are
+white · a 5px FLAT SILVER `#9AA0A6` as the outer edge · their colour as a 4px inset ring inside it · black
+`#1a1a1a` writing. The Amazon link is the filled tan pill. All three are `278 × 77`, 13px Jost 700
+uppercase at `.06em`, and carry the same 18px stroke SVG arrow with the same 8px of air.** ⚠️ **The tan
+Storefront pill keeps its tan and the small top copy of it keeps its deliberately smaller size (`230 × 36`,
+her round-5 decision, 2026-09-22).**
+🚨🚨🚨 **THE SILVER IS FLAT, NEVER A GRADIENT — HER RULING, AND IT IS THE MOST REUSABLE THING ON THIS PAGE:**
+***"I don't want the silver to be gradient."*** ▶ **Rounds 1-5 used `.dream-mirror`'s own 7-stop metallic
+gradient, on the reasoning that it IS the app's existing chrome and therefore safe.** ⚠️⚠️ **IT IS — AT A
+13px PAGE FRAME. AT A 5px BUTTON EDGE IT READS AS A SMEAR**, and it visibly dulled her pink and teal sitting
+beside it. ▶▶ **THAT IS WHY SHE SAID THE COLOURS WERE WRONG THREE TIMES WHILE THE HEX VALUES WERE PROVABLY
+EXACT** — pixel-sampled out of the real render, the rings painted `#EC4899` and `#0FA6B6` unaltered. **She
+was right that something was wrong and Claude kept answering the wrong question, defending the hex instead
+of looking at what sat next to it.**
+⚠️ **`#9AA0A6` IS NOT AN INVENTED GREY: it is one of that same gradient's own stops and was already used 8
+times in `styles.css`.** The mirror was flattened to its own silver, never swapped for a new one.
+⭐⭐ **THE GENERAL LESSON, AND IT IS THE 2026-09-22 TAN LESSON ARRIVING FROM THE OTHER SIDE: A TREATMENT THAT
+WORKS AS A BIG SURFACE CAN READ WRONG AT EDGE WEIGHT.** There it was a COLOUR used as thin ink (`#ECBD83`
+read "greenish brown" as an outline and right as a fill); here it is a GRADIENT used as a thin edge.
+▶ **Neither is caught by contrast maths or by "it's already in the app" — only by rendering it and looking.**
+🚨 **AND THE PROCESS LESSON, WHICH COST HER FOUR ROUNDS: WHEN SHE SAYS A THING LOOKS WRONG AND THE
+MEASUREMENT SAYS IT IS RIGHT, THE MEASUREMENT IS ANSWERING A DIFFERENT QUESTION.** The hex was right; the
+thing NEXT TO IT was the fault. ▶ **Widen what is measured before replying that nothing is wrong.**
+⚠️ **AND THE OTHER THING FOUND BY MEASURING RATHER THAN EYEBALLING: THE ARROWS REALLY WERE INCONSISTENT.**
+The tan pill spaced its arrow with a flex `gap:8px` and centred it as a flex child; the two framed pills
+used `margin-left:4px` and `vertical-align`. **Same icon, two different spacings and two different
+alignment methods.** ▶ Now one size, one 8px gap, `vertical-align:middle` — **which works ONLY because it
+is a real SVG with a symmetric viewBox** (the 2026-09-22 rounds proved the Unicode glyph sits low in its
+own em-box and no alignment rule can fix a font's own placement). ⚠️ **NEVER go back to a text arrow.**
+⚠️ **"SAME SIZE" WAS MEASURED, AND THE BOX — NOT THE FONT — WAS WHAT DIFFERED.** All three are 278px wide,
+but her own copy is longer on two of them ("Click here to explore…", "Curious what's trending
 right now?") so those wrap to two lines while "My Amazon Storefront" sits on one. ▶ **Equalised with
 `min-height:70px`, NEVER by shortening her words** — her standing rule is that her copy is not rewritten to
 satisfy a rule. All three now measure **278 × 70**.
@@ -751,7 +774,14 @@ colour check is asserted CROSSWISE now, off the SAME `goesTo` map the wording ch
 copying one page's markup onto the other fails on the colour as well as on the words, and a page can never
 again invite a woman somewhere in the wrong colour. **The right assertion already existed two lines above
 it; it just had not been asked the same question.**
-✅ **`findspage` 111/111 · `storefrontlink` 22/22 · `editshare` 30/30 · `copy` 50/50 · `affq` 42/42 ·
+🚨 **SHE ASKED DIRECTLY AT THE END: "The Amazon button is it the same size as the other 2?" — MEASURED, YES,
+IDENTICAL: all three `278 × 77`.** ▶ **But her instinct was picking up something real and it is worth
+keeping: the two framed pills spend 9px of their width on frame, so their white middle is 260px, while the
+tan one runs its colour the full 278 edge to edge.** ⚠️ **A solid block of colour always reads heavier than
+an outlined one at the identical box size.** ▶ **OFFERED, NOT BUILT: give the Amazon pill the same flat
+silver outer edge with the tan filling the inside, so all three share one outline and differ only in what
+is within it. Her call.**
+✅ **`findspage` 113/113 · `storefrontlink` 22/22 · `editshare` 30/30 · `copy` 50/50 · `affq` 42/42 ·
 `linkwatch` 27/27 · `fromedit` 24/24.** CSS and sitemap restamped. **Verified on the SERVED file at
 stylestar.app, not the deploy badge.**
 ⭐⭐ **THE TWO NEWEST CHECKS ARE THE SHAPE THIS FILE KEEPS ASKING FOR, AND BOTH ARE PROVEN TO BITE: every
@@ -1638,7 +1668,8 @@ invention — the Garnet Hill lesson was about inventing SILENTLY.**
   | pink/teal read off `color` | the same ruling moved both colours into the FRAME | each colour is worn SOMEWHERE on its own pill |
   | "own line" = height ÷ line-height | a padded, bordered pill counted its padding as lines | a real GEOMETRIC overlap of the two boxes |
   | the invitation is PINK on both pages | her "The Amazon button is supposed to be tan" | **a pill wears the colour of WHERE IT GOES, not of its page** |
-  ▶▶ **THE LAST FOUR ROWS ARE 2026-09-29 AND THEY WIDEN THE LESSON PAST STRINGS: a CSS PROPERTY and a
+  | *(no check at all)* — the silver was a GRADIENT because `.dream-mirror` is | her *"I don't want the silver to be gradient"* | **the edge is FLAT and one colour — asserted as "no gradient", never as a hex** |
+  ▶▶ **THE LAST FIVE ROWS ARE 2026-09-29 AND THEY WIDEN THE LESSON PAST STRINGS: a CSS PROPERTY and a
   PIECE OF ARITHMETIC go stale exactly the same way a word does.** Each named the MECHANISM she happened
   to be using rather than the thing she asked for, so a correct page went red the moment she restyled it.
   ⭐ **THE QUESTION THAT CATCHES ALL OF THEM: if she restyles this tomorrow and it still looks right TO
@@ -1651,6 +1682,17 @@ invention — the Garnet Hill lesson was about inventing SILENTLY.**
 - 🚨 **WHEN A TEST BREAKS, ASK WHETHER THE APP GOT WORSE OR MERELY BIGGER.** Four suites broke the day
   she was approved for a shop — **they failed on good news.** ▶ **If it merely got bigger, rewrite the
   assertion to name the RULE, never to bump the number.** All four got STRONGER in the rewrite.
+- 🚨🚨🚨 **WHEN SHE SAYS IT LOOKS WRONG AND THE MEASUREMENT SAYS IT IS RIGHT, THE MEASUREMENT IS ANSWERING
+  A DIFFERENT QUESTION — 2026-09-29, AND IT COST HER FOUR ROUNDS.** She said the pink and teal were the
+  wrong colours. They were pixel-exact (`#EC4899`/`#0FA6B6`, sampled out of the real render), and that was
+  said back to her twice. ▶▶ **THE FAULT WAS THE 5px METALLIC GRADIENT SITTING BESIDE THEM**, which dulled
+  both — she was reading the whole edge, Claude was measuring one hex inside it. ⭐ **WIDEN WHAT IS
+  MEASURED BEFORE REPLYING THAT NOTHING IS WRONG.** Her eye found a real fault that every check passed.
+- ⚠️⚠️ **A TREATMENT THAT WORKS AS A BIG SURFACE CAN READ WRONG AT EDGE WEIGHT — BOTH DIRECTIONS NOW
+  MEASURED.** 2026-09-22: the page tan `#ECBD83` read *"greenish brown"* as thin outline/text ink and right
+  as a FILL. 2026-09-29: `.dream-mirror`'s gradient reads as a mirror at a 13px PAGE FRAME and as a smear
+  at a 5px BUTTON EDGE. ▶ **"It is already in the app" is not a reason a treatment will survive a change of
+  scale.** Contrast maths catches neither; **render it at the size it will really be, and look.**
 - ⚠️ **MEASURE TO FIND CANDIDATES, LOOK TO DECIDE.** A crop detector once accused her FARM Rio fix of
   being broken; rendering all ten Star photos and looking disproved it — **it was measuring a grey
   studio backdrop as though it were the dress.** ▶ **Reporting that number to her unchecked would have
