@@ -654,7 +654,7 @@ Do NOT pay the Your Fashion Friend renewal; the wording and the two addresses ar
 the 407-246-2204 call has three questions attached. **This is the one thing with a deadline.**
 **(2)** the **Amazon Creators API retest** — due from 2026-09-29, so it is due NOW. Re-running the same two
 calls takes seconds; **it needs her Access Key ID / Secret Access Key again, because nothing was stored.**
-**(3)** whether **Indie Law replied** to her 2026-09-28 escalation.
+**(3)** ✅ **Indie Law REPLIED (Rose) and granted all four asks** — she still has to verify the Member line on Sunbiz herself; see INDIE LAW below.
 **(4)** her **fall Edit batch** — her own active ask, and the highest-value thing she can bring.
 ▶ **Her three named priorities (searches · traffic · affiliates) are still unsequenced and she asked to
 organise her own thoughts first — a plain status recap of each is ready, but do NOT launch into any of
@@ -877,8 +877,19 @@ FARM Rio · Vilebrequin · Fleur du Mal · COUTR · Etsy · Cashmere Boutique.**
 (MID 54027) — an older line in this file describing the Rakuten feed as "8 stores" predates it.**
 ⭐ **Etsy is worth remembering for fall jewellery — her own words, *"They are great for jewelry especially."***
 
-### 🏛️ INDIE LAW — SHE SENT THE ESCALATION EMAIL 2026-09-28, NO REPLY YET
-Confirmed by her in session: *"The email went out a few hours ago to the law firm. No reply yet."*
+### 🏛️ INDIE LAW — SHE SENT THE ESCALATION EMAIL 2026-09-28; ✅ THEY REPLIED 2026-09-29/30 AND GRANTED ALL FOUR ASKS
+✅ **Reply signed "Rose, Indie Law Client Care Team" — a NEW name, not Almira.** It says: (1) the Statement of
+Correction is "fully applied" and Sunbiz now shows "Catherine Bailey Ellspermann" as BOTH Registered Agent and
+Authorized Member (a link, NOT a copy of a filed document); (2) "updating internal systems and review processes
+and adjusting staffing"; (3) Rose is now her "main point of contact", every update signed by name; (4) **a $500
+service credit, approved — usable only toward FUTURE Indie Law services, not a refund.**
+⚠️ **STILL TO DO, HERS: verify the Member line on Sunbiz herself** (the sandbox is 403'd by Sunbiz and cannot) —
+on 09-28 it still read "Bail". ⚠️ **Soft gaps worth one polite reply, her call:** she asked for a copy of the
+FILED document and got a link; the promised contact changed a THIRD time (Almira → "the team" → Rose) with no
+word about Almira; and the credit only has value if she keeps using the firm (Statements of Use are still ahead,
+covered in the package, $900 USPTO fees separate). **This is a real fix on paper — do not re-open the "switch
+firms" question unless the pattern resumes.**
+*Original line:* Confirmed by her in session: *"The email went out a few hours ago to the law firm. No reply yet."*
 ⚠️ **The file had this dated 2026-09-29, a day ahead of reality; corrected this session on her word.**
 ▶ **NEXT SESSION: ask whether Indie Law replied, and to what.** A written, specific reply (the Member-
 listing correction actually filed, a real explanation, consistently signed updates) is a real fix.
@@ -887,7 +898,7 @@ revisiting the "switch firms" question plainly with her. **Full five-error detai
 
 ### ⏳⏳ THE ONE GENUINELY TIME-SENSITIVE THING ON THIS WHOLE PAGE — **OCTOBER 1**
 The Florida business tax year turns over **Oct 1**, and nothing else on this board has a hard date.
-1. 🚨 **DO NOT PAY the Your Fashion Friend renewal notice.** Write *"NO LONGER IN BUSINESS…"* on it with
+1. ✅ **SENT 2026-09-29 by email to btpc@octaxcol.com** (closure effective Sept 29, 2026, business tax ID 0598950; she Bcc'd herself). **Sept 29, 2026 is the date her accountant needs.** Watch for a reply asking for their Notice of Business Closure form. *Original instruction:* 🚨 **DO NOT PAY the Your Fashion Friend renewal notice.** Write *"NO LONGER IN BUSINESS…"* on it with
    the business name, receipt number, effective date and signature → mail to **Tax Department, P.O. Box
    545100, Orlando, FL 32854**, or email the Notice of Business Closure form to **btpc@octaxcol.com**.
    **By mail or email, NOT in person** — the in-person rule is for CHANGES, not closures.
