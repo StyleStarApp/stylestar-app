@@ -883,8 +883,14 @@ Correction is "fully applied" and Sunbiz now shows "Catherine Bailey Ellspermann
 Authorized Member (a link, NOT a copy of a filed document); (2) "updating internal systems and review processes
 and adjusting staffing"; (3) Rose is now her "main point of contact", every update signed by name; (4) **a $500
 service credit, approved — usable only toward FUTURE Indie Law services, not a refund.**
-⚠️ **STILL TO DO, HERS: verify the Member line on Sunbiz herself** (the sandbox is 403'd by Sunbiz and cannot) —
-on 09-28 it still read "Bail". ⚠️ **Soft gaps worth one polite reply, her call:** she asked for a copy of the
+✅✅ **VERIFIED BY HER ON SUNBIZ 2026-09-30 (screenshots): Registered Agent AND Authorized Person (AMBR) both read
+"ELLSPERMANN, CATHERINE BAILEY". The name is fully fixed.** Only ONE correction event exists (08/25/2026 LC Article
+of Correction), so the 08-25 filing covered both lines and the Member display lagged or was misread on 09-28 —
+cannot tell which from here. ⚠️ **The ORIGINAL 07/27 Articles PDF still says "BAIL" in Articles III and IV, and
+ALWAYS WILL — a filed image is never edited; the correction is its own document beside it. Not an error.** ▶ The
+filed-document copy she asked for is the "View image in PDF format" link beside the 08/25 event; she can save it
+herself. ⚠️ **Sunbiz shows "FEI/EIN Number: NONE" — normal; it gets added on her FIRST ANNUAL REPORT, due Jan 1 –
+May 1, 2027 (a real deadline: late fee $400). Any other "annual report" solicitation is the scam wave.** ⚠️ **Soft gaps worth one polite reply, her call:** she asked for a copy of the
 FILED document and got a link; the promised contact changed a THIRD time (Almira → "the team" → Rose) with no
 word about Almira; and the credit only has value if she keeps using the firm (Statements of Use are still ahead,
 covered in the package, $900 USPTO fees separate). **This is a real fix on paper — do not re-open the "switch
