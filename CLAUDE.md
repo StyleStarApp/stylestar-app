@@ -890,7 +890,8 @@ cannot tell which from here. ⚠️ **The ORIGINAL 07/27 Articles PDF still says
 ALWAYS WILL — a filed image is never edited; the correction is its own document beside it. Not an error.** ▶ The
 filed-document copy she asked for is the "View image in PDF format" link beside the 08/25 event; she can save it
 herself. ⚠️ **Sunbiz shows "FEI/EIN Number: NONE" — normal; it gets added on her FIRST ANNUAL REPORT, due Jan 1 –
-May 1, 2027 (a real deadline: late fee $400). Any other "annual report" solicitation is the scam wave.** ⚠️ **Soft gaps worth one polite reply, her call:** she asked for a copy of the
+May 1, 2027 (a real deadline: late fee $400). Any other "annual report" solicitation is the scam wave.** ✅ **SHE REPLIED 2026-09-30 asking for the $500 as a REFUND, not a credit** (reason: Statements of Use are already in the TM Max package and the protection plan was already offered free on 08-17), plus Rose's full name/role and whether Rose replaced Almira ("Almira confirmed on August 31 that all communications would come from her. Since then I have received an unsigned email, a reply from Joey Vitale, and now yours"). ▶ **NEXT: ask what Rose answered.** ⚠️ **Do NOT write "the third change" in anything to them — counting varies 2 to 5 depending on how you count; stick to dated facts.**
+⚠️ **Soft gaps worth one polite reply, her call:** she asked for a copy of the
 FILED document and got a link; the promised contact changed a THIRD time (Almira → "the team" → Rose) with no
 word about Almira; and the credit only has value if she keeps using the firm (Statements of Use are still ahead,
 covered in the package, $900 USPTO fees separate). **This is a real fix on paper — do not re-open the "switch
@@ -924,7 +925,7 @@ SigV4; endpoints; the camelCase resource enum) is in the AMAZON section — it n
 ### 🎨 OPEN THREAD, UNCHANGED THIS SESSION: FIVERR INSTAGRAM CONTENT — ONE REVISION ROUND SENT
 A single consolidated, code-verified brief (real fonts, real gold-gradient/teal/pink values, both real
 logo file URLs, a concrete photography direction) was sent to Fiverr 2026-09-15 after their first round
-came back off-brand. ▶ **RESURFACE: ask whether the revised posts came back, and whether they match.**
+came back off-brand. 🚨 **2026-09-30: THE REVISED ROUND CAME BACK AND IS ALSO UNUSABLE — her words: *"the stuff they came up with is so bad. I cannot post it."*** Two rounds off-brand despite a code-verified brief. ▶ **Get the specifics (screenshots) before advising; options are one more tightly-scoped revision, a refund/dispute through Fiverr's own resolution centre, or dropping Fiverr and building posts from her existing templates artifact.**
 
 ### 🎨🎨 PINTEREST — LIVE OPERATIONAL STATUS, NEVER ARCHIVES, UNCHANGED THIS SESSION
 ✅✅ **Business account live** (`StyleStarbyCatherine`, Content creator type), domain `stylestar.app`
