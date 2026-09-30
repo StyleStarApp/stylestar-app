@@ -918,7 +918,7 @@ She crossed **10 shipped items** on 2026-09-28 and the real live call that same 
 **`AssociateNotEligible`**. ⚠️ **That is consistent with "not yet reviewed", not "no"** — Amazon's own FAQ
 allows up to 48 hours after crossing the bar. ▶▶ **THE RETEST IS JUST RE-RUNNING THE SAME TWO CALLS
 (the credential is already known-good) AND IT IS DUE FROM 2026-09-29.** ▶ **It needs her Access Key ID /
-Secret Access Key again — nothing was stored.** **If it passes, that is the trigger to scope the Amazon-
+Secret Access Key again — nothing was stored.** 🚨 **RETESTED LIVE 2026-09-30 (token 200, valid call): STILL `AssociateNotEligible`, at 11 shipped / 28 ordered.** Most likely Amazon counts only sales that have cleared the return window, or uses its own trailing window, so the dashboard's "shipped" overstates it. ▶ **Next retest in about a week; needs her keys again, nothing stored.** **If it passes, that is the trigger to scope the Amazon-
 photos build with her, which in turn unblocks open question 2 above.** Full technical detail (OAuth2, not
 SigV4; endpoints; the camelCase resource enum) is in the AMAZON section — it never has to be re-derived.
 
