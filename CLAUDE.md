@@ -905,7 +905,7 @@ revisiting the "switch firms" question plainly with her. **Full five-error detai
 
 ### ⏳⏳ THE ONE GENUINELY TIME-SENSITIVE THING ON THIS WHOLE PAGE — **OCTOBER 1**
 The Florida business tax year turns over **Oct 1**, and nothing else on this board has a hard date.
-1. ✅ **SENT 2026-09-29 by email to btpc@octaxcol.com** (closure effective Sept 29, 2026, business tax ID 0598950; she Bcc'd herself). **Sept 29, 2026 is the date her accountant needs.** Watch for a reply asking for their Notice of Business Closure form. *Original instruction:* 🚨 **DO NOT PAY the Your Fashion Friend renewal notice.** Write *"NO LONGER IN BUSINESS…"* on it with
+1. ✅ **SENT 2026-09-29 by email to btpc@octaxcol.com** (closure effective Sept 29, 2026, business tax ID 0598950; she Bcc'd herself). **Sept 29, 2026 is the date her accountant needs.** ✅✅ **DONE 2026-09-30: she called the Tax Collector, who asked for their Notice of Business Closure form; she filled it in (out-of-business date 9.29.26, BTR 0598950, Closed Business, Owner) and emailed it to btpc@octaxcol.com.** ▶ Next on this line: the City of Orlando call (407-246-2204) and Style Star LLC's own county + city receipts; then Sunbiz fictitious-name cancellation CR4E001 §4 by ~Oct 29. *Original instruction:* 🚨 **DO NOT PAY the Your Fashion Friend renewal notice.** Write *"NO LONGER IN BUSINESS…"* on it with
    the business name, receipt number, effective date and signature → mail to **Tax Department, P.O. Box
    545100, Orlando, FL 32854**, or email the Notice of Business Closure form to **btpc@octaxcol.com**.
    **By mail or email, NOT in person** — the in-person rule is for CHANGES, not closures.
