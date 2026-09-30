@@ -3046,6 +3046,7 @@ it grow: ADD A ROW, never replace the table.**
 | Sep 21 | **$3.40** | 4 | 13 | 175 | **7.43%** |
 | Sep 22 | **$4.47** | 6 | 14 | 228 | 6.14% |
 | Sep 28 | **$6.89** | 10 | 25 | 338 | **7.40%** |
+| Sep 30 | **$8.18** | 11 | 28 | 347 | **8.07%** |
 ⚠️ **"ORDERED" IS NOT A SALE YET.** An ordered item stays PENDING until it ships AND clears its return
 window — that is when Amazon confirms it as a qualifying sale, counts it toward the 3-sales/180-day clock
 and pays. **No figure in this table is certified; every one is her dashboard's own live reading.**
