@@ -14761,6 +14761,16 @@ var WEEK_STARS=[  {n:'Tommy Hilfiger Claihre Kitten Heel Slide Sandal',store:'No
   // Sep 20 deadline. The only effect is every item currently scheduled from
   // Sep 27 onward (Love Hearts Necklace and later) slides back exactly one
   // week to make room -- nothing time-sensitive sits there.
+  /* ⭐ HER PICK, 2026-10-02: "for the star of the week I want to do this sunday
+     the pointed toe mid calf boots that we have on the site now". The FIRST
+     Amazon Star. `amz` (the ASIN) is what licenses its photo: Amazon's own
+     image, fetched live through her Creators API access and kept at most 12h,
+     never a `px` (a hotlinked retailer URL would not be licensed here).
+     Note = her own Finds note, first sentence, unchanged. Price rounds UP
+     with a tilde, same as /finds (Amazon prices cannot be checked from here). */
+  {n:'Pointed Toe Mid Calf Boots',store:'Amazon',url:'https://www.amazon.com/dp/B0HCX9JRV8',price:'~$108',
+   amz:'B0HCX9JRV8',pxFit:'contain',
+   note:'These comfy boots look good with jeans, trousers, skirts and dresses.'},
   {n:'Isabella Celini Stackable Love Bracelet',store:'Etsy',url:'https://www.etsy.com/listing/1223444750/heart-pendant-stackable-love-bracelet',price:'~$50',
    note:'The best stretchy bracelets. They come in 5 sizes and 6 colors for a perfect fit on your wrist.',
    px:'https://i.etsystatic.com/11251328/r/il/7af46b/6599573925/il_1588xN.6599573925_3cd9.jpg'},
@@ -14924,18 +14934,23 @@ var WEEK_STAR_PHOTO_ORDER=[
      _weekStar(), not assumed. Never edit a line here without re-running the
      schedule. */
   // ── indices 0-3: reached LAST, after the wrap ──────────────────────────────
-  'Zoe Lev Diamond & 14k Gold Bezel Pendant Necklace',            // Dec 6  — was Nov 29
-  'Valentino Garavani VLOGO Signature Reversible Leather Belt',   // Dec 13 — was Dec 6
-  'Open Heart Necklace',                                          // Dec 20 — was Dec 13
-  'Valentino Square Oversized Sunglasses',                        // Dec 27 — was Dec 20
+  'Zoe Lev Diamond & 14k Gold Bezel Pendant Necklace',            // Dec 13  — moved 1 week, boots inserted Oct 4
+  'Valentino Garavani VLOGO Signature Reversible Leather Belt',   // Dec 20 — moved 1 week, boots inserted Oct 4
+  'Open Heart Necklace',                                          // Dec 27 — moved 1 week, boots inserted Oct 4
+  'Valentino Square Oversized Sunglasses',                        // Jan 3 — moved 1 week, boots inserted Oct 4
   // ── index 4 is TODAY ───────────────────────────────────────────────────────
   'Saint Laurent SL M136 Sunglasses',                             // Sep 6  — LIVE NOW
   'Vilebrequin Long Mesh Cover-Up Dress — Black',                 // Sep 13 — renamed from "— Off White" 2026-09-13, her photo swap
   'Veronica Beard Crosbie Jean',                                  // Sep 20
   'Valentino Garavani Rockstud Medium Suede Pouch',               // Sep 27 — her swap, was Oct 25
-  'Isabella Celini Stackable Love Bracelet',                      // Oct 4
-  'Love Hearts Find Me Pendant Necklace',                         // Oct 11
-  'Diane von Furstenberg Jeanne Silk Jersey Wrap Dress',          // Oct 18
+  /* ⭐ INSERTED 2026-10-02, HER PICK FOR THIS SUNDAY (Oct 4). Every date before
+     it stays; every date after it moves ONE week later (the bracelet to
+     Oct 11, and so on), and the wrap-around weeks above move one week too.
+     Verified week by week with a re-implementation of _weekStarIndex. */
+  'Pointed Toe Mid Calf Boots',                                   // Oct 4  — HER PICK, the first Amazon Star
+  'Isabella Celini Stackable Love Bracelet',                      // Oct 11
+  'Love Hearts Find Me Pendant Necklace',                         // Oct 18
+  'Diane von Furstenberg Jeanne Silk Jersey Wrap Dress',          // Oct 25
   /* ⚠️⚠️ THE FARM RIO MAXI WAS HERE (Oct 25) AND SHE RETIRED IT, 2026-09-11:
      "we already used that farm rio dress so it doesn't need to go back on star of
      the week." ▶ RETIRED, NOT DELETED — its WEEK_STARS entry stays put and is now
@@ -14943,16 +14958,16 @@ var WEEK_STAR_PHOTO_ORDER=[
      'center 60%' crop her 2026-09-07 catch produced and starpx leans on that entry.
      Removing a row that already renders nowhere would only throw the lesson away.
      ⚠️ This is a TIMING call about one dress, not a rule about FARM Rio. */
-  'Simkhai Stella Suede Block Heel Sandal',                       // Oct 25 — her swap, was Sep 27
-  'Gucci GG Canvas Mini Shoulder Bag',                            // Nov 1
-  'Simkhai Devon Suede Tote',                                     // Nov 8
-  'Fleur du Mal Sculpt Molded Sports Bra',                        // Nov 15 — her swap, was Sep 27
+  'Simkhai Stella Suede Block Heel Sandal',                       // Nov 1 — her swap, was Sep 27
+  'Gucci GG Canvas Mini Shoulder Bag',                            // Nov 8
+  'Simkhai Devon Suede Tote',                                     // Nov 15
+  'Fleur du Mal Sculpt Molded Sports Bra',                        // Nov 22 — her swap, was Sep 27
   // ⭐ ADDED 2026-09-12, HER PICK. Appended at the END on purpose (the same
   // choice made for the bracelet earlier in this file's history): every date
   // already scheduled through Nov 15 stays exactly where it was, and only the
   // tail of the cycle (the wrap-around weeks) moves. Verified week by week
   // with _weekStar(), not assumed.
-  'Stella McCartney Falabella Mini Embellished Bag',              // Nov 22
+  'Stella McCartney Falabella Mini Embellished Bag',              // Nov 29
   // ⭐ ADDED 2026-09-13, HER PICK. Appended at the END, same reasoning as
   // every prior addition: every date through Nov 22 stays exactly where it
   // was, only the tail (Nov 29 onward) shifts one week later. Verified
@@ -14961,7 +14976,7 @@ var WEEK_STAR_PHOTO_ORDER=[
   // confirmed every date past Nov 22 moves by exactly one week and nothing
   // moves before it. Requires the _pxLicensed() widening above (CJ, not just
   // Rakuten) or this item's photo would silently not render the week it's up.
-  'Cashmere & Silk Pashmina'                                      // Nov 29
+  'Cashmere & Silk Pashmina'                                      // Dec 6
 ];
 function _weekStarPhotoPool(){
   // WHITELIST, not a sort hint: only a name she has actually put here can
@@ -14970,7 +14985,7 @@ function _weekStarPhotoPool(){
   // never a second way IN.
   return WEEK_STAR_PHOTO_ORDER.map(function(n){
     return WEEK_STARS.filter(function(s){return s.n===n;})[0];
-  }).filter(function(s){return s&&!!s.px;});
+  }).filter(function(s){return s&&(!!s.px||!!s.amz);});   // amz: an Amazon piece, photo from her Creators API access
 }
 // Which week is it? Whole LOCAL days since the anchor Sunday (2026-08-09, the
 // Sunday before the first star shipped), then whole weeks, wrapped around the
@@ -15060,9 +15075,25 @@ var _OWN_PX_RE=/^stars\/[a-z0-9][a-z0-9._-]*\.(jpe?g|png|webp)$/i;
 // NOT the same as _mallEarns: that one says yes for Amazon too, and her rule
 // is NO AMAZON PRODUCT PHOTOS, EVER -- so this names Rakuten + CJ only.
 function _pxLicensed(u){return !!(_affMid(u)||(_CJ_PID&&_cjAid(u)));}
+/* ⭐ AN AMAZON STAR (2026-10-02, the boots): its photo is Amazon's own, from her
+   Creators API access, the SAME cache the Finds page fills (12h, never written
+   into the page). Her old "no Amazon product photos, ever" rule was retired by
+   her on 2026-09-22 ("If we could use Amazon photos that would be amazing"), and
+   this access is what licenses them. _pxLicensed is unchanged: a hotlinked `px`
+   on an Amazon url is still NOT licensed; only the API's own image is. */
+function _wkStarAmzLoad(S,redraw){
+  if(!S||!S.amz||_amzPxCacheGet(S.amz)!==null||_findsPxOff)return;
+  fetch('/.netlify/functions/amazon-images?asins='+S.amz).then(function(r){return r.ok?r.json():null}).then(function(d){
+    if(!d)return;
+    if(d.why==='unconfigured'){_findsPxOff=true;return;}
+    var v=d.images&&d.images[S.amz];_amzPxCacheSet(S.amz,(v&&v.url)||'');
+    if(v&&v.url)try{redraw()}catch(e){}
+  }).catch(function(){});
+}
 function _wkStarPxSrc(S){
   if(!S)return '';
   if(S.ownPx&&_OWN_PX_RE.test(S.ownPx))return S.ownPx;
+  if(S.amz){var au=_amzPxCacheGet(S.amz);return au&&/^https:\/\/m\.media-amazon\.com\//.test(au)?au:'';}
   if(S.px&&_pxLicensed(S.url)&&_wlSafeUrl(S.px))return S.px;
   return '';
 }
@@ -15104,6 +15135,8 @@ function _wkStarPxTag(S,cls){
   var sty='';
   if(S.pxFit==='contain'||S.pxFit==='cover')sty+='object-fit:'+S.pxFit+';';
   if(S.pxPos)sty+='object-position:'+_esc(S.pxPos)+';';
+  // an Amazon photo is shot on white: centre it on white, not on the card's cream
+  if(S.amz)sty+='object-position:center;background:#fff;';
   var posAttr=sty?' style="'+sty+'"':'';
   // ⚠️ px2, OPTIONAL and PER ITEM: a SECOND view of the same piece, stacked above
   // the first. Her idea, 2026-09-08, on the Saint Laurent sunglasses -- "stack the
@@ -15161,6 +15194,11 @@ function _wksStarSvg(){
 /* One builder for the Star note, because it is rendered on TWO surfaces (the
    Welcome Back card and the Discovery page) and a rule applied by hand at two
    sites drifts the moment a third appears. See .wks-q-lo above for the why. */
+/* Amazon's required sentence, her exact wording, ONLY on a week whose Star is an
+   Amazon piece (the Star had no Amazon piece until the boots, 2026-10-02). */
+function _wksAmzDisc(S){
+  return S&&_amzAsinOf(S.url)?'<span class="disc-az">As an Amazon Associate, I earn from qualifying purchases.</span>':'';
+}
 function _wksNoteHTML(note){
   if(!note)return '';
   var lo=/[.,]\s*$/.test(note) ? ' wks-q-lo' : '';
@@ -15187,9 +15225,10 @@ function _renderWeekStar(){
     +_wksNoteHTML(WEEK_STAR.note)
     +'<div class="wks-act"><a class="wks-shop" href="'+_esc(_affUrl(_wlSafeUrl(WEEK_STAR.url)))+'" target="_blank" rel="sponsored noopener">Shop it &rarr;</a>'+_wlSaveBtn(item)+'</div>'
     +'</div>'
-    +'<div class="wks-disc">Some links may earn a commission.</div>'
+    +'<div class="wks-disc">Some links may earn a commission.'+_wksAmzDisc(WEEK_STAR)+'</div>'
     +'<div class="wl-door wb-wl-door" data-wldoor style="display:none"></div>';
   el.classList.add('on');
+  _wkStarAmzLoad(WEEK_STAR,_renderWeekStar);
   try{_wlSyncButtons()}catch(e){}
   try{_syncHeartTip()}catch(e){}
 }
@@ -15496,8 +15535,9 @@ function _renderDiscoStar(){
     +'<div class="wks-act"><a class="wks-shop" href="'+_esc(_affUrl(_wlSafeUrl(S.url)))+'" '
       +'target="_blank" rel="sponsored noopener">Shop it &rarr;</a></div>'
     +'</div></div>'
-    +'<div class="wks-disc">Some links may earn a commission.</div>';
+    +'<div class="wks-disc">Some links may earn a commission.'+_wksAmzDisc(S)+'</div>';
   el.classList.add('on');
+  _wkStarAmzLoad(S,_renderDiscoStar);
 }
 function updateWbScreen(){
   _buildWbHubs();
