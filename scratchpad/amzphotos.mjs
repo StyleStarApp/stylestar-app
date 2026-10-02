@@ -96,5 +96,9 @@ ok(/As an Amazon Associate, I earn from qualifying purchases\./.test(q.disc),"Am
 ok(q.tagged,'every Amazon card is tagged and sponsored');
 ok(q.saves===q.cards,'every Amazon card has a Save');
 ok(r.errs.length===0,'no page errors'+(r.errs.length?': '+r.errs[0]:''));
+const stk=await r.p.evaluate(()=>{const pairs=[...document.querySelectorAll('#s-dream .dc-item')].filter(d=>d.querySelectorAll('.dc-item-px.is-stack>img').length>1).map(d=>d.querySelector('.dc-item-btn').getAttribute('href'));
+  const cards=[...document.querySelectorAll('#resEditGallery .fme-card')].filter(c=>pairs.some(u=>decodeURIComponent(c.querySelector('.fme-go').getAttribute('href')).includes(u.split('?')[0])));
+  return {n:cards.length,ok:cards.every(c=>c.querySelectorAll('.fme-px.is-stack>img').length===2)}});
+ok(stk.n>0&&stk.ok,`a stacked pair on the Edit shows as the same stack on the results panel (${stk.n})`);
 await r.b.close();
 console.log(`\n${fail?'✗':'✓'} ${pass} passed, ${fail} failed`);process.exit(fail?1:0);

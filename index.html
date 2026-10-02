@@ -254,7 +254,7 @@
   ▶ RESTAMP AFTER ANY CSS EDIT:  node scripts/css-version.js --write
   ⚠️ DO NOT hand-type or "tidy" the value — it is derived from the file, and
   scratchpad/copy.js fails if it is stale. -->
-  <link rel="stylesheet" href="/styles.css?v=61514e0ed5">
+  <link rel="stylesheet" href="/styles.css?v=b5c261809b">
 </head>
 <body>
 <!-- build: quiz glow-up (chrome frame, gold knob, gold button, gold progress) 2026-07-11 r2 -->
@@ -15270,10 +15270,18 @@ function _resGalleryHtml(items,o){
          an untagged link that earns nothing. _affUrl never double-wraps. */
       return '<div class="fme-card">'
         +'<a class="fme-go" href="'+_esc(_affUrl(it.url))+'" target="_blank" rel="sponsored noopener">'
-        +'<span class="fme-px"><img src="'+_esc(it.image)+'" alt="'+_esc(it.name)+'"'
-        +' loading="lazy" decoding="async"'
-        /* a photo that 404s takes its own card with it rather than leaving a hole */
-        +' onerror="var c=this.closest(\'.fme-card\');if(c)c.remove()"></span>'
+        +(it.srcs&&it.srcs.length>1
+          /* a stacked pair: the second view can only unwrap itself, never take
+             the card (same reasoning as the "More from the Edit" strip) */
+          ? '<span class="fme-px is-stack">'
+            +'<img src="'+_esc(it.srcs[0])+'" alt="'+_esc(it.name)+'" loading="lazy" decoding="async"'
+            +' onerror="var c=this.closest(\'.fme-card\');if(c)c.remove()">'
+            +'<img src="'+_esc(it.srcs[1])+'" alt="" loading="lazy" decoding="async"'
+            +' onerror="var p=this.parentElement;this.remove();if(p)p.classList.remove(\'is-stack\')"></span>'
+          : '<span class="fme-px"><img src="'+_esc(it.image)+'" alt="'+_esc(it.name)+'"'
+            +' loading="lazy" decoding="async"'
+            /* a photo that 404s takes its own card with it rather than leaving a hole */
+            +' onerror="var c=this.closest(\'.fme-card\');if(c)c.remove()"></span>')
         +'<span class="fme-n">'+_esc(it.name)+'</span>'
         +'<span class="fme-m">'+_esc(it.store||'')+'</span>'
         +'<span class="fme-p">'+_esc(it.price||'')+'</span></a>'
@@ -15298,6 +15306,14 @@ function _renderEditGallery(){
     items=RES_EDIT_PICKS.map(function(u){return by[u];}).filter(Boolean);
   }
   items=items.slice(0,RES_EDIT_MAX);
+  /* ⚠️ A px2 STACKED PAIR SHOWS AS A STACK HERE TOO (her catch, 2026-10-02: the
+     Saint Laurent glasses sat low in an empty frame, because only the FIRST view
+     came across). Same "one photo renders the same on every screen" rule the
+     "More from the Edit" strip already obeys. */
+  items.forEach(function(it){
+    var st=it.el.querySelectorAll('.dc-item-px.is-stack>img');
+    if(st.length>1)it.srcs=[st[0].getAttribute('src'),st[1].getAttribute('src')];
+  });
   if(!items.length){el.classList.remove('on');el.innerHTML='';return;}
   el.innerHTML=_resGalleryHtml(items,{
     head:'From My Edit',
