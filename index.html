@@ -254,7 +254,7 @@
   ▶ RESTAMP AFTER ANY CSS EDIT:  node scripts/css-version.js --write
   ⚠️ DO NOT hand-type or "tidy" the value — it is derived from the file, and
   scratchpad/copy.js fails if it is stale. -->
-  <link rel="stylesheet" href="/styles.css?v=b56a199979">
+  <link rel="stylesheet" href="/styles.css?v=61514e0ed5">
 </head>
 <body>
 <!-- build: quiz glow-up (chrome frame, gold knob, gold button, gold progress) 2026-07-11 r2 -->
@@ -15261,8 +15261,11 @@ function _resGalleryHtml(items,o){
         +'<div class="fme-act">'+_wlSaveBtn(it)+'</div></div>';
     }).join('')
     +'</div>'
-    +'<button class="fme-all" onclick="'+o.go+'()">'+o.btn
-    +'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h13"/><path d="M12 6.5 18.5 12 12 17.5"/></svg></button>'
+    /* the SAME pill as the Edit/Finds closing buttons, coloured by where it GOES
+       (her rule): to the Edit = pink ring in flat silver, to Amazon = tan fill.
+       Same arrow SVG as those pills, never a different one. */
+    +'<button class="fme-all '+o.to+'" onclick="'+o.go+'()">'+o.btn
+    +'<svg class="fme-arr" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h15M13 6l6 6-6 6"/></svg></button>'
     +'<div class="fme-disc">'+o.disc+'</div>'
     +'</div></div></div>';
 }
@@ -15275,7 +15278,7 @@ function _renderEditGallery(){
   el.innerHTML=_resGalleryHtml(items,{
     head:'From My Edit',
     sub:'What I am recommending to my clients right now.',
-    btn:'See the full Edit',go:'showDream',
+    btn:'See the full Edit',go:'showDream',to:'to-edit',
     /* the Edit's own disclosure wording, because this IS the Edit's pieces */
     disc:'Nothing here is chosen by AI. Every piece is personally '
       +'selected by Catherine. Some links may earn a commission.'});
@@ -15318,7 +15321,7 @@ function _renderFindsGallery(){
     el.innerHTML=_resGalleryHtml(items,{
       head:'From My Amazon Finds',
       sub:'Mixing high and low is how I dress my clients.',   // her own live line, verbatim (the Edit/Finds crosslinks)
-      btn:'See all my Amazon Finds',go:'openFinds',
+      btn:'See all my Amazon Finds',go:'openFinds',to:'to-amazon',
       disc:'As an Amazon Associate, I earn from qualifying purchases.'});
     el.classList.add('on');
     try{_wlSyncButtons();}catch(e){}

@@ -3344,11 +3344,20 @@ body.card-fb{padding:0}
    tap target; tighten the margins around it, never the padding inside. */
 :is(#resEditGallery,#resFindsGallery) .fme-act{margin-top:7px}
 :is(#resEditGallery,#resFindsGallery) .fme-act .wl-save{padding:7px 11px;border-color:#E6D6A8}
-:is(#resEditGallery,#resFindsGallery) .fme-all{display:flex;align-items:center;justify-content:center;gap:6px;
-  margin:22px auto 0;font:500 11.5px/1 'Jost',sans-serif;letter-spacing:.1em;text-transform:uppercase;
-  color:#26221c;background:#ECD9A4;border:1px solid #C9A44C;border-radius:999px;
-  padding:13px 22px;max-width:252px;width:100%;cursor:pointer;-webkit-tap-highlight-color:transparent}
-:is(#resEditGallery,#resFindsGallery) .fme-all svg{width:15px;height:15px;flex:0 0 auto}
+/* 🚨 HER ASK, 2026-10-02: "make all of these buttons consistent". These two are
+   now the SAME pill as the closing buttons on /edit and /finds -- 278 wide (as they measure), 77
+   tall, a 5px border box, 13px Jost 700 uppercase at .06em, the same 18px SVG
+   arrow with 8px of air -- and each wears the colour of WHERE IT GOES (her
+   2026-09-29 rule): to the Edit = white, flat silver edge, pink inset ring; to
+   Amazon = the filled tan pill, never a tan ring (her 2026-09-22 ruling).
+   ⚠️ If the closing pills change weight or size, change these to match. */
+:is(#resEditGallery,#resFindsGallery) .fme-all{display:flex;align-items:center;justify-content:center;gap:8px;
+  margin:22px auto 0;font:700 13px/1.55 'Jost',sans-serif;letter-spacing:.06em;text-transform:uppercase;
+  border-radius:999px;border:5px solid transparent;box-sizing:border-box;
+  padding:13px 20px;width:278px;max-width:100%;min-height:77px;cursor:pointer;-webkit-tap-highlight-color:transparent}
+:is(#resEditGallery,#resFindsGallery) .fme-all.to-edit{background:#fff;color:#1a1a1a;border-color:#9AA0A6;box-shadow:inset 0 0 0 4px #EC4899}
+:is(#resEditGallery,#resFindsGallery) .fme-all.to-amazon{background:#ECBD83;color:#4a463e;border-color:#ECBD83}
+:is(#resEditGallery,#resFindsGallery) .fme-all svg{width:18px;height:18px;flex:0 0 auto;display:block}
 :is(#resEditGallery,#resFindsGallery) .fme-disc{font-size:11px;line-height:1.45;color:#6e6e6e;text-align:center;margin-top:14px}
 @media(max-width:374px){
   :is(#resEditGallery,#resFindsGallery) .fme-grid{gap:13px 9px}
