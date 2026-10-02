@@ -13952,6 +13952,7 @@ var _AMZ_PER_ROW=3, _AMZ_MEM=new Map(), _amzOff=false;
    most real description in front of it, keep up to three of those words, stop
    at filler. The brand is not repeated here; the card's store line carries it
    ("Sidefeel · Amazon"), the same convention as her Finds page. */
+var _AMZ_GARM=/^(jeans|pants|trousers|leggings|joggers|culottes|chinos|dress(es)?|gowns?|tops?|tees?|t-?shirts?|tshirts?|shirts?|blouses?|cami(sole)?s?|tanks?|bodysuits?|tunics?|polos?|sweaters?|sweatshirts?|pullovers?|hoodies?|cardigans?|jackets?|coats?|blazers?|shackets?|trenches|trench|parkas?|ponchos?|capes?|kimonos?|vests?|skirts?|shorts|jumpsuits?|rompers?|overalls|sandals?|boots?|booties|heels|pumps|flats|sneakers|loafers|mules|slides|espadrilles|bags?|totes?|clutch(es)?|crossbody|necklaces?|earrings?|bracelets?|bangles?|rings?|scarf|scarves|belts?|sunglasses|hats?)$/i;
 var _AMZ_FILL=/^(for|with|and|or|the|a|an|to|in|on|of|at|by|wom[ae]n['’]?s?|’s|'s|ladies|girls?|trendy|fashion|casual|cute|basic|summer|fall|winter|spring|autumn|clothes|outfits?|loose|comfy|comfortable|elegant|sexy|new|20\d\d|[0-9]+(pack|pcs)?)$/i;
 function _amzTidy(t,brand,item){
   var s=String(t||'');
@@ -13959,13 +13960,19 @@ function _amzTidy(t,brand,item){
   if(brand)s=s.replace(new RegExp('^\\s*'+esc(brand)+'\\s*','i'),'');
   s=s.split(/\s[-–|]\s|,|\(/)[0].replace(/\bsize\s*[a-z0-9.]{1,5}\b/gi,' ');
   var w=s.split(/\s+/).filter(Boolean);
-  var noun=String(item||'').trim().split(/\s+/).pop()||'';
+  /* the garment word in the ROW'S name, not simply its last word: "Tops in your
+     favorite colors" anchors on "Tops", never on "colors" (which named a card
+     "Is My Favorite Color", caught testing 2026-10-02) */
+  var iw=String(item||'').trim().split(/\s+/).filter(Boolean);
+  var gw=iw.filter(function(x){return _AMZ_GARM.test(x)});
+  /* a row named by a colour or a trend ("Chocolate Brown", "Faux Fur") has no
+     garment word, so the card is named after whatever garment the title holds */
+  var noun=gw.length?gw[gw.length-1]:'';
   var stem=noun.toLowerCase().replace(/(es|s)$/,'').slice(0,5);
   /* a row named by a colour or a trend ("Chocolate Brown") has no garment in
      it, so fall back to any garment word in the title */
-  var GARM=/^(jeans|pants|trousers|leggings|dress(es)?|tops?|tees?|shirts?|blouses?|cami(sole)?s?|tanks?|sweaters?|cardigans?|jackets?|coats?|blazers?|shackets?|vests?|skirts?|shorts|jumpsuits?|sandals?|boots?|booties|heels|pumps|flats|sneakers|loafers|mules|bags?|totes?|necklaces?|earrings?|bracelets?|scarf|scarves|belts?|sunglasses|hats?)$/i;
   var isN=function(x){return stem&&x.toLowerCase().indexOf(stem)===0};
-  if(!w.some(isN))isN=function(x){return GARM.test(x)};
+  if(!w.some(isN))isN=function(x){return _AMZ_GARM.test(x)};
   var best=-1,bestN=-1;
   for(var k=0;k<Math.min(w.length,12);k++){
     if(!isN(w[k]))continue;
@@ -13981,7 +13988,10 @@ function _amzTidy(t,brand,item){
 }
 async function _amzFetch(req){
   if(_amzOff||!req||!req.item)return [];
-  var q=[req.colour,req.fabric,req.cut,req.item].filter(Boolean).join(' ').slice(0,80);
+  /* a Wardrobe row's name is sometimes a sentence ("Tops in your favorite
+     colors"); Amazon gets the garment part only, or it answers with slogan tees */
+  var item=String(req.item).replace(/\s+(in|for|that|with)\s+your\b.*$/i,'').trim()||req.item;
+  var q=[req.colour,req.fabric,req.cut,item].filter(Boolean).join(' ').slice(0,80);
   var key=q+'|'+(req.price||'');
   var hit=_AMZ_MEM.get(key);
   if(hit&&Date.now()-hit.t<12*3600*1000)return hit.v;
@@ -13997,7 +14007,7 @@ async function _amzFetch(req){
   var v=(d.items||[]).filter(function(it){
     return it&&it.image&&it.url&&_AMZ_NEVER_BRANDS.indexOf(String(it.brand||'').toLowerCase())<0;
   }).map(function(it){
-    var name=_amzTidy(it.title,it.brand,req.item);
+    var name=_amzTidy(it.title,it.brand,item);
     return {id:'amz_'+it.asin,asin:it.asin,title:name,name:name,search:it.title,brand:it.brand||'',
       store:(it.brand?it.brand+' \u00b7 ':'')+'Amazon',price:it.priceText||'',image:it.image,url:it.url,amz:true};
   });
