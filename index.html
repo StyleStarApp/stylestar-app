@@ -11392,7 +11392,10 @@ function _wlEditItems(){
     // view (h() above renders it eager, first), so it is the one honest single
     // photo to carry into a save -- the wishlist thumbnail is not the place to
     // reproduce a two-photo stack built for a much bigger card.
-    var px=el.querySelector('.dc-item-px img, img.dc-item-px');
+    // ⚠️ The Open Heart Necklace's photo sits in a hand-built crop wrapper with no
+    // class (see its own note), so fall back to the item's first <img>; without
+    // this it read as "no photo" and dropped off the quiz-results panel.
+    var px=el.querySelector('.dc-item-px img, img.dc-item-px')||el.querySelector('img');
     out.push({el:el,name:n.textContent.trim(),store:st?st.textContent.trim():'',
               price:pr?pr.textContent.trim():'',url:a.getAttribute('href')||'',pick:true,
               image:(px&&px.src)||''});
@@ -15231,6 +15234,22 @@ function _renderEditTeaser(){
       is not the place to reproduce a two-view stack built for a much bigger
       card. The strip on Welcome Back is wider, which is why IT renders stacks. */
 var RES_EDIT_MAX=10;   // a preview, with a real door to the rest; safe to turn
+/* ⭐ HER EDIT PICKS FOR THE QUIZ RESULTS, IN HER ORDER (2026-10-02). Listed by
+   the product link in the Edit's markup, never by name. A pick with no photo, or
+   one she removes from the Edit, is simply skipped. Empty this list to fall back
+   to the Edit's own order. */
+var RES_EDIT_PICKS=[
+  'https://www.coutr.com/products/saint-laurent-sl-m136-sunglasses', // Saint Laurent SL M136 Sunglasses
+  'https://www.olivela.com/products/jane-win-love-hearts-find-me-pendant-necklace-gold', // Love Hearts Find Me Pendant Necklace
+  'https://www.mytheresa.com/us/en/women/valentino-garavani-rockstud-medium-suede-pouch-beige-p01180729', // Valentino Garavani Rockstud Medium Suede Pouch
+  'https://www.mytheresa.com/us/en/women/stella-mccartney-falabella-mini-embellished-crossbody-bag-white-p01174765', // Stella McCartney Falabella Mini Embellished Bag
+  'https://marissacollections.com/products/veronica-beard-crosbie-jean', // Veronica Beard Crosbie Jean
+  'https://www.dvf.com/products/flag-scarf-in-myrtle-berry', // Diane von Furstenberg Flag Scarf - Myrtle Berry
+  'https://www.mytheresa.com/us/en/women/valentino-garavani-vlogo-signature-reversible-leather-belt-black-p01182366', // Valentino Garavani VLOGO Signature Reversible Leather Belt
+  'https://www.mytheresa.com/us/en/women/gucci-gg-canvas-mini-shoulder-bag-beige-p01192311', // Gucci GG Canvas Mini Shoulder Bag
+  'https://www.etsy.com/listing/849636969/open-heart-necklace-14k-gold-fill', // Open Heart Necklace
+  'https://www.mytheresa.com/us/en/women/roger-vivier-epine-rose-85-suede-mules-burgundy-p01216762'  // Roger Vivier Épine Rose 85 Suede Mules
+];
 var RES_FINDS_MAX=10;  // same, for the Amazon Finds panel; safe to turn
 /* ONE builder for both quiz-results panels, so there is exactly one card
    template and one outbound-link path (affq counts it once). Each panel passes
@@ -15273,7 +15292,12 @@ function _renderEditGallery(){
   var el=document.getElementById('resEditGallery');if(!el)return;
   var items=_wlEditItems().filter(function(it){
     return it.el.closest('#s-dream') && it.image;   // Edit only, and only with a photograph
-  }).slice(0,RES_EDIT_MAX);
+  });
+  if(RES_EDIT_PICKS.length){
+    var by={};items.forEach(function(it){by[it.url]=it;});
+    items=RES_EDIT_PICKS.map(function(u){return by[u];}).filter(Boolean);
+  }
+  items=items.slice(0,RES_EDIT_MAX);
   if(!items.length){el.classList.remove('on');el.innerHTML='';return;}
   el.innerHTML=_resGalleryHtml(items,{
     head:'From My Edit',

@@ -81,6 +81,9 @@ const q=await r.p.evaluate(()=>{const e=document.getElementById('resEditGallery'
     after:!!(e.compareDocumentPosition(g)&4),saves:g.querySelectorAll('.wl-save').length,cats,
     allText:txt(e)+' '+txt(g)}});
 ok(q.editOn&&q.editCards>0&&q.editHead==='From My Edit','the Edit panel still renders, its heading unchanged');
+const eo=await r.p.evaluate(()=>{const raw=[...document.querySelectorAll('#resEditGallery .fme-card')].map(c=>c.querySelector('.fme-n').textContent);
+  const want=RES_EDIT_PICKS.map(u=>{const it=_wlEditItems().find(i=>i.url===u&&i.image&&i.el.closest('#s-dream'));return it?it.name:null}).filter(Boolean).slice(0,RES_EDIT_MAX);return {raw,want};});
+ok(eo.raw.length>0&&JSON.stringify(eo.raw)===JSON.stringify(eo.want),`the Edit panel shows her Edit picks, in her order (${eo.raw.length})`);
 ok(q.on&&q.cards>0&&q.cards<=10,`the Amazon panel shows at most ten pieces (${q.cards}; the stub withholds some photos on purpose)`);
 ok(q.after,'…and sits after the Edit panel, never merged into it');
 const order=await r.p.evaluate(()=>[...document.querySelectorAll('#resFindsGallery .fme-go')].map(a=>(a.href.match(/dp\/([A-Z0-9]{10})/)||[])[1]));
