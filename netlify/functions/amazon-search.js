@@ -58,6 +58,7 @@ export default async (req) => {
   const q = new URL(req.url).searchParams;
   const keywords = (q.get('q') || '').replace(/[^\w '&-]/g, ' ').replace(/\s+/g, ' ').trim().slice(0, 80);
   const maxPrice = Math.max(0, Math.min(100000, parseInt(q.get('max') || '0', 10) || 0));
+  const minPrice = Math.max(0, Math.min(100000, parseInt(q.get('min') || '0', 10) || 0));
   if (!keywords) return new Response(JSON.stringify({ items: [] }), { status: 200, headers });
 
   const id = process.env.AMAZON_CREATORS_ID, secret = process.env.AMAZON_CREATORS_SECRET;
@@ -68,6 +69,7 @@ export default async (req) => {
     searchIndex: 'Fashion', itemCount: 10, condition: 'New', availability: 'Available',
     minReviewsRating: 4, resources: RESOURCES };
   if (maxPrice) body.maxPrice = maxPrice * 100;   // lowest denomination: cents
+  if (minPrice) body.minPrice = minPrice * 100;   // a price floor, being tested with her (2026-10-02)
 
   try {
     const token = await getToken(id, secret);
