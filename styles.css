@@ -3369,14 +3369,21 @@ body.card-fb{padding:0}
 /* 🚨 HER PICK, 2026-10-02 ("I like option 2"), after she said the old heading
    looked "sort of small and brownish": the two shopping panels' headings are the
    large black DM Serif Display of the product names, mixed case, instead of the
-   12px gold capitals the portrait's own headings use. Scoped to THESE TWO
-   panels only; "Your Style Portrait"/"Your Style Signature" keep theirs.
+   12px gold capitals. Then, the same day, "I think for all the headings": so it
+   is EVERY heading on the portrait screen (#s-res) -- Your Style Portrait,
+   Your Style Signature and both shopping panels. Analyze an Outfit's headings
+   (#s-photo-res) are a different screen with their own bold black style.
    ⚠️ The thin gold side rules come off on both, because "From My Amazon Finds"
    is too long to leave them room (they shrank to dots), and two panels side by
    side must match. It may wrap on a narrow phone, balanced, never overflow. */
-:is(#resEditGallery,#resFindsGallery) .eng-rule{display:none}
-:is(#resEditGallery,#resFindsGallery) .eng-lbl{font:400 28px/1.15 'DM Serif Display',serif;letter-spacing:0;
+#s-res .eng-rule{display:none}
+#s-res .eng-lbl{font:400 28px/1.15 'DM Serif Display',serif;letter-spacing:0;
   text-transform:none;color:#1a1a1a;white-space:normal;text-align:center;text-wrap:balance}
+/* ⚠️ ONE EXCEPTION, SIZE ONLY: "Your Style Portrait" sits directly above her
+   own name ("This is Catherine", .nm) in the same font. At 28px the two read as
+   one headline said twice; at 20px her NAME stays the biggest thing on the card.
+   Same font, same black, just smaller. */
+#s-res .eng.pr .eng-lbl{font-size:20px}
 /* ⭐ THE STAR OF THE WEEK ON THE DISCOVERY PAGE — her idea, 2026-08-21:
    "I am wondering if the Discovery page, for first time users, before she even
    takes the quiz, could be able to get a peak at the star of the week."
