@@ -254,7 +254,7 @@
   ▶ RESTAMP AFTER ANY CSS EDIT:  node scripts/css-version.js --write
   ⚠️ DO NOT hand-type or "tidy" the value — it is derived from the file, and
   scratchpad/copy.js fails if it is stale. -->
-  <link rel="stylesheet" href="/styles.css?v=43fe722adc">
+  <link rel="stylesheet" href="/styles.css?v=f76b4ed450">
 </head>
 <body>
 <!-- build: quiz glow-up (chrome frame, gold knob, gold button, gold progress) 2026-07-11 r2 -->
@@ -9190,6 +9190,69 @@ function openFinds(){
   // a returning woman should never land on a filtered page from her last visit
   try{const fi=document.getElementById('findsSearchInput');if(fi)fi.value='';findsSearch('');}catch(e){}
   try{findsCatNavRender();}catch(e){}
+  try{findsPhotosLoad();}catch(e){}
+}
+// --- Amazon Finds photos (eligible for Amazon's Creators API 2026-10-02) -----
+// Her rule "photos on Finds will be my own, or none" was retired by her on
+// 2026-09-22 after two testers asked for photos the same day. Amazon's own
+// catalogue photos come from /.netlify/functions/amazon-images by ASIN.
+// ⚠️ LICENSING: Amazon lets us SHOW its images, hotlinked from its own host and
+//   linked to the product, and keep its data at most 24h. So the photo is added
+//   at RUNTIME, never written into the markup or the CSV, and the browser keeps
+//   it for 12h. Tapping the photo goes where "Shop this item" goes (the button's
+//   own click, so it stays affiliate-tagged and adds no new way out of the app).
+// ⚠️ A sight-unseen photo is never cropped: `contain` on white, the same rule as
+//   the finder's cards. If Amazon sends nothing (keys unset, eligibility lapsed,
+//   a piece withdrawn) the card stays the text card it has always been.
+const _AMZ_PX_TTL=12*60*60*1000;
+let _findsPxBusy=false,_findsPxOff=false;
+function _amzAsinOf(href){const m=/amazon\.com\/(?:[^?#]*\/)?dp\/([A-Z0-9]{10})/i.exec(href||'');return m?m[1].toUpperCase():'';}
+// returns the url, '' for a remembered "Amazon has no photo for this one", or
+// null for "never asked / too old" -- so a piece Amazon won't show is not
+// re-asked on every visit
+function _amzPxCacheGet(asin){try{const v=JSON.parse(localStorage.getItem('ss_amzpx_'+asin)||'null');if(v&&typeof v.u==='string'&&Date.now()-v.t<_AMZ_PX_TTL)return v.u;}catch(e){}return null;}
+function _amzPxCacheSet(asin,u){try{localStorage.setItem('ss_amzpx_'+asin,JSON.stringify({u:u,t:Date.now()}));}catch(e){}}
+function _findsPxPlace(item,url){
+  if(!item||item.querySelector('.dc-item-px'))return;
+  const btn=item.querySelector('.dc-item-btn');
+  const nm=item.querySelector('.dc-item-name');
+  const img=document.createElement('img');
+  img.className='dc-item-px is-amz';
+  img.src=url;img.loading='lazy';img.decoding='async';
+  img.alt=nm?nm.textContent:'';
+  img.onerror=function(){this.remove();};
+  if(btn){img.onclick=function(){btn.click();};img.setAttribute('role','link');}
+  item.insertBefore(img,item.firstChild);
+}
+async function findsPhotosLoad(){
+  if(_findsPxBusy)return;
+  const items=Array.from(document.querySelectorAll('#s-finds .dc-item'));
+  const need=[];const byAsin={};
+  items.forEach(function(it){
+    if(it.querySelector('.dc-item-px'))return;
+    const b=it.querySelector('.dc-item-btn');
+    const asin=_amzAsinOf(b&&b.getAttribute('href'));
+    if(!asin)return;
+    (byAsin[asin]=byAsin[asin]||[]).push(it);
+    const hit=_amzPxCacheGet(asin);
+    if(hit)_findsPxPlace(it,hit);else if(hit===null&&need.indexOf(asin)<0)need.push(asin);
+  });
+  if(!need.length||_findsPxOff)return;
+  _findsPxBusy=true;
+  try{
+    // one batch of ten at a time, top of the page first, so the first photos
+    // a woman sees arrive first and Amazon's per-second limit is respected
+    for(let i=0;i<need.length;i+=10){
+      const chunk=need.slice(i,i+10);
+      let data=null;
+      try{const r=await fetch('/.netlify/functions/amazon-images?asins='+chunk.join(','));if(r.ok)data=await r.json();}catch(e){}
+      const imgs=(data&&data.images)||{};
+      // keys not set in Netlify: stop asking for the rest of this visit
+      if(data&&data.why==='unconfigured'){_findsPxOff=true;break;}
+      if(!data)continue;   // a failed call remembers nothing, so the next visit tries again
+      chunk.forEach(function(a){const v=imgs[a];const u=(v&&v.url)||'';_amzPxCacheSet(a,u);if(u)(byAsin[a]||[]).forEach(function(it){_findsPxPlace(it,u);});});
+    }
+  }finally{_findsPxBusy=false;}
 }
 // --- Amazon Finds category quick-jump (a second real tester's ask, 2026-09-22) ---
 // Renders one pill per LIVE `.dc-cat` heading -- never a hardcoded list, so it can
