@@ -92,6 +92,34 @@ ok('the find-block wrap is gone, no leftover apology box', r2.state.findWrapGone
 ok('her compare cards are untouched', r2.state.gridHasCompareCard);
 ok('nothing from the dead search was merged', !r2.state.gridHasFindCard);
 
+console.log('\n3. WHILE it searches, the wait is a card INSIDE the row, never a second row (her catch, 2026-10-02)');
+{
+  const ctx = await browser.newContext({ viewport: { width: 390, height: 1500 } });
+  const pg = await ctx.newPage();
+  await pg.route(u => u.pathname.includes('style-ai'), r => r.fulfill({ status: 200,
+    contentType: 'application/json', body: JSON.stringify({ content: [{ text: JSON.stringify(IDEAS) }] }) }));
+  await pg.route(u => u.pathname.includes('product-find'), async r => { await new Promise(z => setTimeout(z, 4000));
+    r.fulfill({ status: 200, contentType: 'application/json', body: JSON.stringify(FIND) }).catch(() => {}); });
+  await pg.route(u => u.pathname.includes('product-search'), r => r.fulfill({ status: 200,
+    contentType: 'application/json', body: JSON.stringify({ products: [] }) }));
+  await pg.addInitScript(() => { localStorage.setItem('ss_data', JSON.stringify({ userName: 'Cath',
+    answers: [8,7,6,9,7,6,7,7,8,10,7,9], topArchNames: ['The Timeless Classic'], portrait: 'p', motto: 'm' })); });
+  await pg.goto(`http://localhost:${PORT}/`); await pg.waitForTimeout(1800);
+  await pg.evaluate(() => { try { openWardrobe() } catch (e) {} });
+  await pg.waitForTimeout(800);
+  await pg.evaluate(() => { try { wardrobeSeeIdeas('to3') } catch (e) {} });
+  await pg.waitForSelector('#wdrFind_to3 .ss-find-wait', { timeout: 8000 });
+  const w = await pg.evaluate(() => {
+    const wrap = document.getElementById('wdrFind_to3'), grid = document.querySelector('#wx_to3 .shop-grid.hscroll');
+    const a = wrap.getBoundingClientRect(), g = grid.getBoundingClientRect(), c = grid.querySelector('.shop-card').getBoundingClientRect();
+    return { inGrid: wrap.parentElement === grid, sameLine: Math.abs(a.top - c.top) < 2, bottom: a.bottom <= g.bottom + 1,
+             star: !!wrap.querySelector('.ss-find-star') };
+  });
+  ok('the waiting slot sits inside her row, not below it', w.inGrid && w.sameLine && w.bottom, JSON.stringify(w));
+  ok('...and it is still the gold turning star', w.star);
+  await ctx.close();
+}
+
 console.log(`\n${pass} passed, ${failn} failed`);
 await browser.close();
 srv.close();

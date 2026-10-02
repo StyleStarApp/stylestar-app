@@ -4412,6 +4412,13 @@ body.ss-play .hm-entrance{animation:ssOverlayOut .55s ease 1.6s forwards}
 .ss-find-wait .ss-find-star{width:66px;height:66px;flex:0 0 66px;margin-top:65px;
   animation:spin 1.7s linear infinite reverse;transform-origin:50% 50%}
 @media(prefers-reduced-motion:reduce){.ss-find-wait .ss-find-star{animation:none}}
+/* ▶ THE WARDROBE / WHAT'S TRENDING WAIT, AS A CARD IN THE ROW (her "There
+   should not be a second row", 2026-10-02). Same gold star at her 66px, same
+   words; only the box shrinks to a card's width and the row's height. */
+.shop-grid.hscroll>.wdr-find-slot{flex:0 0 150px;margin:0;align-self:stretch}
+.shop-grid.hscroll>.wdr-find-slot .ss-find-wait{height:100%;min-height:150px;gap:14px;justify-content:center}
+.shop-grid.hscroll>.wdr-find-slot .ss-find-wait .ss-find-star{margin-top:0}
+.shop-grid.hscroll>.wdr-find-slot .ss-find-wait-t{font-size:12.5px;padding:0 10px}
 /* ⚠️ HER WORDS, from `_FIND_STEPS`, and they rotate as the search goes on so it
    reads as a stylist working rather than a spinner stuck. Italic and quiet, the
    same voice as the chat's status line — this is reassurance, not a headline. */

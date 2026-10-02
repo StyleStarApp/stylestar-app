@@ -254,7 +254,7 @@
   ▶ RESTAMP AFTER ANY CSS EDIT:  node scripts/css-version.js --write
   ⚠️ DO NOT hand-type or "tidy" the value — it is derived from the file, and
   scratchpad/copy.js fails if it is stale. -->
-  <link rel="stylesheet" href="/styles.css?v=41034e19df">
+  <link rel="stylesheet" href="/styles.css?v=33a707c472">
 </head>
 <body>
 <!-- build: quiz glow-up (chrome frame, gold knob, gold button, gold progress) 2026-07-11 r2 -->
@@ -10999,6 +10999,16 @@ async function _wardrobeIdeaGen(id,boxId){
     const fillN=curated.length?Math.max(0,6-curated.length):aiItems.length;
     aiItems.slice(0,fillN).forEach(function(item){html+=_shopCard(item)});
     _wdrMoreBuf[id]=aiItems.slice(fillN);
+    /* 🚨 THE WAITING STAR SITS INSIDE THE ROW, AS ITS LAST CARD — her catch,
+       2026-10-02, from What's Trending: "There should not be a second row." The
+       merge below already folded the real cards into this row once they
+       landed, but the 5-8s WAIT still showed as a big second block underneath.
+       Now the wait is a card-sized slot at the end of this same scroller; the
+       found cards are moved in beside it and the slot goes, so there is never a
+       second row, waiting or done. Same id, same painter, same merge. */
+    html+='<div id="wdrFind_'+_esc(id)+'" class="find-block ss-find wdr-find-slot">'
+      +'<div class="ss-find-wait">'+_starSpin('ss-find-star')
+      +'<span class="ss-find-wait-t">'+_esc(_FIND_STEPS[0])+'</span></div></div>';
     html+='</div><div class="wdr-swipe-hint">Swipe for more &rarr;</div>';
     // "+ See more ideas": her requirement, verbatim intent -- she must ALWAYS
     // be able to keep looking, full shelf or not, on every slot.
@@ -11048,9 +11058,6 @@ async function _wardrobeIdeaGen(id,boxId){
          like Ideas' own AI failure always has: silent, because her real cards
          are already on screen and an apology over them would be noise — never
          a "try again" that just re-hits the same outage and wastes her time. */
-    html+='<div id="wdrFind_'+_esc(id)+'" class="find-block ss-find">'
-      +'<div class="ss-find-wait">'+_starSpin('ss-find-star')
-      +'<span class="ss-find-wait-t">'+_esc(_FIND_STEPS[0])+'</span></div></div>';
     box.innerHTML=html;
     const _g=box.querySelector('.shop-grid.hscroll'),_h=box.querySelector('.wdr-swipe-hint');
     _swipeHint(_g,_h);_nudgeScroll(_g);
