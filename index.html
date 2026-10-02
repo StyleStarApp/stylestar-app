@@ -13608,14 +13608,23 @@ function _findBlockHtml(data,req,quiet){
       url:(b.feed&&b.url)?b.url:getStoreUrl(b.store,b.title),
       exact:!!(b.feed&&b.url)});
   });
-  /* ⭐ THE THREE AMAZON CARDS take seats 2, 5 and 8 of the browse stretch (or the
-     end, if it is shorter): mixed in, never first. Real product page, Amazon's
-     live price, no ticks. */
-  amazon.forEach(function(a,i){
-    const card=_findCard({id:a.id,title:a.title,brand:a.brand,store:a.store,price:a.price,
+  /* ⭐ THE THREE AMAZON CARDS take seats 3, 6 and 9 of the WHOLE ROW (or the end,
+     if it is shorter): mixed in, never first. Real product page, Amazon's live
+     price, no ticks.
+     🚨 OF THE WHOLE ROW, NOT THE BROWSE STRETCH — her catch 2026-10-02, "nothing
+     from Amazon showed up": seated in the browse stretch they came after every
+     checked card, and Shop your Style's range can lead with up to twelve of
+     those, so the first Amazon card sat fifteen swipes in. */
+  const amazonCards=amazon.map(function(a){
+    return _findCard({id:a.id,title:a.title,brand:a.brand,store:a.store,price:a.price,
       image:a.image,url:a.url,exact:true});
-    browseCards.splice(Math.min(browseCards.length,2+i*3),0,card);
   });
+  const _seatAmz=function(list){
+    const out=list.slice();
+    amazonCards.forEach(function(c,i){out.splice(Math.min(out.length,2+i*3),0,c)});
+    return out;
+  };
+  if(!exact.length)browseCards.splice.apply(browseCards,[0,browseCards.length].concat(_seatAmz(browseCards)));
   /* ⚠️ A BROWSE CARD CARRIES NO TICKS AND CLAIMS NOTHING — it is handed no
      `checks`, so `_findCard` renders name, store, price and photo and stops.
      Showing MORE is not claiming more, and that distinction is hers. */
@@ -13694,7 +13703,7 @@ function _findBlockHtml(data,req,quiet){
          found anything wrong with it. Hers simply opens the door.
        ⚠️ DO NOT PARAPHRASE IT BACK INTO SOMETHING FULLER. Her wording has now
          beaten a Claude draft on this row twice. */
-    const head=browseCards.length
+    const head=(browseCards.length||amazonCards.length)
       ? 'Here are some options.'
       /* ▶ With nothing unchecked behind them there is no "first few" to name,
          so the original wording stands and stays honest. */
@@ -13709,9 +13718,9 @@ function _findBlockHtml(data,req,quiet){
          the app knew perfectly well the word was RED. Handing each card the
          request makes it say "✓ red" — which is the whole point she made, that
          the checkmark should carry the meaning instead of a header sentence. */
-      _findRow(shown.map(function(p){
-        return _findCard(Object.assign({},p,{request:req}))}).join('')+
-        browseCards.join(''),shown.length+browseCards.length)+DISC;
+      _findRow(_seatAmz(shown.map(function(p){
+        return _findCard(Object.assign({},p,{request:req}))}).concat(browseCards)).join(''),
+        shown.length+browseCards.length+amazonCards.length)+DISC;
   }else if(doors.length){
     /* ▶▶ HER COPY, VERBATIM (2026-09-06): "I couldn't find an exact match today.
        Would you like me to keep the blush and look at satin, or keep the silk and
