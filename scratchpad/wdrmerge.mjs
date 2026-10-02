@@ -71,6 +71,8 @@ async function open(findResponse) {
       gridCards: grid ? grid.children.length : -1,
       gridHasFindCard: grid ? !!grid.querySelector('.find-card') : false,
       gridHasCompareCard: grid ? !!grid.querySelector('.shop-card') : false,
+      firstIsPhoto: grid ? !!(grid.firstElementChild && grid.firstElementChild.classList.contains('find-card')) : false,
+      moreBtn: !!document.querySelector('#wx_to3 .wdr-more'),
     };
   });
   await ctx.close();
@@ -84,6 +86,8 @@ ok('the find-block wrap is gone, not left as a second box', r1.state.findWrapGon
 ok('her compare cards are still in the row', r1.state.gridHasCompareCard);
 ok('the finder\'s cards folded into the SAME grid', r1.state.gridHasFindCard);
 ok('the row genuinely grew (compare + found together)', r1.state.gridCards > 2);
+ok('HER CALL 2026-10-02: the photos come FIRST in the row', r1.state.firstIsPhoto);
+ok('HER CALL 2026-10-02: no "+ See more ideas" button any more', !r1.state.moreBtn);
 
 console.log('\n2. a dead search (the SerpApi-outage shape) never shows an apology over real cards');
 const r2 = await open(null);
@@ -117,6 +121,16 @@ console.log('\n3. WHILE it searches, the wait is a card INSIDE the row, never a 
   });
   ok('the waiting slot sits inside her row, not below it', w.inGrid && w.sameLine && w.bottom, JSON.stringify(w));
   ok('...and it is still the gold turning star', w.star);
+  /* ⚠️ NOTHING MAY JUMP: she has swiped to a no-photo card while it searches;
+     when the photos land in FRONT of it, that card must not move on screen. */
+  await pg.waitForTimeout(1200);   // past the row's own opening nudge, as a real swipe would be
+  const before = await pg.evaluate(() => {
+    const g = document.querySelector('#wx_to3 .shop-grid.hscroll'); g.scrollLeft = 120;
+    const c = g.querySelectorAll('.shop-card')[1]; c.dataset.pin = '1'; return c.getBoundingClientRect().left; });
+  await pg.waitForSelector('#wx_to3 .find-card', { timeout: 10000 }); await pg.waitForTimeout(300);
+  const after = await pg.evaluate(() => document.querySelector('#wx_to3 [data-pin="1"]').getBoundingClientRect().left);
+  ok('...and when the photos land in front, the card she is looking at does not move', Math.abs(after - before) < 2,
+     'before=' + before + ' after=' + after);
   await ctx.close();
 }
 

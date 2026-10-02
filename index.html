@@ -254,7 +254,7 @@
   ▶ RESTAMP AFTER ANY CSS EDIT:  node scripts/css-version.js --write
   ⚠️ DO NOT hand-type or "tidy" the value — it is derived from the file, and
   scratchpad/copy.js fails if it is stale. -->
-  <link rel="stylesheet" href="/styles.css?v=33a707c472">
+  <link rel="stylesheet" href="/styles.css?v=4561388351">
 </head>
 <body>
 <!-- build: quiz glow-up (chrome frame, gold knob, gold button, gold progress) 2026-07-11 r2 -->
@@ -10989,7 +10989,17 @@ async function _wardrobeIdeaGen(id,boxId){
     const parsed=_aiJSON(d.content.map(function(c){return c.text||''}).join(''));
     let html='<div class="wdr-expand-lbl"><span class="wdr-see-star">&#9733;</span> See ideas for &ldquo;'+_esc(name)+'&rdquo; <a onclick="'+again+'">&mdash; refresh</a></div>';
     html+='<div class="shop-grid hscroll">';
-    // Catalog pieces lead, AI ideas fill the set to 6, one seamless carousel.
+    /* 🚨 THE WAITING STAR SITS INSIDE THE ROW, AS ITS FIRST CARD — her two calls,
+       2026-10-02, from What's Trending: "There should not be a second row", then
+       YES to photos first. The 5-8s wait used to be a big block UNDER the row;
+       it is now a card-sized slot at the FRONT of this same scroller, and the
+       found photo cards take its place there (see _wdrMergeFindRow, which keeps
+       whatever card she is looking at still if she has already swiped). Same id,
+       same painter, same merge, on the Wardrobe list and What's Trending alike. */
+    html+='<div id="wdrFind_'+_esc(id)+'" class="find-block ss-find wdr-find-slot">'
+      +'<div class="ss-find-wait">'+_starSpin('ss-find-star')
+      +'<span class="ss-find-wait-t">'+_esc(_FIND_STEPS[0])+'</span></div></div>';
+    // Catalog pieces lead the no-photo cards, AI ideas fill the set to 6.
     // Extra AI ideas beyond the fill wait in a buffer so the first "+ See
     // more ideas" tap is instant; later taps fetch fresh ones.
     curated.forEach(function(x){html+=_curatedCard(x)});
@@ -10999,20 +11009,12 @@ async function _wardrobeIdeaGen(id,boxId){
     const fillN=curated.length?Math.max(0,6-curated.length):aiItems.length;
     aiItems.slice(0,fillN).forEach(function(item){html+=_shopCard(item)});
     _wdrMoreBuf[id]=aiItems.slice(fillN);
-    /* 🚨 THE WAITING STAR SITS INSIDE THE ROW, AS ITS LAST CARD — her catch,
-       2026-10-02, from What's Trending: "There should not be a second row." The
-       merge below already folded the real cards into this row once they
-       landed, but the 5-8s WAIT still showed as a big second block underneath.
-       Now the wait is a card-sized slot at the end of this same scroller; the
-       found cards are moved in beside it and the slot goes, so there is never a
-       second row, waiting or done. Same id, same painter, same merge. */
-    html+='<div id="wdrFind_'+_esc(id)+'" class="find-block ss-find wdr-find-slot">'
-      +'<div class="ss-find-wait">'+_starSpin('ss-find-star')
-      +'<span class="ss-find-wait-t">'+_esc(_FIND_STEPS[0])+'</span></div></div>';
     html+='</div><div class="wdr-swipe-hint">Swipe for more &rarr;</div>';
-    // "+ See more ideas": her requirement, verbatim intent -- she must ALWAYS
-    // be able to keep looking, full shelf or not, on every slot.
-    html+='<div class="wdr-morewrap"><span class="wdr-more" role="button" onclick="_wdrMoreIdeas(\''+id+'\''+(boxId?',\''+boxId+'\'':'')+')">+ See more ideas</span></div>';
+    /* 🚨 "+ See more ideas" CAME OFF, HER CALL 2026-10-02 ("Yes let's do that"),
+       on BOTH the Wardrobe list and What's Trending. It only ever appended more
+       no-photo cards; now real photo results fill the row, and "refresh" at the
+       top still gives fresh ideas, so she can always keep looking. One button
+       fewer, a calmer screen. _wdrMoreIdeas is left in place, unused. */
     // Her ask 2026-08-12: nudge toward Refine "without getting her off track
     // from shopping" -- so this sits AFTER the real ideas, never before or
     // instead of them, and only for the one color-dependent item while she
@@ -11071,16 +11073,19 @@ async function _wardrobeIdeaGen(id,boxId){
        ("Work-appropriate dresses") swaps the whole label for a real search
        phrase a shop would print ("work dress"). Rows with no override are
        unaffected — same `{item:name}` as before. */
+    /* the slot's width, measured NOW, so the merge can keep her view still even
+       when the painter has already removed an empty slot by itself */
+    const _slot=document.getElementById('wdrFind_'+id);
+    const _slotW=_slot?_slot.getBoundingClientRect().width+(parseFloat(getComputedStyle(_g).columnGap)||0):0;
     _ssFindRun(_WDR_FIND_OVERRIDE[id]||{item:name},{wrapId:'wdrFind_'+id,promise:'',pre:null,save:false,quiet:true})
-      .then(function(){_wdrMergeFindRow(id,boxId)});
+      .then(function(){_wdrMergeFindRow(id,boxId,_slotW,_g)});
   }catch(e){
     // The AI failing must never blank a shelf that has real catalog pieces:
-    // render them alone, with See more as the retry door.
+    // render them alone, with refresh in the label as the retry door.
     if(curated.length){
-      let chtml='<div class="wdr-expand-lbl"><span class="wdr-see-star">&#9733;</span> See ideas for &ldquo;'+_esc(name)+'&rdquo;</div><div class="shop-grid hscroll">';
+      let chtml='<div class="wdr-expand-lbl"><span class="wdr-see-star">&#9733;</span> See ideas for &ldquo;'+_esc(name)+'&rdquo; <a onclick="'+again+'">&mdash; refresh</a></div><div class="shop-grid hscroll">';
       curated.forEach(function(x){chtml+=_curatedCard(x)});
       chtml+='</div><div class="wdr-swipe-hint">Swipe for more &rarr;</div>';
-      chtml+='<div class="wdr-morewrap"><span class="wdr-more" role="button" onclick="_wdrMoreIdeas(\''+id+'\''+(boxId?',\''+boxId+'\'':'')+')">+ See more ideas</span></div>';
       chtml+=_wdrQuizInvite();   // the AI-failed shelf gets it too, or it drifts
       box.innerHTML=chtml;
       const _g2=box.querySelector('.shop-grid.hscroll'),_h2=box.querySelector('.wdr-swipe-hint');
@@ -11105,23 +11110,37 @@ async function _wardrobeIdeaGen(id,boxId){
    box; if the wrap for THIS id is gone or was never written, there is nothing
    of this id's left to merge and the function is a no-op — never a stale
    grid getting another id's cards. */
-function _wdrMergeFindRow(id,boxId){
+function _wdrMergeFindRow(id,boxId,slotW,g0){
   try{
     const findWrap=document.getElementById('wdrFind_'+id);
-    if(!findWrap)return;   // nothing found, or she's since moved on — _ssFindPaint already removed it
     const box=document.getElementById(boxId||('wx_'+id));
     const grid=box&&box.querySelector('.shop-grid.hscroll');
+    /* ⚠️ NOTHING MAY JUMP (her rule): the slot sits at the FRONT, so whatever
+       replaces it changes the width of everything to her left. If she has
+       already swiped along, scrollLeft moves by exactly that change, so the
+       card under her eye stays put. At the start she simply sees the photos. */
+    if(!findWrap){   // nothing found, or a dead search: the painter already removed the slot
+      // only the SAME row she was on; a shared box may hold another row by now
+      if(grid&&grid===g0&&slotW&&grid.scrollLeft>0)grid.scrollLeft=Math.max(0,grid.scrollLeft-slotW);
+      return;
+    }
     const cards=findWrap.querySelectorAll('.find-card');
+    /* anchored on the first card AFTER the slot, never on scrollWidth: the
+       painter has just filled the slot with its own row, which overflows it and
+       makes scrollWidth meaningless at this instant */
+    const keep=grid?grid.scrollLeft:0, anchor=findWrap.nextElementSibling, a0=anchor?anchor.offsetLeft:0;
     if(grid&&cards.length){
-      cards.forEach(function(c){grid.appendChild(c)});
-      _wlSyncButtons();
-      _swipeHint(grid,box.querySelector('.wdr-swipe-hint'));
+      cards.forEach(function(c){grid.insertBefore(c,findWrap)});   // photos FIRST, her call
     }
     /* ⚠️ REMOVED UNCONDITIONALLY, even when there was nothing to merge — a dead
        search or an empty pool leaves only head/hint chrome behind, and quiet
        mode means none of it is hers to see. Her real compare cards above stay
        exactly as they were, which is the whole point. */
     findWrap.remove();
+    if(grid){
+      if(keep>0&&anchor)grid.scrollLeft=Math.max(0,keep+(anchor.offsetLeft-a0));
+      if(cards.length){_wlSyncButtons();_swipeHint(grid,box.querySelector('.wdr-swipe-hint'));}
+    }
   }catch(e){}
 }
 // The endless door: appends more AI ideas into the SAME carousel. Buffered

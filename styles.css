@@ -4415,7 +4415,7 @@ body.ss-play .hm-entrance{animation:ssOverlayOut .55s ease 1.6s forwards}
 /* ▶ THE WARDROBE / WHAT'S TRENDING WAIT, AS A CARD IN THE ROW (her "There
    should not be a second row", 2026-10-02). Same gold star at her 66px, same
    words; only the box shrinks to a card's width and the row's height. */
-.shop-grid.hscroll>.wdr-find-slot{flex:0 0 150px;margin:0;align-self:stretch}
+.shop-grid.hscroll>.wdr-find-slot{flex:0 0 150px;min-width:0;max-width:150px;overflow:hidden;margin:0;align-self:stretch}
 .shop-grid.hscroll>.wdr-find-slot .ss-find-wait{height:100%;min-height:150px;gap:14px;justify-content:center}
 .shop-grid.hscroll>.wdr-find-slot .ss-find-wait .ss-find-star{margin-top:0}
 .shop-grid.hscroll>.wdr-find-slot .ss-find-wait-t{font-size:12.5px;padding:0 10px}

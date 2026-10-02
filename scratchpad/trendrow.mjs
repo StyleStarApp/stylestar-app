@@ -20,10 +20,10 @@ await p.route('**/*',async r=>{const u=new URL(r.request().url());
 await p.goto('https://stylestar.app/');await p.waitForTimeout(1200);
 await p.evaluate(()=>{try{openTrending()}catch(e){}});await p.waitForTimeout(800);
 await p.evaluate(()=>{try{wardrobeSeeIdeas('trend0')}catch(e){}});
-await p.waitForSelector('#wdrFind_trend0 .ss-find-wait');await p.waitForTimeout(300);
+await p.waitForSelector('#wdrFind_trend0 .ss-find-wait');await p.waitForTimeout(1300);
 const shot=async n=>{const bb=await (await p.$('#wx_trend0')).boundingBox();await p.screenshot({path:SP+n,clip:{x:0,y:bb.y-20,width:390,height:Math.min(bb.height+40,520)},fullPage:true});};
-await p.evaluate(()=>{const g=document.querySelector('#wx_trend0 .shop-grid.hscroll');g.scrollLeft=g.scrollWidth});await p.waitForTimeout(200);await shot('trend-wait.png');
+await shot('trend-wait.png');
 await p.waitForSelector('#wx_trend0 .find-card',{timeout:10000});await p.waitForTimeout(400);
-await p.evaluate(()=>{const g=document.querySelector('#wx_trend0 .shop-grid.hscroll');g.scrollLeft=330});await p.waitForTimeout(200);
+
 await shot('trend-done.png');
 await b.close();
