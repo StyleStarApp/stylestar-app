@@ -61,11 +61,16 @@ ok('with an ask, it quotes HER sentence back as the only source of words',
    ▶ THE RULE IT NAMES NOW: on a full hand-over the fields ARE the search, and
      the sentence must describe them. The her-words guard is untouched and is
      asserted separately, below, on the half it was written for. */
-ok('with NO ask, the stylist\'s own pick IS the search, and she is told so',
-   /THESE FIELDS ARE THE SEARCH/.test(noAsk) &&
-   !/leave all three EMPTY/i.test(noAsk), noAsk.slice(0, 200));
-ok('...and the sentence she writes must be the same pick as the fields',
-   /THE SENTENCE AND THE FIELDS MUST BE THE SAME PICK/.test(noAsk));
+/* 🚨🚨 SUPERSEDED BY HER RULING OF 2026-10-02, AND READ THIS BEFORE "RESTORING"
+   THE ONE-PICK HAND-OVER: "I would rather the shop your style search for a range
+   of items based on her quiz. Not a specific item she didn't ask for and there is
+   no need to say couldn't find." She photographed "I chose a blazer dress" over
+   "I couldn't find exactly what you asked for" when she had asked for NOTHING.
+   ▶ THE RULE NOW: with no ask the stylist chooses NO single garment; the app
+     searches a few of the stylist's own six (section 5). */
+ok('with NO ask, the stylist picks NO single garment to search',
+   /leave `find` and `findlead` EMPTY/.test(noAsk) &&
+   !/THESE FIELDS ARE THE SEARCH/.test(noAsk), noAsk.slice(-220));
 ok('...while a woman who TYPED something still gets the her-words rule only',
    /ONLY with words she actually used/.test(withAsk) &&
    !/THESE FIELDS ARE THE SEARCH/.test(withAsk));
@@ -76,13 +81,12 @@ ok('...while a woman who TYPED something still gets the her-words rule only',
    things on purpose, and this names which. */
 ok('when SHE typed, empty is still safer than a guess',
    /Leave a field empty rather than guessing/.test(withAsk));
-ok('and on a hand-over, colour and fabric are still only for when they are the point',
-   /only if they are genuinely the point/.test(noAsk), noAsk.slice(0, 300));
+
 /* ▶ HER DELEGATION RULING, 2026-09-08: when a woman hands over the choice, the
    stylist's pick becomes a real search requirement AND the stylist must name it
    out loud, "so it stays hers to overrule". */
-ok('with NO ask, the stylist must SAY the pick was hers',
-   /findlead/.test(noAsk) && /overrule/i.test(noAsk), noAsk.slice(-200));
+ok('with NO ask, there is no pick for the stylist to announce',
+   !/overrule/i.test(noAsk.slice(noAsk.indexOf('She has not asked'))), noAsk.slice(-200));
 /* ⚠️ REWRITTEN 2026-09-10, NOT BUMPED. This asserted the typed prompt never
    mentions `findlead` at all — true while a typed ask could never have anything
    chosen for her, and false the moment an OCCASION had to be translated ("Try:
@@ -419,12 +423,14 @@ ok('...but the garment she DID ask for is kept',
 /* 🚨 THE PAIR THAT PROVES THE SPLIT IS A SPLIT AND NOT A LOOSENING: the SAME
    model answer, on the SAME page, seconds apart — kept when she handed the
    choice over, deleted the moment she used her own words. */
-ok('...and the SAME invented cut DID survive on the hand-over just before it',
-   FINDCALLS[0].cut === 'fitted' && FINDCALLS[0].colour === 'emerald',
-   JSON.stringify(FINDCALLS[0]));
+/* ▶ REWRITTEN 2026-10-02: the default open no longer searches the model's `find`
+   at all (her range ruling), so the invented emerald never travels on EITHER
+   half now. */
+ok('...and the default open just before it never searched the invented cut either',
+   !FINDCALLS[0].cut && !FINDCALLS[0].colour, JSON.stringify(FINDCALLS[0]));
 
 /* ═══ 5 · THE DEFAULT VIEW SEARCHES TOO — HER RULING (b) ══════════════════ */
-console.log('\n5. the default "show me a mix" searches too, and says whose choice it was');
+console.log('\n5. the default "show me a mix" searches a range of her six, and announces nothing');
 /* 🚨🚨 HER OWN CASE, 2026-09-10, REBUILT FROM HER SCREENSHOT. The lead said "I
    chose a belted dress", her six styling picks included a Printed Belted Midi
    Dress, and NOT ONE photographed product was belted.
@@ -434,54 +440,53 @@ console.log('\n5. the default "show me a mix" searches too, and says whose choic
      appeared, and NEVER that they agreed — so it passed all the way through the
      fault. This is the same shape as the resume's false green: a check can name
      a behaviour and still measure nothing about it. */
-REPLY = { items: six(), findlead: 'I chose a belted dress, you told me you love them.',
-          find: { item: 'dress', colour: '', fabric: '', cut: 'belted' } };
-await ask(pg, '');
-await pg.waitForSelector('#ssFindWrap .find-card', { timeout: 20000 });
-const d = await pg.evaluate(() => {
-  const w = document.getElementById('ssFindWrap');
-  return { lead: w.querySelector('.ss-find-lead') ? w.querySelector('.ss-find-lead').textContent : null,
-           cards: w.querySelectorAll('.find-card').length };
-});
-ok('HER RULING (b): it searched even with nothing typed', FINDCALLS.length === 1, String(FINDCALLS.length));
-ok('...and real products came back', d.cards === 4, String(d.cards));
-/* ▶ HER DELEGATION RULING: name the pick out loud so it stays hers to overrule. */
-ok('the stylist SAYS the choice was hers', /belted dress/i.test(d.lead || ''), String(d.lead));
-/* 🚨 THE CHECK HER SCREENSHOT ASKED FOR: the promise and the search are ONE. */
-ok('HER RULING: the pick she was PROMISED is the pick that gets searched',
-   FINDCALLS[0].cut === 'belted', JSON.stringify(FINDCALLS[0]));
-/* 🚨🚨 THE PROMISE ARRIVES WITH THE GOODS — HER DECISION, 2026-09-10. Measured
-   DURING the wait, with the stub deliberately slowed, because "before the cards"
-   is the only moment this can be got wrong. ⚠️ THIS IS THE CHECK THAT COULD MOST
-   EASILY BE VACUOUS: if the search finished before it looked, an absent promise
-   would prove nothing. So it asserts the star is STILL TURNING at the same
-   instant — the wait is real and the promise is genuinely not there yet. */
-DELAY = 2500;
-REPLY = { items: six(), findlead: 'I chose a belted dress, you told me you love them.',
-          find: { item: 'dress', colour: '', fabric: '', cut: 'belted' } };
+/* 🚨🚨 REWRITTEN FOR HER RULING OF 2026-10-02 — the default view searches a RANGE
+   of the stylist's own six, never one pick she did not ask for, and never
+   apologises. The fixture deliberately still carries the old-style `find` and
+   `findlead` the model might send anyway: neither may reach the screen or the
+   search. */
+const mixed = () => [
+  { category: 'dress', name: 'Belted Shirt Dress', search: 'belted shirt dress', store: 'Nordstrom' },
+  { category: 'dress', name: 'Wrap Midi Dress', search: 'midi dress', store: 'Nordstrom' },
+  { category: 'top', name: 'Silk Cami', search: 'silk cami', store: 'Nordstrom' },
+  { category: 'shoes', name: 'Block Heel Sandal', search: 'block heel sandal', store: 'Nordstrom' },
+  { category: 'bag', name: 'Woven Tote', search: 'woven tote', store: 'Nordstrom' },
+  { category: 'jacket', name: 'Cropped Blazer', search: 'cropped blazer', store: 'Nordstrom' }];
+DELAY = 1500;
+REPLY = { items: mixed(), findlead: 'I chose a blazer dress, structured and on-trend for you.',
+          find: { item: 'dress', colour: '', fabric: '', cut: 'blazer' } };
 await ask(pg, '');
 await pg.waitForSelector('#ssFindWrap .ss-find-wait', { timeout: 20000 });
 const during = await pg.evaluate(() => ({
   waiting: !!document.querySelector('#ssFindWrap .ss-find-wait'),
-  promise: !!document.querySelector('#ssFindWrap .ss-find-lead'),
   txt: (document.getElementById('ssFindWrap') || {}).innerText || '' }));
 ok('DURING the wait she is told work is happening, and promised NOTHING',
-   during.waiting && !during.promise && !/belted/i.test(during.txt),
-   JSON.stringify(during));
+   during.waiting && !/blazer|I chose/i.test(during.txt), JSON.stringify(during));
 await pg.waitForSelector('#ssFindWrap .find-card', { timeout: 20000 });
-const afterw = await pg.evaluate(() => ({
-  promise: !!document.querySelector('#ssFindWrap .ss-find-lead'),
-  txt: (document.getElementById('ssFindWrap') || {}).innerText || '' }));
-ok('...and the promise appears in the same breath as the cards that keep it',
-   afterw.promise && /belted dress/i.test(afterw.txt), JSON.stringify(afterw).slice(0, 140));
 DELAY = 0;
-ok('...and the words the shops actually see carry it on EVERY query',
-   buildQueries(FINDCALLS[0]).length > 0 &&
-   buildQueries(FINDCALLS[0]).every(q => /belted/.test(q)),
-   JSON.stringify(buildQueries(FINDCALLS[0])));
-/* ⚠️ THE OTHER HALF, AND IT IS WHAT KEEPS THE GUARD HONEST: a stylist pick is
-   searchable ONLY on a full hand-over. The moment she types, her sentence is the
-   authority again and an invented cut still dies in code (section 4 above). */
+const d = await pg.evaluate(() => {
+  const w = document.getElementById('ssFindWrap');
+  return { lead: !!w.querySelector('.ss-find-lead'), cards: w.querySelectorAll('.find-card').length,
+           rows: w.querySelectorAll('.find-scroll').length,
+           txt: w.innerText || '' };
+});
+const items = FINDCALLS.map(q => q.item);
+ok('HER RULING (b) STILL HOLDS: it searched even with nothing typed', FINDCALLS.length > 0, String(FINDCALLS.length));
+ok('HER RULING 2026-10-02: it searched a RANGE — three of her six, each a different category',
+   JSON.stringify(items) === JSON.stringify(['belted shirt dress', 'silk cami', 'block heel sandal']),
+   JSON.stringify(items));
+ok('...searching the pieces themselves, never a colour, fabric or cut on top',
+   FINDCALLS.every(q => !q.colour && !q.fabric && !q.cut), JSON.stringify(FINDCALLS));
+ok('...and the single pick the model sent anyway is NOT what was searched',
+   !items.includes('dress'), JSON.stringify(items));
+ok('...and the results from all of them land in ONE row', d.cards > 0 && d.rows === 1, 'cards=' + d.cards + ' rows=' + d.rows);
+ok('no "I chose..." sentence: nothing was chosen, so nothing is announced',
+   !d.lead && !/I chose/i.test(d.txt), d.txt.slice(0, 160));
+ok('and NO "I couldn\'t find" sentence: she asked for nothing, so nothing was missed',
+   !/couldn.t find|closest I could/i.test(d.txt), d.txt.slice(0, 160));
+const rs = await pg.evaluate(() => JSON.parse(localStorage.getItem('ss_shoppicks') || '{}'));
+ok('...and the range is stored, so a resume brings back the same row',
+   !!(rs.f && rs.f.many && rs.f.many.length === 3 && rs.d), JSON.stringify(rs.f || {}).slice(0, 160));
 
 /* ═══ 6 · THE CACHE — HER RULING (b) IS WHY IT EXISTS ═════════════════════ */
 console.log('\n6. the same question twice costs one search, not two');
@@ -491,7 +496,7 @@ console.log('\n6. the same question twice costs one search, not two');
 await ask(pg, '', true);
 await pg.waitForTimeout(1500);
 ok('a second identical open spends NO new search', FINDCALLS.length === 0, String(FINDCALLS.length));
-REPLY = { items: six(), find: { item: 'top', colour: '', fabric: '', cut: '' } };
+REPLY = { items: six().map(x => ({ ...x, category: 'top', search: 'silk blouse' })) };
 await ask(pg, '', true);
 await pg.waitForTimeout(1500);
 ok('...but a DIFFERENT question really does search again', FINDCALLS.length === 1, String(FINDCALLS.length));
@@ -776,8 +781,10 @@ ok('her own shops are shown even though Google returned nothing',
    be the app apologising for an answer it actually gave. */
 ok('...and she is NOT told the search came back with nothing',
    !/didn.t come back just then/i.test(rescue.txt), rescue.txt.slice(0, 120));
-ok('...and the promise is kept, because there are cards to keep it with',
-   rescue.promise && /belted dress/i.test(rescue.txt), 'promise=' + rescue.promise);
+/* ▶ REWRITTEN 2026-10-02: a default open makes no promise at all now (her range
+   ruling), so the check is that none is printed over her own shops' cards. */
+ok('...and no promise is printed over them, because nothing was chosen',
+   !rescue.promise && !/I chose/i.test(rescue.txt), 'promise=' + rescue.promise);
 /* ▶ HER SECOND SYMPTOM, CLOSED BY THE SAME ROOT: a row that paints is a row that
    is stored, so the whisper's "same pieces waiting" is true again. */
 const rstore = await pg.evaluate(() => JSON.parse(localStorage.getItem('ss_shoppicks') || '{}'));
@@ -930,8 +937,10 @@ const sw = (HTML.match(/_findShopWords\(/g) || []).length - 1;
 ok('the her-words guard and the shop-words floor run on the SAME routes',
    kw === sw && kw === 4, 'keepHerWords=' + kw + ' shopWords=' + sw);
 /* ▶ AND THE PROMPT SIDE, WHICH IS THE ACTUAL FIX: an occasion is never searched. */
+/* ▶ Only the typed half fills search fields now (her 2026-10-02 range ruling),
+   so only it needs the rule. */
 ok('the stylist is told an occasion is never a search word',
-   /No garment is NAMED "vacation"/.test(noAsk) && /No garment is NAMED "vacation"/.test(withAsk));
+   /No garment is NAMED "vacation"/.test(withAsk));
 
 /* ═══ 15 · AN OCCASION IS TRANSLATED, NOT SEARCHED ══════════════════════ */
 console.log('\n15. "vacation dress" is one of OUR OWN suggestions, so it must work');

@@ -7496,15 +7496,14 @@ function _findAskRule(){
         +'her own words hold nothing searchable. Leave it EMPTY whenever she named a real garment detail herself. '
         +'Leave a field empty rather than guessing; empty is always safe. Choose the item she asked for. '
         +'\u26a0\ufe0f THESE FIELDS HOLD WORDS A SHOP PRINTS ON A PRODUCT, never a description and never a sentence. "Linen Midi Dress" and "Belted Shirt Dress" are what shops call things; "belted wrap with midi length and fitted bodice" is not, and no product on earth is named that. Two or three plain words per field, maximum. AND NEVER AN OCCASION OR A MOOD: vacation, wedding, work, brunch, date night, effortless, elevated. No garment is NAMED "vacation", so searching for it finds NOTHING AT ALL. If the only thing she named is an occasion, leave these fields empty and let your six pieces carry the styling. '+'\n'
-      : 'She has not asked for anything specific, so YOU choose the one garment worth showing her most, from her profile, '
-        +'and put the shape or detail that makes it right for her in `cut` (and colour or fabric only if they are genuinely the point). '
-        +'THESE FIELDS ARE THE SEARCH. Whatever you put in them is exactly what she will be shown, and anything you leave out is not looked for: '
-        +'a `cut` of "belted" shows her belted dresses, an empty `cut` shows her any dress at all. '
-        +'\u26a0\ufe0f THESE FIELDS HOLD WORDS A SHOP PRINTS ON A PRODUCT, never a description and never a sentence. "Linen Midi Dress" and "Belted Shirt Dress" are what shops call things; "belted wrap with midi length and fitted bodice" is not, and no product on earth is named that. Two or three plain words per field, maximum. AND NEVER AN OCCASION OR A MOOD: vacation, wedding, work, brunch, date night, effortless, elevated. No garment is NAMED "vacation", so searching for it finds NOTHING AT ALL. If the only thing she named is an occasion, leave these fields empty and let your six pieces carry the styling. '
-        +'Then say so in `findlead`, in one short warm sentence in your own voice, naming what you chose and why, '
-        +'so she knows it was your pick and can overrule it. Under 18 words. '
-        +'\u26a0\ufe0f THE SENTENCE AND THE FIELDS MUST BE THE SAME PICK. Never promise her a detail you did not put in the fields, '
-        +'because she will be shown exactly the fields and she WILL notice.\n');
+      /* 🚨 HER RULING, 2026-10-02: "I would rather the shop your style search for a
+         range of items based on her quiz. Not a specific item she didn't ask for
+         and there is no need to say couldn't find." So on the default view the
+         stylist picks NO single garment; the app searches a few of her six
+         picks itself (see _ssMixFind). This used to ask for one pick plus a lead
+         ("I chose a blazer dress..."), which then failed to find it and
+         apologised for a thing she never asked for. */
+      : 'She has not asked for anything specific, so leave `find` and `findlead` EMPTY. The app searches a few of your six pieces for her itself.\n');
 }
 function _askedForLead(){
   return _ssAsk
@@ -7973,6 +7972,11 @@ async function _shopStyleGen(){
        request was `undefined` — so a resume silently lost the row it was added
        to keep. Caught by the resume check, which is why that check exists. */
     var _ssFind=(parsed&&parsed.find&&typeof parsed.find==='object')?parsed.find:null;
+    /* ⭐ THE DEFAULT VIEW SEARCHES A RANGE, NOT ONE PIECE — her 2026-10-02 ruling,
+       see _findAskRule. Built from the stylist's own six (so the photographs
+       match the styling under them), one per category, in her order. A resume
+       already carries its `many`, so it is never rebuilt. */
+    if(!_ssAsk&&_shopStyleMode==='quiz'&&!_ssFindPre)_ssFind=_ssMixFind(_keep);
     if(_ssFind&&_ssFind.item&&!_ssFindPre&&_ssAsk){
       /* ⚠️ HER SENTENCE IS THE AUTHORITY, exactly as in chat. Anything the model
          put in colour/fabric/cut that she did not say is deleted here, in CODE,
@@ -8034,7 +8038,7 @@ async function _shopStyleGen(){
     }
     /* ▶ AFTER the her-words guard on both halves, so a hand-over pick is trimmed
        to searchable words too — that is the half that was writing sentences. */
-    if(_ssFind&&_ssFind.item&&!_ssFindPre)_findShopWords(_ssFind);
+    if(_ssFind&&_ssFind.item&&!_ssFind.many&&!_ssFindPre)_findShopWords(_ssFind);
     _saveShopPicks(_keep,parsed.note,_ssFind,_ssFindLead(parsed));   // so she can come back to exactly this, see _shopResume
     /* 🚨 HER HONEST LINE (2026-08-24). Two ways to reach it and both are real:
        (a) the model used its escape hatch and sent a note -- see _honestyRule;
@@ -8132,7 +8136,9 @@ async function _shopStyleGen(){
       /* ⚠️ NORMALLY SILENT WHEN SHE TYPED — her words need no announcement. The
          exception is a TRANSLATION: see `_ssTranslated`, where the app chose
          words she never said and must say which. */
-      _ssPromise=(!_ssAsk||_ssTranslated)?_ssFindLead(parsed):'';
+      /* ⚠️ A RANGE HAS NO PROMISE: nothing was chosen, so there is nothing to
+         name and nothing to fall short of (her 2026-10-02 ruling). */
+      _ssPromise=_ssFind.many?'':((!_ssAsk||_ssTranslated)?_ssFindLead(parsed):'');
       html+='<div id="ssFindWrap" class="find-block ss-find">'
         +'<div class="ss-find-wait">'+_starSpin('ss-find-star')
         +'<span class="ss-find-wait-t">'+_esc(_FIND_STEPS[0])+'</span></div></div>';
@@ -8244,7 +8250,8 @@ async function _ssFindRun(req,o){
   var pre=('pre' in o)?o.pre:_ssFindData;
   if(!('pre' in o))_ssFindData=null;
   var promise=('promise' in o)?o.promise:_ssPromise;
-  var save=o.save!==false, quiet=!!o.quiet;
+  /* a range never apologises: she asked for nothing, so nothing can be missed */
+  var save=o.save!==false, quiet=!!o.quiet||!!(req&&req.many);
   if(pre){ if(_ssFindPaint(wrap,pre,req,promise,quiet)&&save)_saveShopFind(pre,_ssPicksT); return; }
   /* ▶ The words move on as the wait goes on, so it reads as a stylist working
      rather than a spinner stuck. Same 3.5s beat as the chat's status line.
@@ -8255,7 +8262,7 @@ async function _ssFindRun(req,o){
     if(!t){clearInterval(_tick);return;}
     _step++;t.textContent=_FIND_STEPS[Math.min(_step,_FIND_STEPS.length-1)];
   },3500);
-  var fr=await _findFetch(req,true);
+  var fr=(req&&req.many)?await _findFetchMany(req.many):await _findFetch(req,true);
   clearInterval(_tick);
   /* ⚠️ She may have left the screen while it searched. Re-read the node rather
      than trusting the one captured above: a refresh replaces the whole block, so
@@ -8287,6 +8294,50 @@ async function _ssFindRun(req,o){
    the row off the screen. */
 function _ssFindLead(parsed){
   return _noDash(String((parsed&&parsed.findlead)||'').trim()).slice(0,120);
+}
+/* ⭐ THE RANGE FOR THE DEFAULT VIEW (her ruling, 2026-10-02). Up to three of
+   the stylist's six picks, each a different category, searched by their own
+   short search term. ⚠️ THREE, not six, because every search costs her real
+   money (up to ~10 SerpApi calls each); each one is cached, so a repeat is free.
+   ⚠️ ITEM ONLY: no colour, fabric or cut is sent, so nothing can be "not
+   confirmed" and no near-miss sentence can appear. Her store scores still order
+   the row, which is what keeps it her taste. */
+var _SS_MIX_MAX=3;
+function _ssMixFind(picks){
+  var seen={},many=[];
+  (picks||[]).forEach(function(it){
+    if(many.length>=_SS_MIX_MAX||!it)return;
+    var c=String(it.category||'').toLowerCase();
+    if(c&&seen[c])return;
+    var w=_noDash(String(it.search||it.name||'')).replace(/[^\w' &-]/g,' ').trim().split(/\s+/).filter(Boolean);
+    if(w.length>4)w=w.slice(-4);   // the noun is at the END of a search term
+    var item=w.join(' ').slice(0,40).trim();
+    if(!item)return;
+    if(c)seen[c]=1;
+    many.push({item:item});
+  });
+  return many.length?{item:many.map(function(q){return q.item}).join(' / '),many:many}:null;
+}
+/* Fetches each request (each cached on its own) and folds the answers into ONE
+   row, interleaved so the range shows from the first swipe rather than all the
+   dresses first. Near-miss groups become plain browse cards: on a range there
+   is no requirement to have missed. Only fails if EVERY search failed. */
+async function _findFetchMany(reqs){
+  var all=await Promise.all(reqs.map(function(q){return _findFetch(q,true)}));
+  var ok=all.filter(function(fr){return fr&&fr.data&&!fr.failed&&!fr.data.why});
+  if(!ok.length){
+    var dead=all.some(function(fr){return !fr||fr.failed||(fr.data&&(fr.data.why==='search-failed'||fr.data.why==='budget'))});
+    return dead?{data:null,failed:true}:{data:{why:'none'},failed:false};
+  }
+  var mix=function(lists){var out=[],n=Math.max.apply(null,lists.map(function(l){return l.length}).concat([0]));
+    for(var i=0;i<n;i++)lists.forEach(function(l){if(l[i])out.push(l[i])});return out;};
+  var seen={},uniq=function(list){return list.filter(function(p){
+    var k=String(p.url||p.link||(p.store+'|'+p.title));if(seen[k])return false;seen[k]=1;return true;})};
+  var exact=uniq(mix(ok.map(function(fr){return fr.data.exact||[]})));
+  var browse=uniq(mix(ok.map(function(fr){
+    var d=fr.data,near=[];(d.doors||[]).forEach(function(g){near=near.concat(g.products||[])});
+    return near.concat(d.browse||[]);})));
+  return {data:{exact:exact,doors:[],browse:browse},failed:false};
 }
 var _shopMsgT=null;
 function _startShopMsgs(){
