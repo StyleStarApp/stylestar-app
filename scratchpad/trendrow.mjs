@@ -14,6 +14,8 @@ await p.route('**/*',async r=>{const u=new URL(r.request().url());
   if(u.pathname.includes('product-find')){await new Promise(z=>setTimeout(z,3500));return r.fulfill({contentType:'application/json',body:JSON.stringify(FIND)}).catch(()=>{});}
   if(u.pathname.includes('product-search'))return r.fulfill({contentType:'application/json',body:'{"products":[]}'});
   if(u.hostname==='img.test')return r.fulfill({path:SP+'sl1.jpg'});
+  if(u.pathname.includes('amazon-search'))return r.fulfill({contentType:'application/json',body:fs.readFileSync(SP+'amz/faux_fur_coat.json')});
+  if(u.hostname==='m.media-amazon.com'){const a=Object.values(JSON.parse(fs.readFileSync(SP+'amz/faux_fur_coat.json')).items).find(x=>x.image===u.href);const f=a&&SP+'amz/img_'+a.asin+'.jpg';return f&&fs.existsSync(f)?r.fulfill({path:f}):r.fulfill({body:PNG,contentType:'image/png'});}
   if(u.hostname==='stylestar.app'){let f=u.pathname==='/'||!path.extname(u.pathname)?'/index.html':u.pathname;f=ROOT+f;return fs.existsSync(f)?r.fulfill({path:f}):r.fulfill({status:404});}
   if(r.request().resourceType()==='image')return r.fulfill({body:PNG,contentType:'image/png'});
   return r.abort();});
@@ -25,5 +27,5 @@ const shot=async n=>{const bb=await (await p.$('#wx_trend0')).boundingBox();awai
 await shot('trend-wait.png');
 await p.waitForSelector('#wx_trend0 .find-card',{timeout:10000});await p.waitForTimeout(400);
 
-await shot('trend-done.png');
+await p.evaluate(()=>{const g=document.querySelector('#wx_trend0 .shop-grid.hscroll');g.scrollLeft=300});await p.waitForTimeout(300);await shot('trend-done.png');
 await b.close();

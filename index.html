@@ -8337,7 +8337,8 @@ async function _findFetchMany(reqs){
   var browse=uniq(mix(ok.map(function(fr){
     var d=fr.data,near=[];(d.doors||[]).forEach(function(g){near=near.concat(g.products||[])});
     return near.concat(d.browse||[]);})));
-  return {data:{exact:exact,doors:[],browse:browse},failed:false};
+  var amazon=uniq(mix(ok.map(function(fr){return fr.data.amazon||[]})));   // one from each search in turn
+  return {data:{exact:exact,doors:[],browse:browse,amazon:amazon},failed:false};
 }
 var _shopMsgT=null;
 function _startShopMsgs(){
@@ -13575,8 +13576,11 @@ function _findBlockHtml(data,req,quiet){
      through that order. THE SEQUENCE MATTERS: sorting after the spread would
      undo the spread, and spreading before the sort would be spreading a list
      that is about to be rearranged. */
+  const amazon=keep(data.amazon).slice(0,_AMZ_PER_ROW);
   const browse=_findSpread(_findByHerShops(
-    keep(data.browse).filter(function(b){return b.store&&b.title})));
+    keep(data.browse).filter(function(b){return b.store&&b.title&&
+      /* with Amazon's own cards present, Google's copies of Amazon listings go */
+      !(amazon.length&&/^amazon\b/i.test(b.store))})));
   /* ⚠️ ONE CARD RENDERER, NEVER A SECOND COPY — `_findCard` draws both halves of
        this row, so `_feedName` still strips a trailing size clause and any
        future card change lands on every card at once. This file's oldest lesson.
@@ -13603,6 +13607,14 @@ function _findBlockHtml(data,req,quiet){
       price:b.price,image:b.image,
       url:(b.feed&&b.url)?b.url:getStoreUrl(b.store,b.title),
       exact:!!(b.feed&&b.url)});
+  });
+  /* ⭐ THE THREE AMAZON CARDS take seats 2, 5 and 8 of the browse stretch (or the
+     end, if it is shorter): mixed in, never first. Real product page, Amazon's
+     live price, no ticks. */
+  amazon.forEach(function(a,i){
+    const card=_findCard({id:a.id,title:a.title,brand:a.brand,store:a.store,price:a.price,
+      image:a.image,url:a.url,exact:true});
+    browseCards.splice(Math.min(browseCards.length,2+i*3),0,card);
   });
   /* ⚠️ A BROWSE CARD CARRIES NO TICKS AND CLAIMS NOTHING — it is handed no
      `checks`, so `_findCard` renders name, store, price and photo and stops.
@@ -13904,7 +13916,97 @@ async function _fetchRetry(url,opts){
   try{await new Promise(function(res){setTimeout(res,1500)})}catch(e){}
   return fetch(url,opts);
 }
+/* ═══ AMAZON CARDS IN THE ROW — HER CALL, 2026-10-02 ("yes let's do all of
+   this") ═══════════════════════════════════════════════════════════════════
+   Amazon's own catalogue search (netlify/functions/amazon-search.js, her
+   Creators API access) runs BESIDE the finder on every row the finder fills:
+   chat, Shop your Style, the Wardrobe list and What's Trending, because they
+   all come through _findFetch and _findBlockHtml (one fetch, one builder).
+   ▶ HER RULINGS: THREE Amazon cards per row (her "3"), mixed in among the
+     browse cards and NEVER leading, so Style Star never reads as an Amazon
+     shop. No price floor (tested: it changed nothing about quality) and no
+     brand list yet; _AMZ_NEVER_BRANDS is there for the day she names one.
+   ⚠️ AMAZON'S OWN DATA, NEVER KEPT MORE THAN 24 HOURS: these cards are NOT
+     stored in the 24h browser cache with the rest of the row. They are fetched
+     fresh each time (the server's CDN copy is at most 12h old), and remembered
+     in memory for this visit only.
+   ⚠️ A card claims nothing it cannot back: no ticks (they were never checked
+     against her words), a real product page and Amazon's live price. Her
+     never-wear list and colour no's run over them like every other card.
+   ⚠️ If her access lapses the function answers empty and the rows are exactly
+     what they were before. */
+var _AMZ_NEVER_BRANDS=[];   // her "never show" brands, lower case; empty until she names one
+var _AMZ_PER_ROW=3, _AMZ_MEM=new Map(), _amzOff=false;
+/* A short, honest name out of an Amazon title, which is keyword soup
+   ("Jeans for Women Trendy High Waisted Stretchy Wide Leg Jeans Loose ... Size 8").
+   Anchored on the garment she searched for: find that noun where it has the
+   most real description in front of it, keep up to three of those words, stop
+   at filler. The brand is not repeated here; the card's store line carries it
+   ("Sidefeel · Amazon"), the same convention as her Finds page. */
+var _AMZ_FILL=/^(for|with|and|or|the|a|an|to|in|on|of|at|by|wom[ae]n['’]?s?|’s|'s|ladies|girls?|trendy|fashion|casual|cute|basic|summer|fall|winter|spring|autumn|clothes|outfits?|loose|comfy|comfortable|elegant|sexy|new|20\d\d|[0-9]+(pack|pcs)?)$/i;
+function _amzTidy(t,brand,item){
+  var s=String(t||'');
+  var esc=function(x){return String(x).replace(/[.*+?^${}()|[\]\\]/g,'\\$&')};
+  if(brand)s=s.replace(new RegExp('^\\s*'+esc(brand)+'\\s*','i'),'');
+  s=s.split(/\s[-–|]\s|,|\(/)[0].replace(/\bsize\s*[a-z0-9.]{1,5}\b/gi,' ');
+  var w=s.split(/\s+/).filter(Boolean);
+  var noun=String(item||'').trim().split(/\s+/).pop()||'';
+  var stem=noun.toLowerCase().replace(/(es|s)$/,'').slice(0,5);
+  /* a row named by a colour or a trend ("Chocolate Brown") has no garment in
+     it, so fall back to any garment word in the title */
+  var GARM=/^(jeans|pants|trousers|leggings|dress(es)?|tops?|tees?|shirts?|blouses?|cami(sole)?s?|tanks?|sweaters?|cardigans?|jackets?|coats?|blazers?|shackets?|vests?|skirts?|shorts|jumpsuits?|sandals?|boots?|booties|heels|pumps|flats|sneakers|loafers|mules|bags?|totes?|necklaces?|earrings?|bracelets?|scarf|scarves|belts?|sunglasses|hats?)$/i;
+  var isN=function(x){return stem&&x.toLowerCase().indexOf(stem)===0};
+  if(!w.some(isN))isN=function(x){return GARM.test(x)};
+  var best=-1,bestN=-1;
+  for(var k=0;k<Math.min(w.length,12);k++){
+    if(!isN(w[k]))continue;
+    var n=0;for(var b=k-1;b>=0&&n<3&&!_AMZ_FILL.test(w[b])&&!isN(w[b]);b--)n++;
+    if(n>bestN){best=k;bestN=n;}
+  }
+  var end=best;while(best>=0&&end+1<w.length&&isN(w[end+1]))end++;   // "Shirt Dresses", "Henley Top"
+  var out=best>=0?w.slice(best-bestN,end+1):w.filter(function(x){return !_AMZ_FILL.test(x)}).slice(0,4);
+  // a cut-off fragment ("Neck Silk Cami", "Leg Jeans") reads as a typo: drop it
+  while(out.length>1&&/^(neck|back|up|sleeves?|front|leg|waisted|hem|straps?|rise|length)$/i.test(out[0]))out.shift();
+  var name=out.map(function(x){return /^[a-z]/.test(x)?x[0].toUpperCase()+x.slice(1):x}).join(' ');
+  return name.length>=3?name:String(t||'');
+}
+async function _amzFetch(req){
+  if(_amzOff||!req||!req.item)return [];
+  var q=[req.colour,req.fabric,req.cut,req.item].filter(Boolean).join(' ').slice(0,80);
+  var key=q+'|'+(req.price||'');
+  var hit=_AMZ_MEM.get(key);
+  if(hit&&Date.now()-hit.t<12*3600*1000)return hit.v;
+  var d=null;
+  try{
+    var ctl=new AbortController(),tm=setTimeout(function(){ctl.abort()},6000);
+    var r=await fetch('/.netlify/functions/amazon-search?q='+encodeURIComponent(q)+(req.price?'&max='+encodeURIComponent(req.price):''),{signal:ctl.signal});
+    clearTimeout(tm);
+    if(r.ok)d=await r.json();
+  }catch(e){}
+  if(!d)return [];
+  if(d.why==='unconfigured'){_amzOff=true;return [];}
+  var v=(d.items||[]).filter(function(it){
+    return it&&it.image&&it.url&&_AMZ_NEVER_BRANDS.indexOf(String(it.brand||'').toLowerCase())<0;
+  }).map(function(it){
+    var name=_amzTidy(it.title,it.brand,req.item);
+    return {id:'amz_'+it.asin,asin:it.asin,title:name,name:name,search:it.title,brand:it.brand||'',
+      store:(it.brand?it.brand+' \u00b7 ':'')+'Amazon',price:it.priceText||'',image:it.image,url:it.url,amz:true};
+  });
+  if(!d.why)_AMZ_MEM.set(key,{t:Date.now(),v:v});
+  return v;
+}
 async function _findFetch(req,useCache){
+  /* the Amazon search runs alongside and is attached to a COPY of the answer,
+     so it never lands in either cache below (see the block above) */
+  const amzP=_amzFetch(req);
+  const fr=await _findFetchCore(req,useCache);
+  if(fr&&fr.data&&!fr.data.why){
+    const list=await amzP;
+    if(list.length)fr.data=Object.assign({},fr.data,{amazon:list});
+  }
+  return fr;
+}
+async function _findFetchCore(req,useCache){
   const key=JSON.stringify(req);
   if(useCache&&_FIND_CACHE.has(key))return{data:_FIND_CACHE.get(key),failed:false,cached:true};
   if(useCache){
