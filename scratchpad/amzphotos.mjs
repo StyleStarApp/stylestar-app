@@ -81,9 +81,13 @@ const q=await r.p.evaluate(()=>{const e=document.getElementById('resEditGallery'
     after:!!(e.compareDocumentPosition(g)&4),saves:g.querySelectorAll('.wl-save').length,cats,
     allText:txt(e)+' '+txt(g)}});
 ok(q.editOn&&q.editCards>0&&q.editHead==='From My Edit','the Edit panel still renders, its heading unchanged');
-ok(q.on&&q.cards===10,`the Amazon panel shows ten pieces (${q.cards})`);
+ok(q.on&&q.cards>0&&q.cards<=10,`the Amazon panel shows at most ten pieces (${q.cards}; the stub withholds some photos on purpose)`);
 ok(q.after,'…and sits after the Edit panel, never merged into it');
-ok(new Set(q.cats).size>=Math.min(10,q.cats.length)-0&&new Set(q.cats).size>=5,`spread across her categories, not ten sunglasses (${new Set(q.cats).size} categories)`);
+const order=await r.p.evaluate(()=>[...document.querySelectorAll('#resFindsGallery .fme-go')].map(a=>(a.href.match(/dp\/([A-Z0-9]{10})/)||[])[1]));
+const picks=await r.p.evaluate(()=>RES_FINDS_PICKS.slice());
+const sub=picks.filter(a=>order.includes(a));
+ok(picks.length===0||(order.every(a=>picks.includes(a))&&JSON.stringify(order)===JSON.stringify(sub)),`only her picks, in her order (${order.length} shown)`);
+ok(picks.length===0||order.length<picks.length,'a pick Amazon gave no photo for is skipped, never shown blank');
 ok(!/styled for you|for your style|based on your|picked for you|chosen for you|matched to you|your quiz/i.test(q.allText),'neither panel claims the quiz chose its pieces');
 ok(/As an Amazon Associate, I earn from qualifying purchases\./.test(q.disc),"Amazon's required sentence is on the Amazon panel");
 ok(q.tagged,'every Amazon card is tagged and sponsored');

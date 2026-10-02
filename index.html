@@ -15296,7 +15296,30 @@ function _renderEditGallery(){
       the panel redraws once when any new photos arrive.
    ⚠️ AMAZON'S REQUIRED SENTENCE goes on this panel, because these are Amazon
       links; the Edit panel above carries none, so it does not need it. */
+/* ⭐ HER PICKS, IN HER ORDER (2026-10-02). Listed by ASIN, never by name, so
+   renaming a piece on /finds never drops it from here (same rule as the CSV
+   importer). A piece Amazon has no photo for is skipped, never shown blank.
+   Empty this list to fall back to one-per-category. */
+var RES_FINDS_PICKS=[
+  'B07RBV936R', // Jackie O Style Polarized Sunglasses
+  'B0CWD1RYK3', // Stretchy Stacking Bangles
+  'B0CZRD78FH', // Kitten Heel Mules
+  'B0D86566NG', // alice + olivia Dylan Satin Pants
+  'B0C9DC79ZC', // Meg High-Rise Wide Leg Jeans
+  'B0C74C5JBN', // High Waist Asymmetrical Wrap Midi Skirt
+  'B09P856G12', // 3-Piece Luggage Set
+  'B0H44ZCKDK', // Full Length Mirror with Wheels
+  'B0DNJTMLWY', // 2-in-1 Handheld Travel Steamer
+  'B0BZCBJ7RL'  // Organizer Hangers, 2 Pack
+];
 function _findsGalleryItems(){
+  if(RES_FINDS_PICKS.length){
+    var by={};
+    _wlEditItems().forEach(function(it){
+      if(it.el.closest('#s-finds')&&it.image){var a=_amzAsinOf(it.url);if(a)by[a]=it;}
+    });
+    return RES_FINDS_PICKS.map(function(a){return by[a];}).filter(Boolean).slice(0,RES_FINDS_MAX);
+  }
   var groups=[],byCat={};
   _wlEditItems().forEach(function(it){
     if(!it.el.closest('#s-finds')||!it.image)return;
