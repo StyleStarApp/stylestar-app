@@ -254,7 +254,7 @@
   ▶ RESTAMP AFTER ANY CSS EDIT:  node scripts/css-version.js --write
   ⚠️ DO NOT hand-type or "tidy" the value — it is derived from the file, and
   scratchpad/copy.js fails if it is stale. -->
-  <link rel="stylesheet" href="/styles.css?v=8557b5c4b3">
+  <link rel="stylesheet" href="/styles.css?v=41034e19df">
 </head>
 <body>
 <!-- build: quiz glow-up (chrome frame, gold knob, gold button, gold progress) 2026-07-11 r2 -->
@@ -596,7 +596,7 @@
           <div class="eng pr">
             <div class="eng-row"><span class="eng-rule l"></span><span class="eng-lbl">Your Style Portrait</span><span class="eng-rule r"></span></div>
           </div>
-          <!-- DYNAMIC: name → #rn (showResult sets "This is {userName}" or "Your style portrait") -->
+          <!-- DYNAMIC: name → #rn (showResult sets "This is {userName}", or leaves it EMPTY when there is no name) -->
           <div class="nm" id="rn"></div>
           <!-- DYNAMIC: archetype notes → #ft (showResult fills from top3, joined by gold dots) -->
           <div class="notes" id="ft"></div>
@@ -4298,7 +4298,7 @@ function showResult(txt,top3,motto){
   var fromCompose=s.classList.contains('rv-compose');
   if(!s.classList.contains('act')){show('s-res')}
   document.getElementById('pw').style.display='none';
-  document.getElementById('rn').innerHTML=userName&&userName!=="You"?'This is <i>'+_esc(userName)+'</i>':'Your style portrait';
+  document.getElementById('rn').innerHTML=userName&&userName!=="You"?'This is <i>'+_esc(userName)+'</i>':'';   /* no name: nothing. The heading above already says "Your Style Portrait", and repeating it was her catch, 2026-10-02 */
   document.getElementById('rp').textContent=txt;
   _renderArchNames((top3||[]).map(a=>a.n),motto);
   buildChart();

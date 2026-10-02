@@ -3384,6 +3384,15 @@ body.card-fb{padding:0}
    one headline said twice; at 20px her NAME stays the biggest thing on the card.
    Same font, same black, just smaller. */
 #s-res .eng.pr .eng-lbl{font-size:20px}
+/* ...and when she gave no name the line below is empty (it used to repeat
+   "Your style portrait" under "Your Style Portrait", her catch 2026-10-02), so
+   the heading is the only headline and takes full size again. */
+#s-res .nm:empty{display:none}
+#s-res .eng.pr:has(+ .nm:empty) .eng-lbl{font-size:28px}
+/* "Your Style Star Card" joins the other portrait-screen headings ("I think
+   for all the headings"): same serif, same black, same size. */
+#s-res .sc-lead{font:400 28px/1.15 'DM Serif Display',serif;letter-spacing:0;text-transform:none;
+  color:#1a1a1a;white-space:normal;text-wrap:balance}
 /* ⭐ THE STAR OF THE WEEK ON THE DISCOVERY PAGE — her idea, 2026-08-21:
    "I am wondering if the Discovery page, for first time users, before she even
    takes the quiz, could be able to get a peak at the star of the week."

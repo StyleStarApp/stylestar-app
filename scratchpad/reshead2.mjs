@@ -13,11 +13,11 @@ await p.route('**/*',async r=>{const u=new URL(r.request().url());
   if(u.pathname.startsWith('/.netlify/functions/amazon-images'))return r.fulfill({contentType:'application/json',body:'{"images":{}}'});
   if(r.request().resourceType()==='image')return r.fulfill({body:PNG,contentType:'image/png'});
   return r.abort();});
-await p.goto('https://stylestar.app/');await p.waitForTimeout(1200);
-await p.evaluate(()=>{answers=[8,7,6,9,7,6,7,7,8,10,7,9];try{userName='Catherine'}catch(e){};try{showResult()}catch(e){show('s-res')}});
+await p.addInitScript(n=>{window.__NAME__=n},process.argv[4]||'');await p.goto('https://stylestar.app/');await p.waitForTimeout(1200);
+await p.evaluate(()=>{answers=[8,7,6,9,7,6,7,7,8,10,7,9];try{userName=window.__NAME__||''}catch(e){};try{showResult()}catch(e){show('s-res')}});
 await p.waitForTimeout(2500);await p.evaluate(()=>document.fonts.ready);
 const extra=process.argv[3]||'';if(extra)await p.addStyleTag({content:extra});await p.waitForTimeout(200);
 const info=await p.evaluate(()=>[...document.querySelectorAll('#s-res .eng-lbl')].map(e=>{const r=e.getBoundingClientRect(),pr=e.closest('.page')||e.parentElement;const q=pr.getBoundingClientRect();return {t:e.textContent,fs:getComputedStyle(e).fontSize,ff:getComputedStyle(e).fontFamily.slice(0,16),over:r.left<q.left||r.right>q.right,top:Math.round(r.top+scrollY)}}));
 console.log(JSON.stringify(info));
-for(const [i,e] of info.entries()){if(i>1)break;await p.screenshot({path:SP+`sec${i}-${W}${extra?'-x':''}.png`,clip:{x:0,y:Math.max(0,e.top-90),width:W,height:330},fullPage:true});}
+const card=await p.evaluate(()=>{const e=document.querySelector('#s-res .sc-lead');return e?Math.round(e.getBoundingClientRect().top+scrollY):0});info.push({top:card});for(const [i,e] of info.entries()){if(i>0&&i<info.length-1)continue;await p.screenshot({path:SP+`sec${i}-${W}${extra?'-x':''}.png`,clip:{x:0,y:Math.max(0,e.top-90),width:W,height:330},fullPage:true});}
 await b.close();
