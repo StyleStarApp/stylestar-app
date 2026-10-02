@@ -13540,7 +13540,20 @@ function _findRemember(data,req){
 function _findBlockHtml(data,req,quiet){
   const asked=[req.item,req.colour,req.fabric,req.cut].filter(Boolean).join(' ');
   const keep=function(list){return filterNeverWear(list||[],asked)};
-  const exact=keep(data.exact);
+  /* 🚨 THE SAME PIECE NEVER SHOWS TWICE — her catch 2026-10-02, "Anthropologie is
+     showing duplicates". Google Shopping lists one piece several times (a listing
+     per colour or seller, same name), and a merged row can meet it again. Her
+     rule from 2026-09-09: the same STORE twice is her design, the same DRESS
+     twice is noise. Keyed on store + name, and on the photo, across the whole
+     row; the first (best-placed) copy wins. */
+  const _seen=new Set();
+  const _once=function(p){
+    const k=String(p.store||'').toLowerCase()+'|'+String(p.title||p.name||'').toLowerCase().replace(/[^a-z0-9]+/g,' ').trim();
+    const im=String(p.image||'');
+    if(_seen.has(k)||(im&&_seen.has(im)))return false;
+    _seen.add(k);if(im)_seen.add(im);return true;
+  };
+  const exact=keep(data.exact).filter(_once);
   const doors=(data.doors||[]).map(function(d){return{...d,products:keep(d.products)}})
                               .filter(function(d){return d.products.length});
 
@@ -13576,9 +13589,9 @@ function _findBlockHtml(data,req,quiet){
      through that order. THE SEQUENCE MATTERS: sorting after the spread would
      undo the spread, and spreading before the sort would be spreading a list
      that is about to be rearranged. */
-  const amazon=keep(data.amazon).slice(0,_AMZ_PER_ROW);
+  const amazon=keep(data.amazon).filter(function(a){return _once(a)}).slice(0,_AMZ_PER_ROW);
   const browse=_findSpread(_findByHerShops(
-    keep(data.browse).filter(function(b){return b.store&&b.title&&
+    keep(data.browse).filter(function(b){return b.store&&b.title&&_once(b)&&
       /* with Amazon's own cards present, Google's copies of Amazon listings go */
       !(amazon.length&&/^amazon\b/i.test(b.store))})));
   /* ⚠️ ONE CARD RENDERER, NEVER A SECOND COPY — `_findCard` draws both halves of

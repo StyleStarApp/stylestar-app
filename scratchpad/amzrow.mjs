@@ -47,5 +47,17 @@ await pg.unroute(u => u.pathname.includes('amazon-search'));
 await pg.route(u => u.pathname.includes('amazon-search'), r => r.fulfill({ status: 200, contentType: 'application/json', body: '{"items":[],"why":"unconfigured"}' }));
 const st3 = await pg.evaluate(async () => { _AMZ_MEM.clear(); const fr = await _findFetch({ item: 'skirt' }, false); return { amz: !!(fr.data && fr.data.amazon), browse: ((fr.data || {}).browse || []).length }; });
 ok('if her Amazon access lapses, rows carry no Amazon cards and nothing else changes', !st3.amz && st3.browse === 6, JSON.stringify(st3));
+// her catch 2026-10-02: the same piece twice is noise (same store twice is fine)
+const dup = await pg.evaluate(() => {
+  const P = (id, t, st, im) => ({ id, title: t, name: t, search: t, store: st, price: '$98', image: im });
+  const data = { exact: [P('e1', 'Maeve Midi Dress', 'Anthropologie', 'https://x/1.jpg')], doors: [], browse: [
+    P('b1', 'Maeve Midi Dress', 'Anthropologie', 'https://x/1b.jpg'),          // same piece, same store
+    P('b2', 'The Maeve Midi Dress', 'Anthropologie', 'https://x/1.jpg'),       // same photo
+    P('b3', 'Somerset Maxi Dress', 'Anthropologie', 'https://x/2.jpg'),        // same store, different piece: KEEP
+    P('b4', 'Somerset Maxi Dress', 'Anthropologie', 'https://x/2c.jpg')] };    // repeat
+  const h = _findBlockHtml(data, { item: 'dress' }, true);
+  const d = document.createElement('div'); d.innerHTML = h;
+  return [...d.querySelectorAll('.find-card')].map(c => (c.querySelector('.fc-name') || c).textContent.trim()); });
+ok('the same piece never shows twice in a row', JSON.stringify(dup) === JSON.stringify(['Maeve Midi Dress', 'Somerset Maxi Dress']), JSON.stringify(dup));
 await browser.close(); srv.close();
 console.log(`\n${pass} passed, ${fail} failed`); process.exit(fail ? 1 : 0);
