@@ -254,7 +254,7 @@
   ▶ RESTAMP AFTER ANY CSS EDIT:  node scripts/css-version.js --write
   ⚠️ DO NOT hand-type or "tidy" the value — it is derived from the file, and
   scratchpad/copy.js fails if it is stale. -->
-  <link rel="stylesheet" href="/styles.css?v=f76b4ed450">
+  <link rel="stylesheet" href="/styles.css?v=b56a199979">
 </head>
 <body>
 <!-- build: quiz glow-up (chrome frame, gold knob, gold button, gold progress) 2026-07-11 r2 -->
@@ -644,6 +644,19 @@
            so every piece she adds to the Edit appears here for free. Same
            pattern as _renderEditTeaser() and _wlDecorateEdit(). -->
     <div id="resEditGallery"></div>
+
+    <!-- PIECE 2.45: "From My Amazon Finds" -- the HIGH/LOW other half, right under
+         the Edit panel (2026-10-02, her go-ahead the day Amazon photos went live).
+         ▶ WHY: every Edit piece is luxury ($198-$1,100 on that panel), so a new
+           woman's first screen of clothes was all splurge. Her own line is the
+           reason this exists: mixing high and low is how she dresses clients.
+         ⚠️ A SECOND PANEL, NEVER MERGED INTO "From My Edit": these pieces are not
+           on the Edit, and Finds prices are rounded up with a tilde while the
+           Edit's are exact -- her "the difference is a truth difference".
+         ⚠️ Same honesty rule as the Edit panel above: the heading may never claim
+           the quiz chose these. Photos are Amazon's own, fetched at runtime by
+           findsPhotosLoad(); a piece without one is simply left out. -->
+    <div id="resFindsGallery"></div>
 
     <!-- PIECE 2.5: her Style Star card on the striped curtain panel.
          (It REPLACED the Style Constellation 2026-08-22, her call, after the one
@@ -3777,6 +3790,7 @@ function show(id,skipHistory){
      visit is also what keeps the hrefs right after a trip to the Edit, since
      _wlDecorateEdit() rewrites those and _affUrl never double-wraps. */
   if(id==='s-res')try{_renderEditGallery();}catch(e){}
+  if(id==='s-res')try{_renderFindsGallery();}catch(e){}
   // ⚠️⚠️ A SCREEN WHOSE CONTENT IS BUILT AT RUNTIME MUST BE REFILLED HERE,
   // NOT BY ITS OWN ENTRY FUNCTION (2026-09-01, the homepage trim). On a
   // trimmed route the screen does not exist yet when the entry function
@@ -9205,7 +9219,7 @@ function openFinds(){
 //   the finder's cards. If Amazon sends nothing (keys unset, eligibility lapsed,
 //   a piece withdrawn) the card stays the text card it has always been.
 const _AMZ_PX_TTL=12*60*60*1000;
-let _findsPxBusy=false,_findsPxOff=false;
+let _findsPxBusy=null,_findsPxOff=false;
 function _amzAsinOf(href){const m=/amazon\.com\/(?:[^?#]*\/)?dp\/([A-Z0-9]{10})/i.exec(href||'');return m?m[1].toUpperCase():'';}
 // returns the url, '' for a remembered "Amazon has no photo for this one", or
 // null for "never asked / too old" -- so a piece Amazon won't show is not
@@ -9224,8 +9238,15 @@ function _findsPxPlace(item,url){
   if(btn){img.onclick=function(){btn.click();};img.setAttribute('role','link');}
   item.insertBefore(img,item.firstChild);
 }
-async function findsPhotosLoad(){
-  if(_findsPxBusy)return;
+// Returns a promise, so the quiz-results panel can wait for the same fetch the
+// Finds page uses rather than running a second one; a call while one is in
+// flight gets that same promise back.
+function findsPhotosLoad(){
+  if(_findsPxBusy)return _findsPxBusy;
+  _findsPxBusy=_findsPhotosLoad().finally(function(){_findsPxBusy=null;});
+  return _findsPxBusy;
+}
+async function _findsPhotosLoad(){
   const items=Array.from(document.querySelectorAll('#s-finds .dc-item'));
   const need=[];const byAsin={};
   items.forEach(function(it){
@@ -9238,8 +9259,7 @@ async function findsPhotosLoad(){
     if(hit)_findsPxPlace(it,hit);else if(hit===null&&need.indexOf(asin)<0)need.push(asin);
   });
   if(!need.length||_findsPxOff)return;
-  _findsPxBusy=true;
-  try{
+  {
     // one batch of ten at a time, top of the page first, so the first photos
     // a woman sees arrive first and Amazon's per-second limit is respected
     for(let i=0;i<need.length;i+=10){
@@ -9252,7 +9272,7 @@ async function findsPhotosLoad(){
       if(!data)continue;   // a failed call remembers nothing, so the next visit tries again
       chunk.forEach(function(a){const v=imgs[a];const u=(v&&v.url)||'';_amzPxCacheSet(a,u);if(u)(byAsin[a]||[]).forEach(function(it){_findsPxPlace(it,u);});});
     }
-  }finally{_findsPxBusy=false;}
+  }
 }
 // --- Amazon Finds category quick-jump (a second real tester's ask, 2026-09-22) ---
 // Renders one pill per LIVE `.dc-cat` heading -- never a hardcoded list, so it can
@@ -15211,24 +15231,23 @@ function _renderEditTeaser(){
       is not the place to reproduce a two-view stack built for a much bigger
       card. The strip on Welcome Back is wider, which is why IT renders stacks. */
 var RES_EDIT_MAX=10;   // a preview, with a real door to the rest; safe to turn
-function _renderEditGallery(){
-  var el=document.getElementById('resEditGallery');if(!el)return;
-  var items=_wlEditItems().filter(function(it){
-    return it.el.closest('#s-dream') && it.image;   // Edit only, and only with a photograph
-  }).slice(0,RES_EDIT_MAX);
-  if(!items.length){el.classList.remove('on');el.innerHTML='';return;}
-  el.innerHTML='<div class="p2 fme-wrap"><div class="board"><span class="lacq"></span>'
+var RES_FINDS_MAX=10;  // same, for the Amazon Finds panel; safe to turn
+/* ONE builder for both quiz-results panels, so there is exactly one card
+   template and one outbound-link path (affq counts it once). Each panel passes
+   only what is genuinely its own: heading, line, button, disclosure. */
+function _resGalleryHtml(items,o){
+  return '<div class="p2 fme-wrap"><div class="board"><span class="lacq"></span>'
     +'<span class="sweep"></span><div class="page">'
     +'<span class="stud tl"></span><span class="stud tr"></span>'
     +'<span class="stud bl"></span><span class="stud br"></span>'
     +'<div class="eng si fme-eng"><div class="eng-row"><span class="eng-rule l"></span>'
-    +'<span class="eng-lbl">From My Edit</span><span class="eng-rule r"></span></div></div>'
-    +'<div class="fme-sub">What I am recommending to my clients right now.</div>'
+    +'<span class="eng-lbl">'+o.head+'</span><span class="eng-rule r"></span></div></div>'
+    +'<div class="fme-sub">'+o.sub+'</div>'
     +'<div class="fme-grid">'
     +items.map(function(it){
       /* ⚠️ _affUrl AT RENDER TIME, NEVER A HARD-CODED AFFILIATE LINK. `it.url` is
-         read RAW off the Edit's markup; _wlDecorateEdit() rewrites those hrefs
-         only once she OPENS the Edit, so a woman who lands here first would get
+         read RAW off the page's markup; _wlDecorateEdit() rewrites those hrefs
+         only once she OPENS that page, so a woman who lands here first would get
          an untagged link that earns nothing. _affUrl never double-wraps. */
       return '<div class="fme-card">'
         +'<a class="fme-go" href="'+_esc(_affUrl(it.url))+'" target="_blank" rel="sponsored noopener">'
@@ -15242,14 +15261,73 @@ function _renderEditGallery(){
         +'<div class="fme-act">'+_wlSaveBtn(it)+'</div></div>';
     }).join('')
     +'</div>'
-    +'<button class="fme-all" onclick="showDream()">See the full Edit'
+    +'<button class="fme-all" onclick="'+o.go+'()">'+o.btn
     +'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h13"/><path d="M12 6.5 18.5 12 12 17.5"/></svg></button>'
-    /* the Edit's own disclosure wording, because this IS the Edit's pieces */
-    +'<div class="fme-disc">Nothing here is chosen by AI. Every piece is personally '
-    +'selected by Catherine. Some links may earn a commission.</div>'
+    +'<div class="fme-disc">'+o.disc+'</div>'
     +'</div></div></div>';
+}
+function _renderEditGallery(){
+  var el=document.getElementById('resEditGallery');if(!el)return;
+  var items=_wlEditItems().filter(function(it){
+    return it.el.closest('#s-dream') && it.image;   // Edit only, and only with a photograph
+  }).slice(0,RES_EDIT_MAX);
+  if(!items.length){el.classList.remove('on');el.innerHTML='';return;}
+  el.innerHTML=_resGalleryHtml(items,{
+    head:'From My Edit',
+    sub:'What I am recommending to my clients right now.',
+    btn:'See the full Edit',go:'showDream',
+    /* the Edit's own disclosure wording, because this IS the Edit's pieces */
+    disc:'Nothing here is chosen by AI. Every piece is personally '
+      +'selected by Catherine. Some links may earn a commission.'});
   el.classList.add('on');
   try{_wlSyncButtons();}catch(e){}
+}
+/* ── "FROM MY AMAZON FINDS" ON THE QUIZ RESULTS (2026-10-02) ───────────────
+   The high/low other half of the panel above. Read the note above
+   <div id="resFindsGallery"> for why it is a SECOND panel and never merged.
+   ⚠️ VARIETY BY CATEGORY: the Finds page runs sunglasses first, so its first ten
+      would be mostly sunglasses. The panel takes one piece from each category
+      in turn, in her own page order, so it shows the range of what is there.
+   ⚠️ Only pieces Amazon gave a photo for. The same findsPhotosLoad() the Finds
+      page uses fills them in (from her browser's 12h memory when it can), and
+      the panel redraws once when any new photos arrive.
+   ⚠️ AMAZON'S REQUIRED SENTENCE goes on this panel, because these are Amazon
+      links; the Edit panel above carries none, so it does not need it. */
+function _findsGalleryItems(){
+  var groups=[],byCat={};
+  _wlEditItems().forEach(function(it){
+    if(!it.el.closest('#s-finds')||!it.image)return;
+    var c=it.el,cat='';
+    while((c=c.previousElementSibling)){if(c.classList&&c.classList.contains('dc-cat')){cat=c.textContent.trim();break;}}
+    if(!byCat[cat]){byCat[cat]=[];groups.push(byCat[cat]);}
+    byCat[cat].push(it);
+  });
+  var out=[];
+  for(var round=0;out.length<RES_FINDS_MAX;round++){
+    var any=false;
+    groups.forEach(function(g){if(g[round]&&out.length<RES_FINDS_MAX){out.push(g[round]);any=true;}});
+    if(!any)break;
+  }
+  return out;
+}
+function _renderFindsGallery(){
+  var el=document.getElementById('resFindsGallery');if(!el)return;
+  var draw=function(){
+    var items=_findsGalleryItems();
+    if(!items.length){el.classList.remove('on');el.innerHTML='';return;}
+    el.innerHTML=_resGalleryHtml(items,{
+      head:'From My Amazon Finds',
+      sub:'Mixing high and low is how I dress my clients.',   // her own live line, verbatim (the Edit/Finds crosslinks)
+      btn:'See all my Amazon Finds',go:'openFinds',
+      disc:'As an Amazon Associate, I earn from qualifying purchases.'});
+    el.classList.add('on');
+    try{_wlSyncButtons();}catch(e){}
+  };
+  var p=null;try{p=findsPhotosLoad();}catch(e){}
+  draw();   // whatever her browser already remembers, straight away
+  if(p&&p.then)p.then(function(){
+    if(document.getElementById('s-res').classList.contains('act'))draw();
+  });
 }
 // ⭐ THE SAME STAR, ON THE DISCOVERY PAGE — her idea 2026-08-21. Read the CSS
 // note at #dsStar for why it exists, why it sits after the founder line, and why

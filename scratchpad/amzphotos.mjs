@@ -17,7 +17,11 @@ async function run(mode){
       as.forEach((a,i)=>{if(i%5!==4)o[a]={url:'https://m.media-amazon.com/images/I/'+a+'.jpg',w:500,h:500}});   // every 5th: Amazon sends nothing
       return r.fulfill({contentType:'application/json',body:JSON.stringify({images:o})});}
     if(u.hostname==='stylestar.app'){let f=u.pathname==='/'||!path.extname(u.pathname)?'/index.html':u.pathname;f=ROOT+f;return fs.existsSync(f)?r.fulfill({path:f}):r.fulfill({status:404});}
+    if(r.request().resourceType()==='image')return r.fulfill({body:PNG,contentType:'image/png'});
     return r.abort();});
+  if(mode==='results'){await p.goto('https://stylestar.app/');await p.waitForTimeout(1200);
+    await p.evaluate(()=>{answers=[8,7,6,9,7,6,7,7,8,10,7,9];try{showResult()}catch(e){show('s-res')}});
+    await p.waitForTimeout(2500);return {p,b,ctx,errs,calls:()=>calls};}
   await p.goto('https://stylestar.app/finds');await p.waitForTimeout(1500);
   const firstCalls=calls;
   const anchorsBefore=await p.evaluate(()=>document.querySelectorAll('#s-finds a').length);
@@ -65,5 +69,25 @@ r=await run('unconfigured');s=r.s;
 ok(s.px===0,'no photos, cards stay the text cards they have always been');
 ok(r.calls()===1,'stops after one call instead of asking eight times');
 ok(r.errs.length===0,'no page errors');
+await r.b.close();
+console.log('— the quiz results: "From My Amazon Finds" beside "From My Edit"');
+r=await run('results');
+const q=await r.p.evaluate(()=>{const e=document.getElementById('resEditGallery'),g=document.getElementById('resFindsGallery');
+  const txt=x=>x?x.textContent:'';
+  const cats=[...g.querySelectorAll('.fme-go')].map(a=>{const href=a.getAttribute('href');const it=[...document.querySelectorAll('#s-finds .dc-item')].find(i=>href.includes(i.querySelector('.dc-item-btn').getAttribute('href').split('/dp/')[1]));let c=it;while(c&&(c=c.previousElementSibling))if(c.classList.contains('dc-cat'))return c.textContent;return '';});
+  return {editOn:e.classList.contains('on'),editCards:e.querySelectorAll('.fme-card').length,editHead:txt(e.querySelector('.eng-lbl')),
+    on:g.classList.contains('on'),cards:g.querySelectorAll('.fme-card').length,head:txt(g.querySelector('.eng-lbl')),sub:txt(g.querySelector('.fme-sub')),
+    disc:txt(g.querySelector('.fme-disc')),tagged:[...g.querySelectorAll('.fme-go')].every(a=>/tag=stylestar01-20/.test(a.href)&&a.rel.includes('sponsored')),
+    after:!!(e.compareDocumentPosition(g)&4),saves:g.querySelectorAll('.wl-save').length,cats,
+    allText:txt(e)+' '+txt(g)}});
+ok(q.editOn&&q.editCards>0&&q.editHead==='From My Edit','the Edit panel still renders, its heading unchanged');
+ok(q.on&&q.cards===10,`the Amazon panel shows ten pieces (${q.cards})`);
+ok(q.after,'…and sits after the Edit panel, never merged into it');
+ok(new Set(q.cats).size>=Math.min(10,q.cats.length)-0&&new Set(q.cats).size>=5,`spread across her categories, not ten sunglasses (${new Set(q.cats).size} categories)`);
+ok(!/styled for you|for your style|based on your|picked for you|chosen for you|matched to you|your quiz/i.test(q.allText),'neither panel claims the quiz chose its pieces');
+ok(/As an Amazon Associate, I earn from qualifying purchases\./.test(q.disc),"Amazon's required sentence is on the Amazon panel");
+ok(q.tagged,'every Amazon card is tagged and sponsored');
+ok(q.saves===q.cards,'every Amazon card has a Save');
+ok(r.errs.length===0,'no page errors'+(r.errs.length?': '+r.errs[0]:''));
 await r.b.close();
 console.log(`\n${fail?'✗':'✓'} ${pass} passed, ${fail} failed`);process.exit(fail?1:0);
