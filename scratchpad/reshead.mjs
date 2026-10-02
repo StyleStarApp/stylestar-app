@@ -4,7 +4,7 @@ import fs from 'fs';import path from 'path';
 const ROOT=path.resolve(path.dirname(new URL(import.meta.url).pathname),'..');
 const SP='/tmp/claude-0/-home-user-stylestar-app/ccd2d3bd-13d7-5b8a-a78c-9f83c0ce0e88/scratchpad/';
 const PNG=Buffer.from('iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8z8DwHwAFBQIAX8jx0gAAAABJRU5ErkJggg==','base64');
-const b=await chromium.launch();const p=await (await b.newContext({viewport:{width:390,height:844},deviceScaleFactor:2})).newPage();
+const b=await chromium.launch();const p=await (await b.newContext({viewport:{width:+(process.argv[3]||390),height:844},deviceScaleFactor:2})).newPage();
 await p.route('**/*',async r=>{const u=new URL(r.request().url());
   if(u.hostname==='cdn.shopify.com'&&/1229377/.test(u.pathname))return r.fulfill({path:SP+'sl1.jpg'});
   if(u.hostname==='cdn.shopify.com'&&/1229376/.test(u.pathname))return r.fulfill({path:SP+'sl2.jpg'});
@@ -22,6 +22,7 @@ const m=await p.evaluate(()=>{const c=document.querySelector('#resEditGallery .f
     h:[...px.querySelectorAll('img')].map(i=>Math.round(i.getBoundingClientRect().height)),box:Math.round(px.getBoundingClientRect().height),
     fit:[...px.querySelectorAll('img')].map(i=>getComputedStyle(i).objectFit)}});
 console.log(JSON.stringify(m));
+const W=+(process.argv[3]||390);
 const OPTS={
   current:'',
   A:`:is(#resEditGallery,#resFindsGallery) .eng-lbl{font:700 18px/1.1 'Jost',sans-serif;letter-spacing:.12em;color:#151515}`,
@@ -37,7 +38,7 @@ for(const [k,css] of Object.entries(OPTS)){
   await p.waitForTimeout(300);
   for(const id of ['resEditGallery','resFindsGallery']){
     const el=await p.$('#'+id+' .page');const bb=await el.boundingBox();
-    await p.screenshot({path:SP+`hd-${k}-${id}.png`,clip:{x:bb.x,y:bb.y,width:bb.width,height:Math.min(520,bb.height)},fullPage:true});
+    await p.screenshot({path:SP+`hd-${k}-${id}-${W}.png`,clip:{x:bb.x,y:bb.y,width:bb.width,height:Math.min(520,bb.height)},fullPage:true});
   }
 }
 await b.close();

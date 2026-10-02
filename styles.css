@@ -3366,6 +3366,17 @@ body.card-fb{padding:0}
 /* the Amazon Finds panel (2026-10-02): Amazon shoots on white, so its frame is
    white too; on the Edit's cream the white square would read as a box. */
 #resFindsGallery .fme-px{background:#fff}
+/* 🚨 HER PICK, 2026-10-02 ("I like option 2"), after she said the old heading
+   looked "sort of small and brownish": the two shopping panels' headings are the
+   large black DM Serif Display of the product names, mixed case, instead of the
+   12px gold capitals the portrait's own headings use. Scoped to THESE TWO
+   panels only; "Your Style Portrait"/"Your Style Signature" keep theirs.
+   ⚠️ The thin gold side rules come off on both, because "From My Amazon Finds"
+   is too long to leave them room (they shrank to dots), and two panels side by
+   side must match. It may wrap on a narrow phone, balanced, never overflow. */
+:is(#resEditGallery,#resFindsGallery) .eng-rule{display:none}
+:is(#resEditGallery,#resFindsGallery) .eng-lbl{font:400 28px/1.15 'DM Serif Display',serif;letter-spacing:0;
+  text-transform:none;color:#1a1a1a;white-space:normal;text-align:center;text-wrap:balance}
 /* ⭐ THE STAR OF THE WEEK ON THE DISCOVERY PAGE — her idea, 2026-08-21:
    "I am wondering if the Discovery page, for first time users, before she even
    takes the quiz, could be able to get a peak at the star of the week."
