@@ -54,10 +54,14 @@ const dup = await pg.evaluate(() => {
     P('b1', 'Maeve Midi Dress', 'Anthropologie', 'https://x/1b.jpg'),          // same piece, same store
     P('b2', 'The Maeve Midi Dress', 'Anthropologie', 'https://x/1.jpg'),       // same photo
     P('b3', 'Somerset Maxi Dress', 'Anthropologie', 'https://x/2.jpg'),        // same store, different piece: KEEP
-    P('b4', 'Somerset Maxi Dress', 'Anthropologie', 'https://x/2c.jpg')] };    // repeat
+    P('b4', 'Somerset Maxi Dress', 'Anthropologie', 'https://x/2c.jpg'),       // repeat
+    P('b5', 'Atrium High-Rise Shorts by Varley in Yellow, Size: XL at Anthropologie', 'Anthropologie', 'https://x/3a.jpg'),
+    P('b6', 'Atrium High-Rise Shorts by Varley in Yellow, Size: XXS at Anthropologie', 'Anthropologie', 'https://x/3b.jpg'),  // her screenshot: same piece, other size
+    P('b7', "Vans Old Skool Sneaker Women's Yellow M9/W10.5", 'American Eagle', 'https://x/4a.jpg'),
+    P('b8', "Vans Old Skool Sneaker Women's Yellow M5.5/W7", 'American Eagle', 'https://x/4b.jpg')] };
   const h = _findBlockHtml(data, { item: 'dress' }, true);
   const d = document.createElement('div'); d.innerHTML = h;
   return [...d.querySelectorAll('.find-card')].map(c => (c.querySelector('.fc-name') || c).textContent.trim()); });
-ok('the same piece never shows twice in a row', JSON.stringify(dup) === JSON.stringify(['Maeve Midi Dress', 'Somerset Maxi Dress']), JSON.stringify(dup));
+ok('the same piece never shows twice in a row, even in two sizes, and no size is printed', dup.length === 4 && dup.filter(n => /Maeve/.test(n)).length === 1 && dup.filter(n => /Somerset/.test(n)).length === 1 && dup.filter(n => /Atrium/.test(n)).length === 1 && dup.filter(n => /Vans/.test(n)).length === 1 && !dup.some(n => /size|\bxl\b|xxs|w10|w7/i.test(n)), JSON.stringify(dup));
 await browser.close(); srv.close();
 console.log(`\n${pass} passed, ${fail} failed`); process.exit(fail ? 1 : 0);

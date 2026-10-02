@@ -10830,6 +10830,13 @@ function _feedName(name,brand){
   if(b)out=out.replace(new RegExp('^\\s*'+esc(b)+'\\s*(?:[-\u2013\u2014:|,]\\s*)?','i'),'');
   out=out.replace(/^\s*(?:wo?m[ae]n(?:'?s)?|ladies|female)\b\s*(?:[-\u2013\u2014:|,]\s*)?/i,'');
   out=out.replace(/\s*[-\u2013\u2014,|]?\s*\bsizes?\b[\s:]*[a-z0-9]{1,6}\s*$/i,'');
+  /* her catch 2026-10-02 (Varley shorts, Vans): a size can sit MID-title, and a
+     shoe listing names both sizes — "…in Yellow, Size: XL at Anthropologie",
+     "…Women's Yellow M9/W10.5". Neither may reach a card (never name her size
+     back), and with them gone the same piece is recognised as the same piece. */
+  out=out.replace(/,?\s*\bsizes?\b\s*:?\s*[a-z0-9.\/]{1,8}\b/gi,'')
+         .replace(/\s*\b[mw]\s?\d{1,2}(?:\.\d)?\s*\/\s*[mw]?\s?\d{1,2}(?:\.\d)?\b/gi,'');
+  if(b)out=out.replace(new RegExp('\\s+at\\s+'+esc(b)+'\\s*$','i'),'');
   out=out.replace(/\s{2,}/g,' ').replace(/^[\s\-\u2013\u2014:,|]+/,'').replace(/[\s\-\u2013\u2014:,|]+$/,'').trim();
   return out.length>=3?out:raw;
 }
@@ -13548,7 +13555,8 @@ function _findBlockHtml(data,req,quiet){
      row; the first (best-placed) copy wins. */
   const _seen=new Set();
   const _once=function(p){
-    const k=String(p.store||'').toLowerCase()+'|'+String(p.title||p.name||'').toLowerCase().replace(/[^a-z0-9]+/g,' ').trim();
+    const nm=_feedName(String(p.title||p.name||''),p.brand||p.store);   // sizes stripped, so XL and XXS are one piece
+    const k=String(p.store||'').toLowerCase()+'|'+nm.toLowerCase().replace(/[^a-z0-9]+/g,' ').trim();
     const im=String(p.image||'');
     if(_seen.has(k)||(im&&_seen.has(im)))return false;
     _seen.add(k);if(im)_seen.add(im);return true;
