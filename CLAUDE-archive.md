@@ -11,6 +11,363 @@ The standing rules, current decisions, store system and open threads all live in
 
 ---
 
+## ARCHIVED 2026-10-03 — THE NINETEENTH-SESSION BLOCK (2026-09-28 → 10-02), VERBATIM
+_Moved out of `CLAUDE.md` unchanged when the twentieth-session notes were written. Nothing deleted._
+
+## ▶▶▶ WHERE WE LEFT OFF — 2026-09-28/29 (nineteenth session). READ THIS FIRST.
+🚪 **SHE CLOSED THIS SESSION ON 2026-09-29 AND OPENED A FRESH ONE IMMEDIATELY** — *"let's save all and I
+will open a new session next"*. ⚠️ **She wrote "next week" first and corrected it to NEXT: do not read this
+as a week's gap, and do not greet her as though time has passed.** ▶ **Everything from it is saved, merged
+to `main` and live, verified on the SERVED files at stylestar.app. Nothing is half-finished and nothing is
+waiting on a push — the session was closed for CONTEXT ROOM, not because the work stopped.**
+⭐ **WHERE TO START, in her own order of urgency — and ASK, do not launch:**
+**(1)** 🚨 **THE OCT 1 FLORIDA CUTOVER IS IN TWO DAYS and it is the only hard date on this whole page.**
+Do NOT pay the Your Fashion Friend renewal; the wording and the two addresses are in BUSINESS & LEGAL, and
+the 407-246-2204 call has three questions attached. **This is the one thing with a deadline.**
+**(2)** the **Amazon Creators API retest** — due from 2026-09-29, so it is due NOW. Re-running the same two
+calls takes seconds; **it needs her Access Key ID / Secret Access Key again, because nothing was stored.**
+**(3)** ✅ **Indie Law REPLIED (Rose) and granted all four asks** — she still has to verify the Member line on Sunbiz herself; see INDIE LAW below.
+**(4)** her **fall Edit batch** — her own active ask, and the highest-value thing she can bring.
+▶ **Her three named priorities (searches · traffic · affiliates) are still unsequenced and she asked to
+organise her own thoughts first — a plain status recap of each is ready, but do NOT launch into any of
+them unprompted.**
+🚨 **THIS BLOCK IS THE CURRENT TRUTH. Everything below it is standing reference — if a line further
+down contradicts this one, THIS ONE WINS.**
+📁 **The eighteenth-session entry moved to `CLAUDE-archive.md` in this commit, VERBATIM.** Nothing was
+deleted. Every open thread inside it was carried forward below before the copy was made.
+
+### 🖼️ SESSION NINETEEN: THE POST-QUIZ SCROLL NOW SHOWS HER CLOTHES — "FROM MY EDIT" IS BUILT AND LIVE
+**Her ask:** *"How can we make the scroll down style portrait into an amazing visual of shoppable items
+and eye candy... Can it be right there for her as she scrolls down after the quiz and portrait reveal?"*
+— prompted by real tester feedback that a woman wants to *immediately see lots and lots of visuals.*
+▶▶ **THE MEASUREMENT THAT FRAMED THE WHOLE JOB, and it was worse than anyone had said: the ENTIRE
+post-quiz scroll was text and icons — not one product photograph anywhere on it.** Portrait → Style
+Signature → Style Star Card → a menu of nine text-and-icon shelves. A woman finished her portrait, the
+most excited she will ever be, and met a menu. **The eye candy was not thin; it was absent.**
+✅✅ **BUILT AND MERGED TO MAIN, verified on the SERVED file at stylestar.app, not the deploy badge.**
+Her own Edit pieces with photographs, rendered from the Edit's own markup at runtime (`_renderEditGallery`,
+`#resEditGallery`), so **every piece she adds to the Edit appears there for free.** Zero search, zero
+SerpApi cost, zero wait — these are already hers and already watched by the Saturday link check.
+▶ **HER TWO RULINGS, both written into the code comments so they cannot be quietly undone:**
+  **(a) PLACEMENT — after the Style Signature, BEFORE the Style Star Card.** Measured: the first
+  photograph now lands at **1,134px, about 1.3 phone screens in, down from never.** She chose it from
+  three rendered placements (662px / 1,217px / 1,617px). ⚠️ **The reason matters and is not just pacing:
+  the Style Star Card ASKS her to share the app with a friend, and that ask now comes AFTER she has seen
+  something beautiful rather than before.**
+  **(b) COPY — "From My Edit" / "What I am recommending to my clients right now"**, chosen by looking at
+  three rendered options. ⚠️ **DO NOT WARM IT UP, do not make it sound personalised, do not paraphrase
+  it fuller.** The second line does what no algorithm can: it invokes twenty years of real clients.
+▶ **Ten pieces of her 21, each with a working `_wlSaveBtn`, then "See the full Edit", then the Edit's own
+disclosure.** `RES_EDIT_MAX=10` is one number and safe to turn — **she is still deciding whether to show
+more.** ⚠️ **Order is the EDIT'S OWN ORDER, deliberately** (her 2026-09-10 ruling puts the shops that pay
+her first). **She was asked about store repetition on this surface and ruled it a non-issue** — *"I'm not
+concerned about store repetition here"* — so no variety shuffle; that rule still governs `_shopRules` and
+the compare carousel where it was actually made.
+▶ **Wired in `show()`'s `s-res` branch, NOT `showResult()`** — `/results`, `resBack()` and `loadSaved()`
+all reach that screen, and a rule that must hold on every route belongs at the choke point.
+▶ **`scratchpad/fromedit.mjs`, 24 checks, PROVEN TO BITE.** Suites re-run clean: `affq` 42/42 ·
+`copy` 50/50 · `wbedittasr` 42/42 · `starpx` 32/32. `styles.css` restamped.
+
+### 🔘 THE THREE CLOSING PILLS — HER DESIGN, BUILT AND LIVE 2026-09-29
+**Her ruling, verbatim:** *"The only one that is tan is the Amazon button. The Edit stays pink and what's
+trending stays teal... I don't want them filled pink or teal. Make the button white but framed pink and
+teal with silver edged mirror around the button. Black writing and same size arrow as on Amazon button.
+Make all of the pills the same size and same font and same look to the arrow."*
+🚨🚨 **AND THE CORRECTION SHE MADE THE SAME DAY, WHICH IS THE PART THAT GENERALISES — A PILL WEARS THE
+COLOUR OF WHERE IT GOES, NEVER OF THE PAGE IT SITS ON.** The first build read *"The Edit stays pink"* as a
+rule about the PAGE and gave `.dc-xlink>span` pink on both. She caught it from a screenshot of the EDIT
+page: ***"The Amazon button is supposed to be tan."*** ▶▶ **The button she was pointing at is `/edit`'s own
+closing invitation, and it GOES TO AMAZON FINDS — so on that page it is an Amazon button.** The two pages'
+invitations point at different places, which is exactly why one rule looked like two:
+| where it goes | colour | where it lives |
+|---|---|---|
+| The Edit | pink `#EC4899` | `/finds` |
+| Amazon (Finds, or the Storefront) | tan `#ECBD83` | `/edit`, and both Storefront pills |
+| What's Trending | teal `#0FA6B6` | both pages |
+⚠️ **THE TAN IS A FILL, NEVER A RING — AND THAT IS HER OWN EARLIER RULING, NOT A STYLE CHOICE.** On
+2026-09-22 this exact tan was tried as thin outline/text ink and she rejected it as *"greenish brown"*,
+muddy, even after it was darkened to pass contrast; **her own fix was to FILL the pill and put dark text on
+top.** So an Amazon button is byte-for-byte the Storefront pill's colours: fill `#ECBD83`, ink `#4a463e`
+(5.44:1). ▶ **Rendering this tan as a border, an outline or text would repeat a mistake she has already
+corrected once.**
+▶▶ **THE SETTLED STATE, AFTER SIX ROUNDS, AND SHE APPROVED IT LIVE: the Edit link and the trending link are
+white · a 5px FLAT SILVER `#9AA0A6` as the outer edge · their colour as a 4px inset ring inside it · black
+`#1a1a1a` writing. The Amazon link is the filled tan pill. All three are `278 × 77`, 13px Jost 700
+uppercase at `.06em`, and carry the same 18px stroke SVG arrow with the same 8px of air.** ⚠️ **The tan
+Storefront pill keeps its tan and the small top copy of it keeps its deliberately smaller size (`230 × 36`,
+her round-5 decision, 2026-09-22).**
+🚨🚨🚨 **THE SILVER IS FLAT, NEVER A GRADIENT — HER RULING, AND IT IS THE MOST REUSABLE THING ON THIS PAGE:**
+***"I don't want the silver to be gradient."*** ▶ **Rounds 1-5 used `.dream-mirror`'s own 7-stop metallic
+gradient, on the reasoning that it IS the app's existing chrome and therefore safe.** ⚠️⚠️ **IT IS — AT A
+13px PAGE FRAME. AT A 5px BUTTON EDGE IT READS AS A SMEAR**, and it visibly dulled her pink and teal sitting
+beside it. ▶▶ **THAT IS WHY SHE SAID THE COLOURS WERE WRONG THREE TIMES WHILE THE HEX VALUES WERE PROVABLY
+EXACT** — pixel-sampled out of the real render, the rings painted `#EC4899` and `#0FA6B6` unaltered. **She
+was right that something was wrong and Claude kept answering the wrong question, defending the hex instead
+of looking at what sat next to it.**
+⚠️ **`#9AA0A6` IS NOT AN INVENTED GREY: it is one of that same gradient's own stops and was already used 8
+times in `styles.css`.** The mirror was flattened to its own silver, never swapped for a new one.
+⭐⭐ **THE GENERAL LESSON, AND IT IS THE 2026-09-22 TAN LESSON ARRIVING FROM THE OTHER SIDE: A TREATMENT THAT
+WORKS AS A BIG SURFACE CAN READ WRONG AT EDGE WEIGHT.** There it was a COLOUR used as thin ink (`#ECBD83`
+read "greenish brown" as an outline and right as a fill); here it is a GRADIENT used as a thin edge.
+▶ **Neither is caught by contrast maths or by "it's already in the app" — only by rendering it and looking.**
+🚨 **AND THE PROCESS LESSON, WHICH COST HER FOUR ROUNDS: WHEN SHE SAYS A THING LOOKS WRONG AND THE
+MEASUREMENT SAYS IT IS RIGHT, THE MEASUREMENT IS ANSWERING A DIFFERENT QUESTION.** The hex was right; the
+thing NEXT TO IT was the fault. ▶ **Widen what is measured before replying that nothing is wrong.**
+⚠️ **AND THE OTHER THING FOUND BY MEASURING RATHER THAN EYEBALLING: THE ARROWS REALLY WERE INCONSISTENT.**
+The tan pill spaced its arrow with a flex `gap:8px` and centred it as a flex child; the two framed pills
+used `margin-left:4px` and `vertical-align`. **Same icon, two different spacings and two different
+alignment methods.** ▶ Now one size, one 8px gap, `vertical-align:middle` — **which works ONLY because it
+is a real SVG with a symmetric viewBox** (the 2026-09-22 rounds proved the Unicode glyph sits low in its
+own em-box and no alignment rule can fix a font's own placement). ⚠️ **NEVER go back to a text arrow.**
+⚠️ **"SAME SIZE" WAS MEASURED, AND THE BOX — NOT THE FONT — WAS WHAT DIFFERED.** All three are 278px wide,
+but her own copy is longer on two of them ("Click here to explore…", "Curious what's trending
+right now?") so those wrap to two lines while "My Amazon Storefront" sits on one. ▶ **Equalised with
+a `min-height`, NEVER by shortening her words** — her standing rule is that her copy is not rewritten to
+satisfy a rule. ⚠️ **The MECHANISM survived every later round; the NUMBER moved twice more as the frame
+thickened. Do not quote a pixel height from this paragraph — the settled figure is `278 × 77` above.**
+⭐ **TWO MORE ROUNDS THE SAME DAY, BOTH HERS, BOTH LIVE — and each one's CAUSE is the useful part:**
+**(a) *"Make the spacing between buttons even."*** The first gap measured **27px against 14px** for every
+gap below it, and **the cause was not a margin**: `.dc-xlink`'s own 13px BOTTOM padding sat UNDERNEATH the
+first pill and added itself to the next pill's margin. ▶ That padding is given back; **the TOP padding
+stays, because it sits above HER SENTENCE rather than between two buttons.** The pills' margin moved 14 →
+16px to match the BACK button below them, so **the whole closing run is 16px: sentence · pill · pill ·
+pill · BACK.**
+**(b) *"the pink and silver border and teal and silver border frame should be thicker."*** Both halves
+thickened TOGETHER — silver 3→4px, the coloured ring 2→3px — **because thickening only one would change the
+PROPORTION of a frame she had already approved rather than its WEIGHT.**
+🚨 **AND (b) NEARLY BROKE (a)'s SIBLING RULE, WHICH IS THE LESSON: 4px of border made the framed pills 2px
+taller than the tan one.** ▶▶ **FIXED BY CONSTRUCTION, NOT BY A NUMBER: every pill now carries the SAME 4px
+border box, and a tan pill paints its own border tan so it still reads as a solid fill edge to edge.** All
+three stayed identical through that round and the next one, **and the next change to the frame's weight
+still needs no second edit anywhere** — which is exactly what happened when the frame went to 5px + 4px
+and every pill moved to `278 × 77` together, with nothing to re-tune.
+⭐ **That is her standing direction applied to CSS — fewer rules and breakable things: a shared box beats a
+re-tuned magic height, because the magic height has to be found again every time.**
+
+🚨 **SHE IS CERTAIN THESE BUTTONS WERE DESIGNED ONCE BEFORE AND THEY WERE NOT — SEARCHED EXHAUSTIVELY** (every
+branch, the whole history of `.dc-xlink` in `styles.css`, the stash, `scratchpad/`, both note files): the only
+earlier ruling is her 2026-09-11 **colour + wording** call, never a button. She accepted it — *"if you don't
+have them, I guess we just make them again."* ▶ **DO NOT RE-LITIGATE THIS.**
+🚨🚨 **THREE TESTS HAD PINNED THE OLD DESIGN AND WENT RED ON A CORRECT PAGE — ALL REWRITTEN TO NAME THE RULE,
+AND THIS IS THE FOURTH TIME THIS FILE HAS PAID FOR THE SAME LESSON:**
+| what was pinned | what broke it | the rule it names now |
+|---|---|---|
+| the invitation is UNDERLINED | her ruling made it a framed pill | the invitation is SET APART (underline **or** frame) while her own sentence stays plain |
+| `tlSize >= xlSize` | it compared the trending PILL against `.dc-xlink`, which holds her SENTENCE — a button measured against a paragraph | the two pills are the same size and font as EACH OTHER, and both smaller than her sentence |
+| pink/teal read off `color` | her ruling moved both colours into the FRAME and made the writing black | each colour is looked for wherever its own pill wears it, **plus** that neither picked up the other's |
+| her sentence "gets its own line" = height ÷ line-height | a padded, bordered pill made the subtraction count padding as lines | a real GEOMETRIC overlap between the sentence's text rects and the pill's box |
+| **the two pages' invitations are the SAME colour** | her "a pill wears the colour of where it goes" | **no PER-PAGE accent — both come off the one shared pill rule, compared screen-against-screen** |
+▶▶ **THE TELL WAS THE SAME EVERY TIME: the assertion named the MECHANISM (a text-decoration, a CSS property,
+a piece of arithmetic) rather than the thing she actually asked for.** ⭐ **Ask of any layout assertion: if she
+restyles this tomorrow and it still looks right to her, does this check still pass?**
+⭐⭐ **AND THE FIFTH ROW IS THE ONE WORTH REMEMBERING LONGEST, because the FIX was better than the test: the
+colour check is asserted CROSSWISE now, off the SAME `goesTo` map the wording check already used** — so
+copying one page's markup onto the other fails on the colour as well as on the words, and a page can never
+again invite a woman somewhere in the wrong colour. **The right assertion already existed two lines above
+it; it just had not been asked the same question.**
+🚨 **SHE ASKED DIRECTLY AT THE END: "The Amazon button is it the same size as the other 2?" — MEASURED, YES,
+IDENTICAL: all three `278 × 77`.** ▶ **But her instinct was picking up something real and it is worth
+keeping: the two framed pills spend 9px of their width on frame, so their white middle is 260px, while the
+tan one runs its colour the full 278 edge to edge.** ⚠️ **A solid block of colour always reads heavier than
+an outlined one at the identical box size.** ▶ **OFFERED, NOT BUILT: give the Amazon pill the same flat
+silver outer edge with the tan filling the inside, so all three share one outline and differ only in what
+is within it. Her call.**
+✅ **`findspage` 113/113 · `storefrontlink` 22/22 · `editshare` 30/30 · `copy` 50/50 · `affq` 42/42 ·
+`linkwatch` 27/27 · `fromedit` 24/24.** CSS and sitemap restamped. **Verified on the SERVED file at
+stylestar.app, not the deploy badge.**
+⭐⭐ **THE TWO NEWEST CHECKS ARE THE SHAPE THIS FILE KEEPS ASKING FOR, AND BOTH ARE PROVEN TO BITE: every
+gap in the closing run equals the others, and every pill is the same size as the others — asserted AGAINST
+EACH OTHER, never against a pixel value.** ▶ **The run is read from the DOM in document order, so it
+survives a FOURTH pill joining it the way the Storefront one did on 2026-09-22** (which is exactly the
+growth that broke the old welded-arrow count). **A check written this way follows her when she restyles
+instead of fighting her.**
+
+### 🚨🚨 THE FAULT SHE CAUGHT THIS SESSION, AND IT IS THE MOST IMPORTANT THING ON THIS PAGE
+**The first build was headed "Styled For You" with a subtitle reading "Chosen for a polished trendsetter
+who leans fitted, detailed and a little bit glam."** Both were FALSE: those are pieces she picked months
+ago, in Edit order, with nothing personalised about them.
+▶ **HER WORDS:** ***"I don't like it saying pieces for your style or styled for you because these pieces
+were not selected based on anyone's quiz answers. They are mostly things that I like and personally
+recommend, not necessarily chosen for a particular style so I don't want to say that... I don't like
+implying that the AI stylist chose this based on her quiz answers."***
+⚠️⚠️ **SHE CAUGHT IT; NO TEST DID, AND CLAUDE WALKED STRAIGHT PAST IT** — the same write-up flagged a
+MECHANICAL problem (two DVF pieces leading the grid) while the false CLAIM sat in 24pt gold above it.
+▶▶ **IT IS THE SAME FAMILY AS CLAIMING A SIZE OR COLOUR THAT WAS NEVER VERIFIED.** It now has a
+permanent row in the rule ledger and a test that names the RULE, never her wording.
+⭐ **AND HER OBJECTION POINTED AT A BETTER PRODUCT, not just safer words: making this panel
+unmistakably CATHERINE'S TASTE is stronger than faking personalisation** — it is Sally's north star
+stated at the exact moment a woman has just been served by an AI. **If this panel is ever genuinely
+personalised it needs real matching underneath it and a SEPARATE honest label. Do not re-word this one.**
+
+### 🔎 TWO THINGS FOUND WHILE BUILDING, BOTH WORTH KEEPING
+1. 🚨 **`affq`'s outbound-anchor census was ALREADY RED BEFORE THIS SESSION TOUCHED ANYTHING — 17 against
+   an expected 15.** Measured against HEAD first rather than assuming the new work caused it. **The two
+   unaccounted anchors are the Amazon Storefront buttons shipped to `/finds` on 2026-09-22** — that
+   session added two ways out of the app and never bumped the count. `.fme-go` is the 18th. All three
+   verified `sponsored` + `_affUrl`-wrapped before the number moved, each named in a line in `affq.js`.
+   ▶ **THE LESSON: measure the baseline before bumping a tripwire — do not assume your own change caused
+   the whole gap.**
+2. ⭐⭐ **PLAUSIBLE ANALYTICS IS INSTALLED AND LIVE IN THE APP RIGHT NOW** (`plausible.io`, found because
+   the render harness tried to load it). ▶▶ **THIS FILE HAS SAID FOR WEEKS THAT "read the analytics" IS
+   A SMALL UNSTARTED PIECE OF WORK. IT IS NOT — THE DATA IS ALREADY BEING COLLECTED IN A HOSTED
+   DASHBOARD SHE CAN LOG INTO.** It answers two standing questions with no build at all: did the
+   Instagram post produce real sessions, and does she have the traffic to justify the Amazon clock.
+   ▶ **NEXT: ask whether she can get into that account, then read the numbers with her.**
+
+### 🚨 HER THREE OPEN QUESTIONS FROM THE END OF THIS SESSION — ANSWERED, NONE STARTED
+1. **Show more than 10 on the new panel?** *"I will think about if we want to show more than 10."*
+   ▶ One number (`RES_EDIT_MAX`); 21 photographed pieces exist. **Her call, nothing blocked.**
+2. **Add the Amazon pieces to it too?** ▶▶ **BLOCKED ON A HARD FACT, NOT A DESIGN CHOICE: the 73
+   `/finds` pieces HAVE NO PHOTOGRAPHS, and the panel only renders a piece that has one.** That is gated
+   on the Creators API (below). ⚠️ **AND WHEN PHOTOS DO LAND, THE RECOMMENDATION IS A SECOND PANEL, NOT A
+   MERGE — for two honesty reasons: the heading says "From My Edit" and Amazon pieces are not on the
+   Edit; and Edit prices are EXACT while Finds prices are ROUNDED UP with a tilde (her own "do not unify
+   the two pages; the difference is a truth difference"). Two panels is also what finally gives that
+   screen the genuine HIGH/LOW mix she wants.** Not started, hers to green-light.
+3. **An easier way to add/update Edit pieces — Cowork, or another tool?** ▶▶ **THE HONEST DIAGNOSIS:
+   `/finds` HAS A BATCH IMPORTER AND THE EDIT DOES NOT, and that asymmetry IS the friction she feels.**
+   Finds = `data/amazon-finds.csv` + `scripts/finds-from-csv.js`; the Edit = hand-written markup, every
+   time. ▶ **So the fix is not a new tool — give the Edit the same importer, then any spreadsheet works.**
+   ⚠️ **HONEST LIMIT, SAID TO HER PLAINLY: a CSV can carry name/store/price/note/link, but an Edit piece
+   also needs a PHOTOGRAPH** — a hotlinked retailer URL, sometimes a `px2` stack, sometimes a `pxPos`
+   crop — **and her own rule says a shoe photo is judged by LOOKING at the angle, never measured. The
+   photo will always need fetching and her eye.** **NOT BUILT. Her call whether it comes before the fall
+   batch or after.**
+
+### 🍂 SHE WANTS TO ADD A LOT OF FALL ITEMS — THE NEXT REAL PIECE OF WORK
+Her words: *"I want to add a lot of fall items now too."* ▶ **The proven pattern, which produced three
+pieces in one sitting: she sends a link, a price and her note; Claude verifies price and stock against
+the shop's own data, strips the tracking, fetches and renders the photo choices, and shows her the card
+before it ships.** ⚠️ **CLAUDE MUST NEVER PICK THE PRODUCTS — the disclosure says every piece is
+personally selected by the founder.**
+🚨🚨 **THE ONE THING THAT SHAPES HER FALL CURATION, AND SHE WAS TOLD IT BEFORE SHE STARTS: a piece from a
+shop she is NOT approved with cannot carry a photograph (the affiliate relationship is what licenses the
+image), earns nothing, AND — new as of this session — will not appear on the results panel at all,
+because that panel is photo-gated.** ▶ **MEASURED FROM `_AFF_MID` + `_CJ_AID` THIS SESSION, the TEN
+shops that earn and license a photo: Mytheresa · Olivela · Diane von Furstenberg · Marissa Collections ·
+FARM Rio · Vilebrequin · Fleur du Mal · COUTR · Etsy · Cashmere Boutique.** ⚠️ **Etsy IS in `_AFF_MID`
+(MID 54027) — an older line in this file describing the Rakuten feed as "8 stores" predates it.**
+⭐ **Etsy is worth remembering for fall jewellery — her own words, *"They are great for jewelry especially."***
+
+### 🏛️ INDIE LAW — SHE SENT THE ESCALATION EMAIL 2026-09-28; ✅ THEY REPLIED 2026-09-29/30 AND GRANTED ALL FOUR ASKS
+✅ **Reply signed "Rose, Indie Law Client Care Team" — a NEW name, not Almira.** It says: (1) the Statement of
+Correction is "fully applied" and Sunbiz now shows "Catherine Bailey Ellspermann" as BOTH Registered Agent and
+Authorized Member (a link, NOT a copy of a filed document); (2) "updating internal systems and review processes
+and adjusting staffing"; (3) Rose is now her "main point of contact", every update signed by name; (4) **a $500
+service credit, approved — usable only toward FUTURE Indie Law services, not a refund.**
+✅✅ **VERIFIED BY HER ON SUNBIZ 2026-09-30 (screenshots): Registered Agent AND Authorized Person (AMBR) both read
+"ELLSPERMANN, CATHERINE BAILEY". The name is fully fixed.** Only ONE correction event exists (08/25/2026 LC Article
+of Correction), so the 08-25 filing covered both lines and the Member display lagged or was misread on 09-28 —
+cannot tell which from here. ⚠️ **The ORIGINAL 07/27 Articles PDF still says "BAIL" in Articles III and IV, and
+ALWAYS WILL — a filed image is never edited; the correction is its own document beside it. Not an error.** ▶ The
+filed-document copy she asked for is the "View image in PDF format" link beside the 08/25 event; she can save it
+herself. ⚠️ **Sunbiz shows "FEI/EIN Number: NONE" — normal; it gets added on her FIRST ANNUAL REPORT, due Jan 1 –
+May 1, 2027 (a real deadline: late fee $400). Any other "annual report" solicitation is the scam wave.** ✅ **SHE REPLIED 2026-09-30 asking for the $500 as a REFUND, not a credit** (reason: Statements of Use are already in the TM Max package and the protection plan was already offered free on 08-17), plus Rose's full name/role and whether Rose replaced Almira ("Almira confirmed on August 31 that all communications would come from her. Since then I have received an unsigned email, a reply from Joey Vitale, and now yours"). ✅ **ROSE ANSWERED 2026-10-02: she is "Rose Martha Delos Angeles, Client Care Officer, responsible for client communications"; acknowledged the Almira concern; ESCALATED the refund-not-credit request to "the team" and will follow up with confirmation and refund timing. No decision yet.** ▶ **NEXT: ask whether the refund was approved. If about a week passes with nothing, one polite nudge. Rose did not say whether Almira is still involved; that is fine to let go.** ⚠️ **Do NOT write "the third change" in anything to them — counting varies 2 to 5 depending on how you count; stick to dated facts.**
+⚠️ **Soft gaps worth one polite reply, her call:** she asked for a copy of the
+FILED document and got a link; the promised contact changed a THIRD time (Almira → "the team" → Rose) with no
+word about Almira; and the credit only has value if she keeps using the firm (Statements of Use are still ahead,
+covered in the package, $900 USPTO fees separate). **This is a real fix on paper — do not re-open the "switch
+firms" question unless the pattern resumes.**
+*Original line:* Confirmed by her in session: *"The email went out a few hours ago to the law firm. No reply yet."*
+⚠️ **The file had this dated 2026-09-29, a day ahead of reality; corrected this session on her word.**
+▶ **NEXT SESSION: ask whether Indie Law replied, and to what.** A written, specific reply (the Member-
+listing correction actually filed, a real explanation, consistently signed updates) is a real fix.
+Another vague or unsigned reply, or silence, is the same pattern continuing — at that point it is worth
+revisiting the "switch firms" question plainly with her. **Full five-error detail is in BUSINESS & LEGAL.**
+
+### ⏳⏳ THE ONE GENUINELY TIME-SENSITIVE THING ON THIS WHOLE PAGE — **OCTOBER 1**
+The Florida business tax year turns over **Oct 1**, and nothing else on this board has a hard date.
+1. ✅ **SENT 2026-09-29 by email to btpc@octaxcol.com** (closure effective Sept 29, 2026, business tax ID 0598950; she Bcc'd herself). **Sept 29, 2026 is the date her accountant needs.** ✅✅ **DONE 2026-09-30: she called the Tax Collector, who asked for their Notice of Business Closure form; she filled it in (out-of-business date 9.29.26, BTR 0598950, Closed Business, Owner) and emailed it to btpc@octaxcol.com.** ✅ **CITY LIMITS CONFIRMED 2026-09-30: the Orange County Property Appraiser record for 1559 Harston Ave says Municipality: ORLANDO — so she needs BOTH a City of Orlando and an Orange County receipt for Style Star LLC, plus likely the city's Home Occupation Application ($50).** 🚨 **SHE HAS ALSO BEEN PAYING A CITY OF ORLANDO BUSINESS TAX RECEIPT FOR YOUR FASHION FRIEND ALL ALONG (her words 2026-09-30) — that one must be closed SEPARATELY with the city; do NOT pay its renewal either. Procedure FOUND 2026-09-30 on orlando.gov: email businesstax@orlando.gov, subject "CLOSE BTR", with the BUS receipt number + business name (or the city's closure form).** ✅ **YFF CITY CLOSURE EMAIL SENT 2026-09-30** (BUS-0004264/COU-1051980). ▶ **Home Occupation form (read 2026-09-30): needs site address, total home sq ft, office sq ft (≤25% of a floor, ≤500 sq ft), trips/day, employees, a description of the business, a hand FLOOR-PLAN SKETCH with room dimensions and the office marked, HOA check, signature; notarized letter only if not the owner; $50; send both applications + Sunbiz proof to businesstax@orlando.gov.** ▶ **Her YFF city numbers (from the 2026-27 renewal invoice): BUS-0004264 · COU-1051980; invoice $225.52 BTR + $15 COU, due Oct 1 — DO NOT PAY, closing instead.** ▶ **Style Star city BTR: apply online via OpenCounter (orlando.opencounter.com/permits/business-tax-receipt) with Sunbiz + EIN, PLUS the Home Occupation Application ($50; notarized owner letter only if renting). City rule: a business starting on/after Aug 1 pays next year's fee, so no double-pay. County BTR is separate (octaxcol.com).** ▶ Next on this line: the City of Orlando call (407-246-2204) and Style Star LLC's own county + city receipts; then Sunbiz fictitious-name cancellation CR4E001 §4 by ~Oct 29. *Original instruction:* 🚨 **DO NOT PAY the Your Fashion Friend renewal notice.** Write *"NO LONGER IN BUSINESS…"* on it with
+   the business name, receipt number, effective date and signature → mail to **Tax Department, P.O. Box
+   545100, Orlando, FL 32854**, or email the Notice of Business Closure form to **btpc@octaxcol.com**.
+   **By mail or email, NOT in person** — the in-person rule is for CHANGES, not closures.
+2. ▶ **Call 407-246-2204** and ask three things: am I inside Orlando city limits · do I need the Home
+   Occupation Application (one-time $50) · **should I apply for Style Star LLC's own receipt before or
+   after Oct 1** so she does not pay twice.
+
+### 🛒 AMAZON CREATORS API — THE RETEST IS DUE NOW
+She crossed **10 shipped items** on 2026-09-28 and the real live call that same day returned
+**`AssociateNotEligible`**. ⚠️ **That is consistent with "not yet reviewed", not "no"** — Amazon's own FAQ
+allows up to 48 hours after crossing the bar. ▶▶ **THE RETEST IS JUST RE-RUNNING THE SAME TWO CALLS
+(the credential is already known-good) AND IT IS DUE FROM 2026-09-29.** ▶ **It needs her Access Key ID /
+Secret Access Key again — nothing was stored.** 🚨 **RETESTED LIVE 2026-09-30 (token 200, valid call): STILL `AssociateNotEligible`, at 11 shipped / 28 ordered.** Most likely Amazon counts only sales that have cleared the return window, or uses its own trailing window, so the dashboard's "shipped" overstates it. ▶ **Next retest in about a week; needs her keys again, nothing stored.** 🎉🎉 **RETESTED 2026-10-02: ELIGIBLE. Token 200, getItems 200, real data back for three of her own /finds ASINs (title + a licensed 500×500 `images.primary.large` photo URL on m.media-amazon.com). THE AMAZON PHOTO GATE IS OPEN.** ⚠️ **Access must be KEPT: 10 qualifying sales in a trailing 30 days, or it lapses.** ▶ **NEXT: scope the Amazon-photos build WITH HER (where photos go, what a failed lookup shows, keys stored as Netlify env vars, never in the repo). BUILT SAME DAY, her go-ahead *"yes let's totally do this"*.** ✅ **AMAZON FINDS PHOTOS ARE BUILT AND ON `main` (2026-10-02):** `netlify/functions/amazon-images.js` (GET `?asins=` ≤10, OAuth token cached, CDN-cached 12h ONLY on a real 200, Amazon-hosted URLs only) + `findsPhotosLoad()` in `index.html` (runtime only, never in markup/CSV, batches of 10 top-first, browser memory 12h incl. "no photo", stops after one call if unconfigured) + `.dc-item-px.is-amz` (square, `contain` on white, tap = the card's own Shop button, so NO new outbound anchor and `affq` unchanged). `scratchpad/amzphotos.mjs` 20/20, proven to bite. **Live-measured: 66 of 73 pieces get a photo; 7 are `ItemNotAccessible` per Amazon (Woven Straw Sunglasses Case, Straw Tote, Quilted Belt Bag, Smocked Maxi Sundress, Flowy Maxi Dress, Arch Support Flip Flops, Lucky Espadrille Wedge) and stay text cards.** 🔑 ✅ **LIVE 2026-10-02: she added `AMAZON_CREATORS_ID` + `AMAZON_CREATORS_SECRET` in Netlify (secret marked secret, Functions scope, Production value) and redeployed; the live function returns real Amazon photo URLs and the CDN caches them 12h. Keys are in no file.** ✅✅ **AND THE SECOND PANEL IS BUILT, SAME DAY, her *"yes, let's add to the quiz results now too"*: `#resFindsGallery`, "From My Amazon Finds" / her own live line *"Mixing high and low is how I dress my clients."*, directly after "From My Edit", never merged (her truth-difference rule). 10 pieces, ONE PER CATEGORY in turn (her page leads with sunglasses), only pieces with an Amazon photo, Amazon's required sentence on it, "See all my Amazon Finds" → `openFinds()`. Both panels now share ONE card builder, `_resGalleryHtml()`, so there is still one outbound-link template (`affq` unchanged). `amzphotos.mjs` 29/29, the no-personalisation check proven to bite. ✅ **SAME DAY, HER *"make all of these buttons consistent"*: both panels' buttons are now the closing-pill design (278×77, 5px border box, 13px Jost 700, same 18px SVG arrow), coloured by where they GO — "See the full Edit" = white/flat silver/pink ring, "See all my Amazon Finds" = tan fill. Measured identical to the /finds closing pills. The small top Storefront pill on /finds was left smaller (her 2026-09-22 round-5 decision).** ⭐ **HER TEN PICKS FOR THAT PANEL, HER ORDER (2026-10-02), held in `RES_FINDS_PICKS` by ASIN: Jackie O sunglasses · Stretchy Stacking Bangles · Kitten Heel Mules · alice + olivia Dylan Satin Pants · Meg jeans · High Waist Wrap Midi Skirt · 3-Piece Luggage · Full Length Mirror · Travel Steamer · Organizer Hangers. Empty the list to fall back to one-per-category. ⭐ **AND HER TEN EDIT PICKS for "From My Edit", her order (2026-10-02), held in `RES_EDIT_PICKS` by product URL: Saint Laurent SL M136 sunglasses · Love Hearts Find Me necklace · Valentino Rockstud pouch · Stella McCartney Falabella bag · Veronica Beard Crosbie Jean · DVF Flag Scarf · Valentino VLOGO belt · Gucci GG mini bag · Open Heart Necklace · Roger Vivier Épine mules. ⚠️ Found and fixed doing it: `_wlEditItems()` read the Open Heart Necklace as photoless (its photo sits in an unclassed crop wrapper), so it now falls back to the item's first `<img>` — which also gives that piece a wishlist thumbnail.** ⚠️ She also confirmed: every Amazon button = the page tan `#ECBD83`; the Edit button = pink/silver frame (both already so).** ✅ **SAME DAY, TWO MORE OF HER CATCHES, LIVE: (1) the Saint Laurent glasses sat low in an empty frame — a `px2` stacked pair now renders as a stack on the results panel too (one shared `is-stack` rule, `amzphotos` 32/32, proven to bite); (2) she called the panel headings *"small and brownish"* and picked option 2 of three rendered: **large black DM Serif Display, mixed case, 28px, no gold side rules** (the Amazon title is too long to leave them room), scoped to the TWO shopping panels only — *Your Style Portrait/Signature* keep the small gold capitals; then she said *"I think for all the headings"*: **every heading on the portrait screen (`#s-res`) now uses it — Your Style Portrait, Your Style Signature and both shopping panels. One exception, size only: "Your Style Portrait" is 20px, because at 28px it sat directly above her name ("This is Catherine") in the same font and read as one headline said twice; told to her, hers to overrule. Analyze an Outfit's headings (`#s-photo-res`) are a different screen and were NOT changed.** ✅ **THEN, FROM HER PHONE SCREENSHOTS: "Your Style Star Card" joined them (same serif/black/28px); and with NO name saved the line under the heading used to repeat "Your style portrait" under "Your Style Portrait" — that line is now EMPTY and hidden when there is no name, and the heading takes full 28px again.** 🚨 **AND HER SHOP YOUR STYLE RULING, SAME DAY, FROM A SCREENSHOT OF "I chose a blazer dress… I couldn't find exactly what you asked for" WHEN SHE HAD ASKED FOR NOTHING: *"I would rather the shop your style search for a range of items based on her quiz. Not a specific item she didn't ask for and there is no need to say couldn't find."*** ▶ **BUILT AND LIVE: with nothing typed, the stylist picks NO single garment; `_ssMixFind` searches up to THREE of her own six picks (one per category, their own search terms, item only), `_findFetchMany` folds them into ONE row, quiet, no lead, no near-miss sentence. Typed asks are unchanged.** ⚠️ **Cost: up to 3 searches per default open instead of 1 (each cached 24h in her browser) — told to her; `_SS_MIX_MAX` is the one number to turn.** `ssfind` 98/99 (the 1 is the pre-existing UNSCORED-shop failure, reproduced on the old code), new checks proven to bite. ✅ **AND WHAT'S TRENDING / WARDROBE, SAME DAY, HER *"There should not be a second row"*: the merge already folded found cards into the one row, but the 5-8s WAIT (gold star + "Looking through all the shops…") showed as a big block UNDER the row. The wait is now a card-sized slot at the END of the same scroller (`.wdr-find-slot`), replaced by the cards when they land. `wdrmerge` 11/11, new check bites.** ✅ **THEN HER TWO FOLLOW-UPS, SAME DAY, BOTH ON WARDROBE AND TRENDING (one shared code path): (1) "+ See more ideas" REMOVED — it only appended more no-photo cards; "— refresh" at the top stays as the way to new ideas (and was added to the AI-failed fallback label, which had used See more as its retry). `_wdrMoreIdeas` left in place, unused. (2) PHOTOS FIRST: the waiting slot sits at the FRONT of the row and the found photo cards take its place; if she has already swiped, the card she is looking at is held still (anchored on the first card after the slot). ⚠️ The slot needs `min-width:0;max-width:150px;overflow:hidden` — a flex item's default min-width let the painted row widen it for one instant and broke the anchor. `wdrmerge` 14/14, photos-first / no-button / no-jump checks proven to bite.** 🛒🛒 **AMAZON SEARCH, HER *"yes definitely let's do all of this"* (2026-10-02), with THREE Amazon cards per row as her answer, and she will choose an Amazon piece for next week's Star of the Week herself. STEP 1 BUILT: `netlify/functions/amazon-search.js` (+ `lib/amazon-creators.js`), Creators API `searchItems` at `creatorsapi.amazon/catalog/v1/searchItems` (body: partnerTag, marketplace, keywords, searchIndex 'Fashion', itemCount ≤10, condition New, availability Available, minReviewsRating 4, maxPrice in CENTS; price at offersV2.listings[0].price.money.amount). LIVE BUT CALLED BY NOTHING IN THE APP. Tested on 12 of her real searches: 7-10 hits each, on-target, $6-$65, nearly all Amazon house/no-name brands (Sidefeel, Zeagoo, Ekouaer, GRACE KARIN, PRETTYGARDEN…); "silk" results are polyester satin; keyword-stuffed titles with sizes need tidying. ▶ NEXT: her quality call (as is / brand allowlist / price floor) before wiring into rows. ⚠️ `_pxLicensed` deliberately excludes Amazon — an Amazon Star of the Week piece needs its photo from the API at runtime.** ⭐ **BUILT AND LIVE SAME DAY: HER POINTED TOE MID CALF BOOTS ARE SUNDAY OCT 4's STAR, the first Amazon Star.** New `amz:` field on a `WEEK_STARS` entry = its ASIN; the photo comes from `amazon-images` at runtime via the same 12h browser cache as /finds (`_wkStarAmzLoad`), centred on white; the pool admits `px` OR `amz`; Amazon's required sentence appears in `.wks-disc` on both Star surfaces ONLY on an Amazon week (`_wksAmzDisc`). Inserted before the bracelet: every later date moved ONE week (bracelet Oct 11 … pashmina Dec 6, Zoe Lev Dec 13, Saint Laurent Jan 10), verified with the real `_weekStar()`. `scratchpad/bootstar.mjs` 10/10. ⚠️ If Amazon access lapses, the boots week shows a photoless card. 🛒 **AND STEP 2 BUILT AND LIVE SAME DAY, HER *"yes let's do all of this"*: Amazon cards in EVERY finder row (chat, Shop your Style, Wardrobe list, What's Trending — one `_findFetch`, one `_findBlockHtml`). `_findFetch` runs `_amzFetch` beside the finder and attaches `amazon` to a COPY of the answer, so Amazon data never enters the 24h browser cache (memory only, 12h). `_findBlockHtml` seats THREE (`_AMZ_PER_ROW`, her "3") at browse seats 2/5/8, never first; never-wear list applies; Google's own copies of Amazon listings drop out when Amazon's are present; names tidied by `_amzTidy` (anchored on the garment word, brand shown in the store line "Sidefeel · Amazon"). Shop your Style's range merges and caps at 3. `_AMZ_NEVER_BRANDS` is EMPTY — she has no brands to ban yet; add lower-case names when she does. A $25 price floor was TESTED and changed nothing about quality, so none is set. `scratchpad/amzrow.mjs` 10/10, proven to bite.** 🚨 **HER CATCH, SAME DAY: "nothing from Amazon showed up" on Shop your Style. Cause: the three cards were seated at 2/5/8 of the BROWSE stretch, which comes after every checked card — and the range can lead with up to 12 checked cards, so the first Amazon card sat ~15 swipes in. FIXED: seats 3/6/9 of the WHOLE row (`_seatAmz`). Proven against the LIVE amazon-search (`scratchpad/sslive.mjs`, real Amazon answers, cards at 3/6/9; fails on the old code).** 🚨 **AND HER NEXT CATCH, SAME DAY: "Anthropologie is showing duplicates". Google Shopping lists one piece several times (per colour/seller, same name). FIXED in `_findBlockHtml`: `_once` drops a repeat by store + name OR by photo, across exact, browse and Amazon cards, every surface; first copy wins. Her 2026-09-09 rule held: same STORE twice stays, same PIECE twice goes (`amzrow` 11/11, the new check bites). ⚠️ A piece in two colours with the same name now shows once.** 🚨 **HER SCREENSHOTS AN HOUR LATER: still duplicates — the copies differed only by a SIZE in the name ("Varley shorts… Size: XL at Anthropologie" / "Size: XXS"; Vans "M9/W10.5" / "M5.5/W7"), which also broke her never-name-her-size rule on the card itself. FIXED in `_feedName` (mid-title "Size: X", shoe "M9/W10.5", trailing "at <store>"), and `_once` now keys on `_feedName`'s output. `feedname` 14/14, `amzrow` 11/11 with her real titles, bites.** ✅ **Also fixed: Amazon gets only the garment part of a row's name ("Tops in your favorite colors" → "Tops"), and colour/trend rows name cards after the garment (`scratchpad/wdrlive.mjs`, live).** ⚠️ `trending.js` reports 17 failures on BOTH old and new code (stale "all 15 cards" counts), pre-existing, not fixed. ⚠️ `scratchpad/fromedit.mjs` cannot run in a new session: it reads `urls.txt` from an OLD session's scratchpad path — repoint it when next touched.** **If it passes, that is the trigger to scope the Amazon-
+photos build with her, which in turn unblocks open question 2 above.** Full technical detail (OAuth2, not
+SigV4; endpoints; the camelCase resource enum) is in the AMAZON section — it never has to be re-derived.
+
+### 🎨 OPEN THREAD, UNCHANGED THIS SESSION: FIVERR INSTAGRAM CONTENT — ONE REVISION ROUND SENT
+A single consolidated, code-verified brief (real fonts, real gold-gradient/teal/pink values, both real
+logo file URLs, a concrete photography direction) was sent to Fiverr 2026-09-15 after their first round
+came back off-brand. 🚨 **2026-09-30: THE REVISED ROUND CAME BACK AND IS ALSO UNUSABLE — her words: *"the stuff they came up with is so bad. I cannot post it."*** Two rounds off-brand despite a code-verified brief. 📄 **2026-10-01: the deliverable is in her Drive — "_style_star.app Instagram content and visual strategy (2).pdf" (32 MB, by MK600MK; 6 posts are on p.15 and in a Canva link). Its TEXT was read: the strategy and voice are good (warm, no negative hooks, Catherine's 20 years up front, fonts DM Serif Display + Lora correct). The PALETTE is wrong: no pink #EC4899, no teal #0FA6B6, an invented "Sky Blue", a muted gold #D8B945 instead of her bright #FFD500, and "avoid heavy use of stars" for a brand whose mark IS a star. ✅ **IMAGES SEEN same day (she shared the link): 6 posts (Ask your stylist · Star of the Week Crosbie Jean · Discover your style · A stylist in your pocket · "Analize" your outfit · You don't follow the rules) + 18 highlight covers. Polished but generic beige minimalism, not Style Star's look; TWO SPELLING ERRORS — "Analize" (post 5 headline) and "quizz" on every style-quiz highlight cover.** ✅✅ **2026-10-01/02: she sent Fiverr a final message asking ONLY to fix the two spellings, then she is done with them. Claude built 6 replacement posts in her own brand (1080×1350, DM Serif Display/Jost/Lora/Dancing Script, flat silver frames, pink/teal rings, bright #FFD500 star, logo): Ask your stylist · Star of the Week (DVF Jeanne, her own note) · What's your Style Star? quiz sliders · A stylist in your pocket (signed Catherine) · Analyze your outfit · "You don't follow the rules of style. You quietly write your own." Reused Fiverr's best LINES, not its visuals. Files were sent to her in-session (not committed to the repo); the source HTML can be rebuilt the same way.** ✅ **2026-10-02: she POSTED "A stylist in your pocket" to Instagram, her first post from this set. The other five are still unposted.** ▶ **Get the specifics (screenshots) before advising; options are one more tightly-scoped revision, a refund/dispute through Fiverr's own resolution centre, or dropping Fiverr and building posts from her existing templates artifact.**
+
+### 🎨🎨 PINTEREST — LIVE OPERATIONAL STATUS, NEVER ARCHIVES, UNCHANGED THIS SESSION
+✅✅ **Business account live** (`StyleStarbyCatherine`, Content creator type), domain `stylestar.app`
+claimed and verified, profile photo a corrected filled-star mark (not committed to the repo — rebuild
+from `logo-tight.png` + the real star polygon in `index.html` if it's ever needed again). ✅✅ **HER FIRST
+PIN IS LIVE** — board **"Personal Style"**. Design canvas:
+https://claude.ai/artifact/WXN4HwP4PaH2SFssKGpVaS — export at 2000×3000 (2x), her settled call.
+▶ **NEXT: ask whether she wants a second pin (another quiz spectrum, a Style Portrait teaser, an Amazon
+Finds piece) — don't re-explain Pinterest mechanics she has now already done herself.**
+⭐ **A related, still-parked thread:** five on-brand Instagram templates —
+https://claude.ai/artifact/CW7xEo5a1aLm5bf3n8hWYb. She said *"I see the idea there"* and moved to
+Pinterest first. ▶ **ASK: has she looked at the templates again?**
+
+### 🤔 TWO THINGS STILL WORTH CONFIRMING WITH HER — FLAGGED 2026-09-22, STILL NOT ASKED
+Both live under the Amazon Storefront + Pinterest thread in the money-path section:
+1. **The required Associates disclosure sentence** on the Storefront bio AND on every pin description —
+   has she added it?
+2. **Cross-linking the bios** (Pinterest bio → Storefront, Instagram bio → Storefront) — and separately:
+   does a pin made through Storefront's own share-to-Pinterest tool already carry the Storefront as its
+   destination? (Ask her to tap "Visit site" on one of her pins.)
+
+### 🚨 OPEN THREAD, UNCHANGED THIS SESSION: THE HEATHER / $8,900 DRESS QUESTION
+🚨 **A REAL USER (HEATHER, A FRIEND) REPORTED AN $8,900 DRESS RECOMMENDATION AND ASKED IF THE DECIMAL WAS
+WRONG.** ⚠️ **STILL UNCONFIRMED — Heather gave no further detail**, and Cath said so plainly. Most likely
+sharpens an ALREADY-TRACKED gap: `verifyPrice`/`max_price` only constrains price when SHE states a
+figure — an ordinary ask with no stated budget still has no ceiling at all. Three options named, none
+decided, none to be started without her:
+1. A default price ceiling even when nobody states a budget.
+2. An honest "why is this shown" / outlier label on a price far outside the norm, rather than hiding it.
+3. Leave it as the accepted cost of full luxury-store browsing.
+▶ **IF MORE DETAIL FROM HEATHER EVER SURFACES, chase that before building anything.**
+⚠️ **RELATED AND NEWLY VISIBLE THIS SESSION: the new results panel's ten pieces run $198–$1,100, median
+about $319** — that is a brand-new woman's first screen of clothes, and it is steep. **Not a bug and not
+her curation: all ten earning shops are luxury.** ▶ **The real fix is the Amazon photos unlock above,
+which would let that screen run genuine high/low. Flagged to her, not started.**
+
+### ⭐⭐⭐ HER THREE NAMED PRIORITIES, STILL UNSEQUENCED
+Her own words: *"I still want to work on fixing the searches... I want to get more traffic and more
+affiliates."* ▶▶ **SHE ASKED TO PAUSE AND ORGANIZE HER OWN THOUGHTS — do not launch into any of the
+three unprompted.** A plain status recap of each is ready the moment she wants it: **searches** — the
+Heather thread plus the standing quality-gate threads; **traffic** — Pinterest, the Instagram Storefront
+post, the stalled Fiverr thread, **and now the Plausible dashboard that has been collecting all along**;
+**affiliates** — the CJ/AWIN pending queues and the Creators API retest, all in the money-path section.
+
+### ▶ EVERYTHING ELSE STILL OPEN, BY SECTION (nothing invented — each already has a home in the master
+to-do list or the standing reference; this is the checklist she asked for so a session can start from it)
+- **Business/legal:** close the sole proprietorship (three parts — loose-ends check, county tax receipt
+  closure by mail/email, Sunbiz fictitious-name cancellation); Style Star LLC's own Orlando business tax
+  receipt before/after Oct 1; tell her accountant the sole-prop cutover date; the Indie Law reply.
+- **Money path:** watch the CJ pending queue (Belk/Macy's/TJ Maxx/Marshalls/Talbots/Lands' End) and the
+  AWIN batch (13 applications) — re-check dashboards in a week or two, not every session; the Creators
+  API retest; apply to the 41 catalogue-publishing brands as CJ/AWIN approvals allow.
+- **App:** the Edit CSV importer (new, above); a second Amazon panel on the results screen once photos
+  exist (new, above); whether to raise `RES_EDIT_MAX` past 10 (new, hers); the SerpApi spend cap (warn,
+  never block — her stance, not to be re-litigated); the flaky `curated.js` never-wear check (needs an
+  isolated test context, never a loosened assertion); draft the twelve Rakuten merchant entries with
+  `store-draft.js` when there is a batch to show her.
+- **Content:** **the fall Edit batch (her active ask, above)**; more What's Trending items whenever she
+  has them — always her curation, never Claude's pick.
+- **Homework only she can do:** Homework 4 (spot-verify Talbots/Kendra Scott/SKIMS/etc. via the
+  address-bar trick) and Homework 6 (the real quality gate — tap through 10-15 shop searches and say
+  where they land wrong) are both still open and still the highest-value things she can do herself.
+- **Small decisions only she can make:** the taxonomy gaps (mini skirts, jumpsuits/rompers, gloves,
+  clogs, wellingtons, bags named only "Bag") and the four confessed defaults (Sandal→Flat sandals,
+  Boot→Ankle boots, Hat→Sun hats, Skirt→Flowy skirt) — confirm or change whenever she wants.
+▶ **NOTHING HERE IS URGENT EXCEPT THE OCT 1 CUTOVER AND THE CREATORS API RETEST.**
+
+
+---
+
 ## ▶▶▶ WHERE WE LEFT OFF — 2026-09-18 (seventeenth session). ARCHIVED.
 🚨 **THIS BLOCK IS THE CURRENT TRUTH. Everything below it is standing reference — if a line further
 down contradicts this one, THIS ONE WINS.**
