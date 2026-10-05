@@ -652,8 +652,10 @@ under "ARCHIVED 2026-10-03". Nothing deleted.** Every open thread in it is carri
 design ruling in it is lifted into "SESSION-19/20 DESIGN RULINGS" below and/or the rule ledger.
 
 ### ⭐ WHERE TO START — ASK, DO NOT LAUNCH
-1. **Indie Law refund** — Rose escalated her refund-not-credit ask 2026-10-02. **Ask whether it was approved.**
-   If ~a week passes with nothing, one polite nudge.
+1. ✅ **Indie Law refund — APPROVED 2026-10-05, SHE WON THE FULL ASK.** Rose: *"our management team has
+   approved the $500 refund to your original payment method"*, 5-10 business days. ⚠️ **NOT YET LANDED —
+   watch for it by ~Oct 19; if nothing by then, one polite nudge.** She replied the same day thanking them
+   and asking who her named point of contact is for the trademark final action steps.
 2. **City of Orlando paperwork** — Style Star LLC's own city BTR (OpenCounter) + Home Occupation Application
    ($50, floor-plan sketch) + its own county BTR. Then Sunbiz fictitious-name cancellation **CR4E001 §4 by
    ~Oct 29**.
@@ -754,15 +756,28 @@ stacked photo (the Saint Laurent glasses) renders as a stack on the results pane
 - **Indie Law:** reply from **Rose Martha Delos Angeles, Client Care Officer** granted all four asks; Sunbiz
   VERIFIED by her 2026-09-30 — Registered Agent AND Authorized Person both "ELLSPERMANN, CATHERINE BAILEY".
   The original 07/27 Articles PDF still says "BAIL" and always will (filed images are never edited; not an
-  error). She replied 2026-09-30 asking for the **$500 as a REFUND, not a credit**; Rose escalated 10-02,
-  **no decision yet.** ⚠️ Do NOT write "the third change" to them — stick to dated facts. Do not re-open
-  "switch firms" unless the pattern resumes. **Total paid to date $6,229.** Full five-error history is in
-  BUSINESS & LEGAL above.
+  error). She replied 2026-09-30 asking for the **$500 as a REFUND, not a credit**; Rose escalated 10-02.
+  ✅✅ **APPROVED 2026-10-05 — ALL FOUR OF HER ASKS ARE NOW GRANTED, INCLUDING THE REFUND IN THE FORM SHE
+  ASKED FOR.** Rose's words: *"our management team has approved the $500 refund to your original payment
+  method"*, 5-10 business days. ⚠️ **MONEY NOT RECEIVED YET — confirm it lands by ~Oct 19, then say so.**
+  ⚠️ **THE SIGNATURE WAS "Rose / Indie Client Care Team" FROM `clients@indielaw.com`, NOT A FULL NAME FROM A
+  NAMED ADDRESS** — better than the unsigned 2026-08-25 email that started this, but not quite the "named,
+  signed updates" she was promised. **DELIBERATELY NOT RAISED AS A COMPLAINT** on a good-news email;
+  instead her reply asks who her point of contact is for the trademark final action steps, which produces a
+  named person as a FORWARD question rather than a backward grievance. ▶ **The relationship is repaired as
+  of this date. Treat it as such.** ⚠️ Do NOT write "the third change" to them — stick to dated facts. Do
+  not re-open "switch firms" unless the pattern resumes. **Total paid to date $6,229** (a $500 refund is
+  pending against it). Full five-error history is in BUSINESS & LEGAL above.
 - **Annual report** (first one, adds her EIN to Sunbiz): **Jan 1 – May 1, 2027, $400 late fee.** Any other
   "annual report" solicitation is the scam wave.
 - **Your Fashion Friend closure:** county closure email SENT 2026-09-29 + Notice of Business Closure form
   sent 2026-09-30 (out-of-business **Sept 29, 2026** — the date her accountant needs; BTR 0598950). City
   closure email SENT 2026-09-30 (BUS-0004264 / COU-1051980) — **do NOT pay the $225.52 + $15 city renewal.**
+  ✅✅ **THE CITY IS CONFIRMED CLOSED, 2026-10-05** — written confirmation from **Lanre Onagoruwa, Business
+  Tax Team, City of Orlando Economic Development**: *"The case has been closed."* Keep that email.
+  🚨 **THE COUNTY HAS NEVER CONFIRMED.** City and county are SEPARATE receipts; only the city has answered.
+  ▶ **She should chase a written county confirmation for BTR 0598950** (btpc@octaxcol.com / 407-434-0312) —
+  an unconfirmed county closure can still generate a renewal bill or a delinquency notice.
   1559 Harston Ave is **inside Orlando city limits** (Property Appraiser: Municipality ORLANDO).
 - **Still to do:** Style Star LLC city BTR via OpenCounter (orlando.opencounter.com/permits/business-tax-
   receipt, Sunbiz + EIN) + Home Occupation Application ($50; site address, home sq ft, office sq ft ≤25% of a
