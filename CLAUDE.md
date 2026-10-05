@@ -661,6 +661,11 @@ design ruling in it is lifted into "SESSION-19/20 DESIGN RULINGS" below and/or t
    ~Oct 29**.
 3. **Her fall Edit batch** — her own active ask, the highest-value thing she brings.
 4. **What she sees on the live finder rows now that Amazon cards are in** — her eye is the quality gate.
+5. **ShopMy** — see its own section below. Two concrete next moves: the referral sign-up, and the
+   partnerships email about in-app use, **which Claude owes her and has not written yet.**
+6. ⚠️ **ARCHIVING IS OWED.** The 2026-10-03 block below was NOT archived on 10-05; this session's notes
+   were written into the live sections instead, while she was mid-work. ▶ **Do the verbatim-archive pass
+   at the START of a session, per this file's own rule, not at the end of one.**
 
 ### 🛒🛒 WHAT WAS BUILT THIS SESSION AND THE ONE BEFORE (2026-10-02 → 10-03), ALL LIVE
 **AMAZON — THE PHOTO GATE OPENED 2026-10-02 (retest: ELIGIBLE).** ⚠️ **Access must be KEPT: 10 qualifying
@@ -801,6 +806,72 @@ stacked photo (the Saint Laurent glasses) renders as a stack on the results pane
 - **Pinterest:** business account `StyleStarbyCatherine` live, first pin on "Personal Style"; canvas
   https://claude.ai/artifact/WXN4HwP4PaH2SFssKGpVaS (export 2000×3000). Instagram templates parked:
   https://claude.ai/artifact/CW7xEo5a1aLm5bf3n8hWYb.
+
+### 🛍️🛍️ SHOPMY + INSTAGRAM — HER LOOSE ENDS FROM 2026-10-05, SAVED AT HER ASK
+▶ **Her words: *"Everything you mentioned above I definitely want to get to…please save all those loose
+ends to revisit."*** ⚠️ **NONE OF THIS IS STARTED. It is hers to execute; Claude drafts.**
+**SHOPMY — the first lever that may get round her traffic ceiling.** Checked live 2026-10-05, not recalled.
+Curated application (`shopmy.us/apply`, 3-5 business days), **no stated follower minimum** — they review a
+public social presence that consistently features products. **47,000+ brands at 10-30%, including
+Nordstrom, Anthropologie and Revolve** — Nordstrom being the one store still blocking her Edit, and one
+that declined her via Impact for TRAFFIC. ▶ **That is the whole argument: ShopMy gates on taste and
+content, not audience size.**
+- ⭐ **A REFERRAL LINK SKIPS THE APPLICATION QUEUE ENTIRELY** — which sidesteps the exact weakness she
+  named (*"right now my instagram is not reading as product recs other than when i post star of the
+  week"*). She has seen creators give these out on YouTube. ⚠️ **THE REFERRER EARNS 10% OF HER
+  COMMISSIONS AND BRAND-COLLAB EARNINGS FOR HER FIRST 6 MONTHS.** Third-party write-ups say ShopMy pays
+  that, not her (*"no additional cost… not from a separate fee charged to you"*) — **NOT CONFIRMED IN
+  SHOPMY'S OWN WORDS; she should ask them directly before clicking.** ▶ Suggested she look for a stylist
+  peer already on it rather than a stranger: same cost either way, and the relationship is worth more.
+- 🚨 **IN-APP SHOPMY LINKS ARE A PARTNER CONVERSATION, NEVER A QUIET BUILD.** Their ToS **§14** needs
+  explicit written consent to develop "software, applications, or browser extensions that interact with"
+  their services; **§8** bars routing their tracking/attribution through "APIs, software tools." And
+  their developer docs say the API is **for brands only** (*"at this time there is no API Key for
+  Creators"*), with a separate OAuth path marked *"for external partners"*, access *"not yet publicly
+  available"*. ▶▶ **So Style Star would have to ask to be a partner. Claude offered to draft that email
+  (what Style Star is, the integration, her real 6-8% conversion); SHE SAID YES AND IT IS NOT WRITTEN
+  YET.** ⚠️ Do not write a line of ShopMy integration code before they answer.
+- ✅ **HER OWN ANSWER ON SCOPE, 2026-10-05: she wants BOTH** — *"I think a storefront would be good to
+  have, but also using inside the app would be good too if that is possible."* ▶ **Order: referral
+  sign-up → build the ShopMy shop (unblocked) → Instagram toward product recs → the partner email.**
+- ⚠️ **KEEP HER DIRECT RELATIONSHIPS DIRECT.** ShopMy layers on top of Rakuten/Impact/CJ for part of its
+  catalogue, so for her nine already-earning shops it is only a middleman. **ShopMy is for brands she
+  CANNOT get directly.** 🚨 **AND AMAZON STAYS AMAZON** — her Creators API photo access needs 10
+  qualifying sales in a trailing 30 days, and 66 of 73 `/finds` photos depend on it.
+**INSTAGRAM — THE DIAGNOSIS, AND IT MAY BE THE WHOLE EXPLANATION.** She posts Star of the Week **as a
+STORY**, which is gone in 24 hours. ▶▶ **So her profile shows no product recommendations the next day —
+which is exactly what ShopMy reviews, and exactly the gap she named.** Three fixes, all small, none done:
+**(a)** save Stories to a **Highlight** (*Star of the Week*, *Shop My Amazon*) so they stop evaporating;
+**(b)** put Star of the Week in the **FEED** as well as the Story — the photo and the words already
+exist, and it is 52 permanent product recommendations a year; **(c)** the **Storefront link in her bio**.
+⚠️ **FTC disclosure belongs in the caption, near the START** — her app carries it on eleven screens and
+Instagram is the one place the habit is not built. ShopMy's §12 will want the same.
+▶ **A FEED-POST CAPTION FOR THE BOOTS IS WRITTEN AND SHE APPROVED IT** (*"I like that a lot as a post.
+The words you wrote are great"*) — long and short versions, built on her own note (*"I have them in brown,
+black and red"*, which is the most persuasive line on the card). **Not yet posted.** ⚠️ `#styleoverfifty`
+was deliberately LEFT OUT and flagged to her: it performs, but it cuts against her own *"literally any
+woman, 18 to 80+"*. Her call, not swept.
+▶ **HER STOREFRONT STORY GRAPHIC went through two rounds and is good** (dressing-room backdrop, the phone
+enlarged until it reads as clothes rather than UI — she solved the "interface is chrome" objection by
+SCALING UP rather than removing, and it worked). 🚨 **THE ONE THING STILL TO FIX: the gold "SHOP MY
+AMAZON" on it is a DRAWN button, not tappable.** Delete it, leave the space, drop Instagram's real link
+sticker there (`https://www.amazon.com/shop/stylestar01?tag=stylestar01-20`, sticker text SHOP MY AMAZON).
+⚠️ **One link sticker per slide** — two slides for two links.
+**✅ DECIDED 2026-10-05, DO NOT RE-OPEN: `/finds` ITEM LINKS KEEP POINTING AT THE ITEM.** She asked
+whether every Amazon Finds card should land on the Storefront instead, so a woman sees everything.
+▶ **No, on three grounds: it would put a price and a photo on a card that lands on a BROWSE page (her own
+2026-09-06 "generic store search dressed as a find" ban); it would spend her 8.07% conversion, which is
+high precisely because the click lands on the thing she just chose; and lengthening the path to purchase
+risks the 10-sales-in-30-days Amazon photo access she only got on 10-02.** ⚠️ **The browse surface
+already exists — `/finds` IS it (73 pieces, 10 categories, search, pill nav), and the tan Storefront pill
+is already on it twice, top and bottom.** ▶ **Her instinct was right about the GAP, wrong about the
+place: the woman with nowhere to go is the one who sees a boots POST and does not want boots. That is an
+Instagram caption fix, not a code change.**
+⚠️ **AND THE CATEGORY-CROSSLINK IDEA IS ANSWERED AND CLOSED: her Storefront's main list is 67 items
+against `/finds`'s 73** (read off her own screenshot) — near-duplicates, so per-category links would send
+a woman in a circle. ▶ **The clean split, which she is already doing instinctively: the STOREFRONT is
+where Instagram traffic lands, `/finds` is where app traffic lands. One curation, two front doors, no
+second catalogue to feed.**
 
 ### 🚨 STILL OPEN, CARRIED FORWARD
 - **Heather / $8,900 dress** — unconfirmed; no default ceiling for an UNSTATED price. Three options (default
@@ -1554,6 +1625,22 @@ invention — the Garnet Hill lesson was about inventing SILENTLY.**
   as a FILL. 2026-09-29: `.dream-mirror`'s gradient reads as a mirror at a 13px PAGE FRAME and as a smear
   at a 5px BUTTON EDGE. ▶ **"It is already in the app" is not a reason a treatment will survive a change of
   scale.** Contrast maths catches neither; **render it at the size it will really be, and look.**
+- 🚨🚨 **A PHONE-FIRST APP STILL HAS TO BE LOOKED AT ON A LAPTOP — HER CATCH 2026-10-05, AND THE FAULT
+  HAD BEEN LIVE ON EVERY DESKTOP SINCE THE PILLS SHIPPED.** Both curated pages' closing invitation
+  (`.dc-xlink`) is HER SENTENCE with the pill as a `<span>` inside the same box. The base rule sets
+  `.dc-xlink>span{display:block}` for exactly this reason — but the two later pill rules each set
+  `display:inline-block` to get a width and padding on the span, silently undoing it. **An inline-block
+  pill is part of her sentence's text flow**, so as soon as the column is wide enough to hold the last
+  word beside a 284px pill, it sits there: she photographed *"clients."* stranded to the LEFT of the
+  button, with the button shoved 22px off centre by it. ▶ **MEASURED AT THE REAL COLUMN WIDTHS: 278px
+  and 318px clean; 388px and every width above broken — and the column caps at 392px.** So it was wrong
+  on EVERY laptop and right on every phone, by a margin of about 70px. ✅ **FIXED: `display:block` on
+  both `.dc-xlink>span` rules** (`block`, never `flex` — the arrow is an inline SVG welded by `.nb` and
+  centred with `vertical-align:middle`, and flex would turn her copy into flex items and break its
+  wrapping). `storefrontlink` 22/22, `findspage` 113/113, both re-rendered and looked at at 1280px.
+  ⚠️ **EVERY RENDER HARNESS IN THIS REPO SHOOTS AT PHONE WIDTH.** That is why no check caught it and why
+  it took her laptop. ▶ **When a layout rule is about how two things MEET — text and a button, a caption
+  and an image — render it at the WIDEST column the app allows, not just the narrowest.**
 - ⚠️ **MEASURE TO FIND CANDIDATES, LOOK TO DECIDE.** A crop detector once accused her FARM Rio fix of
   being broken; rendering all ten Star photos and looking disproved it — **it was measuring a grey
   studio backdrop as though it were the dress.** ▶ **Reporting that number to her unchecked would have

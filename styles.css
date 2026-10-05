@@ -2321,6 +2321,25 @@ body.menu-open .menu-panel{display:block}
    ⚠️ NEVER render this tan as a border, an outline or text. */
 #s-dream .dc-xlink>span{
   display:inline-block;background:#ECBD83;border-color:#ECBD83;color:#4a463e}
+/* 🚨🚨 THE INVITATION PILL IS BLOCK-LEVEL, NEVER `inline-block` -- HER CATCH ON A
+   LAPTOP, 2026-10-05, AND IT HAD BEEN LIVE SINCE THE PILLS SHIPPED.
+   ▶ The two rules above each set `inline-block` to get a width and padding onto
+   the span, and that silently undid the `display:block` the BASE rule (.dc-xlink>
+   span, ~line 308) sets for exactly this reason. An inline-block pill is part of
+   HER SENTENCE's text flow, so the moment the column is wide enough to hold the
+   last word beside a 284px pill, it sits there: she saw "clients." stranded to
+   the LEFT of the button, and the button shoved 22px off centre by it.
+   ⚠️ IT COULD NEVER BE SEEN ON A PHONE. Measured at the real column widths:
+   278px and 318px are clean, 388px and every width above are broken -- and the
+   column caps at 392px, so it was wrong on EVERY laptop and right on every phone.
+   ▶ THE LESSON, AND IT IS THIS FILE'S OWN: a phone-first app still needs looking
+   at on a laptop. Nothing was wrong with the pill; the fault only existed at a
+   width nobody had rendered.
+   ⚠️ `block`, NOT `flex`: the arrow is an inline SVG welded by `.nb` and centred
+   with `vertical-align:middle`, and flex would make the text node and the weld
+   into flex items and break her copy's own wrapping. Block keeps the inside
+   exactly as it is and only changes how the pill meets the sentence. */
+#s-dream .dc-xlink>span,#s-finds .dc-xlink>span{display:block}
 /* the Storefront pill paints its own border tan for the same reason */
 #s-finds .dc-store-btn.is-bottom{border-color:#ECBD83}
 /* ⚠️ THE INVITATION'S PARENT CARRIES PADDING ON ALL FOUR SIDES, and two of those
