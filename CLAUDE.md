@@ -683,6 +683,19 @@ nothing half-finished, nothing unpushed, working tree clean.**
   to feature… case by case."* ⚠️ **Her sentence about AMAZON was cut off mid-thought ("they usually have
   something that will fit every single trend, but i dn…") — ask her to finish it before deciding Amazon's
   share.** ⚠️ Store photo URLs (hotlinks) only, never copies of retailers' images on our server.
+  ✅ **HER AMAZON ANSWER: *"I don't want Style Star to be like a totally Amazon thing… let's give it 2-3 seats for
+  now and once we look at how it all looks maybe we pull back on it."*** ▶ **BUILT AS:** `scripts/trend-photos.js`
+  + `.github/workflows/trend-photos.yml` (Mondays 12:00 UTC + on demand) → `data/trend-photos.json` → the page's
+  `_trendStrips()` renders one quiet `_findBlockHtml` row per card. Finder `lean:true` = 1 search, 0 look-ups.
+  Amazon fetched LIVE per card as it scrolls into view (Amazon's data-retention terms), its usual 3 seats.
+  Prices DROPPED from the weekly cards (a week-old price can be dearer). ⚠️ **THE PAGE CODE IS ON THE WORKING
+  BRANCH ONLY, NOT LIVE — she has not seen the mock-up yet.**
+  🚨🚨 **SERPAPI PARTIAL OUTAGE 2026-10-06 (from 15:51 UTC, their status page).** The first job run got 504s on
+  22 of 23 trends, spent **41 searches** (budget 228 → 187) and — a save bug, now fixed — wrote nothing. The job
+  now stops after 3 failures in a row. ⚠️ **OPEN, AND IT MATTERS MORE THAN THE TRENDS: during the outage the
+  LIVE finder 504'd outright (~26s+), losing even her FREE feed results, rather than returning the feed with
+  Google marked failed.** Root cause not proven (the per-call ceilings should cap it near 13s). **Do not rerun
+  the job until SerpApi is green.**
 ▶ **NOTHING HERE HAS A HARD DATE EXCEPT CR4E001 (~Oct 29).**
 
 ## ▶▶▶ WHERE WE LEFT OFF — 2026-10-03 (twentieth session).
