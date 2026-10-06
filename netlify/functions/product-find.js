@@ -251,6 +251,11 @@ function cleanReq(body) {
      must not become a max_price that quietly asks Google for everything). */
   const p = Math.floor(Number(body.price));
   if (Number.isFinite(p) && p > 0 && p <= 20000) out.price = p;
+  /* ⭐ LEAN, 2026-10-06 — the weekly What's Trending photo run ONLY
+     (scripts/trend-photos.js). ONE search, ZERO look-ups: it wants a row of
+     photos to browse, never a tick, so it never pays for checking. 23 trends a
+     week ≈ 100 searches a month instead of ~800. The app itself never sends it. */
+  if (body.lean === true) out.lean = 1;
   return out.item ? out : null;
 }
 
@@ -538,7 +543,7 @@ export default async (req) => {
        the search is going to take anyway. Same reasoning as the chat's marker
        going first — run the two together, wait for the longer, not the sum. */
     const feedP = feedBrowse(request);
-    const queries = buildQueries(request).slice(0, MAX_QUERIES);
+    const queries = buildQueries(request).slice(0, request.lean ? 1 : MAX_QUERIES);
     /* ▶ Fired all at once as before; the difference is that we no longer wait
        for the slowest. SOFT_SEARCH_MS is the point at which a pool that already
        holds results is good enough — one Google Shopping search returns ~40
@@ -721,7 +726,7 @@ export default async (req) => {
     /* ⚠️ 4500 -> 3500. A look-up only earns a TICK; the card, its photo, its
        price and its shop are already in hand. Cheapest second to save. */
     const SOFT_LOOKUP_MS = 3500;
-    const looked = await settledBy(mine.slice(0, MAX_VERIFY).map(c =>
+    const looked = await settledBy(mine.slice(0, request.lean ? 0 : MAX_VERIFY).map(c =>
       c.raw.serpapi_immersive_product_api
         ? get(c.raw.serpapi_immersive_product_api + '&api_key=' + KEY, LOOKUP_MS)
             .then(d => ({c, d})).catch(() => null)
