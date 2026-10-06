@@ -2447,9 +2447,12 @@ svg.dc-xl-arr{width:18px;height:18px;display:inline-block;vertical-align:middle;
    rule), so the lead AND the closing line both wear it. */
 /* Her own photo (2026-10-06), at home, not an AI backdrop — on the page that
    says "I read every message myself", the face has to be real. Same silver
-   1px frame as the two email cards beneath it, so it belongs to the page. */
-.cc-px{display:block;width:100%;height:auto;max-width:260px;aspect-ratio:3/4;object-fit:cover;object-position:top center;
-  margin:14px auto 18px;border:1px solid #9AA0A6;background:#F5EFE2}
+   1px frame as the two email cards beneath it, so it belongs to the page.
+   Her rulings: SMALL and subtle (150px, not 260), a RECTANGLE (she ruled the
+   round crop off), cropped just under the gold cuffs so the belt and both
+   bracelets show but only a sliver of the trousers. */
+.cc-px{display:block;width:100%;height:auto;max-width:150px;aspect-ratio:540/700;object-fit:cover;object-position:top center;
+  margin:10px auto 16px;border:1px solid #9AA0A6;background:#F5EFE2}
 .cc-lead{font:400 15.5px/1.65 'Lora',Georgia,serif;color:#4a463e;text-wrap:balance;margin:0 auto 18px;max-width:320px}
 .cc-card{border:1px solid #9AA0A6;background:#fff;padding:15px 14px;margin:0 auto 12px;max-width:320px;text-align:center}
 .cc-h{font:400 17px/1.25 'DM Serif Display',Georgia,serif;color:#1a1a1a;margin-bottom:5px}
