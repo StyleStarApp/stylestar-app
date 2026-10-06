@@ -1,0 +1,49 @@
+# What's Trending photos, refreshed once a week (Cath's ask, 2026-10-06:
+# "when she opens up that page she sees full visuals instantly").
+#
+# Runs scripts/trend-photos.js against the LIVE finder in lean mode — one
+# search per trend, no look-ups, so ~23 searches a week (~100 a month) — and
+# commits data/trend-photos.json to main, which Netlify then deploys.
+# A trend whose search fails keeps last week's photos rather than going blank.
+#
+# ⚠️ Amazon is NOT stored by this job; the page fetches it live (Amazon's terms).
+# ⚠️ GITHUB DISABLES A SCHEDULED WORKFLOW AFTER 60 DAYS WITH NO COMMITS — this
+#   job commits weekly, so it keeps itself alive.
+name: What's Trending photos
+
+on:
+  # 12:00 UTC Monday — 8am New York.
+  schedule:
+    - cron: '0 12 * * 1'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: trend-photos
+  cancel-in-progress: false
+
+jobs:
+  photos:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Search each trend (lean)
+        run: node scripts/trend-photos.js
+      - name: Commit the new photos
+        run: |
+          if git diff --quiet -- data/trend-photos.json; then
+            echo "No change."; exit 0
+          fi
+          git config user.name "Style Star photos bot"
+          git config user.email "actions@users.noreply.github.com"
+          git add data/trend-photos.json
+          git commit -m "Weekly What's Trending photos"
+          git push origin HEAD:main
