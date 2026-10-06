@@ -263,6 +263,19 @@ const json = (body, headers, status = 200) =>
   new Response(JSON.stringify(body), {status, headers});
 
 export default async (req) => {
+  /* ⏱🚨 ONE CLOCK FOR THE WHOLE REQUEST, 2026-10-06. During SerpApi's partial
+     outage that day the live finder 504'd outright (~26s) and her FREE feed
+     results were lost with it. Every call had its own ceiling, but the
+     ceilings STACKED: budget check 4s + search 9s + dearer search 9s +
+     look-ups 6s + reading 12s = 40s, against a host that kills a function
+     at ~26s. ▶ So each OPTIONAL stage now asks how much time is left before
+     it starts, and is skipped (or cut short) rather than run past the host.
+     Nothing optional is worth losing the whole row for: a skipped stage
+     costs her some ticks or some luxury pieces; a 504 costs her everything.
+     ⚠️ NO PER-CALL CEILING WAS RAISED (this file's standing rule). */
+  const tStart = Date.now();
+  const elapsed = () => Date.now() - tStart;
+  const BUDGET_MS = 20000;            // well under the host's ~26s
   const reqOrigin = req.headers.get('origin') || '';
   const headers = {
     'Content-Type': 'application/json',
@@ -462,11 +475,17 @@ export default async (req) => {
      ⚠️ IT SAVES NO MONEY AND IS NOT MEANT TO. SerpApi bills the call the moment
        it is made, so an abandoned query is paid for either way. What this buys
        is that her screen stops depending on the slowest thing in the batch. */
-  function settledBy(promises, ms, atLeast = 1) {
+  function settledBy(promises, ms, atLeast = 1, hardMs = 0) {
     return new Promise(resolve => {
       const out = new Array(promises.length).fill(null);
       let left = promises.length, done = false, got = 0;
-      const finish = () => { if (!done) { done = true; resolve(out); } };
+      let hard = null;
+      /* 🚨 AN EMPTY LIST MUST RESOLVE AT ONCE (found 2026-10-06). With nothing
+         to wait for, no `finally` ever fires and the soft deadline needs
+         atLeast results, so the promise NEVER settled — every lean request
+         (0 look-ups, the weekly trend job) hung until the host killed it. */
+      if (!promises.length) { resolve(out); return; }
+      const finish = () => { if (!done) { done = true; clearTimeout(hard); resolve(out); } };
       /* ⚠️ The soft deadline only fires if something USABLE has arrived. With
          nothing in hand it is not a deadline, it is a way of reporting failure
          early, and this app already has a rule about that. */
@@ -487,6 +506,10 @@ export default async (req) => {
            that has nothing to add. */
       let past = false;
       const timer = setTimeout(() => { past = true; if (got >= atLeast) finish(); }, ms);
+      /* ⏱ A HARD stop for OPTIONAL stages only (2026-10-06): finish with
+         whatever is in hand, even nothing. The searches never pass one —
+         they keep "nothing yet is not a deadline". */
+      hard = hardMs ? setTimeout(finish, hardMs) : null;
       promises.forEach((p, i) => p
         .then(v => { out[i] = v; if (v) { got++; if (past && got >= atLeast) { clearTimeout(timer); finish(); } } })
         .catch(() => {})
@@ -677,7 +700,8 @@ export default async (req) => {
     const priced = request.price ? [] : [...pool.values()]
       .map(x => x.extracted_price).filter(v => typeof v === 'number' && v > 0)
       .sort((a, b) => a - b);
-    if (priced.length >= 5 && queries.length) {
+    /* ⏱ Skipped when the first round was slow: a bonus is never worth a 504. */
+    if (priced.length >= 5 && queries.length && elapsed() < 8000) {
       const p90 = priced[Math.min(priced.length - 1, Math.floor(priced.length * 0.9))];
       const floor = Math.ceil(p90);
       /* ⚠️ Kept on a SHORTER leash than the first round, deliberately. This
@@ -689,7 +713,7 @@ export default async (req) => {
         get('https://serpapi.com/search.json?' + new URLSearchParams({
           engine: 'google_shopping', q: queries[0], gl: 'us', hl: 'en', num: '60',
           min_price: String(floor), api_key: KEY,
-        })).catch(() => null)], DEAR_MS);
+        })).catch(() => null)], DEAR_MS, 1, DEAR_MS + 1000);
       for (const x of (dear && dear.shopping_results) || []) {
         const id = x.product_id || x.title;
         if (id && !pool.has(id)) pool.set(id, x);
@@ -726,11 +750,14 @@ export default async (req) => {
     /* ⚠️ 4500 -> 3500. A look-up only earns a TICK; the card, its photo, its
        price and its shop are already in hand. Cheapest second to save. */
     const SOFT_LOOKUP_MS = 3500;
-    const looked = await settledBy(mine.slice(0, request.lean ? 0 : MAX_VERIFY).map(c =>
+    /* ⏱ No look-ups once the clock is short: the row still shows every piece
+       as browse cards, only without ticks. */
+    const lookN = (request.lean || elapsed() > 11000) ? 0 : MAX_VERIFY;
+    const looked = await settledBy(mine.slice(0, lookN).map(c =>
       c.raw.serpapi_immersive_product_api
         ? get(c.raw.serpapi_immersive_product_api + '&api_key=' + KEY, LOOKUP_MS)
             .then(d => ({c, d})).catch(() => null)
-        : Promise.resolve(null)), SOFT_LOOKUP_MS);
+        : Promise.resolve(null)), SOFT_LOOKUP_MS, 1, LOOKUP_MS + 500);
 
     const tLook = Date.now() - t1;
     const verified = [];
@@ -777,7 +804,10 @@ export default async (req) => {
          what shipped yesterday. */
     const READ = ['colour', 'fabric', 'cut'].filter(k => request[k]);
     let read = null;
-    if (READ.length && verified.length && process.env.ANTHROPIC_API_KEY) {
+    /* ⏱ The reading gets whatever time is left, never more than its own 12s;
+       with under 3s left it is skipped and judge() runs, as on any failure. */
+    const readMs = Math.min(12000, BUDGET_MS - elapsed());
+    if (READ.length && verified.length && process.env.ANTHROPIC_API_KEY && readMs >= 3000) {
       const sub = Object.fromEntries([['item', request.item], ...READ.map(k => [k, request[k]])]);
       try {
         const r = await fetch('https://api.anthropic.com/v1/messages', {
@@ -796,7 +826,7 @@ export default async (req) => {
             model: 'claude-haiku-4-5-20251001', max_tokens: 1500,
             messages: [{role: 'user', content: buildJudgePrompt(sub, verified)}],
           }),
-          signal: AbortSignal.timeout(12000),
+          signal: AbortSignal.timeout(readMs),
         });
         if (r.ok) {
           const d = await r.json();

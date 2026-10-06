@@ -267,53 +267,80 @@ export default {
  },
  "Gap Factory": {
   "host": "gapfactory.com",
-  "tier": "",
-  "sizes": []
+  "tier": "$-$$",
+  "sizes": [
+   "petite",
+   "plus",
+   "tall"
+  ]
  },
  "Moda Operandi": {
   "host": "modaoperandi.com",
-  "tier": "",
+  "tier": "$$$$",
   "sizes": []
  },
  "Merlette": {
   "host": "merlette.com",
-  "tier": "",
-  "sizes": []
+  "tier": "$$$",
+  "sizes": [
+   "petite",
+   "plus"
+  ]
  },
  "ViX Swimwear": {
   "host": "vixpaulahermanny.com",
-  "tier": "",
-  "sizes": []
+  "tier": "$$$",
+  "sizes": [
+   "plus"
+  ]
  },
  "ASTR the Label": {
   "host": "astrthelabel.com",
-  "tier": "",
-  "sizes": []
+  "tier": "$$",
+  "sizes": [
+   "petite"
+  ]
  },
  "Pact": {
   "host": "wearpact.com",
-  "tier": "",
-  "sizes": []
+  "tier": "$$",
+  "sizes": [
+   "plus"
+  ]
  },
  "PacSun": {
   "host": "pacsun.com",
-  "tier": "",
-  "sizes": []
+  "tier": "$",
+  "sizes": [
+   "plus",
+   "petite",
+   "tall"
+  ]
  },
  "Tommy Hilfiger": {
   "host": "usa.tommy.com",
-  "tier": "",
-  "sizes": []
+  "tier": "$$",
+  "sizes": [
+   "petite",
+   "tall"
+  ]
  },
  "Aeropostale": {
   "host": "aeropostale.com",
-  "tier": "",
-  "sizes": []
+  "tier": "$",
+  "sizes": [
+   "plus",
+   "petite",
+   "tall"
+  ]
  },
  "FWRD": {
   "host": "fwrd.com",
-  "tier": "",
-  "sizes": []
+  "tier": "$$$",
+  "sizes": [
+   "petite",
+   "plus"
+  ]
  },
  "White House Black Market": {
   "host": "whitehouseblackmarket.com",
@@ -641,8 +668,11 @@ export default {
  },
  "Kohl's": {
   "host": "kohls.com",
-  "tier": "",
-  "sizes": []
+  "tier": "$",
+  "sizes": [
+   "petite",
+   "plus"
+  ]
  },
  "COUTR": {
   "host": "coutr.com",
@@ -651,8 +681,12 @@ export default {
  },
  "Cashmere Boutique": {
   "host": "cashmereboutique.com",
-  "tier": "",
-  "sizes": []
+  "tier": "$$",
+  "sizes": [
+   "petite",
+   "plus",
+   "tall"
+  ]
  },
  "Sachin & Babi": {
   "host": "sachinandbabi.com",
@@ -708,107 +742,161 @@ export default {
  },
  "Aerie": {
   "host": "ae.com",
-  "tier": "",
-  "sizes": []
+  "tier": "$",
+  "sizes": [
+   "plus",
+   "petite",
+   "tall"
+  ]
  },
  "American Eagle": {
   "host": "ae.com",
-  "tier": "",
-  "sizes": []
+  "tier": "$",
+  "sizes": [
+   "petite",
+   "plus",
+   "tall"
+  ]
  },
  "ASOS": {
   "host": "asos.com",
-  "tier": "",
-  "sizes": []
+  "tier": "$$$",
+  "sizes": [
+   "plus"
+  ]
  },
  "Ashley Stewart": {
   "host": "ashleystewart.com",
-  "tier": "",
-  "sizes": []
+  "tier": "$$",
+  "sizes": [
+   "plus",
+   "wide"
+  ]
  },
  "City Chic": {
   "host": "citychiconline.com",
-  "tier": "",
-  "sizes": []
+  "tier": "$$",
+  "sizes": [
+   "plus",
+   "wide"
+  ]
  },
  "Club Monaco": {
   "host": "clubmonaco.com",
-  "tier": "",
+  "tier": "$$",
   "sizes": []
  },
  "Frances Valentine": {
   "host": "francesvalentine.com",
-  "tier": "",
+  "tier": "$$$",
   "sizes": []
  },
  "Honeylove": {
   "host": "honeylove.com",
-  "tier": "",
-  "sizes": []
+  "tier": "$$$",
+  "sizes": [
+   "plus"
+  ]
  },
  "Karen Millen": {
   "host": "karenmillen.com",
-  "tier": "",
-  "sizes": []
+  "tier": "$$",
+  "sizes": [
+   "petite",
+   "tall"
+  ]
  },
  "L*Space": {
   "host": "lspace.com",
-  "tier": "",
-  "sizes": []
+  "tier": "$$$",
+  "sizes": [
+   "plus"
+  ]
  },
  "L.L.Bean": {
   "host": "llbean.com",
-  "tier": "",
-  "sizes": []
+  "tier": "$$",
+  "sizes": [
+   "petite",
+   "plus",
+   "tall"
+  ]
  },
  "Lilly Pulitzer": {
   "host": "lillypulitzer.com",
-  "tier": "",
+  "tier": "$$$",
   "sizes": []
  },
  "Long Tall Sally": {
   "host": "longtallsally.com",
-  "tier": "",
-  "sizes": []
+  "tier": "$$",
+  "sizes": [
+   "petite",
+   "plus",
+   "tall"
+  ]
  },
  "Lord & Taylor": {
   "host": "lordandtaylor.com",
-  "tier": "",
-  "sizes": []
+  "tier": "$$",
+  "sizes": [
+   "petite",
+   "plus",
+   "tall",
+   "wide"
+  ]
  },
  "Mestiza New York": {
   "host": "mestizanewyork.com",
-  "tier": "",
-  "sizes": []
+  "tier": "$$$",
+  "sizes": [
+   "petite",
+   "plus"
+  ]
  },
  "MZ Wallace": {
   "host": "mzwallace.com",
-  "tier": "",
+  "tier": "$$$",
   "sizes": []
  },
  "Ramy Brook": {
   "host": "ramybrook.com",
-  "tier": "",
-  "sizes": []
+  "tier": "$$$$",
+  "sizes": [
+   "petite",
+   "plus"
+  ]
  },
  "Reiss": {
   "host": "reiss.com",
-  "tier": "",
-  "sizes": []
+  "tier": "$$-$$$",
+  "sizes": [
+   "petite",
+   "tall"
+  ]
  },
  "Rothy's": {
   "host": "rothys.com",
-  "tier": "",
-  "sizes": []
+  "tier": "$$",
+  "sizes": [
+   "wide",
+   "narrow",
+   "plus"
+  ]
  },
  "Staud": {
   "host": "staud.clothing",
-  "tier": "",
-  "sizes": []
+  "tier": "$$$",
+  "sizes": [
+   "petite",
+   "plus"
+  ]
  },
  "Teri Jon": {
   "host": "terijon.com",
-  "tier": "",
-  "sizes": []
+  "tier": "$$$$",
+  "sizes": [
+   "plus"
+  ]
  }
 };

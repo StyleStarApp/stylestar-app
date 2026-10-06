@@ -306,8 +306,14 @@ H('PART 10 — the generated domain file cannot drift from index.html');
   ok('and it is byte-identical to a fresh build',
      JSON.stringify(onDisk) === JSON.stringify(fresh),
      'run: node scripts/build-store-domains.js');
+  /* ⚠️ PINNED THE RULE, NOT THE COUNT (2026-10-06): this said `=== 8` and went
+     red when her 2026-09-13 scoring added four more wide-width shops (Ashley
+     Stewart, City Chic, Lord & Taylor, Rothy's). Her original July eight must
+     all survive; the list is free to grow. */
+  const wideNames = Object.entries(fresh).filter(([, v]) => v.sizes.includes('wide')).map(([k]) => k);
   ok("her wide-width shops survived the trip",
-     Object.entries(fresh).filter(([, v]) => v.sizes.includes('wide')).length === 8);
+     ['Nordstrom', "Macy's", 'Nordstrom Rack', 'Amazon', 'Naturalizer', 'Lane Bryant', 'Zappos', 'DSW']
+       .every(n => wideNames.includes(n)), wideNames.join(', '));
 }
 
 H('PART 11 — the price filter (2026-09-13, item 1 of "the full look" list)');
