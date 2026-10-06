@@ -39,7 +39,9 @@ jobs:
         run: node scripts/trend-photos.js
       - name: Commit the new photos
         run: |
-          if git diff --quiet -- data/trend-photos.json; then
+          # `git status`, not `git diff`: the first run creates the file, and
+          # diff ignores an untracked file (that bug lost the very first run).
+          if [ -z "$(git status --porcelain -- data/trend-photos.json)" ]; then
             echo "No change."; exit 0
           fi
           git config user.name "Style Star photos bot"
