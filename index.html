@@ -254,7 +254,7 @@
   ▶ RESTAMP AFTER ANY CSS EDIT:  node scripts/css-version.js --write
   ⚠️ DO NOT hand-type or "tidy" the value — it is derived from the file, and
   scratchpad/copy.js fails if it is stale. -->
-  <link rel="stylesheet" href="/styles.css?v=09a718f703">
+  <link rel="stylesheet" href="/styles.css?v=59b2ba25a8">
 </head>
 <body>
 <!-- build: quiz glow-up (chrome frame, gold knob, gold button, gold progress) 2026-07-11 r2 -->
@@ -11212,7 +11212,58 @@ function _decorateTrendCards(){
   });
   // ⚠️ Only stamp when there was really something to decorate, so a call that
   // lands before self-heal has restored the screen does not lock this out.
-  if(cards.length)body.dataset.decorated='1';
+  if(cards.length){body.dataset.decorated='1';_trendStrips(body);}
+}
+/* ═══ A ROW OF PHOTOS ON EVERY TREND CARD — HER ASK, 2026-10-06 ═════════════
+   "when she opens up that page she sees full visuals instantly." Until now
+   every card was words; photos came only after a tap and a 5-8s live search.
+   ▶ data/trend-photos.json is built ONCE A WEEK by scripts/trend-photos.js
+     (the same finder a tap uses, one search per trend, her feed shops beside
+     Google), so the photos are already there for every woman, at no cost per
+     visit. Rendered through the ONE _findBlockHtml, quiet, so her never-wear
+     list, the no-duplicate rule, her store order and her paying shops' seats
+     all hold here exactly as on every other row.
+   ⚠️ AMAZON IS FETCHED LIVE, card by card as each scrolls into view (Amazon's
+     terms limit how long its data may be kept, and one request per visible
+     card stays well inside its rate). Her ruling for this page: 2-3 Amazon
+     seats per row, never first — _findBlockHtml's own seats, unchanged.
+   ⚠️ NO PRICES on these cards: a week-old price can be wrong in the dearer
+     direction. The shop shows the real one.
+   ⚠️ A missing file or a trend with no photos simply shows the card as before. */
+var _TREND_PX=null;
+function _trendStrips(body){
+  if(!body||body.dataset.strips)return;
+  body.dataset.strips='1';
+  var go=function(px){
+    if(!px||!px.trends)return;
+    var io=('IntersectionObserver' in window)?new IntersectionObserver(function(es){
+      es.forEach(function(e){if(e.isIntersecting){io.unobserve(e.target);_trendStripAmz(e.target)}});
+    },{rootMargin:'200px 0px'}):null;
+    body.querySelectorAll('.wdr-tcard').forEach(function(c){
+      var n=c.querySelector('.ttf');n=n?(n.textContent||'').trim():'';
+      var row=px.trends[n];
+      if(!n||!row||!row.items||!row.items.length||c.querySelector('.trend-strip'))return;
+      var d=document.createElement('div');
+      d.className='trend-strip';d.dataset.trend=n;
+      d.innerHTML=_findBlockHtml({browse:row.items},{item:n},true);
+      var tnf=c.querySelector('.tnf');
+      if(tnf&&tnf.nextSibling)c.insertBefore(d,tnf.nextSibling);else c.appendChild(d);
+      if(io)io.observe(d);else _trendStripAmz(d);
+    });
+  };
+  if(_TREND_PX){go(_TREND_PX);return;}
+  fetch('/data/trend-photos.json',{cache:'no-cache'}).then(function(r){return r.ok?r.json():null})
+    .then(function(px){_TREND_PX=px;go(px)}).catch(function(){});
+}
+function _trendStripAmz(d){
+  var n=d.dataset.trend,row=_TREND_PX&&_TREND_PX.trends[n];
+  if(!row)return;
+  _amzFetch({item:n}).then(function(list){
+    if(!list||!list.length)return;
+    var sc=d.querySelector('.find-cards');
+    if(sc&&sc.scrollLeft>4)return;           /* she has already swiped: hold the row still */
+    d.innerHTML=_findBlockHtml({browse:row.items,amazon:list},{item:n},true);
+  }).catch(function(){});
 }
 // Bottom-of-Her-List horizontal teaser — a 2nd entry point into the same
 // the same markup. preview=true shows the first 3 + a "See all trending" card that

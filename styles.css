@@ -814,6 +814,12 @@ html.finds-velvet .ss.dream-mirror{background:linear-gradient(#fff,#fff) padding
 #s-wardrobe .wdr-tcard .ttf,#s-trending .wdr-tcard .ttf{font:600 15.5px/1.3 'Jost',sans-serif;color:#1a1a1a;margin-bottom:6px;text-align:left}
 #s-wardrobe .wdr-tcard .tnf,#s-trending .wdr-tcard .tnf{font:400 15.5px/1.5 'Lora',Georgia,serif;color:#4a463e;margin-bottom:12px;text-align:left}
 #s-wardrobe .wdr-tcard .tlf,#s-trending .wdr-tcard .tlf{display:inline-flex;align-items:center;gap:3px;font:600 11.5px/1 'Jost',sans-serif;letter-spacing:.03em;color:#8a6a1e;cursor:pointer;padding:5px 10px;border:1px solid #D8A52E;border-radius:2px;background:#fff;-webkit-tap-highlight-color:transparent}
+/* What's Trending photo row on every card (2026-10-06, her ask: visuals the
+   moment the page opens). Bleeds to the card's edges for swipe room; the edge
+   fade is repainted in the card's own linen so it reads as one surface. */
+#s-trending .trend-strip{margin:0 -16px 12px;padding-left:12px;text-align:left}
+#s-trending .trend-strip .find-hint{margin-right:16px}
+#s-trending .trend-strip .find-scroll::after{background:linear-gradient(to right,rgba(245,239,226,0),rgba(245,239,226,.96))}
 #s-wardrobe .wdr-foot,#s-trending .wdr-foot{text-align:center;margin-top:26px}
 /* Bottom-of-list "What's Trending" horizontal teaser (2nd entry point) */
 /* A real page break before What's Trending, so the secondary offer stops
