@@ -642,7 +642,24 @@ there enough traffic for the Amazon clock" with no code written. *The original l
 
 ---
 
-## ▶▶▶ WHERE WE LEFT OFF — 2026-10-03 (twentieth session). READ THIS FIRST.
+## ▶▶▶ SESSION TWENTY-ONE CLOSED 2026-10-06 — READ THIS FIRST, THEN THE 10-03 BLOCK BELOW
+🚪 **She closed to open a fresh chat. Everything is merged to `main` and VERIFIED ON THE SERVED FILE at
+stylestar.app (the rule itself in the live `styles.css`, and the live cache stamp matching the repo's) —
+nothing half-finished, nothing unpushed, working tree clean.**
+**WHAT HAPPENED, all of it already written into the live sections below rather than kept here:**
+- ✅ **Her laptop button bug — FIXED AND LIVE.** The closing invitation's pill was `inline-block`, so her
+  sentence flowed around it and stranded *"clients."* beside the button. See the STANDING DON'T,
+  *"A PHONE-FIRST APP STILL HAS TO BE LOOKED AT ON A LAPTOP"*.
+- ✅ **Indie Law approved the $500 as a REFUND** — her full ask, granted. ⚠️ **NOT LANDED YET; watch ~Oct 19.**
+- ✅ **City of Orlando confirmed Your Fashion Friend closed.** 🚨 **The COUNTY still has not** — she emailed
+  them 2026-10-06 asking for written confirmation and that nothing is owed for 2026-27. **Chase if silent.**
+- 🛍️ **ShopMy researched in full and all of it saved** — see its own section. **Claude still owes her the
+  partnerships email; she said yes and it is not written.**
+- 📱 **Instagram:** the Stories-evaporate diagnosis, the approved boots caption (unposted), and the drawn
+  button on her Storefront graphic that still needs to become a real link sticker.
+▶ **NOTHING HERE HAS A HARD DATE EXCEPT CR4E001 (~Oct 29).**
+
+## ▶▶▶ WHERE WE LEFT OFF — 2026-10-03 (twentieth session).
 🚪 **She closed this session on 2026-10-03 to open a fresh chat — *"let's save everything here and I will
 open new chat"*. Closed for CONTEXT ROOM, not because work stopped.** ▶ **Everything built is merged to
 `main` and verified live on the SERVED files at stylestar.app. Nothing is half-finished or unpushed.**
