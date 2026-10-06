@@ -662,6 +662,14 @@ nothing half-finished, nothing unpushed, working tree clean.**
   for both trademark applications."* Legal reviews any Office Action, Rose relays guidance. *"There's
   nothing you need to do at this time."* ▶ **The named-contact ask from 08-28 is finally answered in
   writing. Nothing open with Indie Law except the refund landing (~Oct 19).**
+- 📸 **CONTACT PAGE HAS HER PHOTO — LIVE 2026-10-06, HER PICK AFTER THREE ROUNDS.** Her real home photo
+  (black silk blouse, Valentino belt, gold cuffs), `/catherine.jpg`, `.cc-px`: a 150px RECTANGLE under the
+  "Contact" title, cropped just under the cuffs. Her rulings: the 260px first draft was *"too large… I
+  want it to look more subtle"*; the round crop she did not like. ⚠️ **HER FIRST PHOTO HAD AN AI-GENERATED
+  BOUTIQUE BACKGROUND (her words) and was deliberately NOT used — on the page that says "I read every
+  message myself", the photo must be real.** ▶ **OPEN: MY STORY HAS NO PHOTO.** She agrees a different
+  photo of her AT WORK would be best there and does not have one yet — ask for it, do not reuse this one
+  without asking.
 ▶ **NOTHING HERE HAS A HARD DATE EXCEPT CR4E001 (~Oct 29).**
 
 ## ▶▶▶ WHERE WE LEFT OFF — 2026-10-03 (twentieth session).
