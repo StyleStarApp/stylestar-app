@@ -655,8 +655,13 @@ nothing half-finished, nothing unpushed, working tree clean.**
   them 2026-10-06 asking for written confirmation and that nothing is owed for 2026-27. **Chase if silent.**
 - 🛍️ **ShopMy researched in full and all of it saved** — see its own section. **Claude still owes her the
   partnerships email; she said yes and it is not written.**
-- 📱 **Instagram:** the Stories-evaporate diagnosis, the approved boots caption (unposted), and the drawn
-  button on her Storefront graphic that still needs to become a real link sticker.
+- 📱 **Instagram:** the Stories-evaporate diagnosis. ✅ **2026-10-06, same day, HER WORDS: *"I fixed the
+  Amazon button on and the insta post went out so that is done."*** The drawn button is now a real link
+  sticker, and the post is up. (Highlights + Star of the Week in the feed are still worth asking about.)
+- ✅✅ **INDIE LAW NAMED HER POINT OF CONTACT, 2026-10-06: ROSE** (Client Care), *"your point of contact
+  for both trademark applications."* Legal reviews any Office Action, Rose relays guidance. *"There's
+  nothing you need to do at this time."* ▶ **The named-contact ask from 08-28 is finally answered in
+  writing. Nothing open with Indie Law except the refund landing (~Oct 19).**
 ▶ **NOTHING HERE HAS A HARD DATE EXCEPT CR4E001 (~Oct 29).**
 
 ## ▶▶▶ WHERE WE LEFT OFF — 2026-10-03 (twentieth session).
@@ -865,12 +870,12 @@ exist, and it is 52 permanent product recommendations a year; **(c)** the **Stor
 Instagram is the one place the habit is not built. ShopMy's §12 will want the same.
 ▶ **A FEED-POST CAPTION FOR THE BOOTS IS WRITTEN AND SHE APPROVED IT** (*"I like that a lot as a post.
 The words you wrote are great"*) — long and short versions, built on her own note (*"I have them in brown,
-black and red"*, which is the most persuasive line on the card). **Not yet posted.** ⚠️ `#styleoverfifty`
+black and red"*, which is the most persuasive line on the card). ✅ **POSTED 2026-10-06 (her words: "the insta post went out").** ⚠️ `#styleoverfifty`
 was deliberately LEFT OUT and flagged to her: it performs, but it cuts against her own *"literally any
 woman, 18 to 80+"*. Her call, not swept.
 ▶ **HER STOREFRONT STORY GRAPHIC went through two rounds and is good** (dressing-room backdrop, the phone
 enlarged until it reads as clothes rather than UI — she solved the "interface is chrome" objection by
-SCALING UP rather than removing, and it worked). 🚨 **THE ONE THING STILL TO FIX: the gold "SHOP MY
+SCALING UP rather than removing, and it worked). ✅ **FIXED BY HER 2026-10-06 — the drawn button is now a real link sticker.** *Original note:* **the gold "SHOP MY
 AMAZON" on it is a DRAWN button, not tappable.** Delete it, leave the space, drop Instagram's real link
 sticker there (`https://www.amazon.com/shop/stylestar01?tag=stylestar01-20`, sticker text SHOP MY AMAZON).
 ⚠️ **One link sticker per slide** — two slides for two links.
