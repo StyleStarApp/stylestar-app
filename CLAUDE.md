@@ -3131,7 +3131,7 @@ THE UNKNOWN** — Impact's FAQ says nothing about Rakuten's FTP catalogs. Mariss
 2026-10-06 (8,667 pieces). If it stops, `rakuten-ingest.py` FAILS the job (GitHub emails her) and the
 sweep's 60% brake keeps her pieces in place, so nothing is wiped — but they would slowly go stale. ▶ **If that
 night comes, the fix is an Impact catalog feed for that brand, a real build — ask Impact support how
-migrated brands' catalogs are delivered.** Each of her other 7 Rakuten brands will move on its own date.
+migrated brands' catalogs are delivered.** ✅ **Partly answered 2026-10-06 from Impact's own help pages:** partners can download a brand's catalog in the dashboard, by **FTP** (credentials emailed on request, needs Technical Settings permission) or by **API**, in the brand's own format or a standard "Impact format". ▶ **So the fallback would be a second source added to the existing FTP ingest, not a rewrite.** Not needed until a feed actually stops. Each of her other 7 Rakuten brands will move on its own date.
 ▶ **AND IT IS SEPARATE FROM HER 2026-08-20 IMPACT NETWORK DECLINE (traffic).** The link went through
 clean, no warning, no rejection — supporting the read given her at the time: a general publisher
 application and a Rakuten-relationship migration are different gates even inside one account. This
