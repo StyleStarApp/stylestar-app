@@ -3120,6 +3120,18 @@ their program with your commission rate intact"). **Her 8 current Rakuten advert
 up in Impact today.** Each one migrates to Impact on its OWN schedule; until it does, it keeps paying
 her through Rakuten exactly as now. ⚠️ **NOTHING TO DO RIGHT NOW** — just watch this Impact account
 over time for advertisers appearing in it.
+🚚 **FIRST BRAND MOVED: MARISSA COLLECTIONS, 2026-10-06** — impact.com email *"Your partnership with Marissa
+Collections has launched on impact.com"* (to her Style Star Partners inbox, as expected). ▶ **What it means,
+checked not assumed:** (a) **her app links keep earning** — impact.com honours Rakuten tracking links for
+linked accounts (*"continues to support Rakuten Advertising tracking links for a while"*, no end date given;
+other reports say at least two years). No code change needed now. (b) 🚨 **HERS TO DO: add PAYMENT AND TAX
+details in impact.com** — *"you'll need to add them before we can issue any payments."* Banking does NOT copy
+over. Do it from the Impact dashboard directly, never via an email link. (c) ⚠️ **THE NIGHTLY PRODUCT FEED IS
+THE UNKNOWN** — Impact's FAQ says nothing about Rakuten's FTP catalogs. Marissa still came through on
+2026-10-06 (8,667 pieces). If it stops, `rakuten-ingest.py` FAILS the job (GitHub emails her) and the
+sweep's 60% brake keeps her pieces in place, so nothing is wiped — but they would slowly go stale. ▶ **If that
+night comes, the fix is an Impact catalog feed for that brand, a real build — ask Impact support how
+migrated brands' catalogs are delivered.** Each of her other 7 Rakuten brands will move on its own date.
 ▶ **AND IT IS SEPARATE FROM HER 2026-08-20 IMPACT NETWORK DECLINE (traffic).** The link went through
 clean, no warning, no rejection — supporting the read given her at the time: a general publisher
 application and a Rakuten-relationship migration are different gates even inside one account. This
