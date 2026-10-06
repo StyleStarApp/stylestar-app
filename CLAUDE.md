@@ -651,8 +651,11 @@ nothing half-finished, nothing unpushed, working tree clean.**
   sentence flowed around it and stranded *"clients."* beside the button. See the STANDING DON'T,
   *"A PHONE-FIRST APP STILL HAS TO BE LOOKED AT ON A LAPTOP"*.
 - ✅ **Indie Law approved the $500 as a REFUND** — her full ask, granted. ⚠️ **NOT LANDED YET; watch ~Oct 19.**
-- ✅ **City of Orlando confirmed Your Fashion Friend closed.** 🚨 **The COUNTY still has not** — she emailed
-  them 2026-10-06 asking for written confirmation and that nothing is owed for 2026-27. **Chase if silent.**
+- ✅ **City of Orlando confirmed Your Fashion Friend closed.** ✅✅ **AND THE COUNTY CONFIRMED 2026-10-06** —
+  Hala Hanna, Tax Specialist II, Orange County Tax Collector (hhanna@octaxcol.com): *"This account closed"*
+  (BTR 0598950). ▶ **YOUR FASHION FRIEND'S TAX RECEIPTS ARE BOTH CLOSED. Keep both emails.** Her one-line
+  reply did not restate the effective date or "nothing owed 2026-27" — a closed account is not billed, so
+  only worth chasing if a renewal notice ever arrives.
 - 🛍️ **ShopMy researched in full and all of it saved** — see its own section. **Claude still owes her the
   partnerships email; she said yes and it is not written.**
 - 📱 **Instagram:** the Stories-evaporate diagnosis. ✅ **2026-10-06, same day, HER WORDS: *"I fixed the
@@ -673,6 +676,13 @@ nothing half-finished, nothing unpushed, working tree clean.**
 - 💬 **CONTACT PAGE INVITES HER INSTAGRAM — LIVE 2026-10-06, HER WORDING PICK: *"Come say hi on Instagram"***
   (`.cc-ig`, under the email cards, above the signature; gold underline, and a drawn SVG arrow — her ask, *"I think it needs the arrow"*). ⚠️ **She ruled OFF "See
   what I'm loving this week" — no weekly promise.** A reply-time line was offered and NOT added.
+- 🖼️ **WHAT'S TRENDING SHOULD OPEN WITH PHOTOS — HER ASK 2026-10-06, PLAN AGREED, NOT BUILT YET.** Today all
+  23 trend cards are text; photos only appear after a tap and a 5-8s live search. **Her picks: a WEEKLY
+  pre-built search per trend (so photos are there instantly for every woman) + a SWIPEABLE ROW of 3-4 or
+  more photos on each card.** Sources: *"lean on the ones that pay, but not if they don't have the right item
+  to feature… case by case."* ⚠️ **Her sentence about AMAZON was cut off mid-thought ("they usually have
+  something that will fit every single trend, but i dn…") — ask her to finish it before deciding Amazon's
+  share.** ⚠️ Store photo URLs (hotlinks) only, never copies of retailers' images on our server.
 ▶ **NOTHING HERE HAS A HARD DATE EXCEPT CR4E001 (~Oct 29).**
 
 ## ▶▶▶ WHERE WE LEFT OFF — 2026-10-03 (twentieth session).
