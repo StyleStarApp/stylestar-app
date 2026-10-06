@@ -702,6 +702,8 @@ nothing half-finished, nothing unpushed, working tree clean.**
   (skipped under 3s → `judge()` fallback). **No per-call ceiling raised.** Measured: dead Google 9.0s with her
   feed kept · slow Google 12.9s · AI hang 18.5s · lean 6.5s — all 200. ▶ **Not yet re-verified LIVE; wait for
   SerpApi's status page to go green, then one live call + re-run the trend job** (~23 searches; 187 left).
+  ⏳ **Checked 20:55 and 23:56 UTC 2026-10-06: SerpApi still "partial outage" / Google degraded. Auto check-ins
+  STOPPED (no more re-arms). Next session: re-check status first, then do the live call + trend run + mockup.**
 ▶ **NOTHING HERE HAS A HARD DATE EXCEPT CR4E001 (~Oct 29).**
 
 ## ▶▶▶ WHERE WE LEFT OFF — 2026-10-03 (twentieth session).
