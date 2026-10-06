@@ -68,7 +68,7 @@ await (async () => {
   console.log('trends found:', names.length);
   const prev = fs.existsSync(OUT) ? JSON.parse(fs.readFileSync(OUT, 'utf8')) : {trends: {}};
   const trends = {};
-  let fresh = 0, kept = 0;
+  let fresh = 0, kept = 0, failRun = 0, stopped = false;
   for (let i = 0; i < names.length; i++) {
     const n = names[i];
     let row = null;
@@ -81,6 +81,16 @@ await (async () => {
       } else console.log('  ', n, '->', d && d.why);
     } catch (e) { console.log('  ', n, '-> failed', e.message); }
     /* a failed week keeps LAST week's photos rather than emptying the card */
+    /* 🚨 STOP EARLY WHEN THE SEARCH SERVICE IS DOWN. A failed call still spends
+       searches; the first run (2026-10-06, during a SerpApi outage) spent 41
+       for one trend's photos. Three failures in a row = stop and keep last
+       week's file untouched. */
+    failRun = row ? 0 : failRun + 1;
+    if (failRun >= 3) {
+      console.log('3 failures in a row - search service looks down; stopping.');
+      stopped = !fresh;          // nothing new at all: leave the file untouched
+      break;
+    }
     if (row) { trends[n] = row; fresh++; }
     else if (prev.trends && prev.trends[n]) { trends[n] = prev.trends[n]; kept++; }
     console.log(String(i + 1).padStart(2), n, row ? row.items.length + ' photos' : '(kept last week)');
@@ -88,5 +98,9 @@ await (async () => {
   }
   const out = {generated: new Date().toISOString(), trends};
   console.log(`fresh ${fresh}, kept ${kept}, empty ${names.length - fresh - kept}`);
-  if (!DRY) fs.writeFileSync(OUT, JSON.stringify(out) + '\n');
+  if (!DRY && !stopped) {
+    /* names not reached this week keep last week's photos */
+    for (const n of names) if (!trends[n] && prev.trends && prev.trends[n]) trends[n] = prev.trends[n];
+    fs.writeFileSync(OUT, JSON.stringify(out) + '\n');
+  }
 })();
