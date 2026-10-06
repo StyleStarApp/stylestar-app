@@ -2459,6 +2459,11 @@ svg.dc-xl-arr{width:18px;height:18px;display:inline-block;vertical-align:middle;
 .cc-w{font:400 13.5px/1.5 'Jost',sans-serif;color:#6b6355;margin-bottom:9px}
 .cc-a{display:inline-block;background:#1a1a1a;color:#F2D889;border:1px solid #C99A2C;border-radius:999px;
   padding:10px 16px;font:600 15px/1 'Jost',sans-serif;letter-spacing:.01em;text-decoration:none;word-break:break-word}
+/* Her Instagram, as an invitation rather than a footer icon (2026-10-06): the
+   Star of the Week and her Storefront link live there, and a woman on this page
+   already wants to connect. Gold underline matches her signature link on home. */
+.cc-ig{display:block;max-width:320px;margin:16px auto 0;font:400 15px/1.55 'Lora',Georgia,serif;color:#1a1a1a;
+  text-decoration:underline;text-decoration-color:#C99A2C;text-underline-offset:3px;text-wrap:balance}
 .cc-sign{font:400 15.5px/1.6 'Lora',Georgia,serif;color:#4a463e;margin-top:18px;text-wrap:balance}
 /* Her catch: "I read every message myself" never says who I is. Her NAME
    answers that; the LLC name answers a different question and belongs in the
