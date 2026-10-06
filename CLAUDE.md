@@ -692,10 +692,16 @@ nothing half-finished, nothing unpushed, working tree clean.**
   BRANCH ONLY, NOT LIVE — she has not seen the mock-up yet.**
   🚨🚨 **SERPAPI PARTIAL OUTAGE 2026-10-06 (from 15:51 UTC, their status page).** The first job run got 504s on
   22 of 23 trends, spent **41 searches** (budget 228 → 187) and — a save bug, now fixed — wrote nothing. The job
-  now stops after 3 failures in a row. ⚠️ **OPEN, AND IT MATTERS MORE THAN THE TRENDS: during the outage the
-  LIVE finder 504'd outright (~26s+), losing even her FREE feed results, rather than returning the feed with
-  Google marked failed.** Root cause not proven (the per-call ceilings should cap it near 13s). **Do not rerun
-  the job until SerpApi is green.**
+  now stops after 3 failures in a row. ✅✅ **THE LIVE-FINDER 504 IS FIXED — her "option 2", 2026-10-06, commit
+  "Finder: one clock per request".** TWO causes, both proven in a simulated hung-SerpApi harness: **(1)**
+  `settledBy([])` NEVER resolved (no promise to finish it, and the soft deadline needs ≥1 result), so EVERY
+  `lean` request — 0 look-ups, i.e. the weekly trend job — hung until Netlify killed it. 🚨 **So at least some of
+  that run's 22 failures were OURS, not SerpApi's.** **(2)** the per-call ceilings STACKED (budget 4 + search 9 +
+  dearer search 9 + look-ups 6 + AI read 12 ≈ 40s vs the host's ~26s). Now one 20s clock per request: dearer
+  search skipped after 8s and hard-capped at 5s, look-ups skipped after 11s, the AI read gets only what is left
+  (skipped under 3s → `judge()` fallback). **No per-call ceiling raised.** Measured: dead Google 9.0s with her
+  feed kept · slow Google 12.9s · AI hang 18.5s · lean 6.5s — all 200. ▶ **Not yet re-verified LIVE; wait for
+  SerpApi's status page to go green, then one live call + re-run the trend job** (~23 searches; 187 left).
 ▶ **NOTHING HERE HAS A HARD DATE EXCEPT CR4E001 (~Oct 29).**
 
 ## ▶▶▶ WHERE WE LEFT OFF — 2026-10-03 (twentieth session).
