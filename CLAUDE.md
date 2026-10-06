@@ -671,7 +671,7 @@ nothing half-finished, nothing unpushed, working tree clean.**
   photo of her AT WORK would be best there and does not have one yet — ask for it, do not reuse this one
   without asking.
 - 💬 **CONTACT PAGE INVITES HER INSTAGRAM — LIVE 2026-10-06, HER WORDING PICK: *"Come say hi on Instagram"***
-  (`.cc-ig`, under the email cards, above the signature; gold underline, no arrow). ⚠️ **She ruled OFF "See
+  (`.cc-ig`, under the email cards, above the signature; gold underline, and a drawn SVG arrow — her ask, *"I think it needs the arrow"*). ⚠️ **She ruled OFF "See
   what I'm loving this week" — no weekly promise.** A reply-time line was offered and NOT added.
 ▶ **NOTHING HERE HAS A HARD DATE EXCEPT CR4E001 (~Oct 29).**
 

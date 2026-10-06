@@ -2464,6 +2464,8 @@ svg.dc-xl-arr{width:18px;height:18px;display:inline-block;vertical-align:middle;
    already wants to connect. Gold underline matches her signature link on home. */
 .cc-ig{display:block;max-width:320px;margin:16px auto 0;font:400 15px/1.55 'Lora',Georgia,serif;color:#1a1a1a;
   text-decoration:underline;text-decoration-color:#C99A2C;text-underline-offset:3px;text-wrap:balance}
+/* Her ask: "it needs the arrow". A drawn SVG, never the text glyph (it sits low). */
+.cc-ig-arr{width:15px;height:15px;margin-left:6px;vertical-align:middle;position:relative;top:-1px}
 .cc-sign{font:400 15.5px/1.6 'Lora',Georgia,serif;color:#4a463e;margin-top:18px;text-wrap:balance}
 /* Her catch: "I read every message myself" never says who I is. Her NAME
    answers that; the LLC name answers a different question and belongs in the
