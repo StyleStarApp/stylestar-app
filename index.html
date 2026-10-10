@@ -1463,15 +1463,6 @@
     </div>
 
     <div class="dc-item">
-      <img class="dc-item-px" src="https://www.olivela.com/cdn/shop/files/HeartsFindMeonClassicRolo.jpg?v=1783707261&amp;width=800" alt="Jane Win LOVE Hearts Find Me pendant necklace in gold" loading="lazy" decoding="async" onerror="this.remove()">
-      <span class="dc-item-star">&#11088;</span>
-      <div class="dc-item-name">Love Hearts Find Me Pendant Necklace</div>
-      <div class="dc-item-meta"><span class="dc-store">Jane Win &middot; Olivela</span><span class="dc-price">$278</span></div>
-      <div class="dc-item-note">This is the best take I have seen on the coin necklace trend. 18 inch chain, plated 14k gold</div>
-      <a class="dc-item-btn" href="https://www.olivela.com/products/jane-win-love-hearts-find-me-pendant-necklace-gold" target="_blank" rel="sponsored noopener"><svg class="dc-bag" viewBox="0 0 24 24" fill="none" stroke="#0FA6B6" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5.8 8.5 h12.4 l-0.8 10.6 a1.2 1.2 0 0 1 -1.2 1.1 H7.8 a1.2 1.2 0 0 1 -1.2 -1.1 Z"/><path d="M8.3 8.5 C8.3 4.2 15.7 4.2 15.7 8.5"/><path d="M12 11.9 L12.5 13.3 L14 13.35 L12.85 14.25 L13.25 15.65 L12 14.8 L10.75 15.65 L11.15 14.25 L10 13.35 L11.5 13.3 Z" fill="#0FA6B6" stroke="none"/></svg>Shop this item <span class="dc-arr">&rarr;</span></a>
-    </div>
-
-    <div class="dc-item">
       <img class="dc-item-px" style="object-fit:contain" src="https://cdn.shopify.com/s/files/1/0333/8892/0967/files/2608_J26FA0156_MEMORY_LANE_FLAT.png?v=1786608188&amp;width=800" alt="Veronica Beard Crosbie Jean, high-rise wide-leg denim, full length" loading="lazy" decoding="async" onerror="this.remove()">
       <!-- ⚠️ object-fit:contain, DELIBERATELY overriding the shared .dc-item-px
            rule (which is cover + top anchor). This source is 2:3 (1000x1500),
@@ -15065,8 +15056,8 @@ var WEEK_STARS=[  {n:'Tommy Hilfiger Claihre Kitten Heel Slide Sandal',store:'No
 var WEEK_STAR_PHOTO_ORDER=[
   /* 🚨🚨 THIS LIST IS NOT IN PLAY ORDER AND NEVER HAS BEEN — READ BEFORE EDITING.
      The star is pool[floor(days-since-anchor / 7) mod pool.length], so the array is
-     ROTATED relative to what a woman sees: today sits at index 4, and the entries
-     ABOVE it are the ones reached after the wrap, at the END of the cycle.
+     ROTATED relative to what a woman sees: Oct 11 2026 sits at index 9, and the
+     entries ABOVE it are the ones reached after the wrap, at the END of the cycle.
      ▶ THE DATE ON EACH LINE IS THE TRUTH. The position is not readable on its own,
      so keep the dates updated and lay out from them, never from the order alone.
      ⚠️ CHANGING THE LENGTH RE-MAPS EVERY WEEK, because the length IS the modulus.
@@ -15076,51 +15067,30 @@ var WEEK_STAR_PHOTO_ORDER=[
      every date through Nov 22 stayed exactly where it was, and only the tail
      of the cycle (Nov 29 onward) moved one week later. Recomputed with
      _weekStar(), not assumed. Never edit a line here without re-running the
-     schedule. */
-  // ── indices 0-3: reached LAST, after the wrap ──────────────────────────────
-  'Zoe Lev Diamond & 14k Gold Bezel Pendant Necklace',            // Dec 13  — moved 1 week, boots inserted Oct 4
-  'Valentino Garavani VLOGO Signature Reversible Leather Belt',   // Dec 20 — moved 1 week, boots inserted Oct 4
-  'Open Heart Necklace',                                          // Dec 27 — moved 1 week, boots inserted Oct 4
-  'Valentino Square Oversized Sunglasses',                        // Jan 3 — moved 1 week, boots inserted Oct 4
-  // ── index 4 is TODAY ───────────────────────────────────────────────────────
-  'Saint Laurent SL M136 Sunglasses',                             // Sep 6  — LIVE NOW
-  'Vilebrequin Long Mesh Cover-Up Dress — Black',                 // Sep 13 — renamed from "— Off White" 2026-09-13, her photo swap
-  'Veronica Beard Crosbie Jean',                                  // Sep 20
-  'Valentino Garavani Rockstud Medium Suede Pouch',               // Sep 27 — her swap, was Oct 25
-  /* ⭐ INSERTED 2026-10-02, HER PICK FOR THIS SUNDAY (Oct 4). Every date before
-     it stays; every date after it moves ONE week later (the bracelet to
-     Oct 11, and so on), and the wrap-around weeks above move one week too.
-     Verified week by week with a re-implementation of _weekStarIndex. */
-  'Pointed Toe Mid Calf Boots',                                   // Oct 4  — HER PICK, the first Amazon Star
-  'Isabella Celini Stackable Love Bracelet',                      // Oct 11
-  'Love Hearts Find Me Pendant Necklace',                         // Oct 18
-  'Diane von Furstenberg Jeanne Silk Jersey Wrap Dress',          // Oct 25
-  /* ⚠️⚠️ THE FARM RIO MAXI WAS HERE (Oct 25) AND SHE RETIRED IT, 2026-09-11:
-     "we already used that farm rio dress so it doesn't need to go back on star of
-     the week." ▶ RETIRED, NOT DELETED — its WEEK_STARS entry stays put and is now
-     inert, exactly like the sold-out Serpui bag, because it carries the pxPos
-     'center 60%' crop her 2026-09-07 catch produced and starpx leans on that entry.
-     Removing a row that already renders nowhere would only throw the lesson away.
-     ⚠️ This is a TIMING call about one dress, not a rule about FARM Rio. */
-  'Simkhai Stella Suede Block Heel Sandal',                       // Nov 1 — her swap, was Sep 27
-  'Gucci GG Canvas Mini Shoulder Bag',                            // Nov 8
-  'Simkhai Devon Suede Tote',                                     // Nov 15
-  'Fleur du Mal Sculpt Molded Sports Bra',                        // Nov 22 — her swap, was Sep 27
-  // ⭐ ADDED 2026-09-12, HER PICK. Appended at the END on purpose (the same
-  // choice made for the bracelet earlier in this file's history): every date
-  // already scheduled through Nov 15 stays exactly where it was, and only the
-  // tail of the cycle (the wrap-around weeks) moves. Verified week by week
-  // with _weekStar(), not assumed.
-  'Stella McCartney Falabella Mini Embellished Bag',              // Nov 29
-  // ⭐ ADDED 2026-09-13, HER PICK. Appended at the END, same reasoning as
-  // every prior addition: every date through Nov 22 stays exactly where it
-  // was, only the tail (Nov 29 onward) shifts one week later. Verified
-  // week-by-week with a direct re-implementation of _weekStarIndex before
-  // committing, not assumed -- Nov 29 through 2027-09-26 checked by hand,
-  // confirmed every date past Nov 22 moves by exactly one week and nothing
-  // moves before it. Requires the _pxLicensed() widening above (CJ, not just
-  // Rakuten) or this item's photo would silently not render the week it's up.
-  'Cashmere & Silk Pashmina'                                      // Dec 6
+     schedule.
+     ⭐ 2026-10-10, HER CALL: the Jane Win Love Hearts pendant sold out — removed
+     from the Edit and from this list (18 → 17), and the Open Heart Necklace
+     moved up to Oct 11. The bracelet takes Oct 18; every date from DVF (Oct 25)
+     through the belt (Dec 20) is unchanged, and so is every PAST week (the
+     list was laid out so index 9 = Oct 11). Recomputed with _weekStarIndex.
+     Its WEEK_STARS entry stays, inert — retired, not deleted. */
+  'Cashmere & Silk Pashmina',                                      // Dec 6
+  'Zoe Lev Diamond & 14k Gold Bezel Pendant Necklace',             // Dec 13
+  'Valentino Garavani VLOGO Signature Reversible Leather Belt',    // Dec 20
+  'Valentino Square Oversized Sunglasses',                         // Dec 27
+  'Saint Laurent SL M136 Sunglasses',                              // Jan 3
+  'Vilebrequin Long Mesh Cover-Up Dress — Black',                  // Jan 10
+  'Veronica Beard Crosbie Jean',                                   // Jan 17
+  'Valentino Garavani Rockstud Medium Suede Pouch',                // Jan 24
+  'Pointed Toe Mid Calf Boots',                                    // Jan 31
+  'Open Heart Necklace',                                           // Oct 11
+  'Isabella Celini Stackable Love Bracelet',                       // Oct 18
+  'Diane von Furstenberg Jeanne Silk Jersey Wrap Dress',           // Oct 25
+  'Simkhai Stella Suede Block Heel Sandal',                        // Nov 1
+  'Gucci GG Canvas Mini Shoulder Bag',                             // Nov 8
+  'Simkhai Devon Suede Tote',                                      // Nov 15
+  'Fleur du Mal Sculpt Molded Sports Bra',                         // Nov 22
+  'Stella McCartney Falabella Mini Embellished Bag'               // Nov 29
 ];
 function _weekStarPhotoPool(){
   // WHITELIST, not a sort hint: only a name she has actually put here can
@@ -15500,7 +15470,6 @@ var RES_EDIT_MAX=10;   // a preview, with a real door to the rest; safe to turn
    to the Edit's own order. */
 var RES_EDIT_PICKS=[
   'https://www.coutr.com/products/saint-laurent-sl-m136-sunglasses', // Saint Laurent SL M136 Sunglasses
-  'https://www.olivela.com/products/jane-win-love-hearts-find-me-pendant-necklace-gold', // Love Hearts Find Me Pendant Necklace
   'https://www.mytheresa.com/us/en/women/valentino-garavani-rockstud-medium-suede-pouch-beige-p01180729', // Valentino Garavani Rockstud Medium Suede Pouch
   'https://www.mytheresa.com/us/en/women/stella-mccartney-falabella-mini-embellished-crossbody-bag-white-p01174765', // Stella McCartney Falabella Mini Embellished Bag
   'https://marissacollections.com/products/veronica-beard-crosbie-jean', // Veronica Beard Crosbie Jean
