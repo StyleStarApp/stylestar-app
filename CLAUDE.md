@@ -706,8 +706,9 @@ nothing half-finished, nothing unpushed, working tree clean.**
   STOPPED (no more re-arms). Next session: re-check status first, then do the live call + trend run + mockup.**
 - ⭐ **2026-10-10, HER CALL: the Jane Win Love Hearts Find Me Pendant SOLD OUT** — removed from the Edit (now
   **20 items**), from `RES_EDIT_PICKS` and from `WEEK_STAR_PHOTO_ORDER` (18 → 17); its `WEEK_STARS` entry stays,
-  inert. **Star schedule now: Oct 11 Open Heart Necklace (her pick) · Oct 18 Isabella Celini bracelet · Oct 25 DVF
-  Jeanne · Nov 1 Simkhai sandal … Dec 20 VLOGO belt (all unchanged) · Dec 27 Valentino sunglasses**, then repeats.
+  inert. **Star schedule now: Oct 11 Open Heart Necklace (her pick) · Oct 18 Valentino Square Oversized Sunglasses
+  · Oct 25 DVF Jeanne · Nov 1 Simkhai sandal … Dec 20 VLOGO belt (all unchanged) · Dec 27 Isabella Celini bracelet**
+  (Oct 18 and Dec 27 swapped at her ask, same day), then repeats.
   Verified with `_weekStarIndex` and on the served file. ⚠️ `affq` 40/42 — the 2 fails are the Contact page's second
   Instagram link (pre-existing, identical without this change); the check needs updating, not the page.
 - ⏳ **SerpApi still "partial outage" on 10-07, 10-08 and 10-10** (cause "identified" 10-07, not resolved).
