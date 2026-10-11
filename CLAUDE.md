@@ -711,6 +711,10 @@ nothing half-finished, nothing unpushed, working tree clean.**
   (Oct 18 and Dec 27 swapped at her ask, same day), then repeats.
   Verified with `_weekStarIndex` and on the served file. ⚠️ `affq` 40/42 — the 2 fails are the Contact page's second
   Instagram link (pre-existing, identical without this change); the check needs updating, not the page.
+- 📸 **2026-10-11, HER CATCH: the Open Heart Necklace's Star card cut the silver heart in half.** Fixed and live: the
+  Star now uses the SAME crop as its Edit card (her 2026-08-30 call, gold heart centred) via a new, optional,
+  whitelisted `pxZoom`/`pxZoomAt` on a `WEEK_STARS` entry (wrapper `.wks-px.is-zoom` + transform). `starpx` 32/32.
+  ⚠️ `bootstar.mjs` reads `fonts.css` from an OLD session's scratchpad path — test debt, repoint when next touched.
 - ⏳ **SerpApi still "partial outage" on 10-07, 10-08 and 10-10** (cause "identified" 10-07, not resolved).
 ▶ **NOTHING HERE HAS A HARD DATE EXCEPT CR4E001 (~Oct 29).**
 
