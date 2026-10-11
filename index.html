@@ -254,7 +254,7 @@
   ▶ RESTAMP AFTER ANY CSS EDIT:  node scripts/css-version.js --write
   ⚠️ DO NOT hand-type or "tidy" the value — it is derived from the file, and
   scratchpad/copy.js fails if it is stale. -->
-  <link rel="stylesheet" href="/styles.css?v=09a718f703">
+  <link rel="stylesheet" href="/styles.css?v=f15a72f223">
 </head>
 <body>
 <!-- build: quiz glow-up (chrome frame, gold knob, gold button, gold progress) 2026-07-11 r2 -->
@@ -14994,7 +14994,11 @@ var WEEK_STARS=[  {n:'Tommy Hilfiger Claihre Kitten Heel Slide Sandal',store:'No
    px:'https://marissacollections.com/cdn/shop/files/valentino-accessories-accessoriesunglasses-gold-square-oversized-sunglasses.jpg?v=1781596529'},
   {n:'Open Heart Necklace',store:'Etsy',url:'https://www.etsy.com/listing/849636969/open-heart-necklace-14k-gold-fill',price:'~$45',
    note:'Lovely conversation piece. Comes in sterling silver or gold fill. Open your heart!',
-   px:'https://i.etsystatic.com/7720739/r/il/8b7e04/3606550162/il_794xN.3606550162_ca87.jpg'},
+   px:'https://i.etsystatic.com/7720739/r/il/8b7e04/3606550162/il_794xN.3606550162_ca87.jpg',
+   // Same crop as its Edit card (her call 2026-08-30: the gold heart centred, no
+   // silver). Without it the Star card cut the silver heart in half -- her catch,
+   // 2026-10-11, the week it became Star.
+   pxPos:'left center',pxZoom:1.15,pxZoomAt:'20% center'},
   // ⭐ ADDED 2026-09-12, HER PICK, same photo and story as the Edit entry above.
   {n:'Stella McCartney Falabella Mini Embellished Bag',store:'Mytheresa',url:'https://www.mytheresa.com/us/en/women/stella-mccartney-falabella-mini-embellished-crossbody-bag-white-p01174765',price:'$1,595',
    note:'I love that this bag is wearing a necklace! Stella McCartney bags are especially popular with animal lovers, since the materials are always 100% vegan. This one is delightful!',
@@ -15288,6 +15292,19 @@ function _wkStarPxTag(S,cls){
       + h(src, S.pxPos, S.n, true)
       + h(S.px2, S.pxPos2, S.px2Alt||'', false)
       + '</div>';
+  }
+  // ⚠️ pxZoom, OPTIONAL and PER ITEM: a small extra zoom for a source photo too
+  //   WIDE for 3:4, where no object-position alone can crop out the unwanted half
+  //   (the Open Heart Necklace's flat-lay shows both colourways side by side).
+  //   An img cannot be scaled inside its own box, so the class moves to a wrapper
+  //   (.is-zoom clips it) -- the same technique the Edit card for that piece uses.
+  //   Whitelisted: a number between 1 and 2, and an origin of "N% word".
+  var z=parseFloat(S.pxZoom);
+  if(z>1&&z<=2){
+    var at=/^\d{1,3}% (center|top|bottom)$/.test(S.pxZoomAt||'')?S.pxZoomAt:'center';
+    return '<div class="'+cls+' is-zoom"><img src="'+_esc(src)+'" alt="'+_esc(S.n)+'" style="'
+      +sty+'transform:scale('+z+');transform-origin:'+at+';" '
+      +'loading="eager" decoding="async" onerror="this.parentElement.remove()"></div>';
   }
   return '<img class="'+cls+'" src="'+_esc(src)+'" alt="'+_esc(S.n)+'"'+posAttr+' '
     +'loading="eager" decoding="async" onerror="this.remove()">';
