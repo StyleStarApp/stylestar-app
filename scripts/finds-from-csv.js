@@ -130,6 +130,9 @@ function storeLine(store) {
    This is the Storefront button's own SVG, so every Finds arrow matches. */
 const ARR = '<svg class="dc-arr-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12h15M13 6l6 6-6 6"/></svg>';
 
+// the "Show N more" arrow: points down to unfold, flips up for "Show less" (CSS)
+const CHEV = '<svg class="dc-chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>';
+
 function renderItem(r, extra) {
   const price = renderPrice(r.price);
   const [first, rest] = splitNote(r.note);
@@ -215,7 +218,7 @@ export function render(rows, lists = loadLists(), noPhoto = loadNoPhoto(), cap =
       out.push('      <div class="dc-morerow">');
       rest.forEach(it => out.push(renderItem(it, true)));
       out.push('      </div>');
-      out.push(`      <button type="button" class="dc-showall" aria-expanded="false" data-n="${rest.length}">Show ${rest.length} more</button>`);
+      out.push(`      <button type="button" class="dc-showall" aria-expanded="false" data-n="${rest.length}"><span>Show ${rest.length} more</span>${CHEV}</button>`);
     }
     out.push('    </section>');
   }

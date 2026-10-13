@@ -237,7 +237,7 @@ console.log('\n9. HER ORDER, AND NO PHOTO-LESS PIECE IN A SECTION\'S FIRST 8 (20
   ok('...even when it was first in her order', o2[o2.length - 1] === 'Piece 0' && o2[0] === 'Piece 1', o2.join(', '));
   ok('two pieces up top, the rest in one swipe row, with "Swipe for" and "Show N more"',
      /<div class="dc-grid">(?:(?!<\/div>\n      <\/div>)[\s\S])*/.test(html) && (html.match(/class="dc-morerow"/g) || []).length === 1 &&
-     /Swipe for 9 more/.test(html) && /Show 9 more<\/button>/.test(html) &&
+     /Swipe for 9 more/.test(html) && /class="dc-showall"[^>]*>(?:<[^>]+>)*Show 9 more</.test(html) &&
      (html.split('class="dc-grid"')[1].split('class="dc-morerow"')[0].match(/class="dc-item[" ]/g) || []).length === 2, 'grid/row split');
 }
 
