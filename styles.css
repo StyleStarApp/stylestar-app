@@ -4670,6 +4670,8 @@ body.ss-play .hm-entrance{animation:ssOverlayOut .55s ease 1.6s forwards}
 #s-finds .dc-wrap.is-rows .dc-grid{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;gap:10px;
   padding:2px 22px 10px;scroll-padding:0 22px;-ms-overflow-style:none;scrollbar-width:none;align-items:stretch}
 #s-finds .dc-wrap.is-rows .dc-grid::-webkit-scrollbar{display:none}
-#s-finds .dc-wrap.is-rows .dc-item{flex:0 0 46%;scroll-snap-align:start}
+#s-finds .dc-wrap.is-rows .dc-item{flex:0 0 62%;scroll-snap-align:start}
+#s-finds .dc-wrap.is-rows .dc-item-name{font-size:18px}
+#s-finds .dc-wrap.is-rows .dc-item-note{font-size:14px}
 #s-finds .dc-wrap.is-rows .dc-sec .dc-extra{display:flex}
 #s-finds .dc-wrap.is-rows .dc-showall{display:none}
