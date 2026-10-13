@@ -4675,3 +4675,11 @@ body.ss-play .hm-entrance{animation:ssOverlayOut .55s ease 1.6s forwards}
 #s-finds .dc-wrap.is-rows .dc-item-note{font-size:14px}
 #s-finds .dc-wrap.is-rows .dc-sec .dc-extra{display:flex}
 #s-finds .dc-wrap.is-rows .dc-showall{display:none}
+/* ▶ THE HYBRID, FOR HER SIDE-BY-SIDE (2026-10-13): 4 at a glance in the grid;
+   "Show all" opens the rest of the section as ONE swipe row under them instead
+   of lengthening the page. Inert unless the Finds wrapper carries .is-hybrid. */
+#s-finds .dc-wrap.is-hybrid .dc-morerow{display:none}
+#s-finds .dc-wrap.is-hybrid .dc-sec.is-open .dc-morerow,#s-finds .dc-wrap.is-hybrid.is-searching .dc-morerow{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;gap:10px;
+  margin:12px -22px 0;padding:2px 22px 10px 0;scroll-padding:0;scrollbar-width:none}
+#s-finds .dc-wrap.is-hybrid .dc-morerow::-webkit-scrollbar{display:none}
+#s-finds .dc-wrap.is-hybrid .dc-morerow .dc-item{flex:0 0 46%;scroll-snap-align:start;display:flex}
