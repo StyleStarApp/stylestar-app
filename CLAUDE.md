@@ -673,6 +673,10 @@ rendered options; none is to be "tidied" back.**
 - **Sold out → `data/amazon-finds-held.csv`** (row + date + why), restored in one step: Hustler Light Wash, Jo Malone
   Orange Blossom lotion. Toolbar: "Search…" + "Jump to…" dropdown (same sections as the pills). Tip line removed from
   Finds only. Prices: ceiling + tilde, now with thousands commas.
+- 🚨 **FOUND ON THE LIVE PAGE RIGHT AFTER LAUNCH, FIXED SAME HOUR:** with 17 photo batches, Amazon throttling ONE
+  came back empty and the page cached it as "no photo" for 12h (ten tan squares). Now `amazon-images` returns
+  `why:'upstream'|'error'` when Amazon didn't really answer; the Finds loader and `_wkStarAmzLoad` cache NOTHING then,
+  and Finds re-asks a throttled batch once after 1.5s. `amzphotos.mjs` throttled-batch checks, proven to bite.
 - **OPEN, hers:** notes for the 14 front cards with none (she'll write later — Claude never writes her notes);
   Storefront Denim still lists the sold-out wash; 3 pieces Amazon gives no photo for (trench, Reef, crystal bracelets).
 - ⏳ **STILL OWED FROM BEFORE: the What's Trending photo mock-up (data is ready, she hasn't seen it), the ShopMy
