@@ -79,31 +79,70 @@ export function renderPrice(raw) {
   // "9.99 for 4" — so the number is rounded and the words are kept verbatim.
   const m = /^\$?\s*([0-9]+(?:\.[0-9]+)?)\s*(.*)$/.exec(s);
   if (!m) return null;                     // unparseable: the caller errors rather than guessing
-  const shown = '~$' + Math.ceil(parseFloat(m[1])) + (m[2] ? ' ' + m[2] : '');
+  const shown = '~$' + Math.ceil(parseFloat(m[1])).toLocaleString('en-US') + (m[2] ? ' ' + m[2] : '');
   return `<span class="dc-price" data-price="${esc(s)}">${esc(shown)}</span>`;
 }
 
 const BAG = '<svg class="dc-bag" viewBox="0 0 24 24" fill="none" stroke="#0FA6B6" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5.8 8.5 h12.4 l-0.8 10.6 a1.2 1.2 0 0 1 -1.2 1.1 H7.8 a1.2 1.2 0 0 1 -1.2 -1.1 Z"/><path d="M8.3 8.5 C8.3 4.2 15.7 4.2 15.7 8.5"/><path d="M12 11.9 L12.5 13.3 L14 13.35 L12.85 14.25 L13.25 15.65 L12 14.8 L10.75 15.65 L11.15 14.25 L10 13.35 L11.5 13.3 Z" fill="#0FA6B6" stroke="none"/></svg>';
 
-function renderItem(r) {
+/* ▶ THE NOTE RULE, HERS (2026-10-13): a note is never cut mid-thought. The card
+   shows the COMPLETE first sentence and the rest opens in place on "more" -- never
+   a character count and an ellipsis. A first sentence is the shortest run ending
+   in . ! or ? that is followed by a space (or the end), so "100%" or "2-in-1" never
+   split it. A blank note renders NO note at all, never placeholder text. */
+export function splitNote(note) {
+  const t = String(note || '').trim();
+  if (!t) return ['', ''];
+  const m = /^[\s\S]*?[.!?](?=\s|$)/.exec(t);
+  if (!m) return [t, ''];
+  return [m[0], t.slice(m[0].length).trim()];
+}
+
+// ▶ HER SECTION CAP (2026-10-13): each section shows 8, notes first, then a
+// "Show all N" that opens the rest in place. Search still reaches every card.
+export const SECTION_CAP = 8;
+
+const LISTS_PATH = path.join(ROOT, 'data/amazon-finds-lists.json');
+export function loadLists() {
+  try { const j = JSON.parse(fs.readFileSync(LISTS_PATH, 'utf8')); delete j._about; return j; }
+  catch (e) { return {}; }
+}
+const LIST_RE = /^[A-Z0-9]{10,16}$/;
+
+function renderItem(r, extra) {
   const price = renderPrice(r.price);
-  const meta = `<div class="dc-item-meta"><span class="dc-store">${esc(r.store || 'Amazon')}</span>${price}</div>`;
+  const [first, rest] = splitNote(r.note);
   // ⚠️ rel="sponsored noopener" on every outbound link or scratchpad/affq.js
   // fails — and it should, an untagged outbound anchor is money on the floor.
   // ▶ The href stays RAW. _wlDecorateEdit() adds ?tag= at runtime from the one
   // _AMZ_TAG constant, which is what lets her paste her id in a single place.
-  return [
-    '    <div class="dc-item">',
-    '      <span class="dc-item-star">⭐</span>',
-    `      <div class="dc-item-name">${esc(r.name)}</div>`,
-    '      ' + meta,
-    `      <div class="dc-item-note">${esc(r.note)}</div>`,
-    `      <a class="dc-item-btn" href="${r.url}" target="_blank" rel="sponsored noopener">${BAG}Shop this item <span class="dc-arr">&rarr;</span></a>`,
-    '    </div>',
-  ].join('\n');
+  // ▶ The photo square is a placeholder until Amazon's photo arrives at runtime
+  // (_findsPxPlace swaps it), so the grid never jumps; a piece Amazon will not
+  // show a photo for keeps it, marked .is-none (tan, her gold star).
+  // ▶ The square, the name and "Shop this item" all go where the button goes:
+  // the square and the name click the button itself, so there is still ONE
+  // tagged outbound anchor per card.
+  const lines = [
+    `    <div class="dc-item${extra ? ' dc-extra' : ''}">`,
+    '      <span class="dc-item-star" aria-hidden="true">⭐</span>',
+    '      <div class="dc-px-ph" role="link" tabindex="-1" aria-hidden="true"></div>',
+    `      <div class="dc-item-meta is-store"><span class="dc-store">${esc(r.store || 'Amazon')}</span></div>`,
+    `      <div class="dc-item-name" role="link" tabindex="0">${esc(r.name)}</div>`,
+  ];
+  if (price) lines.push(`      <div class="dc-item-meta is-price">${price}</div>`);
+  if (first) {
+    lines.push(`      <div class="dc-item-note"><span class="dc-note-1">${esc(first)}</span>` +
+      (rest ? `<span class="dc-note-rest" hidden> ${esc(rest)}</span>` : '') + '</div>');
+    if (rest) lines.push('      <button type="button" class="dc-more" aria-expanded="false">more</button>');
+  }
+  lines.push(`      <a class="dc-item-btn" href="${r.url}" target="_blank" rel="sponsored noopener">${BAG}Shop this item <span class="dc-arr">&rarr;</span></a>`);
+  lines.push('    </div>');
+  return lines.join('\n');
 }
 
-export function render(rows) {
+const slug = s => String(s).toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+
+export function render(rows, lists = loadLists()) {
   // Her spreadsheet's row order IS the page order, and the order categories
   // first APPEAR is the order they are laid out in — so she rearranges the page
   // by rearranging her rows, with nobody to ask and nothing to configure.
@@ -114,25 +153,35 @@ export function render(rows) {
     if (!g) groups.push(g = { key, items: [] });
     g.items.push(r);
   }
-  // An uncategorised group renders with NO heading, so a spreadsheet with the
-  // column left empty produces exactly the flat page she has today.
   const out = [];
-  /* ⚠️ THE FIRST HEADING IS MARKED, AND CSS CANNOT DO IT ON ITS OWN. Her catch
-     2026-09-11: the gap under "Some links may earn a commission." was too big. The
-     first heading needs LESS air above it than the others — it follows the
-     disclosure, not a card, so it has nothing to separate from. `:first-of-type`
-     looks like the answer and is not: it matches the first DIV among its siblings,
-     not the first .dc-cat, so it silently selects nothing here. Measured — both
-     gaps came back identical. A marker class is the honest fix. */
+  /* ⚠️ THE FIRST HEADING IS MARKED, AND CSS CANNOT DO IT ON ITS OWN (her catch
+     2026-09-11: it follows the disclosure, not a card, so it needs less air).
+     `:first-of-type` matches the first DIV among siblings, not the first .dc-cat. */
   let firstHeading = true;
   for (const g of groups) {
+    // Notes first WITHIN a section, her CSV order otherwise (a stable sort).
+    const items = g.items.map((r, i) => [r, i])
+      .sort((x, y) => ((y[0].note ? 1 : 0) - (x[0].note ? 1 : 0)) || (x[1] - y[1]))
+      .map(x => x[0]);
+    const capped = items.length > SECTION_CAP;
+    out.push(`    <section class="dc-sec${capped ? ' is-capped' : ''}"${g.key ? ` data-cat="${slug(g.key)}"` : ''}>`);
     if (g.key) {
-      out.push(`    <div class="dc-cat${firstHeading ? ' is-first' : ''}">${esc(g.key)}</div>`);
+      const id = lists[g.key];
+      const href = id && LIST_RE.test(id) ? `https://www.amazon.com/shop/stylestar01/list/${id}` : '';
+      const name = href
+        ? `<a class="dc-cat-link" href="${href}" target="_blank" rel="sponsored noopener">${esc(g.key)}</a>`
+        : esc(g.key);
+      out.push(`      <div class="dc-cat${firstHeading ? ' is-first' : ''}">${name}</div>`);
+      if (href) out.push(`      <a class="dc-cat-see" href="${href}" target="_blank" rel="sponsored noopener">See the whole list on Amazon <span class="dc-arr">&rarr;</span></a>`);
       firstHeading = false;
     }
-    for (const it of g.items) out.push(renderItem(it));
+    out.push('      <div class="dc-grid">');
+    items.forEach((it, i) => out.push(renderItem(it, i >= SECTION_CAP)));
+    out.push('      </div>');
+    if (capped) out.push(`      <button type="button" class="dc-showall">Show all ${items.length}</button>`);
+    out.push('    </section>');
   }
-  return out.join('\n\n');
+  return out.join('\n');
 }
 
 // ---- read + validate -------------------------------------------------------
@@ -187,7 +236,7 @@ const pieces = h => {
   const s0 = h.indexOf('id="s-finds"'), s1 = h.indexOf('id="s-shop"', s0);
   const scope = h.slice(s0, s1 < 0 ? h.length : s1);
   const out = new Map();
-  const re = /<div class="dc-item-name">([\s\S]*?)<\/div>[\s\S]{0,1200}?<a class="dc-item-btn"[^>]*href="[^"]*\/dp\/([A-Z0-9]{10})/g;
+  const re = /<div class="dc-item-name"[^>]*>([\s\S]*?)<\/div>[\s\S]{0,2400}?<a class="dc-item-btn"[^>]*href="[^"]*\/dp\/([A-Z0-9]{10})/g;
   for (const m of scope.matchAll(re)) out.set(m[2], m[1]);
   return out;
 };
@@ -244,7 +293,7 @@ if (import.meta.url === pathToFileURL(process.argv[1] || '').href) {
   const v = fs.readFileSync(IDX, 'utf8');
   const count = (id, nextId) => {
     const i = v.indexOf(`id="${id}"`), j = v.indexOf(`id="${nextId}"`, i);
-    return (v.slice(i, j < 0 ? v.length : j).match(/<div class="dc-item">/g) || []).length;
+    return (v.slice(i, j < 0 ? v.length : j).match(/<div class="dc-item[" ]/g) || []).length;
   };
   console.log(`\n✓ written. The Edit holds ${count('s-dream', 's-finds')} pieces; Amazon Finds holds ${count('s-finds', 's-shop')}.`);
   console.log('  ▶ now run: node scripts/sitemap-lastmod.js --write');

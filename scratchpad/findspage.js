@@ -309,7 +309,8 @@ ok('each shown price is her real figure rounded UP, never down', money.every(m =
   /* ⚠️ TAKE THE LEADING NUMBER ONLY. "~$10 for 4" has a 4 in its qualifier, and
      stripping every non-digit turned it into 104 — a check that failed on a card
      that was perfectly correct. */
-  const num = t => parseFloat((/([0-9]+(?:\.[0-9]+)?)/.exec(String(t || '')) || [])[1]);
+  // ⚠️ a thousands comma ("~$2,595", 2026-10-13) is part of the number, not a stop
+  const num = t => parseFloat((/([0-9]+(?:\.[0-9]+)?)/.exec(String(t || '').replace(/,/g, '')) || [])[1]);
   const n = num(m.exact), s = num(m.shown);
   return !isFinite(n) || s === Math.ceil(n);
 }), JSON.stringify(money));
@@ -616,8 +617,12 @@ ok('...but stays under the product names, so it organises rather than competes',
 const air = await page.evaluate(() => {
   const c = document.querySelectorAll('#s-finds .dc-cat')[1];
   const items = [...document.querySelectorAll('#s-finds .dc-item')];
-  return { above: Math.round(c.getBoundingClientRect().top - c.previousElementSibling.getBoundingClientRect().bottom),
-           between: Math.round(items[1].getBoundingClientRect().top - items[0].getBoundingClientRect().bottom) };
+  // 2026-10-13: each heading now opens its own <section>, and cards sit two
+  // across — so "above" is measured from the PREVIOUS SECTION'S foot, and
+  // "between" is the gap between two ROWS (card 0 and the card under it, 2)
+  const prev = c.closest('.dc-sec').previousElementSibling;
+  return { above: Math.round(c.getBoundingClientRect().top - prev.getBoundingClientRect().bottom),
+           between: Math.round(items[2].getBoundingClientRect().top - items[0].getBoundingClientRect().bottom) };
 });
 ok('and it is set apart — clearly more air above it than between two cards',
    air.above >= air.between * 2, `above ${air.above} vs between ${air.between}`);

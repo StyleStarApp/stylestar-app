@@ -63,12 +63,14 @@ export function collectEdit(src = html(), opts = {}) {
     ? screenSlice(src, 's-dream', 's-finds')
     : opts.scope;
   const out = [];
-  const blocks = String(scope).split('<div class="dc-item">').slice(1);
+  // A Finds card may carry a second class (`dc-item dc-extra`, a card past her
+  // section cap of 8 — 2026-10-13), so split on the class, never the exact tag.
+  const blocks = String(scope).split(/<div class="dc-item(?:"| [^"]*")>/).slice(1);
   for (const b of blocks) {
     const block = b.slice(0, b.indexOf('</div>\n    </div>') + 1 || 4000);
-    const name = /<div class="dc-item-name">([\s\S]*?)<\/div>/.exec(block);
+    const name = /<div class="dc-item-name"[^>]*>([\s\S]*?)<\/div>/.exec(block);
     const store = /<span class="dc-store">([\s\S]*?)<\/span>/.exec(block);
-    const price = /<span class="dc-price">([\s\S]*?)<\/span>/.exec(block);
+    const price = /<span class="dc-price"[^>]*>([\s\S]*?)<\/span>/.exec(block);
     const href = /<a class="dc-item-btn"[^>]*href="([^"]+)"/.exec(block);
     if (!name || !href) continue;
     out.push({

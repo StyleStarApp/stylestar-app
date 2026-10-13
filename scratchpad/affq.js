@@ -110,7 +110,13 @@ const anchors = allOutbound.filter(a => !/instagram\.com/.test(a));
 //   portrait before ever opening the Edit would otherwise get an untagged link
 //   that earns nothing. `scratchpad/fromedit.mjs` §3 and §4 pin both halves.
 const TEMPLATES = 18;
-const EDIT_N = (HTML.match(/<a class="dc-item-btn"/g) || []).length;
+// ▶ 2026-10-13: her /finds section headings link to her Storefront idea lists —
+//   a heading link and a "See the whole list on Amazon" line per section. They are
+//   DATA-DRIVEN like the product buttons (one pair per section her CSV has), so
+//   they are counted from the markup like EDIT_N, never added to TEMPLATES; both
+//   carry rel="sponsored noopener" and are tagged at runtime by openFinds().
+const LIST_N = (HTML.match(/<a class="dc-cat-(?:link|see)"/g) || []).length;
+const EDIT_N = (HTML.match(/<a class="dc-item-btn"/g) || []).length + LIST_N;
 ok('found the full set of outbound PRODUCT anchors (every Edit link + ' + TEMPLATES + ' templates)',
    anchors.length === EDIT_N + TEMPLATES, 'got ' + anchors.length + ' with ' + EDIT_N + ' Edit links');
 ok('every product link carries sponsored + noopener', anchors.every(a => /rel="sponsored noopener"/.test(a)),
@@ -121,13 +127,13 @@ ok('...carries noopener but NOT sponsored', social.every(a => /rel="noopener"/.t
 ok('...has an aria-label, being an icon with no text', social.every(a => /aria-label="[^"]+"/.test(a)));
 const editBtns = [...HTML.matchAll(/<a class="dc-item-btn"[^>]*>/g)].map(m => m[0]);
 ok('every hardcoded Edit link is included and carries the rel',
-   editBtns.length === EDIT_N && editBtns.length >= 19 && editBtns.every(a => /rel="sponsored noopener"/.test(a)),
+   editBtns.length === EDIT_N - LIST_N && editBtns.length >= 19 && editBtns.every(a => /rel="sponsored noopener"/.test(a)),
    editBtns.length + ' links');
 
 console.log('\nA2. Amazon shortlinks are canonical now');
 ok('no a.co shortlinks remain', !/a\.co\//.test(HTML));
 ok('both canonical /dp/ links present, tracking-free',
-  HTML.includes('https://www.amazon.com/dp/B0CWD1RYK3"') && HTML.includes('https://www.amazon.com/dp/B0DWL5VV8Z"'));
+  HTML.includes('https://www.amazon.com/dp/B0CWD1RYK3"') && HTML.includes('https://www.amazon.com/dp/B07RBV936R"'));
 
 console.log('\nA3. package.json no longer carries @netlify/blobs');
 const pkg = JSON.parse(fs.readFileSync(path.join(ROOT, 'package.json'), 'utf8'));
@@ -229,6 +235,9 @@ const editDom = await page.evaluate(() => {
     amazon: links.filter(a => /amazon\.com\//.test(a.href)).length,
     amazonCanonical: links.filter(a => /amazon\.com\//.test(a.href))
                           .every(a => a.href.includes('amazon.com/dp/')),
+    lists: [...document.querySelectorAll('#s-finds .dc-cat-link, #s-finds .dc-cat-see')]
+             .map(a => ({ rel: a.rel, tagged: /[?&]tag=stylestar01-20/.test(a.href),
+                          list: /amazon\.com\/shop\/stylestar01\/list\/[A-Z0-9]+/.test(a.href) })),
   };
 });
 // ⚠️ 2026-08-21: an Edit href may now be AFFILIATE-WRAPPED in the live DOM
@@ -237,13 +246,16 @@ const editDom = await page.evaluate(() => {
 // canonicalisation are what this assertion is really about, so it counts
 // against the derived total rather than a frozen number.
 ok('every curated product link carries the rel in the live DOM',
-   editDom.n === EDIT_N && editDom.rel, JSON.stringify(editDom));
+   editDom.n === EDIT_N - LIST_N && editDom.rel, JSON.stringify(editDom));
 // ⚠️ NOT "2 on the Edit" any more — WHERE she keeps an Amazon piece is hers to
 // change, and a test that pins it to a screen just makes her moves look broken.
 ok('every Amazon link anywhere is the canonical /dp/ form',
    editDom.amazon >= 2 && editDom.amazonCanonical, JSON.stringify(editDom));
 // ⚠️ AND HER SECOND CURATED SCREEN IS REALLY BEING LOOKED AT, so the check above
 //   cannot quietly pass by finding nothing there.
+ok('every /finds section heading link is her Storefront list, tagged, sponsored',
+   editDom.lists.length === LIST_N && LIST_N > 0 &&
+   editDom.lists.every(l => l.rel === 'sponsored noopener' && l.tagged && l.list), JSON.stringify(editDom.lists.slice(0, 2)));
 ok('Amazon Finds is rendering her pieces, not an empty page',
    editDom.finds >= 2, JSON.stringify(editDom));
 await page.close();

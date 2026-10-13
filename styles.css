@@ -4575,3 +4575,78 @@ body.ss-play .hm-entrance{animation:ssOverlayOut .55s ease 1.6s forwards}
   .chat-typing-star,.find-load-star{animation:none;opacity:.75}
 }
 
+
+/* ============================================================================
+   AMAZON FINDS — THE TWO-ACROSS GRID (her rebuild, 2026-10-13)
+   🚨 HER RULE ABOVE ALL OTHERS: "Nothing about the look changes." Same colours,
+   fonts, card border, star, button and Save pill; ONLY the layout moves: two
+   cards across, a bigger square photo, the note cut to its first sentence with
+   a "more". Every rule here is scoped to #s-finds -- the Edit wears the same
+   .dc-* classes and must not move by a pixel.
+   ▶ Columns follow the CARD COLUMN'S width, not the window's: the app frame is
+   capped at 480px on every device, so on a phone AND a laptop this is two
+   across. 3 and 4 across are written for the day the frame is ever widened.
+   ========================================================================== */
+#s-finds .dc-wrap{container-type:inline-size}
+/* the grid borrows most of the page's side padding (the same move the disclosure
+   line makes), so two cards across get a photo big enough to judge */
+#s-finds .dc-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;align-items:stretch;margin:0 -22px}
+@container (min-width:620px){#s-finds .dc-grid{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@container (min-width:880px){#s-finds .dc-grid{grid-template-columns:repeat(4,minmax(0,1fr))}}
+#s-finds .dc-item{display:flex;flex-direction:column;margin:0;padding:9px 9px 11px;min-width:0}
+#s-finds .dc-item-star{top:6px;right:7px;font-size:14px;z-index:1;pointer-events:none}
+/* the square: the placeholder holds the space until Amazon's photo arrives, so
+   nothing jumps; the photo then takes its place at the same size */
+#s-finds .dc-px-ph,#s-finds .dc-item-px.is-amz{display:block;width:100%;max-width:none;aspect-ratio:1/1;
+  margin:0 0 10px;box-sizing:border-box;border:1px solid #EFE7D2;border-radius:2px;background:#fff;cursor:pointer}
+#s-finds .dc-item-px.is-amz{padding:8px;object-fit:contain}
+/* no photo from Amazon: her page tan with her gold star (her call, "for now") */
+#s-finds .dc-px-ph.is-none{background:#ECBD83 url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='%23FFD500' stroke='%239AA0A6' stroke-width='1.1' stroke-linejoin='round' d='M12 1.6L14.47 8.6L21.89 8.79L15.99 13.3L18.11 20.41L12 16.2L5.89 20.41L8.01 13.3L2.11 8.79L9.53 8.6Z'/%3E%3C/svg%3E") center/34% no-repeat;border-color:#ECBD83}
+#s-finds .dc-item-meta{margin:0}
+#s-finds .dc-item-meta.is-store{margin-bottom:4px}
+#s-finds .dc-store{font-size:10px;letter-spacing:.1em;overflow-wrap:anywhere}
+#s-finds .dc-item-name{font-size:16.5px;line-height:1.24;margin:0 0 5px;padding-right:0;cursor:pointer;overflow-wrap:anywhere}
+#s-finds .dc-item-meta.is-price{margin-bottom:8px}
+#s-finds .dc-item-note{font-size:13px;line-height:1.55;margin:0;padding-left:15px}
+#s-finds .dc-item-note::before{font-size:26px;top:-3px}
+#s-finds .dc-item-note::after{font-size:26px;margin-left:2px}
+#s-finds .dc-more{align-self:flex-start;background:none;border:0;padding:6px 0 2px 15px;margin:0;cursor:pointer;
+  font:700 10.5px/1.2 'Jost',sans-serif;letter-spacing:.12em;text-transform:uppercase;color:#4a463e;
+  text-decoration:underline;text-decoration-color:#ECBD83;text-decoration-thickness:2px;text-underline-offset:3px}
+/* the button sits at the foot of every card, so a row of cards lines its buttons up */
+#s-finds .dc-item-btn{margin-top:auto;align-self:stretch;justify-content:center;gap:5px;padding:10px 4px;font-size:9.5px;letter-spacing:.07em;white-space:nowrap;min-width:0}
+/* the air above the button belongs to whatever sits last above it */
+#s-finds .dc-item-note{margin-bottom:12px}
+#s-finds .dc-item-note:has(+.dc-more){margin-bottom:0}
+#s-finds .dc-more{margin-bottom:10px}
+#s-finds .dc-item-meta:has(+.dc-item-btn),#s-finds .dc-item-name:has(+.dc-item-btn){margin-bottom:12px}
+#s-finds .dc-item-btn .dc-bag{width:14px;height:14px}
+#s-finds .dc-item-btn .dc-arr{font-size:12px}
+#s-finds .dc-save-row{margin-top:9px}
+/* her section cap: 8 cards, notes first, then "Show all N" -- and a search
+   reaches every card (an inline display:none from the search still wins) */
+#s-finds .dc-sec.is-capped:not(.is-open) .dc-extra{display:none}
+#s-finds .dc-wrap.is-searching .dc-sec .dc-extra{display:flex}
+#s-finds .dc-wrap.is-searching .dc-showall{display:none}
+#s-finds .dc-showall{display:block;margin:14px auto 0;cursor:pointer;background:#fff;border:1.3px solid #E4DCC8;border-radius:999px;padding:9px 20px;
+  font:600 12px/1 'Jost',sans-serif;letter-spacing:.06em;text-transform:uppercase;color:#6b6459}
+#s-finds .dc-showall:hover{border-color:#0FA6B6;color:#0FA6B6}
+/* her headings link to her Storefront idea lists; the heading keeps its look,
+   the small line under it says where it goes */
+#s-finds .dc-cat-link{color:inherit;text-decoration:none}
+#s-finds .dc-cat{margin-bottom:.55rem}
+#s-finds .dc-cat-see{display:table;margin:0 auto 1rem;font:600 10.5px/1.3 'Jost',sans-serif;letter-spacing:.1em;text-transform:uppercase;color:#4a463e;
+  text-decoration:underline;text-decoration-color:#ECBD83;text-decoration-thickness:2px;text-underline-offset:4px;padding:4px 2px}
+#s-finds .dc-cat-see .dc-arr{text-decoration:none;display:inline-block}
+/* search box + "Jump to a section" side by side */
+#s-finds .dc-toolrow{display:flex;gap:8px;align-items:stretch;max-width:420px;margin:1.5rem -14px 0}
+#s-finds .dc-toolrow .dc-search{flex:1 1 auto;min-width:0;margin:0;max-width:none}
+#s-finds .dc-toolrow .dc-search-input{padding-right:30px}
+#s-finds .dc-secsel{flex:0 0 108px;width:108px;font:500 13px/1.2 'DM Sans',sans-serif;color:#4a463e;
+  background:#fff;border:1.5px solid #E4DCC8;border-radius:22px;padding:0 12px;cursor:pointer}
+/* on the narrowest phones the bag icon steps aside so "Shop this item" still
+   fits inside its own button; the words and the arrow always stay */
+#s-finds .dc-item{container-type:inline-size}
+@container (max-width:150px){#s-finds .dc-item-btn .dc-bag{display:none}#s-finds .dc-item-btn{letter-spacing:.05em}}
+@container (max-width:126px){#s-finds .dc-item-btn{font-size:8.5px;letter-spacing:.03em}}
+#s-finds .dc-item-note{overflow-wrap:break-word;-webkit-hyphens:auto;hyphens:auto}

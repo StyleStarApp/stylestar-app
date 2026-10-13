@@ -31,26 +31,36 @@ console.log('1. THE NAV RENDERS ONE REAL PILL PER LIVE CATEGORY, NOT A HARDCODED
 const pillLabels = await page.evaluate(() => Array.from(document.querySelectorAll('#findsCatNav .dc-catnav-btn')).map(b => b.textContent));
 const realCatCount = await page.evaluate(() => document.querySelectorAll('#s-finds .dc-cat').length);
 ok(pillLabels.length === realCatCount && realCatCount > 0, `pill count (${pillLabels.length}) matches real .dc-cat count (${realCatCount})`);
-ok(pillLabels.includes('Shoes') && pillLabels.includes('Jewelry & Other Accessories'), 'real category names appear verbatim as pills');
+// ▶ 2026-10-13: named from HER CSV, never typed here, so a section she renames
+//   or retires (she retired Shoes and Jewelry that day) never turns this red
+const { load } = await import(path.join(ROOT, 'scripts/finds-from-csv.js'));
+const CATS = [...new Set(load(path.join(ROOT, 'data/amazon-finds.csv')).map(r => r.category).filter(Boolean))];
+ok(JSON.stringify(pillLabels) === JSON.stringify(CATS), 'her section names appear verbatim as pills, in her CSV order');
+const CAT_A = CATS[Math.min(3, CATS.length - 1)], CAT_B = CATS[Math.floor(CATS.length / 2)];
+const startVisible = await page.evaluate(() => [...document.querySelectorAll('#s-finds .dc-item')].filter(n => getComputedStyle(n).display !== 'none').length);
+const opts = await page.evaluate(() => [...document.getElementById('findsSecSel').options].slice(1).map(o => o.textContent));
+ok(JSON.stringify(opts) === JSON.stringify(pillLabels), 'the "Jump to" dropdown lists exactly the same sections as the pills');
 
 console.log('2. TAPPING A PILL SCROLLS TO THAT CATEGORY, CLEAR OF THE FIXED MENU CHIP');
-const shoesIndex = pillLabels.indexOf('Shoes');
+const shoesIndex = pillLabels.indexOf(CAT_A);
 await page.evaluate(i => findsCatNavJump(i), shoesIndex);
 await page.waitForTimeout(1100);
-const shoesTop = await page.evaluate(() => document.querySelector('#s-finds .dc-cat').parentElement && [...document.querySelectorAll('#s-finds .dc-cat')].find(c => c.textContent === 'Shoes').getBoundingClientRect().top);
-ok(shoesTop >= 55 && shoesTop <= 120, `Shoes heading lands between the chip and comfortably on screen (measured top: ${shoesTop}px)`);
+const shoesTop = await page.evaluate(n => [...document.querySelectorAll('#s-finds .dc-cat')].find(c => c.textContent === n).getBoundingClientRect().top, CAT_A);
+ok(shoesTop >= 55 && shoesTop <= 120, `the "${CAT_A}" heading lands between the chip and comfortably on screen (measured top: ${shoesTop}px)`);
 
 console.log('3. JUMPING WHILE A SEARCH IS ACTIVE CLEARS THE SEARCH FIRST');
-await page.fill('#findsSearchInput', 'jewelry');
+await page.fill('#findsSearchInput', 'lips');
 await page.waitForTimeout(150);
-const jewelryIndex = pillLabels.indexOf('Jewelry & Other Accessories');
-await page.evaluate(i => findsCatNavJump(i), jewelryIndex);
+const jewelryIndex = pillLabels.indexOf(CAT_B);
+// through the DROPDOWN this time, the other door to the same jump
+await page.selectOption('#findsSecSel', String(jewelryIndex));
 await page.waitForTimeout(1100);
 ok((await page.inputValue('#findsSearchInput')) === '', 'the search box is emptied by the jump');
 const visibleAfterJump = await page.evaluate(() => [...document.querySelectorAll('#s-finds .dc-item')].filter(n => getComputedStyle(n).display !== 'none').length);
-ok(visibleAfterJump === 73, `all 73 pieces are visible again after the jump clears the filter (saw ${visibleAfterJump})`);
-const jewelryTop = await page.evaluate(() => [...document.querySelectorAll('#s-finds .dc-cat')].find(c => c.textContent === 'Jewelry & Other Accessories').getBoundingClientRect().top);
-ok(jewelryTop >= 55 && jewelryTop <= 120, `Jewelry heading actually lands on screen after the clear-then-jump (measured top: ${jewelryTop}px)`);
+ok(visibleAfterJump === startVisible, `the page is back as it was after the jump clears the filter (${visibleAfterJump} of ${startVisible})`);
+ok((await page.inputValue('#findsSecSel')) === '', 'the dropdown resets to "Jump to…" after a jump');
+const jewelryTop = await page.evaluate(n => [...document.querySelectorAll('#s-finds .dc-cat')].find(c => c.textContent === n).getBoundingClientRect().top, CAT_B);
+ok(jewelryTop >= 55 && jewelryTop <= 120, `the "${CAT_B}" heading actually lands on screen after the clear-then-jump (measured top: ${jewelryTop}px)`);
 
 console.log('4. THE NAV SURVIVES A RETURN VISIT (RE-RENDERED FRESH, NOT STALE)');
 await page.evaluate(() => { closeFinds(); });

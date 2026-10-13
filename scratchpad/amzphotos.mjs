@@ -14,7 +14,7 @@ async function run(mode){
     if(u.pathname.startsWith('/.netlify/functions/amazon-images')){calls++;
       if(mode==='unconfigured')return r.fulfill({contentType:'application/json',body:'{"images":{},"why":"unconfigured"}'});
       const as=(u.searchParams.get('asins')||'').split(',');const o={};
-      as.forEach((a,i)=>{if(i%5!==4)o[a]={url:'https://m.media-amazon.com/images/I/'+a+'.jpg',w:500,h:500}});   // every 5th: Amazon sends nothing
+      as.forEach((a,i)=>{if(i%5!==4&&!(mode==='results'&&a==='B07RBV936R'))o[a]={url:'https://m.media-amazon.com/images/I/'+a+'.jpg',w:500,h:500}});   // every 5th: Amazon sends nothing
       return r.fulfill({contentType:'application/json',body:JSON.stringify({images:o})});}
     if(u.hostname==='stylestar.app'){let f=u.pathname==='/'||!path.extname(u.pathname)?'/index.html':u.pathname;f=ROOT+f;return fs.existsSync(f)?r.fulfill({path:f}):r.fulfill({status:404});}
     if(r.request().resourceType()==='image')return r.fulfill({body:PNG,contentType:'image/png'});
@@ -31,7 +31,8 @@ async function run(mode){
     const px=[...document.querySelectorAll('#s-finds .dc-item-px.is-amz')];
     const cs=px[0]&&getComputedStyle(px[0]);
     return {items:it.length,amz:amz.length,px:px.length,
-      allFirst:px.every(i=>i.parentNode.firstElementChild===i),
+      // the photo is the first thing in the card; only the decorative star may sit before it
+      allFirst:px.every(i=>{const f=i.parentNode.firstElementChild;return f===i||(f.classList.contains('dc-item-star')&&f.nextElementSibling===i)}),
       onePer:it.every(i=>i.querySelectorAll('.dc-item-px').length<=1),
       fit:cs&&cs.objectFit,bg:cs&&cs.backgroundColor,
       hostOk:px.every(i=>/^https:\/\/m\.media-amazon\.com\//.test(i.src)),
@@ -90,7 +91,9 @@ const order=await r.p.evaluate(()=>[...document.querySelectorAll('#resFindsGalle
 const picks=await r.p.evaluate(()=>RES_FINDS_PICKS.slice());
 const sub=picks.filter(a=>order.includes(a));
 ok(picks.length===0||(order.every(a=>picks.includes(a))&&JSON.stringify(order)===JSON.stringify(sub)),`only her picks, in her order (${order.length} shown)`);
-ok(picks.length===0||order.length<picks.length,'a pick Amazon gave no photo for is skipped, never shown blank');
+// the stub withholds her first pick's photo in this run, so it MUST be skipped (2026-10-13: was
+// left to batch position, and her bigger page moved every pick off the withheld slots)
+ok(picks.length===0||(order.length<picks.length&&!order.includes('B07RBV936R')),'a pick Amazon gave no photo for is skipped, never shown blank');
 ok(!/styled for you|for your style|based on your|picked for you|chosen for you|matched to you|your quiz/i.test(q.allText),'neither panel claims the quiz chose its pieces');
 ok(/As an Amazon Associate, I earn from qualifying purchases\./.test(q.disc),"Amazon's required sentence is on the Amazon panel");
 ok(q.tagged,'every Amazon card is tagged and sponsored');

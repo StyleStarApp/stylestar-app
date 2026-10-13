@@ -40,7 +40,7 @@ const slice = (id, next) => {
   const i = src.indexOf(`id="${id}"`), j = src.indexOf(`id="${next}"`, i);
   return i < 0 ? '' : src.slice(i, j < 0 ? src.length : j);
 };
-const count = t => (t.match(/<div class="dc-item">/g) || []).length;
+const count = t => (t.match(/<div class="dc-item[" ]/g) || []).length;   // dc-extra cards too (2026-10-13)
 const domCount = count(slice('s-dream', 's-finds'));
 const findsCount = count(slice('s-finds', 's-shop'));
 ok('every Edit item in the markup is collected, none dropped',

@@ -39,13 +39,23 @@ const visibleItemNames = () => page.evaluate(() => {
 });
 const visibleCatNames = () => page.evaluate(() => {
   const wrap = document.querySelector('#s-finds .dc-wrap');
-  return [...wrap.querySelectorAll('.dc-cat')].filter(n => getComputedStyle(n).display !== 'none').map(n => n.textContent);
+  // a search hides a whole SECTION now (heading and all), so read the section's display
+  return [...wrap.querySelectorAll('.dc-cat')].filter(n => getComputedStyle(n.closest('.dc-sec') || n).display !== 'none' && getComputedStyle(n).display !== 'none').map(n => n.textContent);
 });
 const search = async (v) => { await page.fill('#findsSearchInput', v); await page.waitForTimeout(120); };
 
+// ▶ 2026-10-13, HER REBUILD: 165 pieces in 15 sections, each section showing 8
+//   (notes first) behind a "Show all N". So "unfiltered" is no longer every card
+//   on screen -- it is every section showing up to its cap, and every count here
+//   is DERIVED from her CSV, never typed, so her next batch does not turn it red.
+const { load, SECTION_CAP } = await import(path.join(ROOT, 'scripts/finds-from-csv.js'));
+const ROWS = load(path.join(ROOT, 'data/amazon-finds.csv'));
+const TOTAL = ROWS.length;
+const bySec = ROWS.reduce((m, r) => (m[r.category] = (m[r.category] || 0) + 1, m), {});
+const UNFILTERED = Object.values(bySec).reduce((t, n) => t + Math.min(n, SECTION_CAP), 0);
 console.log('1. THE PAGE STARTS UNFILTERED');
 const allNames = await visibleItemNames();
-ok(allNames.length === 73, 'all 73 pieces show with no search typed (' + allNames.length + ')');
+ok(allNames.length === UNFILTERED, 'every section shows up to ' + SECTION_CAP + ' with no search typed (' + allNames.length + ' of ' + TOTAL + ')');
 ok((await page.evaluate(() => getComputedStyle(document.getElementById('findsSearchClear')).display)) === 'none', 'the clear (×) button is hidden with nothing typed');
 ok((await page.evaluate(() => getComputedStyle(document.getElementById('findsSearchEmpty')).display)) === 'none', 'the empty-state line is hidden with nothing typed');
 
@@ -53,20 +63,24 @@ console.log('2. HER FRIEND\'S REAL SEARCH: "shoes" MUST FIND THE SHOES CATEGORY'
 await search('shoes');
 const shoeNames = await visibleItemNames();
 const shoeCats = await visibleCatNames();
-ok(shoeCats.includes('Shoes'), 'the Shoes category heading is shown');
-ok(shoeNames.includes('Kitten Heel Mules') && shoeNames.includes('Arch Support Flip Flops') && shoeNames.includes('J. Renee Sandal'), 'real Shoes-category pieces are shown, none of which say the word "shoe" in their own name');
-ok(shoeNames.includes('Reebok Training Shoes'), 'a piece from a DIFFERENT category whose own name says "Shoes" is also found');
-ok(!shoeNames.includes('Cropped Cardigan'), 'an unrelated piece (a cardigan) is not shown');
-ok(!shoeCats.includes('Wraps & Layers'), 'a category with nothing matching is hidden, not left as an empty heading');
+ok(shoeCats.includes('Comfy Shoes'), 'the Comfy Shoes heading is shown');
+ok(shoeNames.includes('Kitten Heel Mules') && shoeNames.includes('Arch Support Flip Flops'), 'real Comfy Shoes pieces are shown, though neither says "shoe" in its own name');
+ok(shoeNames.includes('J. Renee Soncino Sandal, Nude'), 'a piece hidden past the section cap of ' + SECTION_CAP + ' is reached by the search (her rule)');
+ok(!shoeNames.includes('Striped Cropped Cardigan'), 'an unrelated piece (a cardigan) is not shown');
+ok(!shoeCats.includes('Lips'), 'a section with nothing matching is hidden, not left as an empty heading');
+ok(await page.evaluate(() => [...document.querySelectorAll('#s-finds .dc-showall')].every(b => getComputedStyle(b).display === 'none')), 'no "Show all" button shows while she searches -- the search already shows them all');
+await search('shoe');
+ok((await visibleItemNames()).includes('Non-Slip Shoe Sole Grips'), 'a piece from a DIFFERENT section whose own name says "shoe" is also found');
 
-console.log('3. A CATEGORY NAME IS ITSELF A VALID SEARCH TERM');
-await search('jewelry');
-ok((await visibleCatNames()).length === 1 && (await visibleCatNames())[0] === 'Jewelry & Other Accessories', 'searching a bare category word ("jewelry") shows exactly that one category');
+console.log('3. A BARE SECTION WORD SHOWS THAT SECTION');
+await search('lips');
+ok(JSON.stringify(await visibleCatNames()) === '["Lips"]', 'searching a bare section word ("lips") shows exactly that one section (' + (await visibleCatNames()).join(', ') + ')');
 
 console.log('4. AN ORDINARY WORD SEARCH STILL WORKS (name/note/store, not just category)');
 await search('crz yoga');
 const crzNames = await visibleItemNames();
-ok(crzNames.length === 4 && crzNames.every(n => ['Butterluxe Adjustable Sports Bra', 'Butterluxe Twist Back Crop Tank Tops', 'Butterluxe Leggings', 'Fleece Thermal Leggings'].includes(n)), 'a store-name search finds exactly her four CRZ YOGA pieces (' + crzNames.join(', ') + ')');
+const CRZ = ROWS.filter(r => /crz yoga/i.test(r.store)).map(r => r.name);
+ok(crzNames.length === CRZ.length && CRZ.length > 0 && crzNames.every(n => CRZ.includes(n)), 'a store-name search finds exactly her ' + CRZ.length + ' CRZ YOGA pieces (' + crzNames.join(', ') + ')');
 
 console.log('5. A REAL MISS SAYS SO HONESTLY, AND OFFERS A WAY OUT');
 await search('zzzznotarealthingoranywhere');
@@ -77,7 +91,7 @@ ok((await page.evaluate(() => document.getElementById('findsSearchEmptyTerm').te
 console.log('6. THE CLEAR BUTTON UNDOES THE SEARCH AND REFOCUSES THE FIELD');
 await page.click('#findsSearchClear');
 await page.waitForTimeout(120);
-ok((await visibleItemNames()).length === 73, 'clearing restores all 73 pieces');
+ok((await visibleItemNames()).length === UNFILTERED, 'clearing restores the page as it was (' + UNFILTERED + ' showing)');
 ok((await page.inputValue('#findsSearchInput')) === '', 'the input itself is emptied');
 ok(await page.evaluate(() => document.activeElement === document.getElementById('findsSearchInput')), 'focus returns to the search field after clearing');
 
@@ -87,11 +101,22 @@ await page.evaluate(() => { closeFinds(); });
 await page.waitForTimeout(100);
 await page.evaluate(() => { openFinds(); });
 await page.waitForTimeout(150);
-ok((await visibleItemNames()).length === 73, 'reopening Amazon Finds shows all 73 pieces again, not the last filter she left it on');
+ok((await visibleItemNames()).length === UNFILTERED, 'reopening Amazon Finds shows the whole page again, not the last filter she left it on');
 ok((await page.inputValue('#findsSearchInput')) === '', 'the search box itself is empty on return, not silently holding her old word');
 
 console.log('8. NOTHING ELSE ON THE PAGE BROKE');
-ok((await page.evaluate(() => document.querySelectorAll('#s-finds .dc-item').length)) === 73, 'the DOM still holds all 73 real .dc-item nodes -- the search hides with display, it never deletes');
+ok((await page.evaluate(() => document.querySelectorAll('#s-finds .dc-item').length)) === TOTAL, 'the DOM still holds all ' + TOTAL + ' real .dc-item nodes -- the search hides with display, it never deletes');
+console.log('9. "SHOW ALL" OPENS A SECTION IN PLACE');
+const capped = Object.entries(bySec).find(([, n]) => n > SECTION_CAP);
+const opened = await page.evaluate(cat => {
+  const sec = [...document.querySelectorAll('#s-finds .dc-sec')].find(s => s.querySelector('.dc-cat').textContent === cat);
+  const vis = () => [...sec.querySelectorAll('.dc-item')].filter(n => getComputedStyle(n).display !== 'none').length;
+  const before = vis(), btn = sec.querySelector('.dc-showall'), label = btn && btn.textContent;
+  btn.click();
+  return { before, after: vis(), label, gone: !sec.querySelector('.dc-showall') };
+}, capped[0]);
+ok(opened.before === SECTION_CAP && opened.label === 'Show all ' + capped[1], capped[0] + ' shows ' + SECTION_CAP + ' and offers "Show all ' + capped[1] + '" (' + JSON.stringify(opened) + ')');
+ok(opened.after === capped[1] && opened.gone, '...and one tap shows every piece, and the button steps away');
 const pageErrors = [];
 page.on('pageerror', e => pageErrors.push(e.message));
 await search('a');

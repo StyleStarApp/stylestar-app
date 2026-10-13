@@ -154,7 +154,7 @@ const idxNow = fs.readFileSync(path.join(path.dirname(new URL(import.meta.url).p
 const byAsin = new Map();
 {
   const a = idxNow.indexOf('id="s-finds"'), b = idxNow.indexOf('id="s-shop"', a);
-  const re = /<div class="dc-item-name">([\s\S]*?)<\/div>[\s\S]{0,1200}?<a class="dc-item-btn"[^>]*href="[^"]*\/dp\/([A-Z0-9]{10})/g;
+  const re = /<div class="dc-item-name"[^>]*>([\s\S]*?)<\/div>[\s\S]{0,2400}?<a class="dc-item-btn"[^>]*href="[^"]*\/dp\/([A-Z0-9]{10})/g;
   for (const m of idxNow.slice(a, b).matchAll(re)) byAsin.set(m[2], m[1]);
 }
 /* ⚠️ COUNTED FROM THE PAGE, NEVER TYPED. A hardcoded 16 here would have gone red
@@ -163,7 +163,7 @@ const byAsin = new Map();
    regex cannot see is a piece the rename/removal guard silently stops protecting. */
 const finds = (idxNow.slice(idxNow.indexOf('id="s-finds"'),
                             idxNow.indexOf('id="s-shop"', idxNow.indexOf('id="s-finds"')))
-                    .match(/<div class="dc-item">/g) || []).length;
+                    .match(/<div class="dc-item[" ]/g) || []).length;   // a card past the section cap carries dc-extra too
 ok('every live piece is found by its ASIN, not its label', byAsin.size === finds,
    `by asin ${byAsin.size} vs cards ${finds}`);
 ok('an ASIN maps to exactly one name', new Set(byAsin.keys()).size === byAsin.size);
@@ -193,7 +193,7 @@ ok('a colour word that IS the piece survives — the purse chains keep their gol
    [...byAsin.values()].join(' | '));
 /* ▶ AND THE OTHER HALF OF HER RULE: a name that dropped its colour must say so in the
    note, or a woman reaches a silver piece off a page that told her nothing. */
-for (const [nm, asin] of [['the bangles', 'B0CWD1RYK3'], ['the ponytail cuff', 'B0FQC2PCXS']]) {
+for (const [nm, asin] of [['the bangles', 'B0CWD1RYK3'], ['the ponytail cuff', 'B01K5R4M74']   /* 2026-10-13: her new file moved "Ponytail Cuff, 4 Pack" and its gold-and-silver note to this listing */]) {
   /* ⚠️ EQUALITY AGAIN. This read `=== nm`, so renaming the cuff to "Ponytail Cuff,
      4 Pack" — a pack count, not a colour — failed the colour rule. The rule is that
      the NAME CARRIES NO METAL, and everything else about the name is hers to edit. */
@@ -214,7 +214,7 @@ for (const [nm, asin] of [['the bangles', 'B0CWD1RYK3'], ['the ponytail cuff', '
 }
 
 console.log('\n8. HER LIVE PAGE AND HER SPREADSHEET AGREE');
-const live = (idx.slice(fStart, fEnd).match(/<div class="dc-item">/g) || []).length;
+const live = (idx.slice(fStart, fEnd).match(/<div class="dc-item[" ]/g) || []).length;
 const sheet = load(path.join(path.dirname(new URL(import.meta.url).pathname), '..', 'data/amazon-finds.csv'));
 ok('the CSV holds every piece that is on her page', sheet.length === live, `csv ${sheet.length} vs page ${live}`);
 ok('every row is an Amazon product link', sheet.every(r => /^https:\/\/www\.amazon\.com\/dp\/[A-Z0-9]{10}$/.test(r.url)));
