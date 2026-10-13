@@ -4658,3 +4658,8 @@ body.ss-play .hm-entrance{animation:ssOverlayOut .55s ease 1.6s forwards}
    markup because the wishlist keys a save on it -- see storeLine() in the importer */
 #s-finds .dc-store-amz{display:none}
 #s-finds .dc-item-meta.is-amz-only{display:none}
+/* the drawn arrow on "Shop this item" (Finds only): gold as the old glyph was,
+   centred by the button's own flex box, the same nudge on hover */
+#s-finds .dc-item-btn .dc-arr-svg{width:15px;height:15px;flex:0 0 auto;display:block;color:#E4C86B;transition:transform .2s}
+#s-finds .dc-item-btn:hover .dc-arr-svg{transform:translateX(3px)}
+@container (max-width:126px){#s-finds .dc-item-btn .dc-arr-svg{width:13px;height:13px}}

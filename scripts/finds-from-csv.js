@@ -121,6 +121,12 @@ function storeLine(store) {
   return `      <div class="dc-item-meta is-store"><span class="dc-store">${esc(store)}</span></div>`;
 }
 
+/* ⚠️ A DRAWN ARROW, NEVER THE "→" CHARACTER (her catch 2026-10-13: "too small and
+   too low"). The same lesson as her Storefront pill, 2026-09-22: the Unicode glyph
+   sits low in its own em-box in this font, and no alignment can fix a font's glyph.
+   This is the Storefront button's own SVG, so every Finds arrow matches. */
+const ARR = '<svg class="dc-arr-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12h15M13 6l6 6-6 6"/></svg>';
+
 function renderItem(r, extra) {
   const price = renderPrice(r.price);
   const [first, rest] = splitNote(r.note);
@@ -149,7 +155,7 @@ function renderItem(r, extra) {
     lines.push(`      <div class="dc-item-note"><span class="dc-note-1">${esc(first)}</span>` +
       (rest ? `<span class="dc-note-rest" hidden> ${esc(rest)}</span> <button type="button" class="dc-more" aria-expanded="false">more</button>` : '') + '</div>');
   }
-  lines.push(`      <a class="dc-item-btn" href="${r.url}" target="_blank" rel="sponsored noopener">${BAG}Shop this item <span class="dc-arr">&rarr;</span></a>`);
+  lines.push(`      <a class="dc-item-btn" href="${r.url}" target="_blank" rel="sponsored noopener">${BAG}Shop this item ${ARR}</a>`);
   lines.push('    </div>');
   return lines.join('\n');
 }
