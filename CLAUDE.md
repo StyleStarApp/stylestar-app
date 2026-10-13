@@ -696,6 +696,8 @@ Every trend card opens with a swipe row of photos (`_trendStrips`, data/trend-ph
   the first dress bc not belted"*) · the Ruslan Baginskiy faux fur hat is hidden by name (`hide`, *"just bc it is
   ugly"* — one piece, not a rule about hats) · `neverWords` keeps the rows womenswear (a girls' coat, girls' jeans
   and a men's trench had slipped in), with `brandOk` for Madden Girl, a women's brand the word list would catch.
+- **Round 3, same day (live, `hide`):** the sleeveless FARM Rio Emily midi dress (*"looks too springy"*), the
+  Isabel Marant Felsa "loafers" (*"boots not loafers"*), and Blundstone on Suede (*"ugly"*, all 8 colourways).
 - **Colour trends must NAME their colour and never another** (`must`/`mustNot`) and search by garment
   (`queries`): a bare "Chocolate Brown" brought back a burgundy top and Birkenstocks. ⚠️ **Name-matching is the
   only lever because the page re-sorts each row by her store scores — so whatever passes may lead.**

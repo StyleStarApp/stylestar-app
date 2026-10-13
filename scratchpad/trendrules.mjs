@@ -24,7 +24,11 @@ const synth=[['Chocolate Brown',{name:'Birkenstock Arizona Soft Footbed Slide Sa
  ['Faux Fur',{name:'Monnalisa Girl Eco-Faux Fur Coat'},false],
  ['Wide-Leg Jeans',{name:'Wide Leg Girlfriend Jeans'},true],
  ['Loafers',{name:"Madden Girl Women's Millie Lug-Sole Tailored Loafers"},true],
- ['Trench Coats',{name:"Burberry Men's Long Silk Hoxton Trench Coat"},false]];
+ ['Trench Coats',{name:"Burberry Men's Long Silk Hoxton Trench Coat"},false],
+ ['Fall Florals',{name:'FARM Rio Emily Tapestry Floral Print Midi Dress in Off-White'},false],
+ ['Fall Florals',{name:'FARM Off-White Emily Floral Tapestry Drawstring Blouse'},true],
+ ['Loafers',{name:'Isabel Marant Felsa fringed suede loafers'},false],
+ ['Suede',{name:'Blundstone Footwear Chelsea Boot in Steel Grey Suede'},false]];
 for(const [t,p,want] of synth)ok(trendKeep(R,t,p)===want,`job: ${t} / ${p.name} should be ${want}`);
 for(const [t,r] of Object.entries(PX.trends))for(const p of r.items)ok(trendKeep(R,t,p),`stored piece breaks her rules: ${t} / ${p.name}`);
 ok(Object.keys(PX.trends).length>=20,'at least 20 trends carry photos');
