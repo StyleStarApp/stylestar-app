@@ -254,7 +254,7 @@
   ▶ RESTAMP AFTER ANY CSS EDIT:  node scripts/css-version.js --write
   ⚠️ DO NOT hand-type or "tidy" the value — it is derived from the file, and
   scratchpad/copy.js fails if it is stale. -->
-  <link rel="stylesheet" href="/styles.css?v=18a931dcd1">
+  <link rel="stylesheet" href="/styles.css?v=f437cdc2a2">
 </head>
 <body>
 <!-- build: quiz glow-up (chrome frame, gold knob, gold button, gold progress) 2026-07-11 r2 -->
@@ -12513,8 +12513,10 @@ function _wlDecorateEdit(){
     // ▶ On Amazon Finds the Save sits right under the photo (her call 2026-10-13),
     //   so every card ends on "Shop this item" and a row's buttons line up. The
     //   Edit keeps it under the button, as it has always been.
-    var ph=it.el.querySelector('.dc-px-ph');
-    if(ph)ph.parentNode.insertBefore(row,ph.nextSibling);
+    // 2026-10-13, her round 2: on the PRICE line, right side -- inside the photo
+    // covered too much of the product, under it cost a whole row
+    var pr=it.el.querySelector('.dc-item-meta.is-price');
+    if(pr)pr.appendChild(row);
     else btn.parentNode.insertBefore(row,btn.nextSibling);
   });
   _wlSyncButtons();
