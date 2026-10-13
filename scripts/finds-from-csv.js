@@ -131,9 +131,11 @@ function renderItem(r, extra) {
   ];
   if (price) lines.push(`      <div class="dc-item-meta is-price">${price}</div>`);
   if (first) {
+    // "more" sits INSIDE the note, right after the sentence (her catch 2026-10-13:
+    // on a line of its own it looked wrong); the closing quote mark follows
+    // whichever part of the note is showing
     lines.push(`      <div class="dc-item-note"><span class="dc-note-1">${esc(first)}</span>` +
-      (rest ? `<span class="dc-note-rest" hidden> ${esc(rest)}</span>` : '') + '</div>');
-    if (rest) lines.push('      <button type="button" class="dc-more" aria-expanded="false">more</button>');
+      (rest ? `<span class="dc-note-rest" hidden> ${esc(rest)}</span> <button type="button" class="dc-more" aria-expanded="false">more</button>` : '') + '</div>');
   }
   lines.push(`      <a class="dc-item-btn" href="${r.url}" target="_blank" rel="sponsored noopener">${BAG}Shop this item <span class="dc-arr">&rarr;</span></a>`);
   lines.push('    </div>');

@@ -4610,19 +4610,23 @@ body.ss-play .hm-entrance{animation:ssOverlayOut .55s ease 1.6s forwards}
 #s-finds .dc-item-note{font-size:13px;line-height:1.55;margin:0;padding-left:15px}
 #s-finds .dc-item-note::before{font-size:26px;top:-3px}
 #s-finds .dc-item-note::after{font-size:26px;margin-left:2px}
-#s-finds .dc-more{align-self:flex-start;background:none;border:0;padding:6px 0 2px 15px;margin:0;cursor:pointer;
-  font:700 10.5px/1.2 'Jost',sans-serif;letter-spacing:.12em;text-transform:uppercase;color:#4a463e;
-  text-decoration:underline;text-decoration-color:#ECBD83;text-decoration-thickness:2px;text-underline-offset:3px}
+/* the closing quote follows whatever part of her note is showing, and "more"
+   rides inline after it, quiet, like a word she could tap */
+#s-finds .dc-item-note::after{content:none}
+#s-finds .dc-note-1::after,#s-finds .dc-item-note.is-open .dc-note-rest::after{content:"\201D";font-family:'DM Serif Display',Georgia,serif;font-size:26px;color:#DFC271;line-height:0;vertical-align:-0.28em;margin-left:2px}
+#s-finds .dc-item-note.is-open .dc-note-1::after{content:none}
+#s-finds .dc-more{display:inline;background:none;border:0;padding:0 2px;margin:0 0 0 3px;cursor:pointer;
+  font:italic 600 12.5px/1 'Lora',Georgia,serif;color:#8a6a1f;
+  text-decoration:underline;text-decoration-color:#ECBD83;text-decoration-thickness:1.5px;text-underline-offset:3px}
 /* the button sits at the foot of every card, so a row of cards lines its buttons up */
 #s-finds .dc-item-btn{margin-top:auto;align-self:stretch;justify-content:center;gap:5px;padding:10px 4px;font-size:9.5px;letter-spacing:.07em;white-space:nowrap;min-width:0}
 /* the air above the button belongs to whatever sits last above it */
 #s-finds .dc-item-note{margin-bottom:12px}
-#s-finds .dc-item-note:has(+.dc-more){margin-bottom:0}
-#s-finds .dc-more{margin-bottom:10px}
 #s-finds .dc-item-meta:has(+.dc-item-btn),#s-finds .dc-item-name:has(+.dc-item-btn){margin-bottom:12px}
 #s-finds .dc-item-btn .dc-bag{width:14px;height:14px}
 #s-finds .dc-item-btn .dc-arr{font-size:12px}
-#s-finds .dc-save-row{margin-top:9px}
+#s-finds .dc-save-row{margin:0 0 10px}
+#s-finds .dc-save-row .wl-save{padding:6px 12px}
 /* her section cap: 8 cards, notes first, then "Show all N" -- and a search
    reaches every card (an inline display:none from the search still wins) */
 #s-finds .dc-sec.is-capped:not(.is-open) .dc-extra{display:none}
