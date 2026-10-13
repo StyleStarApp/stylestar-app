@@ -1,0 +1,358 @@
+{
+  "_about": "What's Trending photo rows: Cath's curation rules, read by BOTH scripts/trend-photos.js (her shops + Google, weekly) and the page (Amazon, live). One file so the two halves can never disagree. Words match the product NAME, case-insensitive, whole words; a trailing * matches any ending (belt* = belt, belts, belted). offSeason drops summer pieces; sandals are NOT on it on purpose, because velvet and evening sandals are real fall pieces (her call to confirm).",
+  "neverBrands": [
+    "birkenstock"
+  ],
+  "offSeason": [
+    "espadrille*",
+    "slide",
+    "slides",
+    "flip flop*",
+    "flip-flop*",
+    "swim*",
+    "bikini*",
+    "cover-up*",
+    "coverup*",
+    "beach"
+  ],
+  "must": {
+    "Faux Fur": [
+      [
+        "fur",
+        "shearling"
+      ]
+    ],
+    "Wide-Leg Jeans": [
+      [
+        "wide",
+        "wide-leg"
+      ],
+      [
+        "jean*",
+        "denim"
+      ]
+    ],
+    "Burgundy": [
+      [
+        "burgundy",
+        "wine",
+        "bordeaux",
+        "oxblood",
+        "merlot",
+        "maroon",
+        "cabernet"
+      ]
+    ],
+    "Leopard Print": [
+      [
+        "leopard",
+        "cheetah"
+      ]
+    ],
+    "Velvet": [
+      [
+        "velvet"
+      ]
+    ],
+    "Suede": [
+      [
+        "suede"
+      ]
+    ],
+    "Chunky Knits": [
+      [
+        "knit*",
+        "sweater*",
+        "cardigan*",
+        "cable"
+      ]
+    ],
+    "Belts": [
+      [
+        "belt",
+        "belts"
+      ]
+    ],
+    "Belted Shirt Dresses": [
+      [
+        "dress",
+        "dresses",
+        "shirtdress*"
+      ]
+    ],
+    "Asymmetrical Hem Skirts": [
+      [
+        "skirt*"
+      ],
+      [
+        "asymm*"
+      ]
+    ],
+    "Trench Coats": [
+      [
+        "trench*"
+      ]
+    ],
+    "Bomber Jackets": [
+      [
+        "bomber*"
+      ]
+    ],
+    "Knee-High Boots": [
+      [
+        "knee",
+        "knee-high",
+        "tall"
+      ],
+      [
+        "boot*"
+      ]
+    ],
+    "Loafers": [
+      [
+        "loafer*"
+      ]
+    ],
+    "Ballet Flats": [
+      [
+        "ballet",
+        "ballerina*"
+      ]
+    ],
+    "East-West Bags": [
+      [
+        "bag*",
+        "clutch*",
+        "baguette*",
+        "purse*",
+        "handbag*"
+      ]
+    ],
+    "Statement Jewelry": [
+      [
+        "earring*",
+        "necklace*",
+        "bracelet*",
+        "cuff*",
+        "bangle*",
+        "ring",
+        "rings",
+        "choker*",
+        "pendant*",
+        "brooch*"
+      ]
+    ],
+    "Large Cuff Bracelets": [
+      [
+        "cuff*",
+        "bangle*"
+      ]
+    ],
+    "Oversized Sunglasses": [
+      [
+        "sunglass*"
+      ]
+    ],
+    "Fall Florals": [
+      [
+        "floral*",
+        "flower*",
+        "rose",
+        "roses",
+        "blossom*",
+        "botanical"
+      ]
+    ],
+    "Shaped Blazers": [
+      [
+        "blazer*"
+      ]
+    ],
+    "Chocolate Brown": [
+      [
+        "chocolate",
+        "brown",
+        "espresso",
+        "cocoa",
+        "mocha",
+        "chestnut",
+        "coffee",
+        "dark brown"
+      ]
+    ],
+    "Butter Yellow": [
+      [
+        "butter",
+        "buttercream",
+        "butter-yellow",
+        "pale yellow",
+        "soft yellow",
+        "lemon"
+      ]
+    ]
+  },
+  "queries": {
+    "_about": "Optional. A trend listed here is searched as these requests (pooled, alternating so the row mixes garments) instead of its bare name: a bare 'Chocolate Brown' brings back random shoes. The colour must still appear in the piece's name (see 'must'), because the page re-sorts each row by her store scores, so only a strict rule decides what can lead.",
+    "Chocolate Brown": [
+      {
+        "item": "sweater",
+        "colour": "chocolate brown"
+      },
+      {
+        "item": "coat",
+        "colour": "chocolate brown"
+      },
+      {
+        "item": "dress",
+        "colour": "chocolate brown"
+      },
+      {
+        "item": "knee high boots",
+        "colour": "chocolate brown"
+      },
+      {
+        "item": "handbag",
+        "colour": "chocolate brown"
+      }
+    ],
+    "Butter Yellow": [
+      {
+        "item": "sweater",
+        "colour": "butter yellow"
+      },
+      {
+        "item": "dress",
+        "colour": "butter yellow"
+      },
+      {
+        "item": "blouse",
+        "colour": "butter yellow"
+      }
+    ],
+    "Shaped Blazers": [
+      {
+        "item": "blazer",
+        "cut": "fitted"
+      },
+      {
+        "item": "blazer",
+        "cut": "cinched waist"
+      }
+    ],
+    "Fall Florals": [
+      {
+        "item": "midi dress",
+        "cut": "floral"
+      },
+      {
+        "item": "blouse",
+        "cut": "floral"
+      },
+      {
+        "item": "skirt",
+        "cut": "floral"
+      }
+    ]
+  },
+  "mustNot": {
+    "_about": "A piece whose NAME says a different colour than the trend is dropped (Chocolate Brown once showed a jacket 'in Wine').",
+    "Chocolate Brown": [
+      "black",
+      "white",
+      "ivory",
+      "cream",
+      "navy",
+      "blue",
+      "red",
+      "pink",
+      "green",
+      "olive",
+      "grey",
+      "gray",
+      "silver",
+      "gold",
+      "orange",
+      "purple",
+      "lilac",
+      "beige",
+      "camel",
+      "tan",
+      "taupe",
+      "nude",
+      "khaki",
+      "wine",
+      "burgundy",
+      "yellow",
+      "rust",
+      "multi",
+      "bordeaux",
+      "oxblood",
+      "merlot",
+      "maroon",
+      "plum"
+    ],
+    "Butter Yellow": [
+      "black",
+      "white",
+      "navy",
+      "blue",
+      "red",
+      "pink",
+      "green",
+      "olive",
+      "grey",
+      "gray",
+      "silver",
+      "orange",
+      "purple",
+      "lilac",
+      "beige",
+      "camel",
+      "tan",
+      "taupe",
+      "nude",
+      "khaki",
+      "wine",
+      "burgundy",
+      "brown",
+      "chocolate",
+      "mustard",
+      "multi"
+    ],
+    "Burgundy": [
+      "black",
+      "white",
+      "ivory",
+      "cream",
+      "navy",
+      "blue",
+      "pink",
+      "green",
+      "olive",
+      "grey",
+      "gray",
+      "silver",
+      "gold",
+      "orange",
+      "purple",
+      "lilac",
+      "beige",
+      "camel",
+      "tan",
+      "taupe",
+      "nude",
+      "khaki",
+      "brown",
+      "chocolate",
+      "yellow"
+    ],
+    "Fall Florals": [
+      "graphic",
+      "sweatshirt",
+      "t-shirt",
+      "tee",
+      "pumpkin",
+      "instant message"
+    ]
+  }
+}

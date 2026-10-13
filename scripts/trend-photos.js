@@ -21,11 +21,18 @@
 import fs from 'fs';
 import path from 'path';
 import {fileURLToPath} from 'url';
+import {trendKeep} from './lib/trend-rules.js';
 
 const ROOT = path.join(path.dirname(fileURLToPath(import.meta.url)), '..');
 const OUT = path.join(ROOT, 'data', 'trend-photos.json');
 const BASE = process.env.SITE || 'https://stylestar.app';
 const DRY = process.argv.includes('--dry');
+/* --only "Chocolate Brown,Butter Yellow" re-searches just those trends (the rest
+   keep their rows); --refilter re-applies data/trend-rules.json to the stored
+   rows with NO searches at all, for a rule change between Mondays. */
+const ONLY = (process.argv.find(a => a.startsWith('--only=')) || '').slice(7).split(',').map(s => s.trim()).filter(Boolean);
+const REFILTER = process.argv.includes('--refilter');
+const RULES = JSON.parse(fs.readFileSync(path.join(ROOT, 'data', 'trend-rules.json'), 'utf8'));
 const PAUSE_MS = 9000;          // product-find allows 8 requests a minute per IP
 const KEEP = 24;                // plenty for a swipe row; keeps the file small
 
@@ -53,20 +60,53 @@ const slim = (p) => ({
   ...(p.feed ? {feed: true, url: p.url} : {}),
 });
 
-async function findOne(item) {
+async function findReq(req) {
   const r = await fetch(BASE + '/.netlify/functions/product-find', {
     method: 'POST',
     headers: {'Content-Type': 'application/json', Origin: BASE, Referer: BASE + '/trending'},
-    body: JSON.stringify({item, lean: true}),
+    body: JSON.stringify({...req, lean: true}),
   });
   if (!r.ok) throw new Error('HTTP ' + r.status);
   return r.json();
 }
+const poolOf = d => [].concat(d.exact || [], ...(d.doors || []).map(x => x.products || []), d.browse || []);
+/* A trend with its own searches in data/trend-rules.json (the colour trends:
+   a bare "Chocolate Brown" brings back random shoes) runs each one and deals
+   the results out in turn, so the row mixes sweater, coat, dress... */
+async function findOne(name) {
+  const qs = (RULES.queries || {})[name];
+  if (!qs) return findReq({item: name});
+  const lists = [];
+  for (let i = 0; i < qs.length; i++) {
+    try { const d = await findReq(qs[i]); if (d && !d.why) lists.push(poolOf(d)); } catch (e) {}
+    if (i < qs.length - 1) await new Promise(r => setTimeout(r, PAUSE_MS));
+  }
+  if (!lists.length) return {why: 'all-failed'};
+  const seen = new Set(), browse = [];
+  for (let k = 0; lists.some(l => k < l.length); k++)
+    for (const l of lists) { const p = l[k]; if (p && !seen.has(p.id)) { seen.add(p.id); browse.push(p); } }
+  return {browse};
+}
 
 await (async () => {
-  const names = trendNames();
-  console.log('trends found:', names.length);
+  const all = trendNames();
+  console.log('trends found:', all.length);
   const prev = fs.existsSync(OUT) ? JSON.parse(fs.readFileSync(OUT, 'utf8')) : {trends: {}};
+  if (REFILTER) {
+    for (const [n, row] of Object.entries(prev.trends || {})) {
+      const before = row.items.length;
+      row.items = row.items.filter(p => trendKeep(RULES, n, p));
+      console.log(n.padEnd(26), before, '->', row.items.length);
+      if (!row.items.length) delete prev.trends[n];
+    }
+    if (!DRY) fs.writeFileSync(OUT, JSON.stringify(prev) + '\n');
+    return;
+  }
+  const names = ONLY.length ? all.filter(n => ONLY.includes(n)) : all;
+  if (ONLY.length) for (const n of all) if (!names.includes(n) && prev.trends && prev.trends[n]) {
+    /* untouched this run: keep, but still under today's rules */
+    prev.trends[n].items = prev.trends[n].items.filter(p => trendKeep(RULES, n, p));
+  }
   const trends = {};
   let fresh = 0, kept = 0, failRun = 0, stopped = false;
   for (let i = 0; i < names.length; i++) {
@@ -75,8 +115,18 @@ await (async () => {
     try {
       const d = await findOne(n);
       if (d && !d.why) {
-        const pool = [].concat(d.exact || [], ...(d.doors || []).map(x => x.products || []), d.browse || []);
-        const items = pool.filter(p => p && p.image && p.store && p.title).slice(0, KEEP).map(slim);
+        const pool = poolOf(d);
+        /* her rules BEFORE the cap, so a dropped piece makes room for a good one */
+        const ok = pool.filter(p => p && p.image && p.store && p.title && trendKeep(RULES, n, p));
+        /* a fair mix: her nightly feed answers some trends with dozens of
+           luxury pieces, which would fill all 24 seats before a single Kohl's
+           or Gap piece; deal feed and Google results in turn instead */
+        const feed = ok.filter(p => p.feed), web = ok.filter(p => !p.feed), mix = [];
+        for (let k = 0; mix.length < KEEP && (k < feed.length || k < web.length); k++) {
+          if (k < web.length) mix.push(web[k]);
+          if (k < feed.length && mix.length < KEEP) mix.push(feed[k]);
+        }
+        const items = mix.map(slim);
         if (items.length) row = {items, at: new Date().toISOString()};
       } else console.log('  ', n, '->', d && d.why);
     } catch (e) { console.log('  ', n, '-> failed', e.message); }
@@ -100,7 +150,7 @@ await (async () => {
   console.log(`fresh ${fresh}, kept ${kept}, empty ${names.length - fresh - kept}`);
   if (!DRY && !stopped) {
     /* names not reached this week keep last week's photos */
-    for (const n of names) if (!trends[n] && prev.trends && prev.trends[n]) trends[n] = prev.trends[n];
+    for (const n of all) if (!trends[n] && prev.trends && prev.trends[n] && prev.trends[n].items.length) trends[n] = prev.trends[n];
     fs.writeFileSync(OUT, JSON.stringify(out) + '\n');
   }
 })();
