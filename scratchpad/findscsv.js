@@ -219,6 +219,21 @@ const sheet = load(path.join(path.dirname(new URL(import.meta.url).pathname), '.
 ok('the CSV holds every piece that is on her page', sheet.length === live, `csv ${sheet.length} vs page ${live}`);
 ok('every row is an Amazon product link', sheet.every(r => /^https:\/\/www\.amazon\.com\/dp\/[A-Z0-9]{10}$/.test(r.url)));
 
+console.log('\n9. HER ORDER, AND NO PHOTO-LESS PIECE IN A SECTION\'S FIRST 8 (2026-10-13)');
+{
+  // a fixture, so the rule is tested whatever her real page holds tomorrow
+  const mk = (n, i, note) => ({ name: n, store: 'Amazon', price: '10', note, category: 'S', url: 'https://www.amazon.com/dp/B0TEST' + String(i).padStart(4, '0'), asin: 'B0TEST' + String(i).padStart(4, '0') });
+  const fx = Array.from({ length: 11 }, (_, i) => mk('Piece ' + i, i, i % 2 ? 'A note.' : ''));
+  const html = render(fx, {}, [{ asin: 'B0TEST0002' }]);
+  const order = [...html.matchAll(/<div class="dc-item-name"[^>]*>([^<]*)/g)].map(m => m[1]);
+  ok('her row order is the page order — no notes-first shuffle',
+     JSON.stringify(order.filter(n => n !== 'Piece 2')) === JSON.stringify(fx.map(r => r.name).filter(n => n !== 'Piece 2')), order.join(', '));
+  ok('a piece Amazon has no photo for sits just after the first 8', order.indexOf('Piece 2') === 8, order.join(', '));
+  const small = render(fx.slice(0, 5), {}, [{ asin: 'B0TEST0001' }]);
+  const o2 = [...small.matchAll(/<div class="dc-item-name"[^>]*>([^<]*)/g)].map(m => m[1]);
+  ok('...and at the end of a section of 8 or fewer', o2[o2.length - 1] === 'Piece 1', o2.join(', '));
+}
+
 fs.rmSync(tmp, { recursive: true, force: true });
 console.log(`\n${fail ? '✗' : '✓'} ${pass} passed, ${fail} failed`);
 process.exit(fail ? 1 : 0);

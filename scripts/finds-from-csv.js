@@ -162,7 +162,12 @@ function renderItem(r, extra) {
 
 const slug = s => String(s).toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
 
-export function render(rows, lists = loadLists()) {
+const NOPX_PATH = path.join(ROOT, 'data/amazon-finds-nophoto.json');
+export function loadNoPhoto() {
+  try { return JSON.parse(fs.readFileSync(NOPX_PATH, 'utf8')).none || []; } catch (e) { return []; }
+}
+
+export function render(rows, lists = loadLists(), noPhoto = loadNoPhoto()) {
   // Her spreadsheet's row order IS the page order, and the order categories
   // first APPEAR is the order they are laid out in — so she rearranges the page
   // by rearranging her rows, with nobody to ask and nothing to configure.
@@ -179,10 +184,16 @@ export function render(rows, lists = loadLists()) {
      `:first-of-type` matches the first DIV among siblings, not the first .dc-cat. */
   let firstHeading = true;
   for (const g of groups) {
-    // Notes first WITHIN a section, her CSV order otherwise (a stable sort).
-    const items = g.items.map((r, i) => [r, i])
-      .sort((x, y) => ((y[0].note ? 1 : 0) - (x[0].note ? 1 : 0)) || (x[1] - y[1]))
-      .map(x => x[0]);
+    /* ▶ HER ORDER, EXACTLY (2026-10-13: "I would like for our page to mirror what is
+       on the storefront so I would like items to be in the same order"). This
+       REPLACES the first build's notes-first sort -- her row order is the order.
+       ▶ ONE EXCEPTION, ALSO HERS: "the ones that don't have pics I don't want them
+       in one of the first 8." A piece listed in data/amazon-finds-nophoto.json
+       (scripts/finds-photo-check.js) is seated just after the first 8, or at the
+       end of a section of 8 or fewer, keeping her order among the rest. */
+    const noPx = new Set(noPhoto.map(n => n.asin));
+    const withPx = g.items.filter(r => !noPx.has(r.asin)), without = g.items.filter(r => noPx.has(r.asin));
+    const items = [...withPx.slice(0, SECTION_CAP), ...without, ...withPx.slice(SECTION_CAP)];
     const capped = items.length > SECTION_CAP;
     out.push(`    <section class="dc-sec${capped ? ' is-capped' : ''}"${g.key ? ` data-cat="${slug(g.key)}"` : ''}>`);
     if (g.key) {
