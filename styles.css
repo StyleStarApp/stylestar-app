@@ -4664,3 +4664,12 @@ body.ss-play .hm-entrance{animation:ssOverlayOut .55s ease 1.6s forwards}
 #s-finds .dc-item-btn:hover .dc-arr-svg{transform:translateX(3px)}
 @container (max-width:126px){#s-finds .dc-item-btn .dc-arr-svg{width:13px;height:13px}}
 #s-finds .dc-cat-see .dc-arr-svg{width:13px;height:13px;display:inline-block;vertical-align:-2px;margin-left:3px;color:#4a463e}
+/* ▶ OPTION B, FOR HER SIDE-BY-SIDE (2026-10-13): each section as one swipe row,
+   the gesture her Wardrobe and What's Trending rows already use. Inert unless
+   the Finds wrapper carries .is-rows -- delete this block if she picks option A. */
+#s-finds .dc-wrap.is-rows .dc-grid{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;gap:10px;
+  padding:2px 22px 10px;scroll-padding:0 22px;-ms-overflow-style:none;scrollbar-width:none;align-items:stretch}
+#s-finds .dc-wrap.is-rows .dc-grid::-webkit-scrollbar{display:none}
+#s-finds .dc-wrap.is-rows .dc-item{flex:0 0 46%;scroll-snap-align:start}
+#s-finds .dc-wrap.is-rows .dc-sec .dc-extra{display:flex}
+#s-finds .dc-wrap.is-rows .dc-showall{display:none}

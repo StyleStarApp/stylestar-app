@@ -167,7 +167,7 @@ export function loadNoPhoto() {
   try { return JSON.parse(fs.readFileSync(NOPX_PATH, 'utf8')).none || []; } catch (e) { return []; }
 }
 
-export function render(rows, lists = loadLists(), noPhoto = loadNoPhoto()) {
+export function render(rows, lists = loadLists(), noPhoto = loadNoPhoto(), cap = SECTION_CAP) {
   // Her spreadsheet's row order IS the page order, and the order categories
   // first APPEAR is the order they are laid out in — so she rearranges the page
   // by rearranging her rows, with nobody to ask and nothing to configure.
@@ -193,8 +193,8 @@ export function render(rows, lists = loadLists(), noPhoto = loadNoPhoto()) {
        end of a section of 8 or fewer, keeping her order among the rest. */
     const noPx = new Set(noPhoto.map(n => n.asin));
     const withPx = g.items.filter(r => !noPx.has(r.asin)), without = g.items.filter(r => noPx.has(r.asin));
-    const items = [...withPx.slice(0, SECTION_CAP), ...without, ...withPx.slice(SECTION_CAP)];
-    const capped = items.length > SECTION_CAP;
+    const items = [...withPx.slice(0, cap), ...without, ...withPx.slice(cap)];
+    const capped = items.length > cap;
     out.push(`    <section class="dc-sec${capped ? ' is-capped' : ''}"${g.key ? ` data-cat="${slug(g.key)}"` : ''}>`);
     if (g.key) {
       const id = lists[g.key];
@@ -207,7 +207,7 @@ export function render(rows, lists = loadLists(), noPhoto = loadNoPhoto()) {
       firstHeading = false;
     }
     out.push('      <div class="dc-grid">');
-    items.forEach((it, i) => out.push(renderItem(it, i >= SECTION_CAP)));
+    items.forEach((it, i) => out.push(renderItem(it, i >= cap)));
     out.push('      </div>');
     if (capped) out.push(`      <button type="button" class="dc-showall">Show all ${items.length}</button>`);
     out.push('    </section>');
