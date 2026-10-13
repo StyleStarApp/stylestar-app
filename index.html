@@ -10261,8 +10261,13 @@ async function _findsPhotosLoad(){
   {
     // one batch of ten at a time, top of the page first, so the first photos
     // a woman sees arrive first and Amazon's per-second limit is respected
-    for(let i=0;i<need.length;i+=10){
-      const chunk=need.slice(i,i+10);
+    // A batch Amazon throttled is asked ONCE more at the end, after a pause --
+    // with 17 batches a throttle is likely, and a second ask usually lands
+    // (measured on the live page, 2026-10-13). Still nothing? The next visit asks.
+    const queue=[];for(let i=0;i<need.length;i+=10)queue.push({chunk:need.slice(i,i+10),retry:false});
+    for(let q=0;q<queue.length;q++){
+      const chunk=queue[q].chunk;
+      if(queue[q].retry)await new Promise(res=>setTimeout(res,1500));
       let data=null;
       try{const r=await fetch('/.netlify/functions/amazon-images?asins='+chunk.join(','));if(r.ok)data=await r.json();}catch(e){}
       const imgs=(data&&data.images)||{};
@@ -10272,7 +10277,7 @@ async function _findsPhotosLoad(){
       // Amazon did not really answer this batch (throttled or an error): remember
       // nothing and mark nothing -- the square stays as it is and the next visit
       // asks again. (A whole batch with no photo at all is treated the same way.)
-      if(data.why||!Object.keys(data.images||{}).length)continue;
+      if(data.why||!Object.keys(data.images||{}).length){if(!queue[q].retry)queue.push({chunk,retry:true});continue;}
       chunk.forEach(function(a){const v=imgs[a];const u=(v&&v.url)||'';_amzPxCacheSet(a,u);(byAsin[a]||[]).forEach(function(it){if(u)_findsPxPlace(it,u);else _findsPxNone(it);});});
     }
   }
