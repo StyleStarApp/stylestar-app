@@ -4702,6 +4702,3 @@ body.ss-play .hm-entrance{animation:ssOverlayOut .55s ease 1.6s forwards}
 #s-finds .dc-item-meta.is-price{display:flex;justify-content:space-between;align-items:center;gap:6px;flex-wrap:wrap}
 #s-finds .dc-item-meta.is-price .dc-save-row{margin:0;flex:0 0 auto}
 #s-finds .dc-item-meta.is-price .wl-save{padding:5px 10px}
-/* option for her look: "Shop this item" above the note — inert unless .shop-up */
-#s-finds .dc-wrap.shop-up .dc-item-btn{order:1;margin-top:4px;margin-bottom:10px}
-#s-finds .dc-wrap.shop-up .dc-item-note,#s-finds .dc-wrap.shop-up .dc-more{order:2}

@@ -642,6 +642,42 @@ there enough traffic for the Amazon clock" with no code written. *The original l
 
 ---
 
+## ▶▶▶ SESSION TWENTY-TWO, 2026-10-13 — AMAZON FINDS REBUILT (165 pieces, 15 sections), LIVE
+🛍️ **Her full rebuild, from a Cowork plan + CSV (`data/amazon-finds.csv`, wave 1).** Replaced the 73-piece page
+whole. Built on branch `claude/finds-rebuild`, merged to `main`. **Every rule below is HERS, chosen by looking at
+rendered options; none is to be "tidied" back.**
+- **ORDER = HER AMAZON STOREFRONT, exactly** (*"I would like for our page to mirror what is on the storefront"*). No
+  notes-first sort. ▶ **A piece in two Storefront lists shows ONCE on Style Star** (her call, redundancy). ⚠️ **Do NOT
+  read her Storefront by script on a schedule** — Amazon's Associates agreement bars automated access; it was read
+  ONCE this session (lists show only the first 20; sale items carry `amzn1.asin.X:amzn1.deal…`, which a strict regex
+  misses). ▶ **Updates: she tells us, or sends a fresh CSV in Storefront order; the importer diffs it.**
+- **SECTION LAYOUT (four options rendered):** 2 cards side by side · "SWIPE FOR N MORE →" · ONE swipe row of the rest,
+  cards EXACTLY the grid cards' width (*her catch: narrower = "skinnier photos"*) · **"SHOW N MORE" (option 2: soft
+  cream `#F5EFE2` pill, Jost 700, down chevron that flips for "Show less")** turns the row into a grid in place —
+  *"I feel like she is going to miss it."* `SECTION_CAP=2` in `scripts/finds-from-csv.js`.
+  🚨 **Switching the row to a grid needs a forced redraw** (`display:none` → reflow → `''`) in `_findsWire` AND in
+  `findsSearch`: without it Chromium drew only each noted card's note. `findsearch.mjs` §9 catches it, proven to bite.
+- **CARD:** square Amazon photo (tan square + her gold star when Amazon has none) · store line WITHOUT "Amazon" (*"I
+  don't think we need to put the word Amazon on all these"* — HIDDEN via `.dc-store-amz`, never deleted: the wishlist
+  id is name+store) · name · **price with "♡ Save" on the same line** (inside the photo covered the product; one save
+  control only, the labelled pill) · note = complete first sentence + inline "more" (never cut mid-thought; blank
+  note = no note) · "Shop this item" LAST (her note sells first; buttons align). Drawn SVG arrows, never "→".
+- **HEADINGS (Option 1):** black Jost 800 caps 21px, NO gold bar, "See the whole list on Amazon" (her Storefront list,
+  tagged at runtime, `data/amazon-finds-lists.json`) tight underneath. ⚠️ **This REPLACES the 2026-09-11 rule that a
+  heading stays smaller than product names** — her later call; `findspage` updated. Finds only; the Edit keeps its bar.
+- **NO PHOTO-LESS PIECE UP FRONT** (*"I don't want them in one of the first 8"*): `scripts/finds-photo-check.js
+  --write` → `data/amazon-finds-nophoto.json` → those go to the END of their section. Re-run it after any batch.
+- **Names:** colour only to tell a same-name pair apart, Amazon's own colour names from her screenshots (Bare
+  Raspberry/Bare Peony, Banquette/Blue Note, Pink Sugar/Cherry, Black Suede/Nude Nappa, Natural Tan Raffia/Black,
+  Beige Braid/White/Leopard, Universe Blue/Black, Hustler White/So Surreal, Dylan Black/White).
+- **Sold out → `data/amazon-finds-held.csv`** (row + date + why), restored in one step: Hustler Light Wash, Jo Malone
+  Orange Blossom lotion. Toolbar: "Search…" + "Jump to…" dropdown (same sections as the pills). Tip line removed from
+  Finds only. Prices: ceiling + tilde, now with thousands commas.
+- **OPEN, hers:** notes for the 14 front cards with none (she'll write later — Claude never writes her notes);
+  Storefront Denim still lists the sold-out wash; 3 pieces Amazon gives no photo for (trench, Reef, crystal bracelets).
+- ⏳ **STILL OWED FROM BEFORE: the What's Trending photo mock-up (data is ready, she hasn't seen it), the ShopMy
+  partnerships email, the verbatim-archive pass of the 10-03 block.**
+
 ## ▶▶▶ SESSION TWENTY-ONE CLOSED 2026-10-06 — READ THIS FIRST, THEN THE 10-03 BLOCK BELOW
 🚪 **She closed to open a fresh chat. Everything is merged to `main` and VERIFIED ON THE SERVED FILE at
 stylestar.app (the rule itself in the live `styles.css`, and the live cache stamp matching the repo's) —
