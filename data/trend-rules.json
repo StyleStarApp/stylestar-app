@@ -1,5 +1,5 @@
 {
-  "_about": "What's Trending photo rows: Cath's curation rules, read by BOTH scripts/trend-photos.js (her shops + Google, weekly) and the page (Amazon, live). One file so the two halves can never disagree. Words match the product NAME, case-insensitive, whole words; a trailing * matches any ending (belt* = belt, belts, belted). offSeason drops summer pieces; sandals are NOT on it on purpose, because velvet and evening sandals are real fall pieces (her call to confirm).",
+  "_about": "What's Trending photo rows: Cath's curation rules, read by BOTH scripts/trend-photos.js (her shops + Google, weekly) and the page (Amazon, live). One file so the two halves can never disagree. Words match the product NAME, case-insensitive, whole words; a trailing * matches any ending (belt* = belt, belts, belted). offSeason drops summer pieces; sandals are NOT on it on purpose: her ruling 2026-10-13, 'velvet and evening sandals can stay'.",
   "neverBrands": [
     "birkenstock"
   ],
