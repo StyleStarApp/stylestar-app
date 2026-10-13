@@ -126,7 +126,18 @@ await (async () => {
           if (k < web.length) mix.push(web[k]);
           if (k < feed.length && mix.length < KEEP) mix.push(feed[k]);
         }
-        const items = mix.map(slim);
+        /* a dead photo link (404/410) never reaches the page. Only a definite
+           "gone" drops a piece: some shops refuse scripts (403), and that says
+           nothing about whether a woman's browser can see the photo. */
+        const items = [];
+        for (const p of mix) {
+          let gone = false;
+          try {
+            const r = await fetch(p.image, {method: 'GET', headers: {Range: 'bytes=0-0', 'User-Agent': 'Mozilla/5.0'}});
+            gone = r.status === 404 || r.status === 410;
+          } catch (e) {}
+          if (!gone) items.push(slim(p));
+        }
         if (items.length) row = {items, at: new Date().toISOString()};
       } else console.log('  ', n, '->', d && d.why);
     } catch (e) { console.log('  ', n, '-> failed', e.message); }

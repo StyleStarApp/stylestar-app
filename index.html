@@ -12250,6 +12250,12 @@ function _trendStrips(body){
       var d=document.createElement('div');
       d.className='trend-strip';d.dataset.trend=n;
       d.innerHTML=_findBlockHtml({browse:row.items},{item:n},true);
+      /* these photos are up to a week old, and a shop's link can die in that
+         time (FARM Rio's own feed carried a 404, 2026-10-13): one card fewer
+         beats an empty white box. Scoped to this row; the live rows are fresh. */
+      d.addEventListener('error',function(e){
+        var t=e.target;if(t&&t.classList&&t.classList.contains('fc-img')){var fc=t.closest('.find-card');if(fc)fc.remove();}
+      },true);
       var tnf=c.querySelector('.tnf');
       if(tnf&&tnf.nextSibling)c.insertBefore(d,tnf.nextSibling);else c.appendChild(d);
       if(io)io.observe(d);else _trendStripAmz(d);

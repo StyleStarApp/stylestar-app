@@ -241,15 +241,16 @@
     ],
     "Fall Florals": [
       {
-        "item": "midi dress",
-        "cut": "floral"
+        "item": "farm rio floral long sleeve dress"
       },
       {
-        "item": "blouse",
-        "cut": "floral"
+        "item": "farm rio floral blouse"
       },
       {
-        "item": "skirt",
+        "item": "farm rio floral skirt"
+      },
+      {
+        "item": "long sleeve dress",
         "cut": "floral"
       }
     ]
@@ -352,7 +353,19 @@
       "t-shirt",
       "tee",
       "pumpkin",
-      "instant message"
-    ]
+      "instant message",
+      "linen",
+      "sleeveless",
+      "strapless",
+      "spaghetti",
+      "palm",
+      "monstera",
+      "tropical",
+      "lemon",
+      "banana",
+      "pineapple",
+      "swim*"
+    ],
+    "_note": "Fall Florals: her call 2026-10-13, 'Farm Rio has fall florals' - the row searches FARM Rio first, and drops summer cuts and prints."
   }
 }
