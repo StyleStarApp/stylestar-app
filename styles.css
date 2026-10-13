@@ -2186,7 +2186,7 @@ body.menu-open .menu-panel{display:block}
 #s-finds .dc-search-empty a{color:#0FA6B6;font-weight:600;text-decoration:underline;cursor:pointer}
 /* Amazon Finds category quick-jump, 2026-09-22 -- a second real tester's ask
    (relayed by Cath's friend), the same shape as the search bar's own origin. */
-#s-finds .dc-catnav{display:flex;gap:8px;overflow-x:auto;-ms-overflow-style:none;scrollbar-width:none;max-width:420px;margin:0.9rem auto 0;padding:2px 2px 4px}
+#s-finds .dc-catnav{display:flex;gap:8px;overflow-x:auto;-ms-overflow-style:none;scrollbar-width:none;max-width:420px;margin:0.7rem auto 0;padding:2px 2px 4px}
 #s-finds .dc-catnav::-webkit-scrollbar{display:none}
 #s-finds .dc-catnav-btn{flex:0 0 auto;font-family:'Jost',sans-serif;font-size:12px;font-weight:600;letter-spacing:.04em;text-transform:uppercase;color:#6b6459;background:#fff;border:1.3px solid #E4DCC8;border-radius:999px;padding:7px 14px;cursor:pointer;white-space:nowrap;transition:border-color .15s,color .15s}
 #s-finds .dc-catnav-btn:hover,#s-finds .dc-catnav-btn:active{border-color:#0FA6B6;color:#0FA6B6}
@@ -2371,7 +2371,9 @@ svg.dc-xl-arr{width:18px;height:18px;display:inline-block;vertical-align:middle;
 /* ⚠️ the SMALL top Storefront pill is deliberately NOT in the rule above --
    her round-5 decision keeps it smaller than the bottom one so the size
    hierarchy on /finds holds. */
-#s-finds .dc-store-btn.is-top{padding:10px 20px;font-size:11px;letter-spacing:.09em;margin:2px auto 16px}
+/* 2026-10-13, her ask: "slightly larger" and everything moved up tighter --
+   still smaller than the bottom pill (padding 13/26), so the hierarchy holds. */
+#s-finds .dc-store-btn.is-top{padding:12px 24px;font-size:12px;letter-spacing:.09em;margin:8px auto 4px}
 /* ⚠️⚠️⚠️ REBUILT A THIRD TIME, HER REPEATED CATCH: two rounds of CSS-only
    fixes (vertical-align, then a flex child with align-items:center) both
    still read "too low" on her real phone. THE REAL CAUSE, ONLY FOUND HERE:
@@ -2385,7 +2387,7 @@ svg.dc-xl-arr{width:18px;height:18px;display:inline-block;vertical-align:middle;
    symmetric, so flex `align-items:center` on the button now centers a real
    shape instead of guessing at a font's glyph placement. */
 #s-finds .dc-store-btn svg.dc-store-arr{width:18px;height:18px;flex:0 0 auto;display:block}
-#s-finds .dc-store-btn.is-top svg.dc-store-arr{width:16px;height:16px}
+#s-finds .dc-store-btn.is-top svg.dc-store-arr{width:17px;height:17px}
 .our-story-link{background:none;border:none;font-family:'DM Sans',sans-serif;font-size:13px;color:#6e6e6e;cursor:pointer;text-decoration:underline;margin-top:4px;letter-spacing:0.04em}
 .our-story-link:hover{color:#666}
 .story-wrap{padding:0.5rem 0.5rem 1.5rem;text-align:center}
@@ -4665,7 +4667,7 @@ body.ss-play .hm-entrance{animation:ssOverlayOut .55s ease 1.6s forwards}
    headings keep their gold bar. */
 #s-finds .dc-cat::after{display:none}
 #s-finds .dc-cat{font:800 21px/1.2 'Jost',sans-serif;letter-spacing:.16em;color:#1a1a1a;padding-bottom:0;margin:2.2rem 0 .3rem}
-#s-finds .dc-cat.is-first{margin-top:1.25rem}
+#s-finds .dc-cat.is-first{margin-top:.75rem}
 #s-finds .dc-cat-see{margin-bottom:.8rem}
 /* ▶ HER SECTION LAYOUT (2026-10-13, chosen over four rendered options): two
    pieces side by side, the rest as ONE swipe row whose cards are EXACTLY the grid
@@ -4691,7 +4693,9 @@ body.ss-play .hm-entrance{animation:ssOverlayOut .55s ease 1.6s forwards}
    flips up for "Show less" -- it unfolds in place, so it wears no destination
    colour (pink/tan/teal are for buttons that GO somewhere). */
 #s-finds .dc-sec:has(>.dc-showall){text-align:center}
-#s-finds .dc-showall{display:inline-flex;align-items:center;gap:8px;margin:14px auto 0;padding:13px 26px;
+/* her ask 2026-10-13: hug the cards ABOVE so it reads as "more of these", with the
+   larger gap below it, before the next heading */
+#s-finds .dc-showall{display:inline-flex;align-items:center;gap:8px;margin:0 auto 14px;padding:13px 26px;
   font:700 13px/1 'Jost',sans-serif;letter-spacing:.1em;text-transform:uppercase;
   background:#F5EFE2;border:1.5px solid #E0D3B5;border-radius:999px;color:#1a1a1a;cursor:pointer}
 #s-finds .dc-showall:hover{border-color:#C8B48A;color:#1a1a1a}
