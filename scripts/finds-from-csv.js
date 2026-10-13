@@ -192,7 +192,7 @@ export function render(rows, lists = loadLists()) {
         ? `<a class="dc-cat-link" href="${href}" target="_blank" rel="sponsored noopener">${esc(g.key)}</a>`
         : esc(g.key);
       out.push(`      <div class="dc-cat${firstHeading ? ' is-first' : ''}">${name}</div>`);
-      if (href) out.push(`      <a class="dc-cat-see" href="${href}" target="_blank" rel="sponsored noopener">See the whole list on Amazon <span class="dc-arr">&rarr;</span></a>`);
+      if (href) out.push(`      <a class="dc-cat-see" href="${href}" target="_blank" rel="sponsored noopener">See the whole list on Amazon ${ARR}</a>`);
       firstHeading = false;
     }
     out.push('      <div class="dc-grid">');

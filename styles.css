@@ -4663,3 +4663,4 @@ body.ss-play .hm-entrance{animation:ssOverlayOut .55s ease 1.6s forwards}
 #s-finds .dc-item-btn .dc-arr-svg{width:15px;height:15px;flex:0 0 auto;display:block;color:#E4C86B;transition:transform .2s}
 #s-finds .dc-item-btn:hover .dc-arr-svg{transform:translateX(3px)}
 @container (max-width:126px){#s-finds .dc-item-btn .dc-arr-svg{width:13px;height:13px}}
+#s-finds .dc-cat-see .dc-arr-svg{width:13px;height:13px;display:inline-block;vertical-align:-2px;margin-left:3px;color:#4a463e}
