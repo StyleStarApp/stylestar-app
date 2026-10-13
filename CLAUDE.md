@@ -679,8 +679,27 @@ rendered options; none is to be "tidied" back.**
   and Finds re-asks a throttled batch once after 1.5s. `amzphotos.mjs` throttled-batch checks, proven to bite.
 - **OPEN, hers:** notes for the 14 front cards with none (she'll write later — Claude never writes her notes);
   Storefront Denim still lists the sold-out wash; 3 pieces Amazon gives no photo for (trench, Reef, crystal bracelets).
-- ⏳ **STILL OWED FROM BEFORE: the What's Trending photo mock-up (data is ready, she hasn't seen it), the ShopMy
-  partnerships email, the verbatim-archive pass of the 10-03 block.**
+- 📐 **Same day, her ask: top Storefront pill slightly larger (12px, 12/24 padding) with the top tightened, and each
+  "Show N more" pulled up against its cards (`margin:0 auto 14px`). Live.**
+- ⏳ **STILL OWED FROM BEFORE: the ShopMy partnerships email, the verbatim-archive pass of the 10-03 block.**
+
+## ▶▶▶ WHAT'S TRENDING PHOTO ROWS — LIVE 2026-10-13, HER YES (*"let's go live and then we can look at it more closely"*)
+Every trend card opens with a swipe row of photos (`_trendStrips`, data/trend-photos.json, weekly job Mondays).
+🚨 **HER CURATION IS ONE FILE, `data/trend-rules.json`, READ BY BOTH HALVES** — the weekly job
+(`scripts/lib/trend-rules.js`) and the page (`_trendKeep`, which also filters the live Amazon cards).
+`scratchpad/trendrules.mjs` asserts they agree, proven to bite. ▶ **A rule change: edit the JSON, then
+`node scripts/trend-photos.js --refilter` (no searches) or `--only="Name,Name"` (re-searches just those).**
+- **Her rulings in it:** *"I would not recommend Birkenstocks either. No matter what color"* (`neverBrands`) ·
+  *"velvet and evening sandals can stay"* (sandals deliberately NOT in `offSeason`; espadrilles, slides, swim,
+  beach are) · *"Farm Rio has fall florals"* (Fall Florals searches FARM Rio first, drops linen/sleeveless/tropical).
+- **Colour trends must NAME their colour and never another** (`must`/`mustNot`) and search by garment
+  (`queries`): a bare "Chocolate Brown" brought back a burgundy top and Birkenstocks. ⚠️ **Name-matching is the
+  only lever because the page re-sorts each row by her store scores — so whatever passes may lead.**
+- The job deals feed and Google pieces in turn (her feed alone filled whole rows with Mytheresa), and skips a
+  photo link that is 404/410; the trend rows also remove a card whose photo fails to load (scoped to these rows:
+  the live finder rows are fresh, and their test fixtures use fake image urls).
+- ⚠️ **Known, for her eye:** a piece whose listing omits "sleeveless" can still lead Fall Florals (the Nordstrom
+  FARM Rio Emily dress did); Butter Yellow is thin (~9) because the colour rule is strict. Cost ~33 searches/week.
 
 ## ▶▶▶ SESSION TWENTY-ONE CLOSED 2026-10-06 — READ THIS FIRST, THEN THE 10-03 BLOCK BELOW
 🚪 **She closed to open a fresh chat. Everything is merged to `main` and VERIFIED ON THE SERVED FILE at
@@ -728,7 +747,7 @@ nothing half-finished, nothing unpushed, working tree clean.**
   + `.github/workflows/trend-photos.yml` (Mondays 12:00 UTC + on demand) → `data/trend-photos.json` → the page's
   `_trendStrips()` renders one quiet `_findBlockHtml` row per card. Finder `lean:true` = 1 search, 0 look-ups.
   Amazon fetched LIVE per card as it scrolls into view (Amazon's data-retention terms), its usual 3 seats.
-  Prices DROPPED from the weekly cards (a week-old price can be dearer). ⚠️ **THE PAGE CODE IS ON THE WORKING
+  Prices DROPPED from the weekly cards (a week-old price can be dearer). ✅ **LIVE 2026-10-13 (see the What's Trending block at the top).** ~~THE PAGE CODE IS ON THE WORKING
   BRANCH ONLY, NOT LIVE — she has not seen the mock-up yet.**
   🚨🚨 **SERPAPI PARTIAL OUTAGE 2026-10-06 (from 15:51 UTC, their status page).** The first job run got 504s on
   22 of 23 trends, spent **41 searches** (budget 228 → 187) and — a save bug, now fixed — wrote nothing. The job
