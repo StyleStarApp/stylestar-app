@@ -98,9 +98,12 @@ export function splitNote(note) {
   return [m[0], t.slice(m[0].length).trim()];
 }
 
-// ▶ HER SECTION CAP (2026-10-13): each section shows 8, notes first, then a
-// "Show all N" that opens the rest in place. Search still reaches every card.
-export const SECTION_CAP = 8;
+// ▶ HER SECTION LAYOUT (2026-10-13, settled after four rendered options): the
+// first TWO pieces sit side by side, the rest of the section is ONE swipe row
+// beneath them ("Swipe for N more"), and a "Show N more" button turns that row
+// into a grid in place for anyone who would rather compare than swipe -- her
+// words: "I feel like she is going to miss it."
+export const SECTION_CAP = 2;
 
 const LISTS_PATH = path.join(ROOT, 'data/amazon-finds-lists.json');
 export function loadLists() {
@@ -185,17 +188,15 @@ export function render(rows, lists = loadLists(), noPhoto = loadNoPhoto(), cap =
   let firstHeading = true;
   for (const g of groups) {
     /* ▶ HER ORDER, EXACTLY (2026-10-13: "I would like for our page to mirror what is
-       on the storefront so I would like items to be in the same order"). This
-       REPLACES the first build's notes-first sort -- her row order is the order.
+       on the storefront so I would like items to be in the same order").
        ▶ ONE EXCEPTION, ALSO HERS: "the ones that don't have pics I don't want them
        in one of the first 8." A piece listed in data/amazon-finds-nophoto.json
-       (scripts/finds-photo-check.js) is seated just after the first 8, or at the
-       end of a section of 8 or fewer, keeping her order among the rest. */
+       (scripts/finds-photo-check.js) goes to the END of its section -- never in
+       the two up top, never at the front of the swipe row. */
     const noPx = new Set(noPhoto.map(n => n.asin));
-    const withPx = g.items.filter(r => !noPx.has(r.asin)), without = g.items.filter(r => noPx.has(r.asin));
-    const items = [...withPx.slice(0, cap), ...without, ...withPx.slice(cap)];
-    const capped = items.length > cap;
-    out.push(`    <section class="dc-sec${capped ? ' is-capped' : ''}"${g.key ? ` data-cat="${slug(g.key)}"` : ''}>`);
+    const items = [...g.items.filter(r => !noPx.has(r.asin)), ...g.items.filter(r => noPx.has(r.asin))];
+    const top = items.slice(0, cap), rest = items.slice(cap);
+    out.push(`    <section class="dc-sec"${g.key ? ` data-cat="${slug(g.key)}"` : ''}>`);
     if (g.key) {
       const id = lists[g.key];
       const href = id && LIST_RE.test(id) ? `https://www.amazon.com/shop/stylestar01/list/${id}` : '';
@@ -207,9 +208,15 @@ export function render(rows, lists = loadLists(), noPhoto = loadNoPhoto(), cap =
       firstHeading = false;
     }
     out.push('      <div class="dc-grid">');
-    items.forEach((it, i) => out.push(renderItem(it, i >= cap)));
+    top.forEach(it => out.push(renderItem(it, false)));
     out.push('      </div>');
-    if (capped) out.push(`      <button type="button" class="dc-showall">Show all ${items.length}</button>`);
+    if (rest.length) {
+      out.push(`      <div class="dc-swipehint" aria-hidden="true">Swipe for ${rest.length} more ${ARR}</div>`);
+      out.push('      <div class="dc-morerow">');
+      rest.forEach(it => out.push(renderItem(it, true)));
+      out.push('      </div>');
+      out.push(`      <button type="button" class="dc-showall" aria-expanded="false" data-n="${rest.length}">Show ${rest.length} more</button>`);
+    }
     out.push('    </section>');
   }
   return out.join('\n');

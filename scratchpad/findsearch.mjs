@@ -52,10 +52,12 @@ const { load, SECTION_CAP } = await import(path.join(ROOT, 'scripts/finds-from-c
 const ROWS = load(path.join(ROOT, 'data/amazon-finds.csv'));
 const TOTAL = ROWS.length;
 const bySec = ROWS.reduce((m, r) => (m[r.category] = (m[r.category] || 0) + 1, m), {});
-const UNFILTERED = Object.values(bySec).reduce((t, n) => t + Math.min(n, SECTION_CAP), 0);
+// 2026-10-13, her final layout: every card is on the page (two up top, the rest in a
+// swipe row), so "unfiltered" is every piece -- nothing is hidden behind a button
+const UNFILTERED = TOTAL;
 console.log('1. THE PAGE STARTS UNFILTERED');
 const allNames = await visibleItemNames();
-ok(allNames.length === UNFILTERED, 'every section shows up to ' + SECTION_CAP + ' with no search typed (' + allNames.length + ' of ' + TOTAL + ')');
+ok(allNames.length === UNFILTERED, 'every piece is on the page with no search typed (' + allNames.length + ' of ' + TOTAL + ')');
 ok((await page.evaluate(() => getComputedStyle(document.getElementById('findsSearchClear')).display)) === 'none', 'the clear (×) button is hidden with nothing typed');
 ok((await page.evaluate(() => getComputedStyle(document.getElementById('findsSearchEmpty')).display)) === 'none', 'the empty-state line is hidden with nothing typed');
 
@@ -109,17 +111,25 @@ ok((await page.inputValue('#findsSearchInput')) === '', 'the search box itself i
 
 console.log('8. NOTHING ELSE ON THE PAGE BROKE');
 ok((await page.evaluate(() => document.querySelectorAll('#s-finds .dc-item').length)) === TOTAL, 'the DOM still holds all ' + TOTAL + ' real .dc-item nodes -- the search hides with display, it never deletes');
-console.log('9. "SHOW ALL" OPENS A SECTION IN PLACE');
-const capped = Object.entries(bySec).find(([, n]) => n > SECTION_CAP);
-const opened = await page.evaluate(cat => {
+console.log('9. TWO UP TOP, A SWIPE ROW, AND "SHOW N MORE" TURNS THE ROW INTO A GRID (her layout, 2026-10-13)');
+const big = Object.entries(bySec).find(([, n]) => n > SECTION_CAP);
+const st = await page.evaluate(([cat, cap]) => {
   const sec = [...document.querySelectorAll('#s-finds .dc-sec')].find(s => s.querySelector('.dc-cat').textContent === cat);
-  const vis = () => [...sec.querySelectorAll('.dc-item')].filter(n => getComputedStyle(n).display !== 'none').length;
-  const before = vis(), btn = sec.querySelector('.dc-showall'), label = btn && btn.textContent;
-  btn.click();
-  return { before, after: vis(), label, gone: !sec.querySelector('.dc-showall') };
-}, capped[0]);
-ok(opened.before === SECTION_CAP && opened.label === 'Show all ' + capped[1], capped[0] + ' shows ' + SECTION_CAP + ' and offers "Show all ' + capped[1] + '" (' + JSON.stringify(opened) + ')');
-ok(opened.after === capped[1] && opened.gone, '...and one tap shows every piece, and the button steps away');
+  const row = sec.querySelector('.dc-morerow'), btn = sec.querySelector('.dc-showall');
+  const look = () => ({ rowDisplay: getComputedStyle(row).display, label: btn.textContent, exp: btn.getAttribute('aria-expanded'),
+    hint: getComputedStyle(sec.querySelector('.dc-swipehint')).display,
+    boxless: [...row.querySelectorAll('.dc-item')].filter(c => !c.querySelector('.dc-item-name').getClientRects().length).length,
+    sameWidth: Math.abs(row.querySelector('.dc-item').getBoundingClientRect().width - sec.querySelector('.dc-grid .dc-item').getBoundingClientRect().width) < 1.5 });
+  const top = sec.querySelectorAll('.dc-grid .dc-item').length, rowN = row.querySelectorAll('.dc-item').length;
+  const a = look(); btn.click(); const b = look(); btn.click(); const c = look();
+  return { top, rowN, a, b, c };
+}, [big[0], SECTION_CAP]);
+ok(st.top === SECTION_CAP && st.top + st.rowN === big[1], big[0] + ': ' + SECTION_CAP + ' up top, the other ' + (big[1] - SECTION_CAP) + ' in the swipe row (' + JSON.stringify([st.top, st.rowN]) + ')');
+ok(st.a.rowDisplay === 'flex' && st.a.hint !== 'none' && st.a.label === 'Show ' + (big[1] - SECTION_CAP) + ' more' && st.a.exp === 'false', 'closed: a swipe row, "Swipe for" showing, and "Show ' + (big[1] - SECTION_CAP) + ' more"');
+ok(st.a.sameWidth, 'the swipe row\'s cards are exactly the width of the cards above (her catch: no skinnier photos)');
+ok(st.b.rowDisplay === 'grid' && st.b.hint === 'none' && st.b.label === 'Show less' && st.b.exp === 'true', 'one tap turns the same row into a grid, and the button offers "Show less"');
+ok(st.b.boxless === 0, 'every card in the grid keeps its photo square, name and price (the Chromium redraw fault, caught 2026-10-13)');
+ok(st.c.rowDisplay === 'flex' && st.c.label === st.a.label, '"Show less" folds it back into the swipe row');
 const pageErrors = [];
 page.on('pageerror', e => pageErrors.push(e.message));
 await search('a');

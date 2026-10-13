@@ -228,10 +228,17 @@ console.log('\n9. HER ORDER, AND NO PHOTO-LESS PIECE IN A SECTION\'S FIRST 8 (20
   const order = [...html.matchAll(/<div class="dc-item-name"[^>]*>([^<]*)/g)].map(m => m[1]);
   ok('her row order is the page order — no notes-first shuffle',
      JSON.stringify(order.filter(n => n !== 'Piece 2')) === JSON.stringify(fx.map(r => r.name).filter(n => n !== 'Piece 2')), order.join(', '));
-  ok('a piece Amazon has no photo for sits just after the first 8', order.indexOf('Piece 2') === 8, order.join(', '));
-  const small = render(fx.slice(0, 5), {}, [{ asin: 'B0TEST0001' }]);
+  // 2026-10-13, her final layout: two up top, the rest in a swipe row -- so a
+  // photo-less piece goes to the very END of its section, never in the top two
+  // and never at the front of the row
+  ok('a piece Amazon has no photo for sits at the end of its section', order[order.length - 1] === 'Piece 2', order.join(', '));
+  const small = render(fx.slice(0, 5), {}, [{ asin: 'B0TEST0000' }]);
   const o2 = [...small.matchAll(/<div class="dc-item-name"[^>]*>([^<]*)/g)].map(m => m[1]);
-  ok('...and at the end of a section of 8 or fewer', o2[o2.length - 1] === 'Piece 1', o2.join(', '));
+  ok('...even when it was first in her order', o2[o2.length - 1] === 'Piece 0' && o2[0] === 'Piece 1', o2.join(', '));
+  ok('two pieces up top, the rest in one swipe row, with "Swipe for" and "Show N more"',
+     /<div class="dc-grid">(?:(?!<\/div>\n      <\/div>)[\s\S])*/.test(html) && (html.match(/class="dc-morerow"/g) || []).length === 1 &&
+     /Swipe for 9 more/.test(html) && /Show 9 more<\/button>/.test(html) &&
+     (html.split('class="dc-grid"')[1].split('class="dc-morerow"')[0].match(/class="dc-item[" ]/g) || []).length === 2, 'grid/row split');
 }
 
 fs.rmSync(tmp, { recursive: true, force: true });

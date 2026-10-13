@@ -4629,9 +4629,6 @@ body.ss-play .hm-entrance{animation:ssOverlayOut .55s ease 1.6s forwards}
 #s-finds .dc-save-row .wl-save{padding:6px 12px}
 /* her section cap: 8 cards, notes first, then "Show all N" -- and a search
    reaches every card (an inline display:none from the search still wins) */
-#s-finds .dc-sec.is-capped:not(.is-open) .dc-extra{display:none}
-#s-finds .dc-wrap.is-searching .dc-sec .dc-extra{display:flex}
-#s-finds .dc-wrap.is-searching .dc-showall{display:none}
 #s-finds .dc-showall{display:block;margin:14px auto 0;cursor:pointer;background:#fff;border:1.3px solid #E4DCC8;border-radius:999px;padding:9px 20px;
   font:600 12px/1 'Jost',sans-serif;letter-spacing:.06em;text-transform:uppercase;color:#6b6459}
 #s-finds .dc-showall:hover{border-color:#0FA6B6;color:#0FA6B6}
@@ -4663,25 +4660,6 @@ body.ss-play .hm-entrance{animation:ssOverlayOut .55s ease 1.6s forwards}
 #s-finds .dc-item-btn:hover .dc-arr-svg{transform:translateX(3px)}
 @container (max-width:126px){#s-finds .dc-item-btn .dc-arr-svg{width:13px;height:13px}}
 #s-finds .dc-cat-see .dc-arr-svg{width:13px;height:13px;display:inline-block;vertical-align:-2px;margin-left:3px;color:#4a463e}
-/* ▶ OPTION B, FOR HER SIDE-BY-SIDE (2026-10-13): each section as one swipe row,
-   the gesture her Wardrobe and What's Trending rows already use. Inert unless
-   the Finds wrapper carries .is-rows -- delete this block if she picks option A. */
-#s-finds .dc-wrap.is-rows .dc-grid{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;gap:10px;
-  padding:2px 22px 10px;scroll-padding:0 22px;-ms-overflow-style:none;scrollbar-width:none;align-items:stretch}
-#s-finds .dc-wrap.is-rows .dc-grid::-webkit-scrollbar{display:none}
-#s-finds .dc-wrap.is-rows .dc-item{flex:0 0 62%;scroll-snap-align:start}
-#s-finds .dc-wrap.is-rows .dc-item-name{font-size:18px}
-#s-finds .dc-wrap.is-rows .dc-item-note{font-size:14px}
-#s-finds .dc-wrap.is-rows .dc-sec .dc-extra{display:flex}
-#s-finds .dc-wrap.is-rows .dc-showall{display:none}
-/* ▶ THE HYBRID, FOR HER SIDE-BY-SIDE (2026-10-13): 4 at a glance in the grid;
-   "Show all" opens the rest of the section as ONE swipe row under them instead
-   of lengthening the page. Inert unless the Finds wrapper carries .is-hybrid. */
-#s-finds .dc-wrap.is-hybrid .dc-morerow{display:none}
-#s-finds .dc-wrap.is-hybrid .dc-sec.is-open .dc-morerow,#s-finds .dc-wrap.is-hybrid.is-searching .dc-morerow{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;gap:10px;
-  margin:12px -22px 0;padding:2px 22px 10px 0;scroll-padding:0;scrollbar-width:none}
-#s-finds .dc-wrap.is-hybrid .dc-morerow::-webkit-scrollbar{display:none}
-#s-finds .dc-wrap.is-hybrid .dc-morerow .dc-item{flex:0 0 46%;scroll-snap-align:start;display:flex}
 /* ▶ HER SECTION HEADING, OPTION 1 OF 2 RENDERED (2026-10-13): "delete the underline
    and make the font bolder and bigger and with deleting the underline, tighten the
    space." Black Jost 800 capitals, no gold bar, "See the whole list" pulled up
@@ -4692,17 +4670,23 @@ body.ss-play .hm-entrance{animation:ssOverlayOut .55s ease 1.6s forwards}
 #s-finds .dc-cat{font:800 21px/1.2 'Jost',sans-serif;letter-spacing:.16em;color:#1a1a1a;padding-bottom:0;margin:2.2rem 0 .3rem}
 #s-finds .dc-cat.is-first{margin-top:1.25rem}
 #s-finds .dc-cat-see{margin-bottom:.8rem}
-/* ▶ HER HYBRID (2026-10-13): "2 items side by side and then the next row down is
-   the one that starts the swipe". The swipe row is always there (no button), and
-   its cards are EXACTLY the grid cards' width -- her catch was that narrower
-   cards made the photos skinnier. The row reaches to the frame's edge so the
-   next card peeks, and a small "Swipe for more" line says so in words.
-   Inert unless the Finds wrapper carries .is-hybrid2. */
-#s-finds .dc-wrap.is-hybrid2 .dc-swipehint{display:flex;justify-content:flex-end;align-items:center;gap:5px;margin:12px 0 6px;
+/* ▶ HER SECTION LAYOUT (2026-10-13, chosen over four rendered options): two
+   pieces side by side, the rest as ONE swipe row whose cards are EXACTLY the grid
+   cards' width (her catch: narrower cards made the photos skinnier), a "Swipe for
+   N more" line saying so in words, and a "Show N more" button that turns the row
+   into a grid in place -- "I feel like she is going to miss it."
+   Cards are never shown twice: the button changes the row, it does not copy it. */
+#s-finds .dc-swipehint{display:flex;justify-content:flex-end;align-items:center;gap:5px;margin:12px 0 6px;
   font:600 10.5px/1 'Jost',sans-serif;letter-spacing:.12em;text-transform:uppercase;color:#6b6459}
-#s-finds .dc-wrap.is-hybrid2 .dc-swipehint .dc-arr-svg{width:13px;height:13px;color:#6b6459}
-#s-finds .dc-wrap.is-hybrid2 .dc-morerow{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;gap:10px;
-  margin:0 -36px 0 -22px;padding:2px 36px 10px 0;scrollbar-width:none}
-#s-finds .dc-wrap.is-hybrid2 .dc-morerow::-webkit-scrollbar{display:none}
-#s-finds .dc-wrap.is-hybrid2 .dc-morerow .dc-item{flex:0 0 calc((100cqw + 34px) / 2);scroll-snap-align:start;display:flex}
-#s-finds .dc-wrap.is-hybrid2.is-searching .dc-swipehint{display:none}
+#s-finds .dc-swipehint .dc-arr-svg{width:13px;height:13px;color:#6b6459}
+#s-finds .dc-morerow{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;gap:10px;
+  margin:0 -36px 0 -22px;padding:2px 36px 10px 0;scrollbar-width:none;-ms-overflow-style:none}
+#s-finds .dc-morerow::-webkit-scrollbar{display:none}
+#s-finds .dc-morerow .dc-item{flex:0 0 calc((100cqw + 34px) / 2);scroll-snap-align:start}
+/* unfolded, or while she searches: the same cards as a grid, like the two above */
+#s-finds .dc-sec.is-open .dc-morerow,#s-finds .dc-wrap.is-searching .dc-morerow{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));
+  overflow:visible;margin:12px -22px 0;padding:0;gap:10px;scroll-snap-type:none}
+/* no snapping once it is a grid (the redraw itself is forced in _findsWire) */
+#s-finds .dc-sec.is-open .dc-morerow .dc-item,#s-finds .dc-wrap.is-searching .dc-morerow .dc-item{scroll-snap-align:none}
+#s-finds .dc-sec.is-open .dc-swipehint,#s-finds .dc-wrap.is-searching .dc-swipehint,#s-finds .dc-wrap.is-searching .dc-showall{display:none}
+#s-finds .dc-showall{margin-top:12px}
