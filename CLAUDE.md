@@ -692,6 +692,10 @@ Every trend card opens with a swipe row of photos (`_trendStrips`, data/trend-ph
 - **Her rulings in it:** *"I would not recommend Birkenstocks either. No matter what color"* (`neverBrands`) ·
   *"velvet and evening sandals can stay"* (sandals deliberately NOT in `offSeason`; espadrilles, slides, swim,
   beach are) · *"Farm Rio has fall florals"* (Fall Florals searches FARM Rio first, drops linen/sleeveless/tropical).
+- **Her second round, same day (live):** Belted Shirt Dresses must actually say belted/buckle/tie waist (*"remove
+  the first dress bc not belted"*) · the Ruslan Baginskiy faux fur hat is hidden by name (`hide`, *"just bc it is
+  ugly"* — one piece, not a rule about hats) · `neverWords` keeps the rows womenswear (a girls' coat, girls' jeans
+  and a men's trench had slipped in), with `brandOk` for Madden Girl, a women's brand the word list would catch.
 - **Colour trends must NAME their colour and never another** (`must`/`mustNot`) and search by garment
   (`queries`): a bare "Chocolate Brown" brought back a burgundy top and Birkenstocks. ⚠️ **Name-matching is the
   only lever because the page re-sorts each row by her store scores — so whatever passes may lead.**

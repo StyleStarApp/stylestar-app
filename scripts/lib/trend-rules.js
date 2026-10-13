@@ -11,6 +11,10 @@ export function trendKeep(rules, trend, p) {
   const brand = String(p.brand || '').toLowerCase() + ' ' + name;
   if ((rules.neverBrands || []).some(b => brand.includes(b))) return false;
   if ((rules.offSeason || []).some(w => wordRe(w).test(name))) return false;
+  const plain = (rules.brandOk || []).reduce((n, b) => n.split(b).join(' '), name);
+  if ((rules.neverWords || []).some(w => wordRe(w).test(plain))) return false;
+  const hide = (rules.hide || {})[trend];
+  if (Array.isArray(hide) && hide.some(h => name.includes(h))) return false;
   const not = (rules.mustNot || {})[trend];
   if (Array.isArray(not) && not.some(w => wordRe(w).test(name))) return false;
   const must = (rules.must || {})[trend];

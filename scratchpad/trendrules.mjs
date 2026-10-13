@@ -17,7 +17,14 @@ const synth=[['Chocolate Brown',{name:'Birkenstock Arizona Soft Footbed Slide Sa
  ['Suede',{name:'Gianvito Rossi Suede-trimmed platform espadrilles'},false],
  ['Velvet',{name:'Aquazzura velvet platform sandals'},true],
  ['Fall Florals',{name:'Pumpkin Season Floral Graphic Sweatshirt'},false],
- ['Belts',{name:'Leather Belt'},true]];
+ ['Belts',{name:'Leather Belt'},true],
+ ['Belted Shirt Dresses',{name:'SHIRTY Mixed Stripe Long Sleeve Shirtdress in Navy'},false],
+ ['Belted Shirt Dresses',{name:"Karen Millen Women's Crepe Buckle Waist Midi Shirt Dress"},true],
+ ['Faux Fur',{name:'Ruslan Baginskiy Faux fur hat'},false],
+ ['Faux Fur',{name:'Monnalisa Girl Eco-Faux Fur Coat'},false],
+ ['Wide-Leg Jeans',{name:'Wide Leg Girlfriend Jeans'},true],
+ ['Loafers',{name:"Madden Girl Women's Millie Lug-Sole Tailored Loafers"},true],
+ ['Trench Coats',{name:"Burberry Men's Long Silk Hoxton Trench Coat"},false]];
 for(const [t,p,want] of synth)ok(trendKeep(R,t,p)===want,`job: ${t} / ${p.name} should be ${want}`);
 for(const [t,r] of Object.entries(PX.trends))for(const p of r.items)ok(trendKeep(R,t,p),`stored piece breaks her rules: ${t} / ${p.name}`);
 ok(Object.keys(PX.trends).length>=20,'at least 20 trends carry photos');

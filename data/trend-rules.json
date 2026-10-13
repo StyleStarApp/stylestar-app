@@ -1,5 +1,5 @@
 {
-  "_about": "What's Trending photo rows: Cath's curation rules, read by BOTH scripts/trend-photos.js (her shops + Google, weekly) and the page (Amazon, live). One file so the two halves can never disagree. Words match the product NAME, case-insensitive, whole words; a trailing * matches any ending (belt* = belt, belts, belted). offSeason drops summer pieces; sandals are NOT on it on purpose: her ruling 2026-10-13, 'velvet and evening sandals can stay'.",
+  "_about": "What's Trending photo rows: Cath's curation rules, read by BOTH scripts/trend-photos.js (her shops + Google, weekly) and the page (Amazon, live). One file so the two halves can never disagree. Words match the product NAME, case-insensitive, whole words; a trailing * matches any ending (belt* = belt, belts, belted). offSeason drops summer pieces; sandals are NOT on it on purpose: her ruling 2026-10-13, 'velvet and evening sandals can stay'. neverWords keeps these rows womenswear (a girls' coat reached Faux Fur). Belted Shirt Dresses must actually say belted/buckle/tie waist (her catch: a striped shirtdress with no belt). brandOk lists women's brands whose NAME contains a neverWords word (Madden Girl), removed before that check.",
   "neverBrands": [
     "birkenstock"
   ],
@@ -78,6 +78,15 @@
         "dress",
         "dresses",
         "shirtdress*"
+      ],
+      [
+        "belt*",
+        "buckle*",
+        "tie waist",
+        "tie-waist",
+        "sash",
+        "self-tie",
+        "wrap"
       ]
     ],
     "Asymmetrical Hem Skirts": [
@@ -367,5 +376,29 @@
       "swim*"
     ],
     "_note": "Fall Florals: her call 2026-10-13, 'Farm Rio has fall florals' - the row searches FARM Rio first, and drops summer cuts and prints."
-  }
+  },
+  "neverWords": [
+    "girl",
+    "girls",
+    "kids",
+    "kid's",
+    "toddler",
+    "baby",
+    "boy",
+    "boys",
+    "men's",
+    "mens",
+    "juniors",
+    "junior's",
+    "juniors'"
+  ],
+  "hide": {
+    "_about": "Single pieces she has ruled off by eye, matched by name (lower case, part of the name is enough). Her reasons are hers; 2026-10-13: the Ruslan Baginskiy hat, 'just bc it is ugly'.",
+    "Faux Fur": [
+      "ruslan baginskiy faux fur hat"
+    ]
+  },
+  "brandOk": [
+    "madden girl"
+  ]
 }

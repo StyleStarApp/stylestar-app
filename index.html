@@ -12287,6 +12287,10 @@ function _trendKeep(trend,p){
   var name=String((p.name||'')+' '+(p.title||'')).toLowerCase(),brand=String(p.brand||'').toLowerCase()+' '+name;
   if((R.neverBrands||[]).some(function(b){return brand.indexOf(b)>=0}))return false;
   if((R.offSeason||[]).some(function(w){return _trendWord(w).test(name)}))return false;
+  var plain=(R.brandOk||[]).reduce(function(n,b){return n.split(b).join(' ')},name);
+  if((R.neverWords||[]).some(function(w){return _trendWord(w).test(plain)}))return false;
+  var hide=(R.hide||{})[trend];
+  if(Array.isArray(hide)&&hide.some(function(h){return name.indexOf(h)>=0}))return false;
   var not=(R.mustNot||{})[trend];
   if(Array.isArray(not)&&not.some(function(w){return _trendWord(w).test(name)}))return false;
   var must=(R.must||{})[trend];
