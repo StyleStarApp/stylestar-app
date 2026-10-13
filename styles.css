@@ -4697,3 +4697,8 @@ body.ss-play .hm-entrance{animation:ssOverlayOut .55s ease 1.6s forwards}
 #s-finds .dc-showall:hover{border-color:#C8B48A;color:#1a1a1a}
 #s-finds .dc-showall .dc-chev{width:15px;height:15px;flex:0 0 auto;transition:transform .2s}
 #s-finds .dc-showall[aria-expanded="true"] .dc-chev{transform:rotate(180deg)}
+/* option for her look (2026-10-13): the Save pill INSIDE the photo, bottom-left —
+   inert unless the Finds wrapper carries .px-save. The card is a size container,
+   so 100cqw is the photo's own width (the square is the card's content width). */
+#s-finds .dc-wrap.px-save .dc-save-row{position:absolute;left:15px;top:calc(9px + 100cqw - 38px);margin:0;z-index:2}
+#s-finds .dc-wrap.px-save .dc-save-row .wl-save{background:rgba(255,255,255,.94);padding:5px 11px;box-shadow:0 1px 4px rgba(60,50,20,.12)}
