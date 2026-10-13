@@ -610,8 +610,11 @@ const type = await page.evaluate(() => {
 ok('a category heading outranks the note beneath it', type.cat > type.note,
    `cat ${type.cat} vs note ${type.note}`);
 ok('...and the store line it sits above', type.cat > type.store, `cat ${type.cat} vs store ${type.store}`);
-ok('...but stays under the product names, so it organises rather than competes',
-   type.cat < type.name, `cat ${type.cat} vs name ${type.name}`);
+/* ⚠️ 2026-10-13, HER LATER CALL REPLACES THE OLD HALF OF THIS RULE: she chose, by
+   looking at two renders, a bolder, bigger heading with no gold bar. The heading now
+   OUTRANKS the product names on purpose -- it is the page's signpost. */
+ok('...and the product names too, her 2026-10-13 heading (bolder, bigger)',
+   type.cat > type.name, `cat ${type.cat} vs name ${type.name}`);
 /* ⚠️ AND THE OTHER HALF OF WHY SHE MISSED IT: it had 30px of air above against 17px
    between two cards, so it floated between them instead of belonging to what follows. */
 const air = await page.evaluate(() => {

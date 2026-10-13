@@ -4638,7 +4638,6 @@ body.ss-play .hm-entrance{animation:ssOverlayOut .55s ease 1.6s forwards}
 /* her headings link to her Storefront idea lists; the heading keeps its look,
    the small line under it says where it goes */
 #s-finds .dc-cat-link{color:inherit;text-decoration:none}
-#s-finds .dc-cat{margin-bottom:.55rem}
 #s-finds .dc-cat-see{display:table;margin:0 auto 1rem;font:600 10.5px/1.3 'Jost',sans-serif;letter-spacing:.1em;text-transform:uppercase;color:#4a463e;
   text-decoration:underline;text-decoration-color:#ECBD83;text-decoration-thickness:2px;text-underline-offset:4px;padding:4px 2px}
 #s-finds .dc-cat-see .dc-arr{text-decoration:none;display:inline-block}
@@ -4683,9 +4682,27 @@ body.ss-play .hm-entrance{animation:ssOverlayOut .55s ease 1.6s forwards}
   margin:12px -22px 0;padding:2px 22px 10px 0;scroll-padding:0;scrollbar-width:none}
 #s-finds .dc-wrap.is-hybrid .dc-morerow::-webkit-scrollbar{display:none}
 #s-finds .dc-wrap.is-hybrid .dc-morerow .dc-item{flex:0 0 46%;scroll-snap-align:start;display:flex}
-/* heading options for her side-by-side (2026-10-13) — inert unless .hd-1 / .hd-2 */
-#s-finds .dc-wrap.hd-1 .dc-cat::after,#s-finds .dc-wrap.hd-2 .dc-cat::after{display:none}
-#s-finds .dc-wrap.hd-1 .dc-cat{font:800 21px/1.2 'Jost',sans-serif;letter-spacing:.16em;color:#1a1a1a;padding-bottom:0;margin:2.2rem 0 .3rem}
-#s-finds .dc-wrap.hd-2 .dc-cat{font:400 29px/1.15 'DM Serif Display',Georgia,serif;letter-spacing:0;text-transform:none;color:#1a1a1a;padding-bottom:0;margin:2.2rem 0 .25rem}
-#s-finds .dc-wrap.hd-1 .dc-cat.is-first,#s-finds .dc-wrap.hd-2 .dc-cat.is-first{margin-top:1.25rem}
-#s-finds .dc-wrap.hd-1 .dc-cat-see,#s-finds .dc-wrap.hd-2 .dc-cat-see{margin-bottom:.8rem}
+/* ▶ HER SECTION HEADING, OPTION 1 OF 2 RENDERED (2026-10-13): "delete the underline
+   and make the font bolder and bigger and with deleting the underline, tighten the
+   space." Black Jost 800 capitals, no gold bar, "See the whole list" pulled up
+   under it. ⚠️ This REPLACES her 2026-09-11 rule that a heading stays under the
+   product names -- her later call, made by looking at both. Finds only; the Edit's
+   headings keep their gold bar. */
+#s-finds .dc-cat::after{display:none}
+#s-finds .dc-cat{font:800 21px/1.2 'Jost',sans-serif;letter-spacing:.16em;color:#1a1a1a;padding-bottom:0;margin:2.2rem 0 .3rem}
+#s-finds .dc-cat.is-first{margin-top:1.25rem}
+#s-finds .dc-cat-see{margin-bottom:.8rem}
+/* ▶ HER HYBRID (2026-10-13): "2 items side by side and then the next row down is
+   the one that starts the swipe". The swipe row is always there (no button), and
+   its cards are EXACTLY the grid cards' width -- her catch was that narrower
+   cards made the photos skinnier. The row reaches to the frame's edge so the
+   next card peeks, and a small "Swipe for more" line says so in words.
+   Inert unless the Finds wrapper carries .is-hybrid2. */
+#s-finds .dc-wrap.is-hybrid2 .dc-swipehint{display:flex;justify-content:flex-end;align-items:center;gap:5px;margin:12px 0 6px;
+  font:600 10.5px/1 'Jost',sans-serif;letter-spacing:.12em;text-transform:uppercase;color:#6b6459}
+#s-finds .dc-wrap.is-hybrid2 .dc-swipehint .dc-arr-svg{width:13px;height:13px;color:#6b6459}
+#s-finds .dc-wrap.is-hybrid2 .dc-morerow{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;gap:10px;
+  margin:0 -36px 0 -22px;padding:2px 36px 10px 0;scrollbar-width:none}
+#s-finds .dc-wrap.is-hybrid2 .dc-morerow::-webkit-scrollbar{display:none}
+#s-finds .dc-wrap.is-hybrid2 .dc-morerow .dc-item{flex:0 0 calc((100cqw + 34px) / 2);scroll-snap-align:start;display:flex}
+#s-finds .dc-wrap.is-hybrid2.is-searching .dc-swipehint{display:none}
