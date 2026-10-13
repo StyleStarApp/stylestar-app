@@ -6,6 +6,7 @@ import fs from 'fs';import path from 'path';
 const ROOT=path.resolve(path.dirname(new URL(import.meta.url).pathname),'..');
 const PNG=Buffer.from('iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8z8DwHwAFBQIAX8jx0gAAAABJRU5ErkJggg==','base64');
 let pass=0,fail=0;const ok=(c,m)=>{c?pass++:fail++;console.log((c?'  ✓ ':'  ✗ ')+m)};
+const FIRST=(fs.readFileSync(ROOT+'/data/amazon-finds.csv','utf8').match(/dp\/([A-Z0-9]{10})/)||[])[1];
 async function run(mode){
   const b=await chromium.launch();const ctx=await b.newContext({viewport:{width:390,height:844}});
   const p=await ctx.newPage();let calls=0;const errs=[];p.on('pageerror',e=>errs.push(e.message));
@@ -13,6 +14,9 @@ async function run(mode){
     if(u.hostname==='m.media-amazon.com')return r.fulfill({body:PNG,contentType:'image/png'});
     if(u.pathname.startsWith('/.netlify/functions/amazon-images')){calls++;
       if(mode==='unconfigured')return r.fulfill({contentType:'application/json',body:'{"images":{},"why":"unconfigured"}'});
+      // throttle the page's FIRST batch on every ask (it holds her first piece), so the
+      // check sees what a woman would see while Amazon is refusing that batch
+      if(mode==='throttled'&&(u.searchParams.get('asins')||'').split(',')[0]===FIRST)return r.fulfill({contentType:'application/json',body:'{"images":{},"why":"upstream"}'});
       const as=(u.searchParams.get('asins')||'').split(',');const o={};
       as.forEach((a,i)=>{if(i%5!==4&&!(mode==='results'&&a==='B07RBV936R'))o[a]={url:'https://m.media-amazon.com/images/I/'+a+'.jpg',w:500,h:500}});   // every 5th: Amazon sends nothing
       return r.fulfill({contentType:'application/json',body:JSON.stringify({images:o})});}
@@ -70,6 +74,16 @@ r=await run('unconfigured');s=r.s;
 ok(s.px===0,'no photos, cards stay the text cards they have always been');
 ok(r.calls()===1,'stops after one call instead of asking eight times');
 ok(r.errs.length===0,'no page errors');
+await r.b.close();
+console.log('— Amazon throttles one batch (2026-10-13: ten tan squares for 12h on the live page)');
+r=await run('throttled');
+const th=await r.p.evaluate(()=>{const first=[...document.querySelectorAll('#s-finds .dc-item')].slice(0,10);
+  const asin=i=>(i.querySelector('.dc-item-btn').getAttribute('href').match(/dp\/([A-Z0-9]{10})/)||[])[1];
+  return {marked:first.filter(i=>i.querySelector('.dc-px-ph.is-none')).length,cached:first.filter(i=>localStorage.getItem('ss_amzpx_'+asin(i))!==null).length,
+          laterPhotos:document.querySelectorAll('#s-finds .dc-item-px.is-amz').length}});
+ok(th.marked===0,'a throttled batch marks no piece as "no photo" ('+th.marked+')');
+ok(th.cached===0,'…and remembers nothing, so the next visit asks again ('+th.cached+')');
+ok(th.laterPhotos>0,'…while the other batches still bring their photos ('+th.laterPhotos+')');
 await r.b.close();
 console.log('— the quiz results: "From My Amazon Finds" beside "From My Edit"');
 r=await run('results');

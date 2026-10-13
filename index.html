@@ -10269,6 +10269,10 @@ async function _findsPhotosLoad(){
       // keys not set in Netlify: stop asking for the rest of this visit
       if(data&&data.why==='unconfigured'){_findsPxOff=true;items.forEach(_findsPxNone);break;}
       if(!data)continue;   // a failed call remembers nothing, so the next visit tries again
+      // Amazon did not really answer this batch (throttled or an error): remember
+      // nothing and mark nothing -- the square stays as it is and the next visit
+      // asks again. (A whole batch with no photo at all is treated the same way.)
+      if(data.why||!Object.keys(data.images||{}).length)continue;
       chunk.forEach(function(a){const v=imgs[a];const u=(v&&v.url)||'';_amzPxCacheSet(a,u);(byAsin[a]||[]).forEach(function(it){if(u)_findsPxPlace(it,u);else _findsPxNone(it);});});
     }
   }
@@ -16220,6 +16224,7 @@ function _wkStarAmzLoad(S,redraw){
   fetch('/.netlify/functions/amazon-images?asins='+S.amz).then(function(r){return r.ok?r.json():null}).then(function(d){
     if(!d)return;
     if(d.why==='unconfigured'){_findsPxOff=true;return;}
+    if(d.why)return;   // Amazon did not really answer: remember nothing, ask again next visit
     var v=d.images&&d.images[S.amz];_amzPxCacheSet(S.amz,(v&&v.url)||'');
     if(v&&v.url)try{redraw()}catch(e){}
   }).catch(function(){});

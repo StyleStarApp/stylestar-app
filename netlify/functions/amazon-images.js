@@ -144,9 +144,14 @@ export default async (req) => {
       const code = (json.errors && json.errors[0] && json.errors[0].code) || '';
       console.error(`[amazon-images] ${status} ${code}`);
     }
-    return new Response(JSON.stringify({ images }), { status: 200, headers });
+    // ⚠️ SAY SO when Amazon did not really answer (throttled, eligibility, an error):
+    // the page must not remember an empty answer as "this piece has no photo" --
+    // with 165 pieces in 17 batches, one throttled batch put ten tan squares on a
+    // woman's screen for 12 hours (measured on the live page, 2026-10-13).
+    const body = status === 200 ? { images } : { images, why: 'upstream' };
+    return new Response(JSON.stringify(body), { status: 200, headers });
   } catch (e) {
     console.error(`[amazon-images] ${e && e.message}`);
-    return new Response(JSON.stringify({ images: {} }), { status: 200, headers });
+    return new Response(JSON.stringify({ images: {}, why: 'error' }), { status: 200, headers });
   }
 };
