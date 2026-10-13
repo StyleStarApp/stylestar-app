@@ -4654,3 +4654,7 @@ body.ss-play .hm-entrance{animation:ssOverlayOut .55s ease 1.6s forwards}
 @container (max-width:150px){#s-finds .dc-item-btn .dc-bag{display:none}#s-finds .dc-item-btn{letter-spacing:.05em}}
 @container (max-width:126px){#s-finds .dc-item-btn{font-size:8.5px;letter-spacing:.03em}}
 #s-finds .dc-item-note{overflow-wrap:break-word;-webkit-hyphens:auto;hyphens:auto}
+/* no "Amazon" on the Finds cards (her call 2026-10-13); the word stays in the
+   markup because the wishlist keys a save on it -- see storeLine() in the importer */
+#s-finds .dc-store-amz{display:none}
+#s-finds .dc-item-meta.is-amz-only{display:none}

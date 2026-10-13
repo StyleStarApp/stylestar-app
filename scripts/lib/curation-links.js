@@ -69,7 +69,10 @@ export function collectEdit(src = html(), opts = {}) {
   for (const b of blocks) {
     const block = b.slice(0, b.indexOf('</div>\n    </div>') + 1 || 4000);
     const name = /<div class="dc-item-name"[^>]*>([\s\S]*?)<\/div>/.exec(block);
-    const store = /<span class="dc-store">([\s\S]*?)<\/span>/.exec(block);
+    // the store line may wrap a hidden " · Amazon" in its own span (Finds, 2026-10-13),
+    // so read to the end of the line and keep the TEXT, as a woman's wishlist does
+    const storeM = /<span class="dc-store">((?:[^<]|<span[^>]*>[^<]*<\/span>)*)<\/span>/.exec(block);
+    const store = storeM && [storeM[0], storeM[1].replace(/<[^>]+>/g, '')];
     const price = /<span class="dc-price"[^>]*>([\s\S]*?)<\/span>/.exec(block);
     const href = /<a class="dc-item-btn"[^>]*href="([^"]+)"/.exec(block);
     if (!name || !href) continue;

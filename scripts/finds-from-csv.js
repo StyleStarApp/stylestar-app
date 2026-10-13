@@ -109,6 +109,18 @@ export function loadLists() {
 }
 const LIST_RE = /^[A-Z0-9]{10,16}$/;
 
+/* ▶ NO "AMAZON" ON THE CARDS (her call 2026-10-13: "I don't think we need to put
+   the word Amazon on all these" -- the whole page is Amazon). The word is HIDDEN,
+   never deleted: the wishlist keys a saved piece on its name + this store text,
+   so changing the text would orphan every save. A card whose store is only
+   "Amazon" shows no store line at all; a brand keeps its brand. */
+function storeLine(store) {
+  const m = /^(.*?)\s*·\s*Amazon$/i.exec(store);
+  if (m && m[1]) return `      <div class="dc-item-meta is-store"><span class="dc-store">${esc(m[1])}<span class="dc-store-amz"> &middot; Amazon</span></span></div>`;
+  if (/^amazon$/i.test(store.trim())) return `      <div class="dc-item-meta is-store is-amz-only"><span class="dc-store"><span class="dc-store-amz">${esc(store)}</span></span></div>`;
+  return `      <div class="dc-item-meta is-store"><span class="dc-store">${esc(store)}</span></div>`;
+}
+
 function renderItem(r, extra) {
   const price = renderPrice(r.price);
   const [first, rest] = splitNote(r.note);
@@ -126,7 +138,7 @@ function renderItem(r, extra) {
     `    <div class="dc-item${extra ? ' dc-extra' : ''}">`,
     '      <span class="dc-item-star" aria-hidden="true">⭐</span>',
     '      <div class="dc-px-ph" role="link" tabindex="-1" aria-hidden="true"></div>',
-    `      <div class="dc-item-meta is-store"><span class="dc-store">${esc(r.store || 'Amazon')}</span></div>`,
+    storeLine(r.store || 'Amazon'),
     `      <div class="dc-item-name" role="link" tabindex="0">${esc(r.name)}</div>`,
   ];
   if (price) lines.push(`      <div class="dc-item-meta is-price">${price}</div>`);
