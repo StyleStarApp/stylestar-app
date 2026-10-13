@@ -4683,3 +4683,9 @@ body.ss-play .hm-entrance{animation:ssOverlayOut .55s ease 1.6s forwards}
   margin:12px -22px 0;padding:2px 22px 10px 0;scroll-padding:0;scrollbar-width:none}
 #s-finds .dc-wrap.is-hybrid .dc-morerow::-webkit-scrollbar{display:none}
 #s-finds .dc-wrap.is-hybrid .dc-morerow .dc-item{flex:0 0 46%;scroll-snap-align:start;display:flex}
+/* heading options for her side-by-side (2026-10-13) — inert unless .hd-1 / .hd-2 */
+#s-finds .dc-wrap.hd-1 .dc-cat::after,#s-finds .dc-wrap.hd-2 .dc-cat::after{display:none}
+#s-finds .dc-wrap.hd-1 .dc-cat{font:800 21px/1.2 'Jost',sans-serif;letter-spacing:.16em;color:#1a1a1a;padding-bottom:0;margin:2.2rem 0 .3rem}
+#s-finds .dc-wrap.hd-2 .dc-cat{font:400 29px/1.15 'DM Serif Display',Georgia,serif;letter-spacing:0;text-transform:none;color:#1a1a1a;padding-bottom:0;margin:2.2rem 0 .25rem}
+#s-finds .dc-wrap.hd-1 .dc-cat.is-first,#s-finds .dc-wrap.hd-2 .dc-cat.is-first{margin-top:1.25rem}
+#s-finds .dc-wrap.hd-1 .dc-cat-see,#s-finds .dc-wrap.hd-2 .dc-cat-see{margin-bottom:.8rem}
