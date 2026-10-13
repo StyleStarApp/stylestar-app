@@ -65,7 +65,10 @@ const shoeNames = await visibleItemNames();
 const shoeCats = await visibleCatNames();
 ok(shoeCats.includes('Comfy Shoes'), 'the Comfy Shoes heading is shown');
 ok(shoeNames.includes('Kitten Heel Mules') && shoeNames.includes('Arch Support Flip Flops'), 'real Comfy Shoes pieces are shown, though neither says "shoe" in its own name');
-ok(shoeNames.includes('J. Renee Soncino Sandal, Nude'), 'a piece hidden past the section cap of ' + SECTION_CAP + ' is reached by the search (her rule)');
+// read off the page, never typed: a name is hers to edit (this check went red the
+// day she renamed "Soncino Sandal, Nude" to "Nude Nappa")
+const capped1 = await page.evaluate(() => { const e = document.querySelector('#s-finds .dc-sec[data-cat="comfy-shoes"] .dc-extra .dc-item-name'); return e && e.textContent; });
+ok(!!capped1 && shoeNames.includes(capped1), 'a piece hidden past the section cap of ' + SECTION_CAP + ' is reached by the search, her rule (' + capped1 + ')');
 ok(!shoeNames.includes('Striped Cropped Cardigan'), 'an unrelated piece (a cardigan) is not shown');
 ok(!shoeCats.includes('Lips'), 'a section with nothing matching is hidden, not left as an empty heading');
 ok(await page.evaluate(() => [...document.querySelectorAll('#s-finds .dc-showall')].every(b => getComputedStyle(b).display === 'none')), 'no "Show all" button shows while she searches -- the search already shows them all');
