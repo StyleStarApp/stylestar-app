@@ -716,6 +716,14 @@ nothing half-finished, nothing unpushed, working tree clean.**
   whitelisted `pxZoom`/`pxZoomAt` on a `WEEK_STARS` entry (wrapper `.wks-px.is-zoom` + transform). `starpx` 32/32.
   ⚠️ `bootstar.mjs` reads `fonts.css` from an OLD session's scratchpad path — test debt, repoint when next touched.
 - ⏳ **SerpApi still "partial outage" on 10-07, 10-08 and 10-10** (cause "identified" 10-07, not resolved).
+- ✅✅ **THE WEEKLY TREND-PHOTO JOB RAN CLEAN ON ITS OWN, Mon 2026-10-12 20:37 UTC** (commit "Weekly What's
+  Trending photos", by the photos bot): **21 of 23 trends now carry photos, 472 pieces** in `data/trend-photos.json`.
+  ▶ So SerpApi recovered enough to work. ⚠️ **The PAGE code that shows them is still on the working branch only and
+  she has NOT seen the mock-up — next session: render the What's Trending mock-up from this real data, show her,
+  merge only on her yes.**
+- 🚪 **Session closed 2026-10-13 at her ask ("let's save and then I will open new session"). Everything merged to
+  `main`, nothing unpushed.** ⚠️ **The verbatim-archive pass of the 10-03 block is STILL owed — do it at the START
+  of the next session.**
 ▶ **NOTHING HERE HAS A HARD DATE EXCEPT CR4E001 (~Oct 29).**
 
 ## ▶▶▶ WHERE WE LEFT OFF — 2026-10-03 (twentieth session).
