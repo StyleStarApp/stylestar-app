@@ -702,6 +702,8 @@ Every trend card opens with a swipe row of photos (`_trendStrips`, data/trend-ph
   linen romper, cotton pants) — `mustNot` drops linen/cotton/twill/Graham & Spencer on Velvet, and watch it each
   Monday · L'orsobruno (kids) in `neverBrands` · Belts can no longer show pants · hidden by name: Simone Rocha
   Ghillie glitter flats, Sebago boat shoes and Church's loafers on Loafers, the kids' hook-and-loop sneakers on Burgundy.
+- **Round 5, 2026-10-14 (live, `hide`):** the Cole Haan Danby loafer and The Row Roana suede bomber on Suede
+  (*"they look too masculine"*). ▶ **Her eye leans away from masculine-reading pieces — worth noticing on future rows.**
 - **Colour trends must NAME their colour and never another** (`must`/`mustNot`) and search by garment
   (`queries`): a bare "Chocolate Brown" brought back a burgundy top and Birkenstocks. ⚠️ **Name-matching is the
   only lever because the page re-sorts each row by her store scores — so whatever passes may lead.**
