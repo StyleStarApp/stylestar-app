@@ -1,7 +1,8 @@
 {
   "_about": "What's Trending photo rows: Cath's curation rules, read by BOTH scripts/trend-photos.js (her shops + Google, weekly) and the page (Amazon, live). One file so the two halves can never disagree. Words match the product NAME, case-insensitive, whole words; a trailing * matches any ending (belt* = belt, belts, belted). offSeason drops summer pieces; sandals are NOT on it on purpose: her ruling 2026-10-13, 'velvet and evening sandals can stay'. neverWords keeps these rows womenswear (a girls' coat reached Faux Fur). Belted Shirt Dresses must actually say belted/buckle/tie waist (her catch: a striped shirtdress with no belt). brandOk lists women's brands whose NAME contains a neverWords word (Madden Girl), removed before that check.",
   "neverBrands": [
-    "birkenstock"
+    "birkenstock",
+    "l'orsobruno"
   ],
   "offSeason": [
     "espadrille*",
@@ -375,7 +376,21 @@
       "pineapple",
       "swim*"
     ],
-    "_note": "Fall Florals: her call 2026-10-13, 'Farm Rio has fall florals' - the row searches FARM Rio first, and drops summer cuts and prints."
+    "_note": "Fall Florals: her call 2026-10-13, 'Farm Rio has fall florals' - the row searches FARM Rio first, and drops summer cuts and prints. Velvet: 'Velvet by Graham & Spencer' is a BRAND, so its linen and cotton pieces matched the word velvet (her catch 2026-10-14). Belts: a pair of pants whose title mentions a belt had slipped in. Watch Velvet each Monday for more pieces from the Velvet brand; hide them by name.",
+    "Velvet": [
+      "graham & spencer",
+      "graham and spencer",
+      "linen",
+      "cotton",
+      "twill"
+    ],
+    "Belts": [
+      "pants",
+      "trousers",
+      "jeans",
+      "dress",
+      "skirt"
+    ]
   },
   "neverWords": [
     "girl",
@@ -393,7 +408,7 @@
     "juniors'"
   ],
   "hide": {
-    "_about": "Single pieces she has ruled off by eye, matched by name (lower case, part of the name is enough). Her reasons are hers; 2026-10-13: the Ruslan Baginskiy hat, 'just bc it is ugly'. 2026-10-13 round 3: the sleeveless FARM Rio Emily midi dress ('looks too springy'), the Isabel Marant Felsa fringed 'loafers' (boots, not loafers), and the Blundstone Chelsea boots ('ugly').",
+    "_about": "Single pieces she has ruled off by eye, matched by name (lower case, part of the name is enough). Her reasons are hers; 2026-10-13: the Ruslan Baginskiy hat, 'just bc it is ugly'. 2026-10-13 round 3: the sleeveless FARM Rio Emily midi dress ('looks too springy'), the Isabel Marant Felsa fringed 'loafers' (boots, not loafers), and the Blundstone Chelsea boots ('ugly'). 2026-10-14 round 4: the Simone Rocha Ghillie glitter flats, the Sebago boat shoes and Church's loafers on Loafers, and the kids' hook-and-loop sneakers on Burgundy.",
     "Faux Fur": [
       "ruslan baginskiy faux fur hat"
     ],
@@ -402,10 +417,22 @@
       "emily floral tapestry midi dress"
     ],
     "Loafers": [
-      "felsa fringed suede loafers"
+      "felsa fringed suede loafers",
+      "sebago",
+      "church`s premium leather loafers",
+      "church's premium leather loafers"
     ],
     "Suede": [
       "blundstone"
+    ],
+    "Ballet Flats": [
+      "ghillie glitter ballet flats"
+    ],
+    "Burgundy": [
+      "tiempo-inspired mini sneakers"
+    ],
+    "Velvet": [
+      "velvet claudia printed palazzo"
     ]
   },
   "brandOk": [

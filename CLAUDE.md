@@ -698,6 +698,10 @@ Every trend card opens with a swipe row of photos (`_trendStrips`, data/trend-ph
   and a men's trench had slipped in), with `brandOk` for Madden Girl, a women's brand the word list would catch.
 - **Round 3, same day (live, `hide`):** the sleeveless FARM Rio Emily midi dress (*"looks too springy"*), the
   Isabel Marant Felsa "loafers" (*"boots not loafers"*), and Blundstone on Suede (*"ugly"*, all 8 colourways).
+- **Round 4, 2026-10-14 (live):** Velvet rows were full of the BRAND "Velvet by Graham & Spencer" (linen shorts, a
+  linen romper, cotton pants) — `mustNot` drops linen/cotton/twill/Graham & Spencer on Velvet, and watch it each
+  Monday · L'orsobruno (kids) in `neverBrands` · Belts can no longer show pants · hidden by name: Simone Rocha
+  Ghillie glitter flats, Sebago boat shoes and Church's loafers on Loafers, the kids' hook-and-loop sneakers on Burgundy.
 - **Colour trends must NAME their colour and never another** (`must`/`mustNot`) and search by garment
   (`queries`): a bare "Chocolate Brown" brought back a burgundy top and Birkenstocks. ⚠️ **Name-matching is the
   only lever because the page re-sorts each row by her store scores — so whatever passes may lead.**
