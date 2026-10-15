@@ -3230,6 +3230,15 @@ clean, no warning, no rejection — supporting the read given her at the time: a
 application and a Rakuten-relationship migration are different gates even inside one account. This
 does not reopen or need to overcome that August decline.
 
+👠 **PEDRO APPROVED ON RAKUTEN, 2026-10-15 — HER 9TH RAKUTEN MERCHANT, WIRED AND LIVE THE SAME DAY.** Email verified
+genuine (its link carries her own publisher id `jZNkkinrr1k`). MID **43892**, read off the approval link's own redirect
+(`ranMID=43892`). All five edits done: `STORES` · `_AFF_MID` (`pedroshoes.com`) · `MID_TO_STORE` · `BUILD_MIDS` · regenerated
+`store-domains.js` (134). Search url `pedroshoes.com/us/search?q=` VERIFIED (real term → products, gibberish → 0); `w:1`
+because its search mixes menswear. ⭐ **ITS WOMEN'S PRICES MEASURED ~$90-$135 — THE FIRST `$$` STORE THAT EARNS.** Shoes and
+bags only, so it eases the shoe/bag price skew, not dresses or tops. ⚠️ **ITS TIER, ARCHETYPE AND TEN SCORES ARE A
+`store-draft.js` DRAFT (neighbours Sam Edelman, Cuyana, Everlane, Coach) — HERS TO CORRECT.** ⚠️ Whether Rakuten actually
+delivers a Pedro product FEED is unknown until the nightly ingest runs; if it does not, the links still earn.
+
 **❌ THE REJECTIONS, AND THE ONE THING THEY ALL HAVE IN COMMON:**
 | Who | When | Level | Reason |
 |---|---|---|---|

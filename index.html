@@ -6210,6 +6210,11 @@ const STORES={
   // worked example) rather than the neighbor-median draft.
   'Kohl\'s':{u:'https://www.kohls.com/search.jsp?submit-search=web-regular&search=',w:1,t:'$',a:'Casual Everyday',s:['petite','plus'],d:[9,3,5,5,6,10,4,5,8,9],c:'budget-friendly everyday basics and activewear, carries plus and petite'},
   'COUTR':{u:'https://www.coutr.com/search?q=',t:'$$$$',w:1,a:'Luxury Fashion, Universal',s:[],d:[4,6,10,8,8,3,10,8,9,9],c:'designer swimwear, jewelry, bags, sunglasses and shoes, high quality designer pieces'},
+  // Pedro approved on Rakuten 2026-10-15 (mid 43892, read off her own approval link's redirect). Search url
+  // VERIFIED from the sandbox: a real term returns products, gibberish returns zero. Sells menswear too, so w:1.
+  // ⚠️ t, a and d are a DRAFT from store-draft.js (neighbours Sam Edelman, Cuyana, Everlane, Coach) for HER to correct;
+  // the tier is $$ because its own women's prices measured ~$90-$135, not the neighbours' $$$.
+  'Pedro':{u:'https://www.pedroshoes.com/us/search?q=',t:'$$',w:1,a:'Modern Chic, Classic Sophisticate',s:[],d:[5,4,9,9,5,6,8,5,9,5],c:'structured leather shoes, loafers, heels, sandals and handbags'},
   /* ADDED 2026-09-13 -- her first individual CJ advertiser approval (the CJ
      publisher account itself went active 2026-09-12). Cashmere specialty
      retailer, real single-item purchases, none of her three exclusions.
@@ -6471,6 +6476,8 @@ var _AFF_MID={'farmrio.com':'44912','dvf.com':'53590','vilebrequin.com':'43322',
   // links wrap immediately, and the photo gate in _wkStarPxTag (px is honoured
   // only when _affMid(url) resolves) opens for it the moment this line exists.
   'coutr.com':'54152',
+  // Pedro approved 2026-10-15 (mid 43892), wired the same day with a verified search url.
+  'pedroshoes.com':'43892',
   // Olivela approved 2026-08-24 (mid 50334). ⚠️ THIS COMMENT USED TO SAY
   // "INERT UNTIL A LINK EXISTS" AND THAT WENT STALE THE SAME DAY AS THE
   // MARISSA COLLECTIONS COMMENT RIGHT BELOW IT -- fixed 2026-09-16, checked

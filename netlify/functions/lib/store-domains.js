@@ -679,6 +679,11 @@ export default {
   "tier": "$$$$",
   "sizes": []
  },
+ "Pedro": {
+  "host": "pedroshoes.com",
+  "tier": "$$",
+  "sizes": []
+ },
  "Cashmere Boutique": {
   "host": "cashmereboutique.com",
   "tier": "$$",
