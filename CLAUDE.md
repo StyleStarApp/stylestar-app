@@ -599,6 +599,9 @@ that makes any future number mean something.**
   do:** tap through 10-15 suggestions across Shop your style, Wardrobe Ideas and Complete the Look and
   say **where the searches land wrong.** Claude can prove a link returns results; **only she can judge
   whether the search term was the right one.**
+- ▶ **PICK A PEDRO PIECE FOR THE EDIT — HER OWN TO-DO, ADDED 2026-10-15** (*"i need to add to my list to pick an
+  edit item from them"*). Pedro earns from today; a Pedro Edit piece would also be her first `$$` Edit pick with a
+  licensed photo. Same working pattern: she sends link + price + note, Claude verifies and shows the card first.
 - ▶ **HOMEWORK 4 — SPOT-VERIFY THE UNVERIFIED STORES** with the address-bar trick. Outstanding: Talbots ·
   Kendra Scott · SKIMS · Lane Bryant · Dia&Co · Sam Edelman · Lacoste · Tory Burch · Belk · Bergdorf
   Goodman · TJ Maxx · Sunglass Hut · Warby Parker · Dillard's. **Only worth doing for stores she would
@@ -3238,6 +3241,12 @@ because its search mixes menswear. ⭐ **ITS WOMEN'S PRICES MEASURED ~$90-$135 �
 bags only, so it eases the shoe/bag price skew, not dresses or tops. ⚠️ **ITS TIER, ARCHETYPE AND TEN SCORES ARE A
 `store-draft.js` DRAFT (neighbours Sam Edelman, Cuyana, Everlane, Coach) — HERS TO CORRECT.** ⚠️ Whether Rakuten actually
 delivers a Pedro product FEED is unknown until the nightly ingest runs; if it does not, the links still earn.
+
+📧 **MYTHERESA EMAIL, 2026-10-15 — INFORMATIONAL, NOTHING TO DO.** Their affiliate team explained where to see the
+order flags behind their commission tiers (Rakuten → Reports → Individual Item Report → add *Customer Status*
+(New/Existing) and *Customer Segment* (topcustomer/assisted)). ▶ **Meaning: Mytheresa pays differently for a first-time
+buyer vs an existing or VIP customer, and prizes new customers.** No link, payment or account change asked, so no
+scam check needed. Worth a look only once Mytheresa orders actually appear.
 
 **❌ THE REJECTIONS, AND THE ONE THING THEY ALL HAVE IN COMMON:**
 | Who | When | Level | Reason |
