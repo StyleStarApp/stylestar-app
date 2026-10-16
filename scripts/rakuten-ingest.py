@@ -19,7 +19,7 @@ import os, sys, gzip, ftplib, tempfile, collections, time
 from datetime import datetime, timezone
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-from rakuten_feed import parse_line, MID_TO_STORE, BUILD_MIDS
+from rakuten_feed import parse_line, MID_TO_STORE, BUILD_MIDS, PENDING_MIDS
 from supabase_io import Supabase, SupabaseError, eq, lt, like_prefix
 from slot_match import load_rules, match as match_slots
 
@@ -211,6 +211,7 @@ def main():
     grand = collections.Counter()
     per_store = []
     failures = 0
+    pending = set()     # new approvals whose catalogue file is not out yet
 
     for mid in BUILD_MIDS:
         store = MID_TO_STORE[mid]
@@ -437,8 +438,14 @@ def main():
         except Exception as e:
             ok = False
             note = redact(str(e))[:400]
-            failures += 1
-            log(f"  FAILED: {note}")
+            if mid in PENDING_MIDS and _missing_file(str(e)):
+                note = "not published yet (new approval): " + note[:200]
+                pending.add(store)
+                log(f"  NOT PUBLISHED YET — newly approved, Rakuten has no catalogue file for it so far."
+                    f" Not a failure; tried again tomorrow.")
+            else:
+                failures += 1
+                log(f"  FAILED: {note}")
             total = kept = n_pieces = no_price = no_image = 0
             reasons = collections.Counter()
         finally:
@@ -476,12 +483,12 @@ def main():
 
     log()
     log("=" * 70)
-    log("TOTAL ACROSS THE SEVEN")
+    log("TOTAL ACROSS ALL STORES")
     log("=" * 70)
     log(f"  {'store':<24}{'lines':>10}{'kept rows':>11}{'PIECES':>10}{'share':>8}")
     tot_pieces = sum(p for _, _, _, p, _ in per_store) or 1
     for store, total, kept, n_pieces, ok in per_store:
-        mark = "" if ok else "   FAILED"
+        mark = "" if ok else ("   not published yet" if store in pending else "   FAILED")
         log(f"  {store:<24}{total:>10,}{kept:>11,}{n_pieces:>10,}"
             f"{n_pieces/tot_pieces*100:>7.1f}%{mark}")
     log(f"  {'':<24}{grand['lines']:>10,}{grand['kept']:>11,}{tot_pieces:>10,}")
@@ -494,6 +501,13 @@ def main():
     # A store that failed must fail the job, or a silently half-empty catalog
     # looks exactly like a healthy one in the Actions list.
     return 1 if failures else 0
+
+
+def _missing_file(msg):
+    """True when the FTP said the file is simply not there (vs. any other fault)."""
+    m = msg.lower()
+    return ("nosuchkey" in m or "no such file" in m or "not found" in m
+            or "status code: 404" in m or m.startswith("550"))
 
 
 def sweep(supa, store, mid, now):

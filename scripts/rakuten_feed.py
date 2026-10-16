@@ -55,6 +55,13 @@ MID_TO_STORE = {
 # independent-seller listings rather than a curated store. Its own problem, later.
 BUILD_MIDS = ["44912", "53590", "43322", "50334", "36537", "43172", "50739", "54152", "43892"]
 
+# A merchant approved so recently that Rakuten has not published its catalogue file yet.
+# For these ONLY, a missing file ("550 ... NoSuchKey" / 404) is logged as "not published yet"
+# instead of failing the whole nightly job. Any OTHER error still fails, and the file is
+# tried every night, so it ingests on its own the day it appears -- then take it out of here.
+# Pedro, approved 2026-10-15: no file on the FTP on its first night.
+PENDING_MIDS = {"43892"}
+
 
 def _clean(v):
     return (v or "").strip()
