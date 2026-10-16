@@ -3244,8 +3244,7 @@ delivers a Pedro product FEED is unknown until the nightly ingest runs; if it do
 🚨 **ANSWERED THE SAME NIGHT: NO PEDRO FILE YET** (FTP `550 NoSuchKey`), so the 2026-10-15 ingest failed and GitHub
 emailed her; the other 8 stores ingested fine. Fixed: `PENDING_MIDS` in `scripts/rakuten_feed.py` makes a MISSING file for a
 brand-new approval a logged "not published yet", never a failure; any other error still fails. Tried nightly, so it ingests
-itself the day Rakuten publishes it. ▶ **When the log shows Pedro rows, take 43892 out of `PENDING_MIDS`.** If it never
-appears in a few weeks, Pedro may not offer a product feed at all — links still earn either way.
+itself the day Rakuten publishes it. ✅ **PUBLISHED 2026-10-16: 1,162 lines, 633 women's pieces; 43892 taken back out of `PENDING_MIDS` (empty is normal).**
 
 📧 **MYTHERESA EMAIL, 2026-10-15 — INFORMATIONAL, NOTHING TO DO.** Their affiliate team explained where to see the
 order flags behind their commission tiers (Rakuten → Reports → Individual Item Report → add *Customer Status*

@@ -59,8 +59,9 @@ BUILD_MIDS = ["44912", "53590", "43322", "50334", "36537", "43172", "50739", "54
 # For these ONLY, a missing file ("550 ... NoSuchKey" / 404) is logged as "not published yet"
 # instead of failing the whole nightly job. Any OTHER error still fails, and the file is
 # tried every night, so it ingests on its own the day it appears -- then take it out of here.
-# Pedro, approved 2026-10-15: no file on the FTP on its first night.
-PENDING_MIDS = {"43892"}
+# Pedro, approved 2026-10-15: no file its first night, published by 2026-10-16 (1,162 lines,
+# 633 women's pieces) and taken back out. Empty is the normal state.
+PENDING_MIDS = set()
 
 
 def _clean(v):
