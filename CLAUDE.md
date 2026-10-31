@@ -3126,6 +3126,12 @@ it grow: ADD A ROW, never replace the table.**
 | Sep 22 | **$4.47** | 6 | 14 | 228 | 6.14% |
 | Sep 28 | **$6.89** | 10 | 25 | 338 | **7.40%** |
 | Sep 30 | **$8.18** | 11 | 28 | 347 | **8.07%** |
+| Oct 31 *(October only)* | **$8.81** | 5 | 17 | 207 | **8.21%** |
+🚨 **2026-10-31: AMAZON PHOTO ACCESS LAPSED.** `amazon-images` and `amazon-search` both get **403** from the Creators
+API (eligibility: under 10 shipped in the trailing 30 days — October shows 5). She saw every /finds photo gone. The app
+degrades as designed (tan square + gold star on /finds, Amazon cards drop out of finder rows, links still earn). **No code
+change needed; access returns on its own once shipped sales are back at 10+.** Re-check with a Referer header:
+`curl -H "Referer: https://stylestar.app/" .../amazon-images?asins=B07RBV936R` → `why:"upstream"` while lapsed.
 ⚠️ **"ORDERED" IS NOT A SALE YET.** An ordered item stays PENDING until it ships AND clears its return
 window — that is when Amazon confirms it as a qualifying sale, counts it toward the 3-sales/180-day clock
 and pays. **No figure in this table is certified; every one is her dashboard's own live reading.**
