@@ -3259,12 +3259,12 @@ dangling alias is a crash risk), `docs/current-stores.txt`, `store-domains.js` (
 `scripts/rakuten_feed.py`** (new): not fetched, and every write run deletes its leftover `products`/`product_sizes` rows
 (idempotent). **To re-approve: move 50739 back into `MID_TO_STORE`/`BUILD_MIDS` and redo the five merchant edits.**
 ⭐ **SAME DAY, HER CALL: the Simkhai Stella sandal (Olivela) is OUT of Star of the Week** — the Olivela "update our app"
-modal from the home-screen icon (known, see Hosting). It **stays on the Edit**. ⚠️ **Two other Olivela pieces are still
-Stars (Devon tote Nov 8, Zoe Lev Nov 29) — the same modal applies; flagged to her, her call.**
-▶ **STAR SCHEDULE NOW (15, measured with `_weekStar`):** Nov 1 Gucci GG mini bag · Nov 8 Simkhai Devon tote · Nov 15
-Stella McCartney Falabella · Nov 22 Pashmina · Nov 29 Zoe Lev · Dec 6 VLOGO belt · Dec 13 Isabella Celini bracelet · Dec 20
-Saint Laurent SL M136 · Dec 27 Vilebrequin · Jan 3 Crosbie · Jan 10 Rockstud pouch · Jan 17 Pointed Toe boots · Jan 24 Open
-Heart · Jan 31 Valentino Square sunglasses · Feb 7 DVF Jeanne, then repeats.
+modal from the home-screen icon (known, see Hosting). It **stays on the Edit**. ✅ **Then ALL Olivela out of the Star, her call: *"take the Olivela out of Star of the week but keep in the edit"*** —
+the Devon tote and Zoe Lev too. ⚠️ **No Olivela piece may go back into `WEEK_STAR_PHOTO_ORDER` without her say.**
+▶ **STAR SCHEDULE NOW (13, measured with `_weekStar`):** Nov 1 Gucci GG mini bag · Nov 8 Stella McCartney Falabella ·
+Nov 15 Pashmina · Nov 22 VLOGO belt · Nov 29 Isabella Celini bracelet · Dec 6 Saint Laurent SL M136 · Dec 13 Vilebrequin ·
+Dec 20 Crosbie · Dec 27 Rockstud pouch · Jan 3 Pointed Toe boots · Jan 10 Open Heart · Jan 17 Valentino Square sunglasses ·
+Jan 24 DVF Jeanne, then repeats.
 📧 **MYTHERESA EMAIL, 2026-10-15 — INFORMATIONAL, NOTHING TO DO.** Their affiliate team explained where to see the
 order flags behind their commission tiers (Rakuten → Reports → Individual Item Report → add *Customer Status*
 (New/Existing) and *Customer Segment* (topcustomer/assisted)). ▶ **Meaning: Mytheresa pays differently for a first-time
