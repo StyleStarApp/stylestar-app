@@ -686,6 +686,12 @@ rendered options; none is to be "tidied" back.**
   "Show N more" pulled up against its cards (`margin:0 auto 14px`). Live.**
 - ⏳ **STILL OWED FROM BEFORE: the ShopMy partnerships email, the verbatim-archive pass of the 10-03 block.**
 
+## ▶▶▶ HOME STRIP ROTATES DAILY — LIVE 2026-10-31, HER ASK (sister Ellen's catch: the DVF scarf always led)
+"More from the Edit" on Welcome Back now starts at a different card each day: `_editTeaserRotate`, 3 places a day,
+same order for everyone that day, day 1 = 2026-10-31 (her "put the front ones at the end"). ⚠️ **The Edit PAGE keeps
+her order** (paying shops first) — only the home strip rotates. Her words: *"let's do it daily and see how we like
+it"* — weekly was offered and is the fallback if daily feels too busy. `scratchpad/editrotate.mjs` 7/7.
+
 ## ▶▶▶ WHAT'S TRENDING PHOTO ROWS — LIVE 2026-10-13, HER YES (*"let's go live and then we can look at it more closely"*)
 Every trend card opens with a swipe row of photos (`_trendStrips`, data/trend-photos.json, weekly job Mondays).
 🚨 **HER CURATION IS ONE FILE, `data/trend-rules.json`, READ BY BOTH HALVES** — the weekly job

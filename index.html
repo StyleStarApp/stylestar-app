@@ -16528,6 +16528,24 @@ function _editPhotos(el){
   if(px&&px.tagName!=='IMG')return [].slice.call(px.querySelectorAll('img'));
   var one=_editPhoto(el);return one?[one]:[];
 }
+/* ⭐ HER ASK, 2026-10-31 (her sister Ellen's catch): "the DVF scarf has been in
+   the number one position for a long time and it needs rotation to look fresh."
+   ▶ HER CALLS: rotate DAILY ("let's do it daily and see how we like it"), and the
+   cards that were up front that day go to the END first.
+   ▶ HOW: the strip is the Edit's own order, started at a different card each day.
+   It moves 3 places a day so the first three cards a woman sees are all new
+   (moving 1 would look the same). Same order for everyone on a given day — it is
+   a calendar, not a shuffle. Day 1 is 2026-10-31, offset 3 = her "put the front
+   ones at the end". ⚠️ THE EDIT PAGE ITSELF IS NOT ROTATED — its order (paying
+   shops first) is her 2026-09-10 ruling. This touches only the home strip. */
+function _editTeaserRotate(items,now){
+  var n=items.length;if(n<2)return items;
+  now=now||new Date();
+  var a=new Date(2026,9,30),t=new Date(now.getFullYear(),now.getMonth(),now.getDate());
+  var day=Math.round((t-a)/86400000);
+  var off=((day*3)%n+n)%n;
+  return items.slice(off).concat(items.slice(0,off));
+}
 function _renderEditTeaser(){
   var el=document.getElementById('wbEditTeaser');if(!el)return;
   var star=_weekStar();
@@ -16552,6 +16570,7 @@ function _renderEditTeaser(){
             alt:imgs[0].getAttribute('alt')||it.name};
   });
   if(!items.length){el.classList.remove('on');el.innerHTML='';return;}
+  items=_editTeaserRotate(items);
   el.innerHTML='<div class="wet-hd"><div class="wet-lbl">More from the Edit</div>'
     +'<span class="wet-swipe" id="wbEditTeaserSwipe" style="display:none">Swipe for more &rarr;</span></div>'
     +'<div class="wet-scroll" id="wbEditTeaserScroll">'
