@@ -724,7 +724,7 @@ nothing half-finished, nothing unpushed, working tree clean.**
 - ✅ **Her laptop button bug — FIXED AND LIVE.** The closing invitation's pill was `inline-block`, so her
   sentence flowed around it and stranded *"clients."* beside the button. See the STANDING DON'T,
   *"A PHONE-FIRST APP STILL HAS TO BE LOOKED AT ON A LAPTOP"*.
-- ✅ **Indie Law approved the $500 as a REFUND** — her full ask, granted. ⚠️ **NOT LANDED YET; watch ~Oct 19.**
+- ✅ **Indie Law approved the $500 as a REFUND** — her full ask, granted. ✅ **LANDED — confirmed in her bank by her, 2026-10-31.**
 - ✅ **City of Orlando confirmed Your Fashion Friend closed.** ✅✅ **AND THE COUNTY CONFIRMED 2026-10-06** —
   Hala Hanna, Tax Specialist II, Orange County Tax Collector (hhanna@octaxcol.com): *"This account closed"*
   (BTR 0598950). ▶ **YOUR FASHION FRIEND'S TAX RECEIPTS ARE BOTH CLOSED. Keep both emails.** Her one-line
@@ -811,8 +811,8 @@ design ruling in it is lifted into "SESSION-19/20 DESIGN RULINGS" below and/or t
 
 ### ⭐ WHERE TO START — ASK, DO NOT LAUNCH
 1. ✅ **Indie Law refund — APPROVED 2026-10-05, SHE WON THE FULL ASK.** Rose: *"our management team has
-   approved the $500 refund to your original payment method"*, 5-10 business days. ⚠️ **NOT YET LANDED —
-   watch for it by ~Oct 19; if nothing by then, one polite nudge.** She replied the same day thanking them
+   approved the $500 refund to your original payment method"*, 5-10 business days. ✅ **RECEIVED — her bank
+   shows it, confirmed by her 2026-10-31. Nothing left open with Indie Law on the refund.** She replied the same day thanking them
    and asking who her named point of contact is for the trademark final action steps.
 2. **City of Orlando paperwork** — Style Star LLC's own city BTR (OpenCounter) + Home Occupation Application
    ($50, floor-plan sketch) + its own county BTR. Then Sunbiz fictitious-name cancellation **CR4E001 §4 by
@@ -922,15 +922,14 @@ stacked photo (the Saint Laurent glasses) renders as a stack on the results pane
   error). She replied 2026-09-30 asking for the **$500 as a REFUND, not a credit**; Rose escalated 10-02.
   ✅✅ **APPROVED 2026-10-05 — ALL FOUR OF HER ASKS ARE NOW GRANTED, INCLUDING THE REFUND IN THE FORM SHE
   ASKED FOR.** Rose's words: *"our management team has approved the $500 refund to your original payment
-  method"*, 5-10 business days. ⚠️ **MONEY NOT RECEIVED YET — confirm it lands by ~Oct 19, then say so.**
+  method"*, 5-10 business days. ✅ **RECEIVED, CONFIRMED BY HER 2026-10-31.**
   ⚠️ **THE SIGNATURE WAS "Rose / Indie Client Care Team" FROM `clients@indielaw.com`, NOT A FULL NAME FROM A
   NAMED ADDRESS** — better than the unsigned 2026-08-25 email that started this, but not quite the "named,
   signed updates" she was promised. **DELIBERATELY NOT RAISED AS A COMPLAINT** on a good-news email;
   instead her reply asks who her point of contact is for the trademark final action steps, which produces a
   named person as a FORWARD question rather than a backward grievance. ▶ **The relationship is repaired as
   of this date. Treat it as such.** ⚠️ Do NOT write "the third change" to them — stick to dated facts. Do
-  not re-open "switch firms" unless the pattern resumes. **Total paid to date $6,229** (a $500 refund is
-  pending against it). Full five-error history is in BUSINESS & LEGAL above.
+  not re-open "switch firms" unless the pattern resumes. **Total paid to date $6,229** (the $500 refund came back 2026-10-31, so **net $5,729**). Full five-error history is in BUSINESS & LEGAL above.
 - **Annual report** (first one, adds her EIN to Sunbiz): **Jan 1 – May 1, 2027, $400 late fee.** Any other
   "annual report" solicitation is the scam wave.
 - **Your Fashion Friend closure:** county closure email SENT 2026-09-29 + Notice of Business Closure form
