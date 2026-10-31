@@ -1514,15 +1514,6 @@
       <a class="dc-item-btn" href="https://www.mytheresa.com/us/en/women/valentino-garavani-vlogo-signature-reversible-leather-belt-black-p01182366" target="_blank" rel="sponsored noopener"><svg class="dc-bag" viewBox="0 0 24 24" fill="none" stroke="#0FA6B6" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5.8 8.5 h12.4 l-0.8 10.6 a1.2 1.2 0 0 1 -1.2 1.1 H7.8 a1.2 1.2 0 0 1 -1.2 -1.1 Z"/><path d="M8.3 8.5 C8.3 4.2 15.7 4.2 15.7 8.5"/><path d="M12 11.9 L12.5 13.3 L14 13.35 L12.85 14.25 L13.25 15.65 L12 14.8 L10.75 15.65 L11.15 14.25 L10 13.35 L11.5 13.3 Z" fill="#0FA6B6" stroke="none"/></svg>Shop this item <span class="dc-arr">&rarr;</span></a>
     </div>
 
-    <div class="dc-item">
-      <img class="dc-item-px" src="https://fleurdumal.com/cdn/shop/files/sculpt_sports_bra_black.jpg?v=1775576790&amp;width=800" alt="Fleur du Mal Sculpt Molded Sports Bra" loading="lazy" decoding="async" onerror="this.remove()">
-      <span class="dc-item-star">⭐</span>
-      <div class="dc-item-name">Fleur du Mal Sculpt Molded Sports Bra</div>
-      <div class="dc-item-meta"><span class="dc-store">Fleur du Mal</span><span class="dc-price">$98</span></div>
-      <div class="dc-item-note">Actual bra sizing with adjustable straps, for better support and comfort. And it looks stylish!</div>
-      <a class="dc-item-btn" href="https://fleurdumal.com/products/sculpt-molded-sports-bra-black" target="_blank" rel="sponsored noopener"><svg class="dc-bag" viewBox="0 0 24 24" fill="none" stroke="#0FA6B6" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5.8 8.5 h12.4 l-0.8 10.6 a1.2 1.2 0 0 1 -1.2 1.1 H7.8 a1.2 1.2 0 0 1 -1.2 -1.1 Z"/><path d="M8.3 8.5 C8.3 4.2 15.7 4.2 15.7 8.5"/><path d="M12 11.9 L12.5 13.3 L14 13.35 L12.85 14.25 L13.25 15.65 L12 14.8 L10.75 15.65 L11.15 14.25 L10 13.35 L11.5 13.3 Z" fill="#0FA6B6" stroke="none"/></svg>Shop this item <span class="dc-arr">&rarr;</span></a>
-    </div>
-
     <!-- Isabella Celini Stackable Love Bracelet, added 2026-08-26. Her Etsy
          listing, direct from her paste: price runs $49.95 (base size) to
          $53.95 (largest of the 5 sizes), so it carries the same ~$ notation
@@ -6018,17 +6009,6 @@ const STORES={
   // Foundations
   'Spanx':{u:'https://www.spanx.com/search?q=',t:'$$$',a:'Modern Minimalist, Professional Power',s:['plus'],d:[2,6,9,7,8,7,5,10,9,4],c:'shapewear, leggings, smoothing basics'},
   'SKIMS':{u:'https://skims.com/search?query=',t:'$$$',a:'Modern Glam, Modern Minimalist',s:['plus'],d:[2,10,8,3,10,8,4,10,9,4],c:'shapewear, loungewear, basics'},
-  // Fleur du Mal approved via Rakuten 2026-08-26 (mid 50739). Every dimension
-  // is hers, drafted against her own words and confirmed verbatim: "very
-  // alluring, glam, not for comfort -- definitely for style... very trend
-  // forward, fitted, not at all for a relaxed or modest or casual woman."
-  // ⚠️ s:[] IS HER FACT, NOT A GAP: "no plus, petite or tall. XS-XL."
-  // ✅ SEARCH VERIFIED, not assumed: "silk slip" returns a 1.24MB page with 19
-  // real mentions, gibberish returns a clean "No results" on 599KB -- a real,
-  // honest search, which is what earns the `deep` flag below. Real prices
-  // pulled off the results page run $56-$598, which is the source of the
-  // $$$-$$$$ tier (not a guess).
-  'Fleur du Mal':{u:'https://fleurdumal.com/search?q=',t:'$$$-$$$$',a:'Glamorous Luxe, Romantic Feminine',s:[],d:[1,10,8,1,10,2,4,10,6,6],deep:'lingerie and sleepwear',c:'sexy lingerie, nightgowns, slips, robes, sleepwear, a small amount of activewear'},
   // Shoes
   'Zappos':{w:1,u:'https://www.zappos.com/search?term=',t:'$$',a:'Universal',s:['wide','narrow'],d:[6,5,7,6,5,9,5,5,7,8],deep:'shoes',c:'shoes, sneakers, boots, comfort footwear, extended widths'},
   'DSW':{w:1,u:'https://www.dsw.com/browse/',t:'$$',a:'Universal',s:['wide'],d:[6,5,6,6,6,8,5,5,7,8],deep:'shoes',c:'shoes, handbags, accessories, extended widths'},
@@ -6359,7 +6339,7 @@ const storeUrls={};Object.keys(STORES).forEach(function(k){storeUrls[k]=STORES[k
 // punctuation, possessives and spacing ("Bloomingdale's", "J Crew", "LOFT").
 // ⚠️ Every value here must be a real key in STORES. Renaming a store without
 // updating its alias points the alias at a key that no longer exists.
-const _STORE_ALIAS={'babygold':'Baby Gold','dvf':'Diane von Furstenberg','saksfifthavenue':'Saks','netaporter':'NET-A-PORTER','aliceolivia':'Alice + Olivia','aliceandolivia':'Alice + Olivia','marshalls':'TJ Maxx','tjx':'TJ Maxx','alo':'Alo Yoga','landsend':"Lands' End",'jjill':'J.Jill','jcrewfactory':'J.Crew','gapfactory':'Banana Republic Factory','tiffany':'Tiffany & Co.','tiffanyco':'Tiffany & Co.','universalstd':'Universal Standard','bodenusa':'Boden','quayaustralia':'Quay','farmrio':'FARM Rio','sezane':'Sézane','whbm':'White House Black Market','whitehouseblackmkt':'White House Black Market','chicos':"Chico's",'somaintimates':'Soma','fleurdumal':'Fleur du Mal'};
+const _STORE_ALIAS={'babygold':'Baby Gold','dvf':'Diane von Furstenberg','saksfifthavenue':'Saks','netaporter':'NET-A-PORTER','aliceolivia':'Alice + Olivia','aliceandolivia':'Alice + Olivia','marshalls':'TJ Maxx','tjx':'TJ Maxx','alo':'Alo Yoga','landsend':"Lands' End",'jjill':'J.Jill','jcrewfactory':'J.Crew','gapfactory':'Banana Republic Factory','tiffany':'Tiffany & Co.','tiffanyco':'Tiffany & Co.','universalstd':'Universal Standard','bodenusa':'Boden','quayaustralia':'Quay','farmrio':'FARM Rio','sezane':'Sézane','whbm':'White House Black Market','whitehouseblackmkt':'White House Black Market','chicos':"Chico's",'somaintimates':'Soma'};
 // NFD splits an accented letter into letter + accent mark, so stripping the marks
 // leaves plain ASCII. Without it "Sezane" and "Sezane" (accented) normalise to
 // different strings and one of them silently fails to resolve.
@@ -6503,10 +6483,6 @@ var _AFF_MID={'farmrio.com':'44912','dvf.com':'53590','vilebrequin.com':'43322',
   // ship together, update BOTH the comment that predicted the link and the
   // one recording it -- don't let a "not yet" note survive its own event.
   'marissacollections.com':'36537',
-  // Fleur du Mal approved 2026-08-26 (mid 50739). Live in STORES from day
-  // one (see the entry there), so this earns immediately -- no waiting on a
-  // link to be added later, unlike the two above.
-  'fleurdumal.com':'50739',
   // Etsy approved via Rakuten 2026-08-26 (mid 54027). Live in STORES from day
   // one (see the entry there), so this earns immediately.
   'etsy.com':'54027',
@@ -10535,18 +10511,6 @@ const mallStores=[
        ⚠️ The blurb is a CLAUDE DRAFT condensed from her own c: line, like
        the others on this shelf -- hers to reword. */
     {n:'COUTR',d:'Designer swimwear, jewelry, bags and shoes',u:'https://www.coutr.com'},
-    /* Fleur du Mal, her seventh Rakuten advertiser (mid 50739), approved
-       2026-08-26 and already live in STORES -- this is only the MALL CARD
-       catching up, same batch as Vilebrequin and COUTR above. Filed here
-       for lack of a better shelf: the Mall has no lingerie/sleepwear
-       category, and her own STORES c: line -- "sexy lingerie, nightgowns,
-       slips, robes, sleepwear, a small amount of activewear" -- is $$$-$$$$
-       and archetype "Glamorous Luxe, Romantic Feminine", which sits closer
-       to this luxury shelf than to Value & Basics or Activewear & Swim.
-       ⚠️ The blurb is a CLAUDE DRAFT condensed from her own c: line, like
-       the others on this shelf -- hers to reword, and she may want a
-       different category entirely once she sees it rendered. */
-    {n:'Fleur du Mal',d:'Sexy lingerie, nightgowns and sleepwear',u:'https://fleurdumal.com'}
   ]},
   {cat:'Value & Basics',stores:[
     {n:'Amazon',d:'Everything, fast, great for basics',u:'https://www.amazon.com/fashion'},
@@ -15977,27 +15941,6 @@ var WEEK_STARS=[  {n:'Tommy Hilfiger Claihre Kitten Heel Slide Sandal',store:'No
    note:'The cutest heart shape that makes a casual hair clip look special.'},
   {n:'MZ Wallace Large Metro Tote Deluxe II',store:'Bloomingdale\'s',url:'https://www.bloomingdales.com/shop/product/mz-wallace-large-metro-tote-deluxe-ii?ID=5956591',price:'~$295',
    note:'The best carry-on travel bag ever. Stylish, lightweight, and it fits right under the seat on planes.'},
-  // ⚠️ HER DELIBERATE EXCEPTION TO "NO BRA AS STAR" (the Felina precedent),
-  // and it is the same shape as the Vilebrequin refinement: the bar was
-  // never the literal word "bra", it is whether the PHOTO reads as bikini
-  // or lingerie at a glance. Her own words: "for this one can we use the
-  // photo of just the bra - not the model - that way we can use it on star
-  // of the week and it won't look too alluring." A sports bra is activewear
-  // (their own product type is "Activewear"), and the photo below is a
-  // plain flat product shot -- no model, no skin -- which is what makes the
-  // exception hold.
-  // ✅ VERIFIED before adding: 200, real product name "Sculpt Molded Sports
-  // Bra", $98 is the REGULAR price (compare_at_price 0, genuinely not on
-  // sale). ⭐ The photo is one of Fleur du Mal's OWN product images (position
-  // 3 of 8 in their media set, alt "Sculpt Molded Sports Bra-black") --
-  // deliberately NOT one of their campaign/model shots, of which there are
-  // several on the same page.
-  // ⚠️ Source is 1467x2000 (ratio 0.734, almost exactly 3:4), so the shared
-  // .wks-px/.dc-item-px default crop loses well under 5% top-to-bottom --
-  // no pxPos override needed, unlike FARM Rio.
-  {n:'Fleur du Mal Sculpt Molded Sports Bra',store:'Fleur du Mal',url:'https://fleurdumal.com/products/sculpt-molded-sports-bra-black',price:'$98',
-   note:'Actual bra sizing with adjustable straps, for better support and comfort. And it looks stylish!',
-   px:'https://fleurdumal.com/cdn/shop/files/sculpt_sports_bra_black.jpg?v=1775576790&width=800'},
   // Isabella Celini Stackable Love Bracelet, added 2026-08-26 (Etsy, mid
   // 54027, approved the same day -- see STORES and _AFF_MID). She gave the
   // listing directly: price $49.95-$53.95 across 5 sizes, hence ~$50, same
@@ -16199,24 +16142,27 @@ var WEEK_STAR_PHOTO_ORDER=[
      moved up to Oct 11. The bracelet takes Oct 18; every date from DVF (Oct 25)
      through the belt (Dec 20) is unchanged, and so is every PAST week (the
      list was laid out so index 9 = Oct 11). Recomputed with _weekStarIndex.
-     Its WEEK_STARS entry stays, inert — retired, not deleted. */
-  'Cashmere & Silk Pashmina',                                      // Dec 6
-  'Zoe Lev Diamond & 14k Gold Bezel Pendant Necklace',             // Dec 13
-  'Valentino Garavani VLOGO Signature Reversible Leather Belt',    // Dec 20
-  'Isabella Celini Stackable Love Bracelet',                       // Dec 27 — her swap 2026-10-10, was Oct 18
-  'Saint Laurent SL M136 Sunglasses',                              // Jan 3
-  'Vilebrequin Long Mesh Cover-Up Dress — Black',                  // Jan 10
-  'Veronica Beard Crosbie Jean',                                   // Jan 17
-  'Valentino Garavani Rockstud Medium Suede Pouch',                // Jan 24
-  'Pointed Toe Mid Calf Boots',                                    // Jan 31
-  'Open Heart Necklace',                                           // Oct 11
-  'Valentino Square Oversized Sunglasses',                         // Oct 18 — her swap 2026-10-10, was Dec 27
-  'Diane von Furstenberg Jeanne Silk Jersey Wrap Dress',           // Oct 25
-  'Simkhai Stella Suede Block Heel Sandal',                        // Nov 1
-  'Gucci GG Canvas Mini Shoulder Bag',                             // Nov 8
-  'Simkhai Devon Suede Tote',                                      // Nov 15
-  'Fleur du Mal Sculpt Molded Sports Bra',                         // Nov 22
-  'Stella McCartney Falabella Mini Embellished Bag'               // Nov 29
+     Its WEEK_STARS entry stays, inert — retired, not deleted.
+     ⭐ 2026-10-31, HER CALL, TWO OUT (17 → 15): the Simkhai Stella sandal (Olivela's
+     "update our app" modal from the home-screen icon — her words, "i don't want people
+     clicking on nonfunctioning link"; it STAYS on the Edit and in WEEK_STARS, inert) and
+     the Fleur du Mal bra (partnership ended, deleted everywhere). Removing both kept the
+     remaining order intact and put Gucci at index 12 = Nov 1. Recomputed with _weekStar(). */
+  'Cashmere & Silk Pashmina',                                      // Nov 22
+  'Zoe Lev Diamond & 14k Gold Bezel Pendant Necklace',             // Nov 29
+  'Valentino Garavani VLOGO Signature Reversible Leather Belt',    // Dec 6
+  'Isabella Celini Stackable Love Bracelet',                       // Dec 13
+  'Saint Laurent SL M136 Sunglasses',                              // Dec 20
+  'Vilebrequin Long Mesh Cover-Up Dress — Black',                  // Dec 27
+  'Veronica Beard Crosbie Jean',                                   // Jan 3
+  'Valentino Garavani Rockstud Medium Suede Pouch',                // Jan 10
+  'Pointed Toe Mid Calf Boots',                                    // Jan 17
+  'Open Heart Necklace',                                           // Jan 24
+  'Valentino Square Oversized Sunglasses',                         // Jan 31
+  'Diane von Furstenberg Jeanne Silk Jersey Wrap Dress',           // Feb 7 (was Oct 25)
+  'Gucci GG Canvas Mini Shoulder Bag',                             // Nov 1
+  'Simkhai Devon Suede Tote',                                      // Nov 8
+  'Stella McCartney Falabella Mini Embellished Bag'               // Nov 15
 ];
 function _weekStarPhotoPool(){
   // WHITELIST, not a sort hint: only a name she has actually put here can

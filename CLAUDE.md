@@ -3251,12 +3251,20 @@ emailed her; the other 8 stores ingested fine. Fixed: `PENDING_MIDS` in `scripts
 brand-new approval a logged "not published yet", never a failure; any other error still fails. Tried nightly, so it ingests
 itself the day Rakuten publishes it. ✅ **PUBLISHED 2026-10-16: 1,162 lines, 633 women's pieces; 43892 taken back out of `PENDING_MIDS` (empty is normal).**
 
-🚨 **FLEUR DU MAL ENDED THE RAKUTEN PARTNERSHIP, FOUND 2026-10-31.** Its nightly file vanished (`550 NoSuchKey`, re-run
-confirmed) and her Rakuten dashboard no longer shows the partnership; no notice was sent (likely low sales). ⏸️ **HER CALL:
-wait one more day in case it comes back.** If it does not, the recommended retirement (her yes still needed): drop the Edit
-piece (Sculpt Molded Sports Bra; photo no longer licensed), pull its **Nov 22 Star** turn (re-run the schedule week by week),
-remove the Mall entry and `_AFF_MID`, delete its ~220 stale feed pieces, and take 50739 out of `BUILD_MIDS`/`MID_TO_STORE`
-(the test pins those equal). Until then the nightly ingest fails on it each night — expected, ignore.
+🚨 **FLEUR DU MAL ENDED THE RAKUTEN PARTNERSHIP, FOUND 2026-10-31 — RETIRED THE SAME DAY, HER CALL.** Its nightly file
+vanished (`550 NoSuchKey`) and her dashboard no longer lists it; she tested the Edit link herself and it did not work:
+*"let's go ahead and delete all the fleur... I don't want our users to click on broken links."* ✅ **Removed everywhere:**
+Edit card (Edit now **19**), `WEEK_STARS` entry + Star turn, Mall card, `STORES`, `_AFF_MID`, the `fleurdumal` alias (a
+dangling alias is a crash risk), `docs/current-stores.txt`, `store-domains.js` (**133**). ▶ **`RETIRED_MIDS` in
+`scripts/rakuten_feed.py`** (new): not fetched, and every write run deletes its leftover `products`/`product_sizes` rows
+(idempotent). **To re-approve: move 50739 back into `MID_TO_STORE`/`BUILD_MIDS` and redo the five merchant edits.**
+⭐ **SAME DAY, HER CALL: the Simkhai Stella sandal (Olivela) is OUT of Star of the Week** — the Olivela "update our app"
+modal from the home-screen icon (known, see Hosting). It **stays on the Edit**. ⚠️ **Two other Olivela pieces are still
+Stars (Devon tote Nov 8, Zoe Lev Nov 29) — the same modal applies; flagged to her, her call.**
+▶ **STAR SCHEDULE NOW (15, measured with `_weekStar`):** Nov 1 Gucci GG mini bag · Nov 8 Simkhai Devon tote · Nov 15
+Stella McCartney Falabella · Nov 22 Pashmina · Nov 29 Zoe Lev · Dec 6 VLOGO belt · Dec 13 Isabella Celini bracelet · Dec 20
+Saint Laurent SL M136 · Dec 27 Vilebrequin · Jan 3 Crosbie · Jan 10 Rockstud pouch · Jan 17 Pointed Toe boots · Jan 24 Open
+Heart · Jan 31 Valentino Square sunglasses · Feb 7 DVF Jeanne, then repeats.
 📧 **MYTHERESA EMAIL, 2026-10-15 — INFORMATIONAL, NOTHING TO DO.** Their affiliate team explained where to see the
 order flags behind their commission tiers (Rakuten → Reports → Individual Item Report → add *Customer Status*
 (New/Existing) and *Customer Segment* (topcustomer/assisted)). ▶ **Meaning: Mytheresa pays differently for a first-time

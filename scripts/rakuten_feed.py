@@ -43,7 +43,6 @@ MID_TO_STORE = {
     "50334": "Olivela",
     "36537": "Marissa Collections",
     "43172": "Mytheresa",
-    "50739": "Fleur du Mal",
     "54152": "COUTR",                 # approved 2026-09-08; her 8th merchant
     "43892": "Pedro",                 # approved 2026-10-15
     "54027": "Etsy",                  # deliberately NOT ingested yet: 5GB, see plan doc
@@ -53,7 +52,7 @@ MID_TO_STORE = {
 # Etsy is excluded because its feed is 5GB -- 200x the
 # next largest store, with a 1GB delta -- and it is a marketplace of millions of
 # independent-seller listings rather than a curated store. Its own problem, later.
-BUILD_MIDS = ["44912", "53590", "43322", "50334", "36537", "43172", "50739", "54152", "43892"]
+BUILD_MIDS = ["44912", "53590", "43322", "50334", "36537", "43172", "54152", "43892"]
 
 # A merchant approved so recently that Rakuten has not published its catalogue file yet.
 # For these ONLY, a missing file ("550 ... NoSuchKey" / 404) is logged as "not published yet"
@@ -62,6 +61,13 @@ BUILD_MIDS = ["44912", "53590", "43322", "50334", "36537", "43172", "50739", "54
 # Pedro, approved 2026-10-15: no file its first night, published by 2026-10-16 (1,162 lines,
 # 633 women's pieces) and taken back out. Empty is the normal state.
 PENDING_MIDS = set()
+
+# A merchant that ENDED the partnership. Not fetched any more, and every night its old pieces
+# are cleared from the database so no card can send a woman to a link that no longer earns or
+# works. Idempotent: once the rows are gone it deletes nothing. Re-approval = move it back up.
+# Fleur du Mal: its file vanished 2026-10-31 and her Rakuten dashboard no longer lists the
+# partnership; her call the same day, "let's go ahead and delete all the fleur".
+RETIRED_MIDS = {"50739": "Fleur du Mal"}
 
 
 def _clean(v):

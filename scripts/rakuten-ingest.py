@@ -19,7 +19,7 @@ import os, sys, gzip, ftplib, tempfile, collections, time
 from datetime import datetime, timezone
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-from rakuten_feed import parse_line, MID_TO_STORE, BUILD_MIDS, PENDING_MIDS
+from rakuten_feed import parse_line, MID_TO_STORE, BUILD_MIDS, PENDING_MIDS, RETIRED_MIDS
 from supabase_io import Supabase, SupabaseError, eq, lt, like_prefix
 from slot_match import load_rules, match as match_slots
 
@@ -480,6 +480,18 @@ def main():
                 log(f"  (could not record the sync row: {redact(str(e))[:200]})")
 
     ftp.quit()
+
+    # Retired merchants: clear whatever of theirs is still in the database (see RETIRED_MIDS).
+    if not DRY_RUN:
+        for mid, store in RETIRED_MIDS.items():
+            try:
+                gone = supa.delete("products", [eq("store", store)])
+                gone_sizes = supa.delete("product_sizes", [like_prefix("piece_key", f"{mid}:")])
+                if gone or gone_sizes:
+                    log(f"retired {store} (MID {mid}): removed {gone:,} garments, {gone_sizes:,} sizes")
+            except Exception as e:
+                failures += 1
+                log(f"FAILED to clear retired {store}: {redact(str(e))[:200]}")
 
     log()
     log("=" * 70)

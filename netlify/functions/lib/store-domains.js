@@ -626,11 +626,6 @@ export default {
    "plus"
   ]
  },
- "Fleur du Mal": {
-  "host": "fleurdumal.com",
-  "tier": "$$$-$$$$",
-  "sizes": []
- },
  "Zappos": {
   "host": "zappos.com",
   "tier": "$$",
