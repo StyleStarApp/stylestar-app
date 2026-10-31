@@ -3245,6 +3245,12 @@ emailed her; the other 8 stores ingested fine. Fixed: `PENDING_MIDS` in `scripts
 brand-new approval a logged "not published yet", never a failure; any other error still fails. Tried nightly, so it ingests
 itself the day Rakuten publishes it. ✅ **PUBLISHED 2026-10-16: 1,162 lines, 633 women's pieces; 43892 taken back out of `PENDING_MIDS` (empty is normal).**
 
+🚨 **FLEUR DU MAL ENDED THE RAKUTEN PARTNERSHIP, FOUND 2026-10-31.** Its nightly file vanished (`550 NoSuchKey`, re-run
+confirmed) and her Rakuten dashboard no longer shows the partnership; no notice was sent (likely low sales). ⏸️ **HER CALL:
+wait one more day in case it comes back.** If it does not, the recommended retirement (her yes still needed): drop the Edit
+piece (Sculpt Molded Sports Bra; photo no longer licensed), pull its **Nov 22 Star** turn (re-run the schedule week by week),
+remove the Mall entry and `_AFF_MID`, delete its ~220 stale feed pieces, and take 50739 out of `BUILD_MIDS`/`MID_TO_STORE`
+(the test pins those equal). Until then the nightly ingest fails on it each night — expected, ignore.
 📧 **MYTHERESA EMAIL, 2026-10-15 — INFORMATIONAL, NOTHING TO DO.** Their affiliate team explained where to see the
 order flags behind their commission tiers (Rakuten → Reports → Individual Item Report → add *Customer Status*
 (New/Existing) and *Customer Segment* (topcustomer/assisted)). ▶ **Meaning: Mytheresa pays differently for a first-time
