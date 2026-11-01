@@ -3177,6 +3177,15 @@ client_credentials (Login with Amazon), NOT the old PA-API's AWS SigV4 signing.*
 ⚠️ **The old AWS Access Key/Secret Key PA-API credentials will NOT work here at all — a genuinely different
 auth system, not just a new key.**
 
+📊📊 **PLAUSIBLE ANALYTICS — SHE GETS THE MONTHLY EMAIL REPORT; FIRST ONE READ 2026-11-01. ADD A ROW, NEVER REPLACE.**
+| month | visitors | pageviews | bounce | top referrers | quiz started → completed | product clicks | outbound clicks |
+|---|---|---|---|---|---|---|---|
+| Oct 2026 | 246 (+23%) | 697 (+10%) | 29% | ChatGPT 103 · Instagram 14 · Google 13 · DuckDuckGo 6 · Bing 4 | 128 → 121 (95%) | 43 | 43 |
+Top pages Oct: / 235 · /results 136 · /finds 41 · /edit 34 · /wardrobe 9. ▶ **CHATGPT IS HER BIGGEST SOURCE (42% of visitors)**
+— not yet known whether that is real discovery or her own/friends' ChatGPT use; her dashboard's Sources → ChatGPT shows
+landing pages. ▶ **Amazon logged 207 clicks in October vs 43 visitors clicking out of the app** — most Amazon traffic
+likely comes from her Storefront/Instagram, not the app (goal counts are per visitor, so not exact). Visitors include her own.
+
 💵💵 **EARNINGS TO DATE, HER FIGURE 2026-09-08: $27 IN THE RAKUTEN DASHBOARD. EVERYTHING ELSE HAS BEEN
 AN EXPENSE.** ▶ **Recorded because it is live operational status and because it is the honest baseline
 that makes any future number mean something.** ⚠️ **It is also the whole argument in one line: the app
